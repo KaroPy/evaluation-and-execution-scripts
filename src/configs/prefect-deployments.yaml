@@ -1,0 +1,17 @@
+prefect-deployments:
+  repository-etl: 
+    name: "prefect-flows-etl"
+    path_to_deployments: "src/deployments"
+    deployment_file: [deployment_config.yaml]
+    deployment_to_ignore: ["databricksExtractTransformLoad","treatmentGenerationDatabricks"]
+  repository-targeting-configs:
+    name: "prefect-2-targeting"
+    path_to_deployments: "config/kubernetes"
+    deployment_file: [node_size_mapping.yaml]
+    deployment_to_ignore: []
+  repository-targeting: 
+    name: "prefect-2-targeting"
+    path_to_deployments: "src/deployments"
+    deployment_file: [targeting.yaml, retraining.yaml]
+    deployment_to_ignore: ["beyondlove"]
+

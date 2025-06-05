@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+localstack-client = "*"
+pandas = "2.2.3"
+kubernetes = "*"
+github = "*"
+pygithub = "*"
+delta-sharing = "*"
+prefect = "*"
+azure-mgmt-consumption = "*"
+azure-identity = "*"
+databricks-sdk = "*"
+jupyter = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
