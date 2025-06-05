@@ -15,16 +15,17 @@ class AzureExtractor:
         self.logger = logger
         self.path_to_save = path_to_save
 
-    def perprocess_azure_json_data(self, data: json):
+    def preprocess_azure_json_data(self, data: json):
         data = pd.json_normalize(data)
         data = data.rename(
             columns={
                 "product": "serviceName",
                 "consumed_service": "serviceCategoryName",
-                "cost": "charge",
+                "cost": "charge_without_tax",
             }
         )
         data["cloud"] = "azure"
+        data["charge"] = data["charge_without_tax"] + data["charge_without_tax"] * 0.19
         use_columns = [
             "date",
             "serviceName",
@@ -65,7 +66,7 @@ class AzureExtractor:
         json_costs = self.query_costs_via_client(
             from_date=from_date, to_date=to_date, save_data=False
         )
-        azure_costs_pd = self.perprocess_azure_json_data(json_costs)
+        azure_costs_pd = self.preprocess_azure_json_data(json_costs)
         if save_data:
             azure_costs_pd.to_csv(
                 f"{self.path_to_save}azure_costs_pd_{from_date}_{to_date}.csv"

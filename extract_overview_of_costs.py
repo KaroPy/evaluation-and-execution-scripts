@@ -19,7 +19,7 @@ from src.data_combination.data_combination import (
 timestamp = datetime.now()
 logger = get_logger(f"extract_overview_of_costs_{timestamp}_v3_databricks")
 from_date = "2024-01-01"
-to_date = "2025-06-02"
+to_date = "2025-06-05"
 path_to_save = f"data/{from_date}_to_{to_date}/{timestamp}/"
 create_directory_if_not_exists(f"{path_to_save}")
 logger.info(f"Extracting costs for date range: {from_date} to {to_date}")
@@ -74,9 +74,10 @@ final_costs_with_azure.to_csv(
 final_costs_with_azure = pd.read_csv(
     f"{path_to_save}final_costs_with_azure_{from_date}_{to_date}.csv"
 )
+logger.info(f"final_costs_with_azure: {final_costs_with_azure.shape}")
+
 # add aws costs
 aws_client = AWSExtractor(logger=logger, path_to_save=path_to_save)
-logger.info(f"final_costs_with_azure: {final_costs_with_azure.shape}")
 aws_costs = aws_client.extract_costs(
     from_date=from_date, to_date=to_date, save_data=True
 )
@@ -94,8 +95,7 @@ final_costs_with_azure_and_aws = pd.read_csv(
 
 databricks_client = DatabricksUsageExtractor(logger=logger, path_to_save=path_to_save)
 databricks_usage = databricks_client.load_cost(
-    from_date=from_date,
-    to_date=to_date,
+    from_date=from_date, to_date=to_date, save_data=True
 )
 databricks_usage.to_csv(f"{path_to_save}databricks_usage_{from_date}_{to_date}.csv")
 

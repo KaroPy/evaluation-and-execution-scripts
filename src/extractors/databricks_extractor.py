@@ -36,6 +36,7 @@ class DatabricksUsageExtractor:
         )
         cluster_data = pd.read_csv(cluster_id_file)
         cluster_data = cluster_data.rename(columns={"rank_key": "cluster_id"})
+        cluster_data["resource_group"] = "cluster"
         self.logger.info(f"cluster_data: {cluster_data.shape}")
 
         resource_file = (
@@ -43,6 +44,7 @@ class DatabricksUsageExtractor:
         )
         resource_data = pd.read_csv(resource_file)
         resource_data = resource_data.rename(columns={"group_key": "resource_name"})
+        resource_data["resource_group"] = "resource"
         self.logger.info(f"resource_data: {resource_data.shape}")
 
         node_type_file = (
@@ -50,6 +52,7 @@ class DatabricksUsageExtractor:
         )
         node_types = pd.read_csv(node_type_file)
         node_types = node_types.rename(columns={"rank_key": "machine.type"})
+        node_types["resource_group"] = "node_types"
         self.logger.info(f"node_types: {node_types.shape}")
 
         result = pd.concat([cluster_data, resource_data])
@@ -73,9 +76,15 @@ class DatabricksUsageExtractor:
         )
         return result
 
-    def load_cost(self, from_date: str, to_date: str, local_files=True):
+    def load_cost(
+        self, from_date: str, to_date: str, local_files=True, save_data=False
+    ):
         if local_files is False:
             raise ValueError(f"Other way than local_files is not defined.")
 
         databricks_costs = self.load_local_files(from_date, to_date)
+        if save_data:
+            databricks_costs.to_csv(
+                f"{self.path_to_save}databricks_data_{from_date}_{to_date}.csv"
+            )
         return databricks_costs

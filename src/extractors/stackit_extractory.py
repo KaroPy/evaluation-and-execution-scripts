@@ -124,6 +124,9 @@ class StackItExtractor:
         for entry in node_pools:
             temp = pd.json_normalize(entry)
             node_pools_df = pd.concat([node_pools_df, temp], ignore_index=True)
+        node_pools_df = node_pools_df[
+            node_pools_df["name"] != "agentpool"
+        ]  # TODO: for now it works, but it is not dynamic
         return node_pools_df
 
     def merge_costs_with_nodes(self, costs: pd.DataFrame, node_pools: pd.DataFrame):
@@ -139,6 +142,7 @@ class StackItExtractor:
         for node_type in node_types:
             mask = costs[columns_service].str.contains(f"-{str(node_type)}-", na=False)
             costs.loc[mask, columns_nodes] = node_type
+
         costs = pd.merge(
             costs,
             node_pools[[columns_nodes, columns_node_name, columns_volumne_type]],
@@ -157,6 +161,7 @@ class StackItExtractor:
         if check_nr_days > 0:
             raise ValueError("Costs over several days are in the data.")
         data["cloud"] = "stackit"
+        data["charge"] = data["charge"] / 100  # transform from cents to euro
         return data
 
     def extract_costs(self, from_date: str, to_date: str):
