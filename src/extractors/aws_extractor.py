@@ -21,7 +21,7 @@ class AWSExtractor:
         to_date = pd.to_datetime(to_date) + timedelta(days=1)
         to_date = to_date.strftime(date_format_hashed)
         date_range = list(
-            pd.date_range(from_date, to_date, freq="30D").strftime(date_format_hashed)
+            pd.date_range(from_date, to_date, freq="5D").strftime(date_format_hashed)
         )
         if to_date not in date_range:
             date_range.append(to_date)
@@ -33,12 +33,13 @@ class AWSExtractor:
                 to_date = date_range[idate + 1]
             self.logger.info(f"Load aws costs from {from_date} to {to_date}")
             try:
+                granularity = "DAILY"
                 response = client.get_cost_and_usage(
                     TimePeriod={"Start": from_date, "End": to_date},
                     Granularity=granularity,
-                    Metrics=["BlendedCost", "UnblendedCost", "UsageQuantity"],
+                    Metrics=["UnblendedCost", "UsageQuantity", "AmortizedCost"],
                     GroupBy=[
-                        # {"Type": "DIMENSION", "Key": "SERVICE"},
+                        # {"Type": "DIMENSION", "Key": "AZ"},
                         {"Type": "DIMENSION", "Key": "USAGE_TYPE"},
                         {"Type": "DIMENSION", "Key": "INSTANCE_TYPE"},
                         # {"Type": "DIMENSION", "Key": "USAGE_TYPE_GROUP"},
@@ -71,10 +72,10 @@ class AWSExtractor:
                 "serviceName",
                 "charge",
                 "billing_currency",
-                "costs_unblended",
                 "quantity",
                 "quantity_unit",
                 "cloud",
+                "amortized_cost",
             ]
         )
         cloud = "aws"
@@ -95,13 +96,11 @@ class AWSExtractor:
                     raise ValueError(
                         f"More than two services are not defined to handle {service_group}"
                     )
-                costs = group.get("Metrics").get("BlendedCost").get("Amount")
-                currency = group.get("Metrics").get("BlendedCost").get("Unit")
-                costs_unblended = (
-                    group.get("Metrics").get("UnblendedCost").get("Amount")
-                )
+                currency = group.get("Metrics").get("UnblendedCost").get("Unit")
+                costs = group.get("Metrics").get("UnblendedCost").get("Amount")
                 quantity = group.get("Metrics").get("UsageQuantity").get("Amount")
                 quantity_unit = group.get("Metrics").get("UsageQuantity").get("Unit")
+                amortized_cost = group.get("Metrics").get("AmortizedCost").get("Amount")
                 data.loc[len(data)] = [
                     date,
                     end,
@@ -109,10 +108,10 @@ class AWSExtractor:
                     serviceName,
                     costs,
                     currency,
-                    costs_unblended,
                     quantity,
                     quantity_unit,
                     cloud,
+                    amortized_cost,
                 ]
 
         use_columns = [
@@ -124,6 +123,7 @@ class AWSExtractor:
             "quantity",
             "billing_currency",
             "cloud",
+            "amortized_cost",
         ]
         data = data[use_columns]
         return data
