@@ -103,7 +103,7 @@ class PrefectRuntimeExtractor:
         max_date = df[col_date].max()
         self.logger.info(f"Dates ranges from {min_date} to {max_date}")
         df["Deployments"] = np.where(
-            df["Deployments"] == "k8-retraining", "retrainng", df["Deployments"]
+            df["Deployments"] == "k8-retraining", "retraining", df["Deployments"]
         )
         df["Deployments"] = np.where(
             df["Deployments"] == "k8-targeting", "targeting", df["Deployments"]

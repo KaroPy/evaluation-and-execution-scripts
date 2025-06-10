@@ -47,7 +47,7 @@ df_prefect_runs = prefect.extract_runtimes(
 )
 
 # merge data and stackit costs
-# merge prefect runs with deployment specs
+# merge prefect runs with deployment specs - may results in duplicates in cost, especially in stack (be aware of it!)
 prefect_runs_with_deployments = combine_deployments_and_prefect_runs(
     df_prefect_runs, deployment_specs
 )

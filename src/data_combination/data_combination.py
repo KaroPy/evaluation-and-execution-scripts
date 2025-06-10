@@ -86,6 +86,55 @@ def combine_data_without_node_name(df1: pd.DataFrame, df2: pd.DataFrame):
     return concat
 
 
+def handle_charges(concat):
+    non_stackit_data = concat[concat["cloud"] != "stackit"]
+    concat = concat[concat["cloud"] == "stackit"]
+    concat["sum_duration_serviceName"] = concat.groupby(by=["date", "serviceName"])[
+        "duration"
+    ].transform("sum")
+    concat["part_of_costs"] = concat["duration"] / concat["sum_duration_serviceName"]
+    concat["total_charge_of_serviceName"] = concat["charge"]
+    concat["charge"] = concat["total_charge_of_serviceName"] * concat["part_of_costs"]
+    concat["charge"] = np.where(
+        (concat["charge"].isnull())
+        & (concat["total_charge_of_serviceName"].isnull() == False),
+        concat["total_charge_of_serviceName"],
+        concat["charge"],
+    )
+    # handle costs where due to no runtime wrong cost merges are executed: charge will have total_charge and so costs will be counted twice
+    temp0 = concat[
+        (concat["sum_duration_serviceName"] == 0) & (concat["duration"] == 0)
+    ]
+    temp0["count_services"] = temp0.groupby(by=["date", "serviceName"])[
+        "serviceName"
+    ].transform("count")
+    temp0["charge_by_service"] = temp0["charge"] / temp0["count_services"]
+    concat = pd.merge(
+        concat,
+        temp0[
+            [
+                "date",
+                "serviceName",
+                "charge",
+                "count_services",
+                "charge_by_service",
+                "tenant",
+                "node_name",
+                "timestamp",
+            ]
+        ],
+        on=["date", "serviceName", "charge", "tenant", "node_name", "timestamp"],
+        how="left",
+    )
+    concat["charge"] = np.where(
+        concat["charge_by_service"].isnull() == False,
+        concat["charge_by_service"],
+        concat["charge"],
+    )
+    concat = pd.concat([concat, non_stackit_data])
+    return concat
+
+
 def combine_prefect_runs_with_deployments_and_costs(
     prefect_runs_with_deployments: pd.DataFrame, costs: pd.DataFrame
 ):
@@ -107,6 +156,7 @@ def combine_prefect_runs_with_deployments_and_costs(
         prefect_runs_with_deployments, costs
     )
     concat = pd.concat([df_with_nodes, df_without_nodes])
+    concat = handle_charges(concat)  # TODO: seems to be some bug
     return concat
 
 
