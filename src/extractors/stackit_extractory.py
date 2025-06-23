@@ -127,6 +127,7 @@ class StackItExtractor:
         node_pools_df = node_pools_df[
             node_pools_df["name"] != "agentpool"
         ]  # TODO: for now it works, but it is not dynamic
+        self.logger.info(f"Node pools: {node_pools_df.values}")
         return node_pools_df
 
     def merge_costs_with_nodes(self, costs: pd.DataFrame, node_pools: pd.DataFrame):
@@ -135,7 +136,74 @@ class StackItExtractor:
         columns_node_name = "name"
         columns_volumne_type = "volume.type"
         columns_service = "serviceName"
-        node_types = node_pools[columns_nodes].dropna().unique()
+        node_types = node_pools[columns_nodes].dropna().unique().tolist()
+        if "b1a.32d" not in node_types:
+            temp_data = pd.DataFrame(
+                data={
+                    columns_nodes: ["b1a.32d"],
+                    columns_node_name: ["30cpu476gib"],
+                }
+            )
+            node_pools = pd.concat([node_pools, temp_data], ignore_index=True)
+        if "b2i.30d" not in node_types:
+            temp_data = pd.DataFrame(
+                data={
+                    columns_nodes: ["b2i.30d"],
+                    columns_node_name: ["30cpu476gib"],
+                }
+            )
+            node_pools = pd.concat([node_pools, temp_data], ignore_index=True)
+        if "g1.4" not in node_types:
+            temp_data = pd.DataFrame(
+                data={
+                    columns_nodes: ["g1.4"],
+                    columns_node_name: ["8cpu32gib"],
+                }
+            )
+        if "m1.3" not in node_types:
+            temp_data = pd.DataFrame(
+                data={
+                    columns_nodes: ["m1.3"],
+                    columns_node_name: ["4cpu32gib"],
+                }
+            )
+            node_pools = pd.concat([node_pools, temp_data], ignore_index=True)
+        if "c1.3" not in node_types:
+            temp_data = pd.DataFrame(
+                data={
+                    columns_nodes: ["c1.3"],
+                    columns_node_name: ["4cpu8gib"],
+                }
+            )
+        if "b1a.16d" not in node_types:
+            temp_data = pd.DataFrame(
+                data={
+                    columns_nodes: ["b1a.16d"],
+                    columns_node_name: ["16cpu256gib"],
+                }
+            )
+        if "b1.4" not in node_types:
+            temp_data = pd.DataFrame(
+                data={
+                    columns_nodes: ["b1.4"],
+                    columns_node_name: ["8cpu128gib"],
+                }
+            )
+        if "g1.3" not in node_types:
+            temp_data = pd.DataFrame(
+                data={
+                    columns_nodes: ["g1.3"],
+                    columns_node_name: ["4cpu16gib"],
+                }
+            )
+        if "b1.3" not in node_types:
+            temp_data = pd.DataFrame(
+                data={
+                    columns_nodes: ["b1.3"],
+                    columns_node_name: ["4cpu64gib"],
+                }
+            )
+        node_types = node_pools[columns_nodes].dropna().unique().tolist()
         self.logger.info(f"Node types: {node_types}")
         # For each node type, if its value is found in serviceName, set machine.type to that value
         costs[columns_nodes] = None
