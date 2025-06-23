@@ -41,10 +41,14 @@ class AWSExtractor:
                     GroupBy=[
                         # {"Type": "DIMENSION", "Key": "AZ"},
                         {"Type": "DIMENSION", "Key": "USAGE_TYPE"},
-                        {"Type": "DIMENSION", "Key": "INSTANCE_TYPE"},
+                        # {"Type": "DIMENSION", "Key": "INSTANCE_TYPE"},
                         # {"Type": "DIMENSION", "Key": "USAGE_TYPE_GROUP"},
                         # {"Type": "DIMENSION", "Key": "DATABASE_ENGINE"},
                         # {"Type": "DIMENSION", "Key": "INSTANCE_TYPE_FAMILY"},
+                        {
+                            "Type": "DIMENSION",
+                            "Key": "SERVICE",
+                        },  # TODO: aufschlüsselung möglich
                     ],
                 )
                 if "ResultsByTime" in response.keys():
