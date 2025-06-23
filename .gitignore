@@ -3,6 +3,8 @@
 
 OpenRC*
 *.log
+trial.py
+playaround.ipynb
 data/
 analysis/data/
 analysis/backup_scripts/
