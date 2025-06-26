@@ -18,8 +18,8 @@ from src.data_combination.data_combination import (
 
 timestamp = datetime.now()
 logger = get_logger(f"extract_overview_of_costs_{timestamp}_v3_databricks")
-from_date = "2024-01-01"
-to_date = "2025-06-05"
+from_date = "2024-01-01"  # 2024-01-01"
+to_date = "2025-06-23"  # 2025-06-12"
 path_to_save = f"data/{from_date}_to_{to_date}/{timestamp}/"
 create_directory_if_not_exists(f"{path_to_save}")
 logger.info(f"Extracting costs for date range: {from_date} to {to_date}")
