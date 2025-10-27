@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+<<<<<<< HEAD
 localstack-client = "*"
 pandas = "2.2.3"
 kubernetes = "*"
@@ -17,6 +18,17 @@ databricks-sdk = "*"
 jupyter = "*"
 matplotlib = "*"
 seaborn = "*"
+=======
+jupyter = "*"
+pandas = "*"
+requests = "*"
+python-dotenv = "*"
+boto3 = "*"
+delta-sharing = "*"
+matplotlib = "*"
+seaborn = "*"
+awswrangler = "*"
+>>>>>>> c67d293 (update scripts)
 
 [dev-packages]
 
