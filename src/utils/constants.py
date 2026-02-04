@@ -1,6 +1,8 @@
 import os
 import json
+from dotenv import load_dotenv
 
+load_dotenv()
 REPOSITORY_TARGETING = "prefect-2-targeting"
 REPOSITRY_ETLFLOW = "prefect-flows-etl"
 

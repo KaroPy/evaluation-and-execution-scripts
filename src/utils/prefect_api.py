@@ -1,6 +1,7 @@
 import json
 import requests
 import pandas as pd
+from datetime import datetime
 from base64 import b64encode
 from src.configs.data_specs import date_format_hashed, col_date
 from src.utils.datetime_helper import transform_local_time_to_datetime
@@ -14,8 +15,11 @@ from src.utils.innkeepr_api import call_api_with_service_token
 from src.utils.accounts import sanitize_account_name
 
 DEPLOYMENTS_TO_CONSIDER = ["etlFlow-k8s-"]
-TAGS_TO_CONSIDER = ["etlFlow", "analytics"]
+TAGS_TO_CONSIDER = ["analytics"]
 # targeting, retraining and updateConversionTable, googleConversionUpdate: tag=analytics
+def format_date_for_prefect_api(date: str):
+    date = pd.to_datetime(date)
+    return datetime.fromisoformat(str(date)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def call_prefect_api(endpoint: str, json_data: dict):
@@ -54,7 +58,24 @@ class PrefectFlowViaApi:
     def __init__(self, logger):
         self.logger = logger
 
-    def extract_flow_runs_for_time_range(self, from_date: str, to_date: str):
+    def extract_task_runs(self, flow_run_ids: list):
+        endpoint = f"/task_runs/filter"
+        response = call_prefect_api(
+            endpoint,
+            {
+                "flow_runs": {
+                    "id": {
+                        "any_": flow_run_ids,
+                    },
+                },
+            },
+        )
+        task_runs = pd.json_normalize(response)
+        return task_runs
+
+    def extract_flow_runs_for_time_range(
+        self, from_date: str, to_date: str, tags_to_consider=TAGS_TO_CONSIDER
+    ):
         self.logger.info(f"extract_flow_runs_for_time_range: {from_date} - {to_date}")
         # Transform from_date and to_date to the required format: YYYY-MM-DDT00:00:00Z / YYYY-MM-DDT23:59:59Z
 
@@ -74,6 +95,7 @@ class PrefectFlowViaApi:
         )
         endpoint = "/flow_runs/filter"  # history"  # flow_runs/filter"
         filter_payload = {
+            "flows": {"name": {"like_": "k8-targeting"}},
             "flow_runs": {
                 "start_time": {
                     "after_": from_date_formatted,
@@ -82,7 +104,7 @@ class PrefectFlowViaApi:
             },
             "deployments": {
                 # "name": {"like_": "etlFlow"},
-                "tags": {"any_": TAGS_TO_CONSIDER},
+                "tags": {"any_": tags_to_consider},
             },
         }
         self.logger.info(f"flow_runs/filter = {filter_payload}")
@@ -146,13 +168,23 @@ class PrefectFlowViaApi:
 
         return data
 
-    def extract_flows(self, from_date: str, to_date: str, save_data=False):
-        flow_runs = self.extract_flow_runs_for_time_range(from_date, to_date)
+    def extract_flows(
+        self,
+        from_date: str,
+        to_date: str,
+        save_data=False,
+        tags_to_consider=TAGS_TO_CONSIDER,
+    ):
+        flow_runs = self.extract_flow_runs_for_time_range(
+            from_date, to_date, tags_to_consider=tags_to_consider
+        )
+        self.logger.info(f"List flow runs: {len(flow_runs)}")
         list_deployments = flow_runs["deployment_id"].dropna().unique().tolist()
         self.logger.info(f"list_deployments = {len(list_deployments)}")
         deployments = self.extract_deployments(deployment_ids=list_deployments)
         flow_runs = pd.merge(flow_runs, deployments, on="deployment_id")
         data = self.clean_data(flow_runs)
+        self.logger.info(f"data = {data.shape}")
         if save_data:
             data.to_csv(f"data_from_prefect_api_{from_date}_{to_date}.csv")
             # write_data_to_json(response, "test_data")

@@ -6,7 +6,7 @@ from general_functions.constants import return_service_token, return_api_url
 
 def return_account_ids(tracking_started=True):
     url = return_api_url()
-    url = f"{url}/core/accounts/query"
+    url = f"{url}/core/workspaces/query"
     print(url)
 
     payload = json.dumps(

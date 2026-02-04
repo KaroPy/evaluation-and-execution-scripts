@@ -1,5 +1,4 @@
 .env
-<<<<<<< HEAD
 .DS_Store
 
 OpenRC*
@@ -12,13 +11,15 @@ analysis/backup_scripts/
 analysis/figures/
 
 __pycache__
-=======
 *.png
 *.csv
 *.parquet
 *.h5
 *.html
 *.log
+*.numbers
+*.xlsx
+*.json
 .DS_Store
 temp.json
 *__pychache__*
@@ -28,4 +29,3 @@ __pychache__/
 configs/databricks_template.share
 DataChecks/profiles/*.json
 DataChecks/sessions/*.json
->>>>>>> c67d293 (update scripts)
