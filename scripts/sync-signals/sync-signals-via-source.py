@@ -8,7 +8,7 @@ Requirements:
 import pandas as pd
 from datetime import datetime
 from general_functions.call_api_with_account_id import call_api_with_accountId
-from general_functions.return_account_ids import return_account_ids
+from general_functions.return_workspace_ids import return_workspace_ids
 from general_functions.constants import return_api_url_prod
 from general_functions.define_logging import define_logging
 
@@ -23,7 +23,7 @@ logger = define_logging(
 
 url = return_api_url_prod()
 logger.info(f"url = {url}")
-account_id = return_account_ids()
+account_id = return_workspace_ids()
 account_id = [acc["id"] for acc in account_id if acc["name"] == customer]
 if len(account_id) != 1:
     raise ValueError(f"Error in getting account: {account_id}")

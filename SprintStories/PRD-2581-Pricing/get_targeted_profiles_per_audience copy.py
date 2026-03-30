@@ -4,7 +4,7 @@ import awswrangler as wr
 
 from general_functions.define_logging import define_logging
 from general_functions.conncet_s3 import S3Connection
-from general_functions.return_account_ids import return_account_ids
+from general_functions.return_workspace_ids import return_workspace_ids
 from general_functions.constants import return_api_url
 
 path_to_data = "SprintStories/PRD-2581-Pricing/"
@@ -21,7 +21,7 @@ res_path = (
 )
 
 url = return_api_url()
-accounts = return_account_ids()
+accounts = return_workspace_ids()
 
 s3 = S3Connection()
 

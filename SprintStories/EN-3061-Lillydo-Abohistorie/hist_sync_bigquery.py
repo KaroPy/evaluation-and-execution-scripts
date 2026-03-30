@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
-from general_functions.return_account_ids import (
-    return_account_ids,
+from general_functions.return_workspace_ids import (
+    return_workspace_ids,
     return_service_token,
 )
 from general_functions.call_api_with_account_id import call_api_with_accountId
@@ -11,7 +11,7 @@ from general_functions.constants import return_api_url
 def hist_sync_bigquery(daterange: list, workspace: str):
     api_url = "https://api.innkeepr.ai/api"  # return_api_url()
     token = return_service_token()
-    workspace_id = return_account_ids()
+    workspace_id = return_workspace_ids()
     workspace_id = [acc["id"] for acc in workspace_id if acc["name"] == workspace]
     if len(workspace_id) != 1:
         raise ValueError(f"Error in getting workspace: {workspace_id}")

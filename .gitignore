@@ -26,6 +26,10 @@ temp.json
 __pychache__/
 *.pyc
 .claude/
+
+
 configs/databricks_template.share
 DataChecks/profiles/*.json
 DataChecks/sessions/*.json
+DataChecks/check_logs_conversion_signals/*.txt
+DataChecks/check_logs_conversion_signals/summaries/*.txt

@@ -21,9 +21,9 @@ def main(flow_names=["etlFlow"], window_in_days=1):
     logger.info(
         f"Querying Prefect flows: {flow_names} for the past {window_in_days} days"
     )
-    logger.info(f"Today: {today}")
     end_time = today
     start_time = end_time - timedelta(days=window_in_days)
+    logger.info(f"Today: {today}, start_time: {start_time}, end_time: {end_time}")
     flow_runs = analyze_flow_runs(
         path_data,
         today,
