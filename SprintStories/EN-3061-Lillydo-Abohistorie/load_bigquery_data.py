@@ -31,11 +31,12 @@ def main(daterange: list, workspace: str):
 
 if __name__ == "__main__":
     date = "20251201"
-    date_end = "20260127"
+    date_end = "20260331"
     daterange = pd.date_range(date, date_end).strftime("%Y%m%d").tolist()
     workspace = "LILLYDOO"
     bigquery_data = main(daterange=daterange, workspace=workspace)
     bigquery_data.to_csv(
-        "SprintStories/EN-3061-Lillydo-Abohistorie/bigquery_data.csv", index=False
+        f"SprintStories/EN-3061-Lillydo-Abohistorie/bigquery_data_{date}_{date_end}.csv",
+        index=False,
     )
     print(bigquery_data)
