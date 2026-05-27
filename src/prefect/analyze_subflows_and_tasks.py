@@ -48,7 +48,7 @@ def analyze_subflows_and_tasks(df, path_data, logger, analyze_only_failed_taks=F
     df = pd.merge(df, task_runs, on="id", how="left")
     df.to_csv(f"{path_data}_with_subflows_and_tasks.csv", index=False)
     analyze_failed_flows(
-        df[df["task_state_type"] == "FAILED"],
+        df[(df["task_state_type"] == "FAILED")],
         f"{path_data}_with_subflows_and_tasks",
         logger,
     )

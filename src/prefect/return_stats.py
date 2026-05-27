@@ -111,26 +111,32 @@ def plot_counts(counts_df, path, logger, x_value="date"):
     plt.savefig(plot_path)
 
     # line plot
-    fig = plt.figure(figsize=(12, 6))
-    ax = fig.add_subplot(1, 1, 1)
-    sns.lineplot(
-        data=counts_df,
-        x=x_value,
-        y="success_rate",
-        hue="flow_name",
-        marker="o",
-        ax=ax,
-    )
-    ax.set_title("Flow Run Success Rate Over Time")
-    ax.set_xlabel(x_value.capitalize())
-    ax.set_ylabel("Success Rate (%)")
-    ax.set_ylim(0, 100)
-    plt.xticks(rotation=45)
-    plt.grid(True)
-    plt.tight_layout()
-    plot_path = f"{path}_success_rate_over_time_line_{x_value}_line.png"
-    plt.savefig(plot_path)
-    logger.info(f"Success rate plot saved to {plot_path}")
+    try:
+        fig = plt.figure(figsize=(12, 6))
+        ax = fig.add_subplot(1, 1, 1)
+        counts_df["success_rate"] = counts_df["success_rate"].astype(float)
+        print(counts_df.dtypes)
+        print(counts_df)
+        sns.lineplot(
+            data=counts_df,
+            x=x_value,
+            y="success_rate",
+            hue="flow_name",
+            marker="o",
+            ax=ax,
+        )
+        ax.set_title("Flow Run Success Rate Over Time")
+        ax.set_xlabel(x_value.capitalize())
+        ax.set_ylabel("Success Rate (%)")
+        ax.set_ylim(0, 100)
+        plt.xticks(rotation=45)
+        plt.grid(True)
+        plt.tight_layout()
+        plot_path = f"{path}_success_rate_over_time_line_{x_value}_line.png"
+        plt.savefig(plot_path)
+        logger.info(f"Success rate plot saved to {plot_path}")
+    except Exception as e:
+        logger.error(f"Error plotting success rate: {e}")
 
 
 def plot_error_counts_subtasks(
@@ -138,6 +144,8 @@ def plot_error_counts_subtasks(
 ):
     if x_value == "date":
         counts_df["date"] = counts_df["date"].astype(str)
+    counts_df[y_value] = counts_df[y_value].astype(float)
+    logger.info(f"Counts df: {counts_df}")
     fig = plt.figure(figsize=(12, 6))
     ax = fig.add_subplot(1, 1, 1)
     sns.barplot(
@@ -168,6 +176,7 @@ def plot_error_counts_subtasks(
         marker="o",
         ax=ax,
         style="task_name_cleaned",
+        errorbar=None,
     )
     ax.set_title(f"Flow {flow_name}: Task Fails Over Time")
     ax.set_xlabel(x_value.capitalize())
@@ -258,6 +267,7 @@ def analyze_failed_flows(df, path, logger):
     error_counts = (
         df.groupby(by=["state_type", "flow_name"])["task_name_cleaned"]
         .value_counts()
+        .rename("count")
         .reset_index()
     )
     logger.info("Top error messages across all flows:")
@@ -265,8 +275,9 @@ def analyze_failed_flows(df, path, logger):
     error_counts.to_csv(f"{path}_error_count_task_name.csv", index=False)
 
     error_counts_by_month = (
-        df.groupby(by=["year-month", "flow_name"])["task_name_cleaned"]
+        df.groupby(by=["state_type", "year-month", "flow_name"])["task_name_cleaned"]
         .value_counts()
+        .rename("count")
         .reset_index()
     )
     error_counts_by_month = error_counts_by_month.reset_index()
@@ -280,8 +291,9 @@ def analyze_failed_flows(df, path, logger):
     )
 
     error_counts_by_week = (
-        df.groupby(by=["year-week", "flow_name"])["task_name_cleaned"]
+        df.groupby(by=["state_type", "year-week", "flow_name"])["task_name_cleaned"]
         .value_counts()
+        .rename("count")
         .reset_index()
     )
     error_counts_by_week = error_counts_by_week.reset_index()
@@ -293,6 +305,12 @@ def analyze_failed_flows(df, path, logger):
     for flow_name in flow_names:
         error_counts_by_month_flow = error_counts_by_month[
             error_counts_by_month["flow_name"] == flow_name
+        ]
+        error_counts_by_month_flow["count"] = error_counts_by_month_flow[
+            "count"
+        ].astype(float)
+        error_counts_by_month_flow = error_counts_by_month_flow[
+            error_counts_by_month_flow["state_type"] == "FAILED"
         ]
         plot_error_counts_subtasks(
             error_counts_by_month_flow,

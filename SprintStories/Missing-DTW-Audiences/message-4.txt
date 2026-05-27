@@ -1,0 +1,89 @@
+NO TREATMENTS 
+==========================================================================================
+
+Pendix (1):
+  ○ Remarketing Innkeepr  Brand Consolidation 1 | 618bc646fb99125ac1c4f593
+
+Junglueck (1):
+  ○ Innkeepr - Bundles & Sets - Seed #2 | 6900d051857b19e246f05f60
+
+Nikin (3):
+  ○ Innkeepr - General - Exclusion | 6847ea1c57bdaeb51ed9e5ec
+  ○ Innkeepr - General - Seed | 6847ea3657bdaeb51ed9e87d
+  ○ Innkeepr - Seed - ValueBased | 6847ea9d57bdaeb51ed9f3e9
+
+Asambeauty (5):
+  ○ Innkeepr - DE_08_PerfMax_Hero-Linien_MC_Innkeepr - Seed #1 | 689afbdc97b976aeefb777bd
+  ○ Innkeepr - DE_08_PerfMax_Hero-Linien_MC_Innkeepr - Seed #2 | 689affa997b976aeefb95a72
+  ○ Innkeepr - DE_08_PerfMax_Hero-Linien_resPrem_Innkeepr - Seed #1 | 689b006f97b976aeefb9bba6
+  ○ Innkeepr - DE_08_PerfMax_Hero-Linien_resPrem_Innkeepr - Seed #2 | 689b009997b976aeefb9cff2
+  ○ Innkeepr - DE_08_PerfMax_Hero_MF-Make-up  - Seed #2 | 67acb5f717e4d31f493ac67a
+
+Ective (1):
+  ○ Innkeepr - General - Seed #2 | 69eb91ce62dfd69717cb9a0c
+
+LILLYDOO (2):
+  ○ Innkeepr - General - Seed | 67d1b8102eb78f8bcc5e2c57
+  ○ Innkeepr - Seed IT - ValueBased | 6836dbd913526dc3d1360591
+
+Rosental (14):
+  ○ Innkeepr - 360d Purchaser - Exclusion | 6980e30ff7564868fe593b93
+  ○ Innkeepr - Beauty Doc - Seed | 6980c4baf7564868fec23572
+  ○ Innkeepr - Beauty Doc - ValueBased | 6980c50ef7564868fec25101
+  ○ Innkeepr - Beauty Dock - High Impact - Seed | 68d4f85a0dd10e3a312f5e4d
+  ○ Innkeepr - Botanical - Growth - Seed - t10-20p | 69b3bbe6deec4e2c906b3fdf
+  ○ Innkeepr - Botanical - Premium - Seed - t0-10p | 69b3bbbedeec4e2c906b3679
+  ○ Innkeepr - Botanical - Volume - Seed - t20-30p | 69b3bbf4deec4e2c906b42f4
+  ○ Innkeepr - EMS - Seed | 6980c47ff7564868feb8123d
+  ○ Innkeepr - EMS - ValueBased | 6980c4eaf7564868fec2469d
+  ○ Innkeepr - Exclusion - 365d | 68302c5bef02595b6bea3cb5
+  ○ Innkeepr - Exclusion - Lifetime | 68302cd3ef02595b6bea4be9
+  ○ Innkeepr - Slow Aging - Growth - Seed - t10-20p | 6942b89ba5250a665d35d601
+  ○ Innkeepr - Slow Aging - High Impact - Seed | 68d4f82b0dd10e3a312f3bc3
+  ○ Innkeepr - Slow Aging - Volume - Seed - t20-30p | 6942b951a5250a665d360549
+
+More (8):
+  ○ Innkeepr - 30d Visitors - Exclusion - UK | 69417d0ca5250a665d7bd0d8
+  ○ Innkeepr - Proteinsahne - NL - Growth - Seed - t10-20p | 69de663b0908b35406f68c89
+  ○ Innkeepr - Proteinsahne - NL - Premium - Seed - t0-10p | 69de662d2751dd75ae38bbef
+  ○ Innkeepr - Proteinsahne - NL - Volume - Seed - t20-30p | 69de66530908b35406f68c8c
+  ○ Innkeepr - VMS - CH - Growth - Seed - t10-20p | 69676be0a5250a665d55453f
+  ○ Innkeepr - VMS - CH - Premium - Seed - t0-10p | 69676bf7a5250a665d554d7f
+  ○ Innkeepr - VMS - CH - Volume - Seed - t20-30p | 69676bcda5250a665d553e46
+  ○ Innkeepr - VMS Search - RTG | 693048ca4227124153d15ae9
+
+ESN (3):
+  ○ Innkeepr - Creatin - Growth - Seed - t10-20p | 69c2c346f56dab97354162de
+  ○ Innkeepr - Creatin - Premium - Seed - t0-10p | 69c2c32df56dab9735415a5e
+  ○ Innkeepr - Creatin - Volume - Seed - t20-30p | 69c2c356f56dab97354166fb
+
+Plantura (6):
+  ○ Innkeepr - Outdoor Pflanzen - Growth - Seed - t10-20p | 69a0825b2568bd24bcf3d2a6
+  ○ Innkeepr - Outdoor Pflanzen - Premium - Seed - t0-10p | 69a082382568bd24bcf3c9f4
+  ○ Innkeepr - Outdoor Pflanzen - Volume - Seed - t20-30p | 69a082742568bd24bcf3daac
+  ○ Innkeepr - Retterboxen - Growth - Seed - t10-20p | 69a082982568bd24bcf3e4ee
+  ○ Innkeepr - Retterboxen - Premium - Seed - t0-10p | 69a082862568bd24bcf3de51
+  ○ Innkeepr - Retterboxen - Volume - Seed - t20-30p | 69a082a72568bd24bcf3e8a7
+
+NO USAGE (has treatments but campaign inactive/paused)
+==========================================================================================
+
+Autobatterienbilliger (2):
+  ○ Innkeepr - General - Seed #1 | 69ca916f241e66980f915f30
+  ○ Innkeepr - General - Seed #2 | 69ca9146241e66980f915198
+  ○ Innkeepr - General - Seed #1 | 69ca916f241e66980f915f30
+  ○ Innkeepr - General - Seed #2 | 69ca9146241e66980f915198
+
+Rosental (6):
+  ○ Innkeepr - LED - ValueBased | 68518c65a93b88d67a15d581
+  ○ Innkeepr - NL - BB Reihe - Bestseller - Seed - t10-20p | 69245716105ef186b0aec061
+  ○ Innkeepr - NL - BB Reihe - Bestseller - Seed - t20-30p | 69245784105ef186b0b1c70f
+  ○ Innkeepr - NL - Botanical - Bestseller - Seed - t15-30p | 69245927105ef186b0c028fb
+  ○ Innkeepr - NL - Botanical - Bestseller - Seed - t7-15p | 69245850105ef186b0b853ae
+  ○ Innkeepr - NL - Sonstiges - Bestseller - Seed - t10-20p | 69245b61105ef186b0d680dd
+  ○ Innkeepr - LED - ValueBased | 68518c65a93b88d67a15d581
+  ○ Innkeepr - NL - BB Reihe - Bestseller - Seed - t10-20p | 69245716105ef186b0aec061
+  ○ Innkeepr - NL - BB Reihe - Bestseller - Seed - t20-30p | 69245784105ef186b0b1c70f
+  ○ Innkeepr - NL - Botanical - Bestseller - Seed - t15-30p | 69245927105ef186b0c028fb
+  ○ Innkeepr - NL - Botanical - Bestseller - Seed - t7-15p | 69245850105ef186b0b853ae
+  ○ Innkeepr - NL - Sonstiges - Bestseller - Seed - t10-20p | 69245b61105ef186b0d680dd

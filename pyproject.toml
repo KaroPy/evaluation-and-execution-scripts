@@ -43,4 +43,6 @@ dependencies = [
     "httpx==0.28.1",
     "feature-engine==1.6.2",
     "nbformat>=5.10.4",
+    "polars>=1.39.3",
+    "deltalake>=1.5.0",
 ]

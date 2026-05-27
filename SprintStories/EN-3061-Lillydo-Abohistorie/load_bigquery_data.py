@@ -30,8 +30,8 @@ def main(daterange: list, workspace: str):
 
 
 if __name__ == "__main__":
-    date = "20251201"
-    date_end = "20260331"
+    date = "20260421"
+    date_end = "20260421"
     daterange = pd.date_range(date, date_end).strftime("%Y%m%d").tolist()
     workspace = "LILLYDOO"
     bigquery_data = main(daterange=daterange, workspace=workspace)

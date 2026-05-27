@@ -43,9 +43,9 @@ def main(flow_names=["etlFlow"], window_in_days=1):
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Usage: python [script_name.py] '[list_of_flow_names]' window_in_days")
-        print("Example: python [script_name].py '['" "etlFlow" "']' 1")
+        print("Example: python [script_name].py '['etlFlow']' 1")
         sys.exit()
 
     main(flow_names=ast.literal_eval(sys.argv[1]), window_in_days=int(sys.argv[2]))
 
-# python Analysis/DataPipeline/analyze_prefect_flows.py '["etlFlow","k8-targeting","k8-retraining","googleConversionUpdate","metaConversionUpdate","updateConversionTable"]' 1
+# python Analysis/DataPipeline/analyze_prefect_flows.py '["etlFlow","k8-targeting","k8-retraining","googleConversionUpdate","metaConversionUpdate","updateConversionTable"]' 27
