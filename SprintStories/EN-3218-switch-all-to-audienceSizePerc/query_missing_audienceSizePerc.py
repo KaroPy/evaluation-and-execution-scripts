@@ -73,6 +73,7 @@ def calc_audience_size_percentage(df: pd.DataFrame, audience_id: str) -> dict:
     count_control = int(counts.get("control", 0))
     total = count_treatment + count_control
     percentage = round(count_treatment / total, 6) if total > 0 else None
+    logger.info(f"{audience_id}: treatment counts = {counts}, total = {total}")
     return {
         "count_treatment_anonymousIds": count_treatment,
         "count_control_anonymousIds": count_control,

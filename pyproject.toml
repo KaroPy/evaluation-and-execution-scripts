@@ -45,4 +45,6 @@ dependencies = [
     "nbformat>=5.10.4",
     "polars>=1.39.3",
     "deltalake>=1.5.0",
+    "nbconvert[webpdf]>=7.17.1",
+    "pexpect>=4.9.0",
 ]
