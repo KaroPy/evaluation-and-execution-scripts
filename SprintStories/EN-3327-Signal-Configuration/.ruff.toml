@@ -1,0 +1,70 @@
+target-version = "py310"
+
+exclude = [
+    ".git",
+    ".venv",
+    ".vscode",
+    "Ignore"
+]
+
+line-length = 100
+
+[lint]
+select = [
+    "B",    # bugbear
+    "C",    #
+    "D",    # pydocstyle
+    "E",    # pycodestyle error
+    "F",    # pyflakes
+    "N",    # naming
+    "S",    # bandit
+    "C90",  # maccabe
+    "I",    # isort
+    "TRY",  # exception handling
+    "RUF",  # ruff specific
+    "UP",    # pyupgrade
+    #DOES NOT WORK CURRENTLY "FAST",  # fastapi specific
+]
+
+ignore = [
+    "D100", # Missing docstring in public module
+    "D101", # Missing docstring in public class
+    "D102", # Missing docstring in public method
+    "D103", # Missing docstring in public function
+    "D104", # Missing docstring in public package
+    "D105", # Missing docstring in magic method
+    "D106", # Missing docstring in public nested class
+    "D107", # Missing docstring in __init__
+    "D301", # Use `r"""` if any backslashes in a docstring
+    "D400", # First line should end with a period
+    "D417", # Missing argument description in the docstring for {definition}: {name}
+    "S101", # Use of assert detected
+    "S104",  # Possible binding to all interfaces
+    "S311",  # Standard pseudo-random generators are not suitable for cryptographic purposes
+    "N815",  # ignore pydantic class naming for now -> fix this
+    "B008", # Function call "Query(XXX)" in endpoints. Should be done according to fastapi.
+]
+exclude = [".venv"]
+
+[lint.mccabe]
+max-complexity = 10
+
+[lint.pycodestyle]
+max-line-length = 100
+
+[lint.pydocstyle]
+convention = "pep257"
+
+[lint.isort]
+known-third-party = ["azure","fastapi","pydantic","pydantic_settings","pytest","pythonjsonlogger","uvicorn"]
+
+[lint.pep8-naming]
+classmethod-decorators = [
+    # Allow Pydantic's `@validator` decorator to trigger class method treatment.
+    "pydantic.validator",
+    "field_validator",
+    # Allow SQLAlchemy's dynamic decorators, like `@field.expression`, to trigger class method treatment.
+    "declared_attr",
+    "expression",
+    "comparator",
+]

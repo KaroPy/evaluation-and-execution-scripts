@@ -1,0 +1,1446 @@
+2026-06-05 14:39:38,409 - root - INFO - === Workspace: ahead-nutrition.com (69df9adc32d85c8da4a2fd4e) ===
+2026-06-05 14:39:38,409 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:38,549 - root - INFO - Fetched 16 elements
+2026-06-05 14:39:38,552 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:39:38,693 - root - INFO - Fetched 5 elements
+2026-06-05 14:39:38,697 - root - INFO -   Active audiences: 1
+2026-06-05 14:39:38,698 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:38,838 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:38,839 - root - INFO -   Audience 6a2289061370504ba6f63d01 (Innkeepr - 30-90d Visitors - Exclusion) — model 6a22a22e4f8a22eab02b6b8c missing audienceSizePercentage
+2026-06-05 14:39:38,839 - root - INFO -   Audiences missing audienceSizePercentage: 1
+2026-06-05 14:39:39,022 - root - INFO -   Most recent targeting history date: 2026-06-04
+2026-06-05 14:39:39,022 - root - INFO -   Processing audience: Innkeepr - 30-90d Visitors - Exclusion (6a2289061370504ba6f63d01)
+2026-06-05 14:39:39,022 - root - INFO -     Reading s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-04/6a2289061370504ba6f63d01.parquet
+2026-06-05 14:39:39,196 - root - WARNING -     Could not read s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-04/6a2289061370504ba6f63d01.parquet: No files Found on: s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-04/6a2289061370504ba6f63d01.parquet.
+2026-06-05 14:39:39,198 - root - INFO -     Reading s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-03/6a2289061370504ba6f63d01.parquet
+2026-06-05 14:39:39,340 - root - WARNING -     Could not read s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-03/6a2289061370504ba6f63d01.parquet: No files Found on: s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-03/6a2289061370504ba6f63d01.parquet.
+2026-06-05 14:39:39,342 - root - INFO -     Reading s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-02/6a2289061370504ba6f63d01.parquet
+2026-06-05 14:39:39,483 - root - WARNING -     Could not read s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-02/6a2289061370504ba6f63d01.parquet: No files Found on: s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-02/6a2289061370504ba6f63d01.parquet.
+2026-06-05 14:39:39,486 - root - INFO -     Reading s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-01/6a2289061370504ba6f63d01.parquet
+2026-06-05 14:39:39,622 - root - WARNING -     Could not read s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-01/6a2289061370504ba6f63d01.parquet: No files Found on: s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-06-01/6a2289061370504ba6f63d01.parquet.
+2026-06-05 14:39:39,625 - root - INFO -     Reading s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-05-31/6a2289061370504ba6f63d01.parquet
+2026-06-05 14:39:39,757 - root - WARNING -     Could not read s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-05-31/6a2289061370504ba6f63d01.parquet: No files Found on: s3://69df9adc32d85c8da4a2fd4e/targeting.history/2026-05-31/6a2289061370504ba6f63d01.parquet.
+2026-06-05 14:39:39,761 - root - WARNING -     No data found in last 5 days — skipping
+2026-06-05 14:39:39,765 - root - INFO - 
+Result (0 rows):
+Empty DataFrame
+Columns: []
+Index: []
+2026-06-05 14:39:39,772 - root - INFO - === Workspace: Innkeepr 2nd Workspace (68f608ae2bc7bd299b643ebb) ===
+2026-06-05 14:39:39,772 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:39,912 - root - INFO - Fetched 0 elements
+2026-06-05 14:39:39,913 - root - INFO -   No audiences found — skipping
+2026-06-05 14:39:39,914 - root - INFO - === Workspace: workspace (656847c546e167d630d660c3) ===
+2026-06-05 14:39:39,914 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:40,059 - root - INFO - Fetched 0 elements
+2026-06-05 14:39:40,060 - root - INFO -   No audiences found — skipping
+2026-06-05 14:39:40,060 - root - INFO - === Workspace: philser (655f795546e167d630b01b55) ===
+2026-06-05 14:39:40,060 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:40,204 - root - INFO - Fetched 0 elements
+2026-06-05 14:39:40,205 - root - INFO -   No audiences found — skipping
+2026-06-05 14:39:40,206 - root - INFO - === Workspace: philiptestphiliptestapril2024 (661653fe01c2ab3bd10dd6fc) ===
+2026-06-05 14:39:40,206 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:40,355 - root - INFO - Fetched 0 elements
+2026-06-05 14:39:40,359 - root - INFO -   No audiences found — skipping
+2026-06-05 14:39:40,359 - root - INFO - === Workspace: workspace (655f7e6146e167d630b0deb1) ===
+2026-06-05 14:39:40,359 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:40,504 - root - INFO - Fetched 0 elements
+2026-06-05 14:39:40,505 - root - INFO -   No audiences found — skipping
+2026-06-05 14:39:40,506 - root - INFO - === Workspace: Sospree (63638744386bf9a5670fd1f1) ===
+2026-06-05 14:39:40,506 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:40,655 - root - INFO - Fetched 0 elements
+2026-06-05 14:39:40,656 - root - INFO -   No audiences found — skipping
+2026-06-05 14:39:40,656 - root - INFO - === Workspace: SWICS (64918a1e5eff13b397a49b9e) ===
+2026-06-05 14:39:40,656 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:40,806 - root - INFO - Fetched 0 elements
+2026-06-05 14:39:40,807 - root - INFO -   No audiences found — skipping
+2026-06-05 14:39:40,807 - root - INFO - === Workspace: NoCoffee (650413684326535e7f30e980) ===
+2026-06-05 14:39:40,808 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:40,978 - root - INFO - Fetched 4 elements
+2026-06-05 14:39:40,982 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:39:41,125 - root - INFO - Fetched 5 elements
+2026-06-05 14:39:41,129 - root - INFO -   No active audiences — skipping
+2026-06-05 14:39:41,129 - root - INFO - === Workspace: München (659fdb698fae7ccc5f22b1a1) ===
+2026-06-05 14:39:41,129 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:41,282 - root - INFO - Fetched 0 elements
+2026-06-05 14:39:41,283 - root - INFO -   No audiences found — skipping
+2026-06-05 14:39:41,283 - root - INFO - === Workspace: Pendix (603f64f26e64740031116698) ===
+2026-06-05 14:39:41,283 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:41,437 - root - INFO - Fetched 5 elements
+2026-06-05 14:39:41,440 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:39:41,590 - root - INFO - Fetched 2 elements
+2026-06-05 14:39:41,594 - root - INFO -   Active audiences: 3
+2026-06-05 14:39:41,594 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:41,734 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:41,734 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:41,882 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:41,883 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:42,033 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:42,034 - root - INFO -   Audiences missing audienceSizePercentage: 0
+2026-06-05 14:39:42,034 - root - INFO - === Workspace: Junglueck (66b4b7310c2144f26032344f) ===
+2026-06-05 14:39:42,034 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:42,219 - root - INFO - Fetched 24 elements
+2026-06-05 14:39:42,224 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:39:42,374 - root - INFO - Fetched 4 elements
+2026-06-05 14:39:42,378 - root - INFO -   Active audiences: 15
+2026-06-05 14:39:42,379 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:42,517 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:42,518 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:42,660 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:42,660 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:42,811 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:42,812 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:42,970 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:42,971 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:43,117 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:43,118 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:43,275 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:43,276 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:43,425 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:43,426 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:43,573 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:43,574 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:43,721 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:43,722 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:43,874 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:43,875 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:44,029 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:44,030 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:44,172 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:44,173 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:44,325 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:44,326 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:44,482 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:44,483 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:44,626 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:44,627 - root - INFO -   Audiences missing audienceSizePercentage: 0
+2026-06-05 14:39:44,627 - root - INFO - === Workspace: Paul Valentine (668cf26c1767991e3b37231a) ===
+2026-06-05 14:39:44,627 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:44,807 - root - INFO - Fetched 19 elements
+2026-06-05 14:39:44,812 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:39:44,970 - root - INFO - Fetched 5 elements
+2026-06-05 14:39:44,976 - root - INFO -   No active audiences — skipping
+2026-06-05 14:39:44,977 - root - INFO - === Workspace: Autobatterienbilliger (6512978b222b7aa0a937034d) ===
+2026-06-05 14:39:44,977 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:45,180 - root - INFO - Fetched 18 elements
+2026-06-05 14:39:45,182 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:39:45,325 - root - INFO - Fetched 4 elements
+2026-06-05 14:39:45,330 - root - INFO -   Active audiences: 2
+2026-06-05 14:39:45,330 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:45,487 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:45,487 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:45,639 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:45,639 - root - INFO -   Audiences missing audienceSizePercentage: 0
+2026-06-05 14:39:45,639 - root - INFO - === Workspace: Eterna (671600966fe626407f2e10a5) ===
+2026-06-05 14:39:45,639 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:45,782 - root - INFO - Fetched 0 elements
+2026-06-05 14:39:45,783 - root - INFO -   No audiences found — skipping
+2026-06-05 14:39:45,783 - root - INFO - === Workspace: Vioneers (60cdf7912ac1920030bb6ede) ===
+2026-06-05 14:39:45,783 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:45,936 - root - INFO - Fetched 3 elements
+2026-06-05 14:39:45,940 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:39:46,088 - root - INFO - Fetched 5 elements
+2026-06-05 14:39:46,092 - root - INFO -   Active audiences: 2
+2026-06-05 14:39:46,093 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:46,244 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:46,244 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:46,395 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:46,396 - root - INFO -   Audiences missing audienceSizePercentage: 0
+2026-06-05 14:39:46,396 - root - INFO - === Workspace: Nikin (624f0bda7aad82d2c5880569) ===
+2026-06-05 14:39:46,396 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:46,600 - root - INFO - Fetched 54 elements
+2026-06-05 14:39:46,606 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:39:46,758 - root - INFO - Fetched 4 elements
+2026-06-05 14:39:46,765 - root - INFO -   Active audiences: 3
+2026-06-05 14:39:46,767 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:46,915 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:46,916 - root - INFO -   Audience 6847ea1c57bdaeb51ed9e5ec (Innkeepr - General - Exclusion) — model 697d8795054b213815b8eaa9 missing audienceSizePercentage
+2026-06-05 14:39:46,916 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:47,072 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:47,073 - root - INFO -   Audience 6847ea9d57bdaeb51ed9f3e9 (Innkeepr - Seed - ValueBased) — model 697d6ca4f788b6c1947d5808 missing audienceSizePercentage
+2026-06-05 14:39:47,074 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:47,225 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:47,226 - root - INFO -   Audiences missing audienceSizePercentage: 2
+2026-06-05 14:39:47,582 - root - INFO -   Most recent targeting history date: 20260604
+2026-06-05 14:39:47,583 - root - INFO -   Processing audience: Innkeepr - General - Exclusion (6847ea1c57bdaeb51ed9e5ec)
+2026-06-05 14:39:47,583 - root - INFO -     Reading s3://624f0bda7aad82d2c5880569/targeting.history/20260604/6847ea1c57bdaeb51ed9e5ec.parquet
+2026-06-05 14:39:47,769 - root - WARNING -     Could not read s3://624f0bda7aad82d2c5880569/targeting.history/20260604/6847ea1c57bdaeb51ed9e5ec.parquet: No files Found on: s3://624f0bda7aad82d2c5880569/targeting.history/20260604/6847ea1c57bdaeb51ed9e5ec.parquet.
+2026-06-05 14:39:47,771 - root - INFO -     Reading s3://624f0bda7aad82d2c5880569/targeting.history/20260603/6847ea1c57bdaeb51ed9e5ec.parquet
+2026-06-05 14:39:47,912 - root - WARNING -     Could not read s3://624f0bda7aad82d2c5880569/targeting.history/20260603/6847ea1c57bdaeb51ed9e5ec.parquet: No files Found on: s3://624f0bda7aad82d2c5880569/targeting.history/20260603/6847ea1c57bdaeb51ed9e5ec.parquet.
+2026-06-05 14:39:47,914 - root - INFO -     Reading s3://624f0bda7aad82d2c5880569/targeting.history/20260602/6847ea1c57bdaeb51ed9e5ec.parquet
+2026-06-05 14:39:48,037 - root - WARNING -     Could not read s3://624f0bda7aad82d2c5880569/targeting.history/20260602/6847ea1c57bdaeb51ed9e5ec.parquet: No files Found on: s3://624f0bda7aad82d2c5880569/targeting.history/20260602/6847ea1c57bdaeb51ed9e5ec.parquet.
+2026-06-05 14:39:48,039 - root - INFO -     Reading s3://624f0bda7aad82d2c5880569/targeting.history/20260601/6847ea1c57bdaeb51ed9e5ec.parquet
+2026-06-05 14:39:48,179 - root - WARNING -     Could not read s3://624f0bda7aad82d2c5880569/targeting.history/20260601/6847ea1c57bdaeb51ed9e5ec.parquet: No files Found on: s3://624f0bda7aad82d2c5880569/targeting.history/20260601/6847ea1c57bdaeb51ed9e5ec.parquet.
+2026-06-05 14:39:48,181 - root - INFO -     Reading s3://624f0bda7aad82d2c5880569/targeting.history/20260531/6847ea1c57bdaeb51ed9e5ec.parquet
+2026-06-05 14:39:48,311 - root - WARNING -     Could not read s3://624f0bda7aad82d2c5880569/targeting.history/20260531/6847ea1c57bdaeb51ed9e5ec.parquet: No files Found on: s3://624f0bda7aad82d2c5880569/targeting.history/20260531/6847ea1c57bdaeb51ed9e5ec.parquet.
+2026-06-05 14:39:48,313 - root - WARNING -     No data found in last 5 days — skipping
+2026-06-05 14:39:48,313 - root - INFO -   Processing audience: Innkeepr - Seed - ValueBased (6847ea9d57bdaeb51ed9f3e9)
+2026-06-05 14:39:48,313 - root - INFO -     Reading s3://624f0bda7aad82d2c5880569/targeting.history/20260604/6847ea9d57bdaeb51ed9f3e9.parquet
+2026-06-05 14:39:48,439 - root - WARNING -     Could not read s3://624f0bda7aad82d2c5880569/targeting.history/20260604/6847ea9d57bdaeb51ed9f3e9.parquet: No files Found on: s3://624f0bda7aad82d2c5880569/targeting.history/20260604/6847ea9d57bdaeb51ed9f3e9.parquet.
+2026-06-05 14:39:48,441 - root - INFO -     Reading s3://624f0bda7aad82d2c5880569/targeting.history/20260603/6847ea9d57bdaeb51ed9f3e9.parquet
+2026-06-05 14:39:48,570 - root - WARNING -     Could not read s3://624f0bda7aad82d2c5880569/targeting.history/20260603/6847ea9d57bdaeb51ed9f3e9.parquet: No files Found on: s3://624f0bda7aad82d2c5880569/targeting.history/20260603/6847ea9d57bdaeb51ed9f3e9.parquet.
+2026-06-05 14:39:48,572 - root - INFO -     Reading s3://624f0bda7aad82d2c5880569/targeting.history/20260602/6847ea9d57bdaeb51ed9f3e9.parquet
+2026-06-05 14:39:48,704 - root - WARNING -     Could not read s3://624f0bda7aad82d2c5880569/targeting.history/20260602/6847ea9d57bdaeb51ed9f3e9.parquet: No files Found on: s3://624f0bda7aad82d2c5880569/targeting.history/20260602/6847ea9d57bdaeb51ed9f3e9.parquet.
+2026-06-05 14:39:48,706 - root - INFO -     Reading s3://624f0bda7aad82d2c5880569/targeting.history/20260601/6847ea9d57bdaeb51ed9f3e9.parquet
+2026-06-05 14:39:48,829 - root - WARNING -     Could not read s3://624f0bda7aad82d2c5880569/targeting.history/20260601/6847ea9d57bdaeb51ed9f3e9.parquet: No files Found on: s3://624f0bda7aad82d2c5880569/targeting.history/20260601/6847ea9d57bdaeb51ed9f3e9.parquet.
+2026-06-05 14:39:48,830 - root - INFO -     Reading s3://624f0bda7aad82d2c5880569/targeting.history/20260531/6847ea9d57bdaeb51ed9f3e9.parquet
+2026-06-05 14:39:48,941 - root - WARNING -     Could not read s3://624f0bda7aad82d2c5880569/targeting.history/20260531/6847ea9d57bdaeb51ed9f3e9.parquet: No files Found on: s3://624f0bda7aad82d2c5880569/targeting.history/20260531/6847ea9d57bdaeb51ed9f3e9.parquet.
+2026-06-05 14:39:48,943 - root - WARNING -     No data found in last 5 days — skipping
+2026-06-05 14:39:48,943 - root - INFO - 
+Result (0 rows):
+Empty DataFrame
+Columns: []
+Index: []
+2026-06-05 14:39:48,944 - root - INFO - === Workspace: Asambeauty (659c0fd6c979766f114b9294) ===
+2026-06-05 14:39:48,944 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:49,184 - root - INFO - Fetched 51 elements
+2026-06-05 14:39:49,189 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:39:49,339 - root - INFO - Fetched 5 elements
+2026-06-05 14:39:49,344 - root - INFO -   No active audiences — skipping
+2026-06-05 14:39:49,344 - root - INFO - === Workspace: Ective (6509682e62fd231df8316da5) ===
+2026-06-05 14:39:49,344 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:49,527 - root - INFO - Fetched 18 elements
+2026-06-05 14:39:49,532 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:39:49,692 - root - INFO - Fetched 4 elements
+2026-06-05 14:39:49,697 - root - INFO -   Active audiences: 2
+2026-06-05 14:39:49,697 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:49,844 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:49,844 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:50,001 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:50,001 - root - INFO -   Audiences missing audienceSizePercentage: 0
+2026-06-05 14:39:50,001 - root - INFO - === Workspace: LILLYDOO (6568582b46e167d630d77abc) ===
+2026-06-05 14:39:50,001 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:39:50,207 - root - INFO - Fetched 36 elements
+2026-06-05 14:39:50,213 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:39:50,363 - root - INFO - Fetched 7 elements
+2026-06-05 14:39:50,369 - root - INFO -   Active audiences: 16
+2026-06-05 14:39:50,369 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:50,518 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:50,519 - root - INFO -   Audience 6811d9de879ec174109231bd (Innkeepr - Exclusion - Bestandskunden) — model 6a1f97b3add569b2a35f609a missing audienceSizePercentage
+2026-06-05 14:39:50,519 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:50,670 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:50,671 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:50,810 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:50,810 - root - INFO -   Audience 68cacdfe77b55cfe7478372b (Innkeepr - Seed ES - ValueBased) — model 6a20d34e4f8a22eab02b62e1 missing audienceSizePercentage
+2026-06-05 14:39:50,810 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:50,962 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:50,962 - root - INFO -   Audience 68cbfcaa77b55cfe74111c89 (Innkeepr - Seed CHAT - ValueBased) — model 6a20e69782c8f2e30d0af78e missing audienceSizePercentage
+2026-06-05 14:39:50,963 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:51,113 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:51,113 - root - INFO -   Audience 6811dc7e879ec174109280ba (Innkeepr - Seed LSTM - IT) — model 6a20f65382c8f2e30d0af8c9 missing audienceSizePercentage
+2026-06-05 14:39:51,113 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:51,271 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:51,272 - root - INFO -   Audience 6811db64879ec17410925ee0 (Innkeepr - Seed - LSTM) — model 69fc57e00cd691e5fd8a8c93 missing audienceSizePercentage
+2026-06-05 14:39:51,272 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:51,418 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:51,418 - root - INFO -   Audience 6811dab9879ec17410924bf4 (Innkeepr - Seed - CHAT) — model 6a20de6104dc34e56c4ac121 missing audienceSizePercentage
+2026-06-05 14:39:51,419 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:51,935 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:51,936 - root - INFO -   Audience 6811dc2b879ec174109276ca (Innkeepr - Seed LSTM - ES) — model 6a20d10d82c8f2e30d0af689 missing audienceSizePercentage
+2026-06-05 14:39:51,936 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:52,090 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:52,090 - root - INFO -   Audience 6811db14879ec1741092565c (Innkeepr - Exclusion - Standard) — model 6a1f9ac5add569b2a35f6134 missing audienceSizePercentage
+2026-06-05 14:39:52,091 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:52,247 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:52,248 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:52,402 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:52,403 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:52,543 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:52,544 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:52,700 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:52,701 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:52,860 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:52,861 - root - INFO -   Audience 6836db0013526dc3d135eb7d (Innkeepr - Seed - ValueBased) — model 6a20e6b204dc34e56c4ac187 missing audienceSizePercentage
+2026-06-05 14:39:52,861 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:53,010 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:53,010 - root - INFO -   Audience 6836dbd913526dc3d1360591 (Innkeepr - Seed IT - ValueBased) — model 6a1fa6f804dc34e56c4abc83 missing audienceSizePercentage
+2026-06-05 14:39:53,011 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:39:53,161 - root - INFO - Fetched 1 elements
+2026-06-05 14:39:53,162 - root - INFO -   Audiences missing audienceSizePercentage: 10
+2026-06-05 14:39:53,473 - root - INFO -   Most recent targeting history date: 20260605
+2026-06-05 14:39:53,474 - root - INFO -   Processing audience: Innkeepr - Exclusion - Bestandskunden (6811d9de879ec174109231bd)
+2026-06-05 14:39:53,474 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260605/6811d9de879ec174109231bd.parquet
+2026-06-05 14:40:12,867 - root - INFO -     Loaded 888717 rows from date 20260605
+2026-06-05 14:40:13,035 - root - INFO - 6811d9de879ec174109231bd: treatment counts = treatment
+6811d9de879ec174109231bd    447083
+control                     427999
+Name: anonymousId, dtype: int64, total = 875082
+2026-06-05 14:40:13,035 - root - INFO -   Processing audience: Innkeepr - Seed ES - ValueBased (68cacdfe77b55cfe7478372b)
+2026-06-05 14:40:13,035 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260605/68cacdfe77b55cfe7478372b.parquet
+2026-06-05 14:40:14,688 - root - INFO -     Loaded 33642 rows from date 20260605
+2026-06-05 14:40:14,694 - root - INFO - 68cacdfe77b55cfe7478372b: treatment counts = treatment
+68cacdfe77b55cfe7478372b    33642
+Name: anonymousId, dtype: int64, total = 33642
+2026-06-05 14:40:14,694 - root - INFO -   Processing audience: Innkeepr - Seed CHAT - ValueBased (68cbfcaa77b55cfe74111c89)
+2026-06-05 14:40:14,694 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260605/68cbfcaa77b55cfe74111c89.parquet
+2026-06-05 14:40:16,826 - root - INFO -     Loaded 33642 rows from date 20260605
+2026-06-05 14:40:16,834 - root - INFO - 68cbfcaa77b55cfe74111c89: treatment counts = treatment
+68cbfcaa77b55cfe74111c89    33642
+Name: anonymousId, dtype: int64, total = 33642
+2026-06-05 14:40:16,834 - root - INFO -   Processing audience: Innkeepr - Seed LSTM - IT (6811dc7e879ec174109280ba)
+2026-06-05 14:40:16,834 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260605/6811dc7e879ec174109280ba.parquet
+2026-06-05 14:40:16,948 - root - WARNING -     Could not read s3://6568582b46e167d630d77abc/targeting.history/20260605/6811dc7e879ec174109280ba.parquet: No files Found on: s3://6568582b46e167d630d77abc/targeting.history/20260605/6811dc7e879ec174109280ba.parquet.
+2026-06-05 14:40:16,949 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260604/6811dc7e879ec174109280ba.parquet
+2026-06-05 14:40:25,279 - root - INFO -     Loaded 437030 rows from date 20260604
+2026-06-05 14:40:25,365 - root - INFO - 6811dc7e879ec174109280ba: treatment counts = treatment
+6811dc7e879ec174109280ba    150000
+control                     287030
+Name: anonymousId, dtype: int64, total = 437030
+2026-06-05 14:40:25,365 - root - INFO -   Processing audience: Innkeepr - Seed - LSTM (6811db64879ec17410925ee0)
+2026-06-05 14:40:25,365 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260605/6811db64879ec17410925ee0.parquet
+2026-06-05 14:40:25,481 - root - WARNING -     Could not read s3://6568582b46e167d630d77abc/targeting.history/20260605/6811db64879ec17410925ee0.parquet: No files Found on: s3://6568582b46e167d630d77abc/targeting.history/20260605/6811db64879ec17410925ee0.parquet.
+2026-06-05 14:40:25,482 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260604/6811db64879ec17410925ee0.parquet
+2026-06-05 14:40:33,982 - root - INFO -     Loaded 371266 rows from date 20260604
+2026-06-05 14:40:34,047 - root - INFO - 6811db64879ec17410925ee0: treatment counts = treatment
+6811db64879ec17410925ee0    150000
+control                     221266
+Name: anonymousId, dtype: int64, total = 371266
+2026-06-05 14:40:34,047 - root - INFO -   Processing audience: Innkeepr - Seed - CHAT (6811dab9879ec17410924bf4)
+2026-06-05 14:40:34,047 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260605/6811dab9879ec17410924bf4.parquet
+2026-06-05 14:40:34,214 - root - WARNING -     Could not read s3://6568582b46e167d630d77abc/targeting.history/20260605/6811dab9879ec17410924bf4.parquet: No files Found on: s3://6568582b46e167d630d77abc/targeting.history/20260605/6811dab9879ec17410924bf4.parquet.
+2026-06-05 14:40:34,215 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260604/6811dab9879ec17410924bf4.parquet
+2026-06-05 14:40:50,346 - root - INFO -     Loaded 741732 rows from date 20260604
+2026-06-05 14:40:50,488 - root - INFO - 6811dab9879ec17410924bf4: treatment counts = treatment
+6811dab9879ec17410924bf4    150000
+control                     591732
+Name: anonymousId, dtype: int64, total = 741732
+2026-06-05 14:40:50,488 - root - INFO -   Processing audience: Innkeepr - Seed LSTM - ES (6811dc2b879ec174109276ca)
+2026-06-05 14:40:50,488 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260605/6811dc2b879ec174109276ca.parquet
+2026-06-05 14:40:50,683 - root - WARNING -     Could not read s3://6568582b46e167d630d77abc/targeting.history/20260605/6811dc2b879ec174109276ca.parquet: No files Found on: s3://6568582b46e167d630d77abc/targeting.history/20260605/6811dc2b879ec174109276ca.parquet.
+2026-06-05 14:40:50,686 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260604/6811dc2b879ec174109276ca.parquet
+2026-06-05 14:40:59,289 - root - INFO -     Loaded 437030 rows from date 20260604
+2026-06-05 14:40:59,362 - root - INFO - 6811dc2b879ec174109276ca: treatment counts = treatment
+6811dc2b879ec174109276ca    150000
+control                     287030
+Name: anonymousId, dtype: int64, total = 437030
+2026-06-05 14:40:59,363 - root - INFO -   Processing audience: Innkeepr - Exclusion - Standard (6811db14879ec1741092565c)
+2026-06-05 14:40:59,363 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260605/6811db14879ec1741092565c.parquet
+2026-06-05 14:41:16,904 - root - INFO -     Loaded 855997 rows from date 20260605
+2026-06-05 14:41:17,185 - root - INFO - 6811db14879ec1741092565c: treatment counts = treatment
+6811db14879ec1741092565c    427998
+control                     427999
+Name: anonymousId, dtype: int64, total = 855997
+2026-06-05 14:41:17,185 - root - INFO -   Processing audience: Innkeepr - Seed - ValueBased (6836db0013526dc3d135eb7d)
+2026-06-05 14:41:17,185 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260605/6836db0013526dc3d135eb7d.parquet
+2026-06-05 14:41:18,886 - root - INFO -     Loaded 33642 rows from date 20260605
+2026-06-05 14:41:18,893 - root - INFO - 6836db0013526dc3d135eb7d: treatment counts = treatment
+6836db0013526dc3d135eb7d    33642
+Name: anonymousId, dtype: int64, total = 33642
+2026-06-05 14:41:18,893 - root - INFO -   Processing audience: Innkeepr - Seed IT - ValueBased (6836dbd913526dc3d1360591)
+2026-06-05 14:41:18,893 - root - INFO -     Reading s3://6568582b46e167d630d77abc/targeting.history/20260605/6836dbd913526dc3d1360591.parquet
+2026-06-05 14:41:20,810 - root - INFO -     Loaded 33705 rows from date 20260605
+2026-06-05 14:41:20,819 - root - INFO - 6836dbd913526dc3d1360591: treatment counts = treatment
+6836dbd913526dc3d1360591    33705
+Name: anonymousId, dtype: int64, total = 33705
+2026-06-05 14:41:20,820 - root - INFO - 
+Result (10 rows):
+  workspace                          audience_name               audience_id  audienceSize  count_control_anonymousIds  count_treatment_anonymousIds  percentage targeting_date
+0  LILLYDOO  Innkeepr - Exclusion - Bestandskunden  6811d9de879ec174109231bd        150000                      427999                        447083    0.510904       20260605
+1  LILLYDOO        Innkeepr - Seed ES - ValueBased  68cacdfe77b55cfe7478372b        150000                           0                         33642    1.000000       20260605
+2  LILLYDOO      Innkeepr - Seed CHAT - ValueBased  68cbfcaa77b55cfe74111c89        150000                           0                         33642    1.000000       20260605
+3  LILLYDOO              Innkeepr - Seed LSTM - IT  6811dc7e879ec174109280ba        150000                      287030                        150000    0.343226       20260604
+4  LILLYDOO                 Innkeepr - Seed - LSTM  6811db64879ec17410925ee0        150000                      221266                        150000    0.404023       20260604
+5  LILLYDOO                 Innkeepr - Seed - CHAT  6811dab9879ec17410924bf4        150000                      591732                        150000    0.202229       20260604
+6  LILLYDOO              Innkeepr - Seed LSTM - ES  6811dc2b879ec174109276ca        150000                      287030                        150000    0.343226       20260604
+7  LILLYDOO        Innkeepr - Exclusion - Standard  6811db14879ec1741092565c        150000                      427999                        427998    0.499999       20260605
+8  LILLYDOO           Innkeepr - Seed - ValueBased  6836db0013526dc3d135eb7d        150000                           0                         33642    1.000000       20260605
+9  LILLYDOO        Innkeepr - Seed IT - ValueBased  6836dbd913526dc3d1360591        150000                           0                         33705    1.000000       20260605
+2026-06-05 14:41:20,825 - root - INFO - === Workspace: engelhorn.com (6617e0cf01c2ab3bd12cde58) ===
+2026-06-05 14:41:20,825 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:41:21,021 - root - INFO - Fetched 0 elements
+2026-06-05 14:41:21,022 - root - INFO -   No audiences found — skipping
+2026-06-05 14:41:21,022 - root - INFO - === Workspace: Diamond Wallet (66f26a656a47308221eb1c60) ===
+2026-06-05 14:41:21,023 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:41:21,179 - root - INFO - Fetched 0 elements
+2026-06-05 14:41:21,181 - root - INFO -   No audiences found — skipping
+2026-06-05 14:41:21,181 - root - INFO - === Workspace: Philspace (68187091879ec174105f5d24) ===
+2026-06-05 14:41:21,181 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:41:21,332 - root - INFO - Fetched 0 elements
+2026-06-05 14:41:21,333 - root - INFO -   No audiences found — skipping
+2026-06-05 14:41:21,333 - root - INFO - === Workspace: Casarista (650a97ea9b3b1b5193276421) ===
+2026-06-05 14:41:21,333 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:41:21,494 - root - INFO - Fetched 0 elements
+2026-06-05 14:41:21,495 - root - INFO -   No audiences found — skipping
+2026-06-05 14:41:21,495 - root - INFO - === Workspace: Innkeepr Test (675002443846bafb7f36d6c7) ===
+2026-06-05 14:41:21,495 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:41:21,646 - root - INFO - Fetched 0 elements
+2026-06-05 14:41:21,647 - root - INFO -   No audiences found — skipping
+2026-06-05 14:41:21,648 - root - INFO - === Workspace: Philips Workspace (69304b0e4227124153e1e5ce) ===
+2026-06-05 14:41:21,648 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:41:21,810 - root - INFO - Fetched 0 elements
+2026-06-05 14:41:21,811 - root - INFO -   No audiences found — skipping
+2026-06-05 14:41:21,811 - root - INFO - === Workspace: Philip+1 (69304bc34227124153e4a9a0) ===
+2026-06-05 14:41:21,811 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:41:21,968 - root - INFO - Fetched 0 elements
+2026-06-05 14:41:21,970 - root - INFO -   No audiences found — skipping
+2026-06-05 14:41:21,970 - root - INFO - === Workspace: Rosental (63eba9a1bfc19074666d7856) ===
+2026-06-05 14:41:21,970 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:41:22,222 - root - INFO - Fetched 95 elements
+2026-06-05 14:41:22,231 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:41:22,396 - root - INFO - Fetched 6 elements
+2026-06-05 14:41:22,405 - root - INFO -   Active audiences: 30
+2026-06-05 14:41:22,406 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:22,551 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:22,552 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:22,715 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:22,715 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:22,864 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:22,865 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:23,031 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:23,032 - root - INFO -   Audience 6980c47ff7564868feb8123d (Innkeepr - EMS - Seed) — model 6a2223964f8a22eab02b6922 missing audienceSizePercentage
+2026-06-05 14:41:23,032 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:23,186 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:23,187 - root - INFO -   Audience 6980c4eaf7564868fec2469d (Innkeepr - EMS - ValueBased) — model 6a22391482c8f2e30d0afd1f missing audienceSizePercentage
+2026-06-05 14:41:23,187 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:23,351 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:23,352 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:23,532 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:23,532 - root - INFO -   Audience 6980c50ef7564868fec25101 (Innkeepr - Beauty Doc - ValueBased) — model 6a222b5304dc34e56c4acb9a missing audienceSizePercentage
+2026-06-05 14:41:23,533 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:23,681 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:23,682 - root - INFO -   Audience 68e926d4b236f67910699632 (Innkeepr - NL - BB Reihe - Bestseller - High Impact - Seed) — model 6a223c25add569b2a35f6ced missing audienceSizePercentage
+2026-06-05 14:41:23,683 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:23,840 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:23,840 - root - INFO -   Audience 6980c4baf7564868fec23572 (Innkeepr - Beauty Doc - Seed) — model 6a2214c104dc34e56c4aca95 missing audienceSizePercentage
+2026-06-05 14:41:23,841 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:23,995 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:23,996 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:24,166 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:24,166 - root - INFO -   Audience 68d4f82b0dd10e3a312f3bc3 (Innkeepr - Slow Aging - High Impact - Seed) — model 6a2243acadd569b2a35f6d97 missing audienceSizePercentage
+2026-06-05 14:41:24,167 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:24,317 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:24,318 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:24,462 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:24,463 - root - INFO -   Audience 68518c65a93b88d67a15d581 (Innkeepr - LED - ValueBased) — model 68afb74718def5fe829bd976 missing audienceSizePercentage
+2026-06-05 14:41:24,463 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:24,605 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:24,606 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:24,761 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:24,762 - root - INFO -   Audience 6980e30ff7564868fe593b93 (Innkeepr - 360d Purchaser - Exclusion) — model 6a223af382c8f2e30d0afd43 missing audienceSizePercentage
+2026-06-05 14:41:24,762 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:24,921 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:24,922 - root - INFO -   Audience 68518c34a93b88d67a15d001 (Innkeepr - Botanical - ValueBased) — model 6a07cfae2fdf49dcf1182839 missing audienceSizePercentage
+2026-06-05 14:41:24,922 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:25,074 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:25,075 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:25,233 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:25,235 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:25,387 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:25,388 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:25,534 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:25,536 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:25,686 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:25,687 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:25,842 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:25,843 - root - INFO -   Audience 68d4f85a0dd10e3a312f5e4d (Innkeepr - Beauty Dock - High Impact - Seed) — model 6a221d0b04dc34e56c4acb63 missing audienceSizePercentage
+2026-06-05 14:41:25,844 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:25,994 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:25,995 - root - INFO -   Audience 68e92747b236f679106a375c (Innkeepr - NL - Sonstiges - Bestseller - High Impact - Seed) — model 6a1f98b0add569b2a35f60ee missing audienceSizePercentage
+2026-06-05 14:41:25,996 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:26,163 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:26,164 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:26,323 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:26,323 - root - INFO -   Audience 6980c569f7564868fec26d22 (Innkeepr - 30d Visitors - Exclusion) — model 6a2220c704dc34e56c4acb79 missing audienceSizePercentage
+2026-06-05 14:41:26,324 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:26,471 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:26,471 - root - INFO -   Audience 68302cd3ef02595b6bea4be9 (Innkeepr - Exclusion - Lifetime) — model 6a221d334f8a22eab02b68f1 missing audienceSizePercentage
+2026-06-05 14:41:26,472 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:26,630 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:26,630 - root - INFO -   Audience 678a5ca0f3abb5123264a902 (Innkeepr - LED Mask - Seed) — model 6a224d87add569b2a35f6df7 missing audienceSizePercentage
+2026-06-05 14:41:26,631 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:26,789 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:26,790 - root - INFO -   Audience 67f61f9f0b17ce11bdc8960e (Innkeepr - BLEM - High Impact - Seed) — model 69fe8699d1232ca5136d9cf5 missing audienceSizePercentage
+2026-06-05 14:41:26,791 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:26,948 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:26,949 - root - INFO -   Audience 68302c5bef02595b6bea3cb5 (Innkeepr - Exclusion - 365d) — model 6a22199c04dc34e56c4acb10 missing audienceSizePercentage
+2026-06-05 14:41:26,949 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:41:27,112 - root - INFO - Fetched 1 elements
+2026-06-05 14:41:27,112 - root - INFO -   Audience 67bc16baaaa1eaa63251f771 (Innkeepr - Low AOV - Exclusion) — model 695a66c425fe4daa5b461d96 missing audienceSizePercentage
+2026-06-05 14:41:27,113 - root - INFO -   Audiences missing audienceSizePercentage: 17
+2026-06-05 14:41:27,547 - root - INFO -   Most recent targeting history date: 20260605
+2026-06-05 14:41:27,547 - root - INFO -   Processing audience: Innkeepr - EMS - Seed (6980c47ff7564868feb8123d)
+2026-06-05 14:41:27,548 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/6980c47ff7564868feb8123d.parquet
+2026-06-05 14:41:27,706 - root - WARNING -     Could not read s3://63eba9a1bfc19074666d7856/targeting.history/20260605/6980c47ff7564868feb8123d.parquet: No files Found on: s3://63eba9a1bfc19074666d7856/targeting.history/20260605/6980c47ff7564868feb8123d.parquet.
+2026-06-05 14:41:27,710 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260604/6980c47ff7564868feb8123d.parquet
+2026-06-05 14:41:38,641 - root - INFO -     Loaded 611442 rows from date 20260604
+2026-06-05 14:41:38,755 - root - INFO - 6980c47ff7564868feb8123d: treatment counts = treatment
+6980c47ff7564868feb8123d    150000
+control                     461442
+Name: anonymousId, dtype: int64, total = 611442
+2026-06-05 14:41:38,755 - root - INFO -   Processing audience: Innkeepr - EMS - ValueBased (6980c4eaf7564868fec2469d)
+2026-06-05 14:41:38,755 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/6980c4eaf7564868fec2469d.parquet
+2026-06-05 14:41:42,785 - root - INFO -     Loaded 102193 rows from date 20260605
+2026-06-05 14:41:42,802 - root - INFO - 6980c4eaf7564868fec2469d: treatment counts = treatment
+6980c4eaf7564868fec2469d    102193
+Name: anonymousId, dtype: int64, total = 102193
+2026-06-05 14:41:42,803 - root - INFO -   Processing audience: Innkeepr - Beauty Doc - ValueBased (6980c50ef7564868fec25101)
+2026-06-05 14:41:42,803 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/6980c50ef7564868fec25101.parquet
+2026-06-05 14:41:46,902 - root - INFO -     Loaded 102193 rows from date 20260605
+2026-06-05 14:41:46,918 - root - INFO - 6980c50ef7564868fec25101: treatment counts = treatment
+6980c50ef7564868fec25101    102193
+Name: anonymousId, dtype: int64, total = 102193
+2026-06-05 14:41:46,919 - root - INFO -   Processing audience: Innkeepr - NL - BB Reihe - Bestseller - High Impact - Seed (68e926d4b236f67910699632)
+2026-06-05 14:41:46,919 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68e926d4b236f67910699632.parquet
+2026-06-05 14:41:47,041 - root - WARNING -     Could not read s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68e926d4b236f67910699632.parquet: No files Found on: s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68e926d4b236f67910699632.parquet.
+2026-06-05 14:41:47,041 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260604/68e926d4b236f67910699632.parquet
+2026-06-05 14:42:15,689 - root - INFO -     Loaded 1604673 rows from date 20260604
+2026-06-05 14:42:16,024 - root - INFO - 68e926d4b236f67910699632: treatment counts = treatment
+68e926d4b236f67910699632     149982
+control                     1454449
+Name: anonymousId, dtype: int64, total = 1604431
+2026-06-05 14:42:16,024 - root - INFO -   Processing audience: Innkeepr - Beauty Doc - Seed (6980c4baf7564868fec23572)
+2026-06-05 14:42:16,024 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/6980c4baf7564868fec23572.parquet
+2026-06-05 14:42:16,188 - root - WARNING -     Could not read s3://63eba9a1bfc19074666d7856/targeting.history/20260605/6980c4baf7564868fec23572.parquet: No files Found on: s3://63eba9a1bfc19074666d7856/targeting.history/20260605/6980c4baf7564868fec23572.parquet.
+2026-06-05 14:42:16,189 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260604/6980c4baf7564868fec23572.parquet
+2026-06-05 14:42:44,902 - root - INFO -     Loaded 1634949 rows from date 20260604
+2026-06-05 14:42:45,481 - root - INFO - 6980c4baf7564868fec23572: treatment counts = treatment
+6980c4baf7564868fec23572     149976
+control                     1484731
+Name: anonymousId, dtype: int64, total = 1634707
+2026-06-05 14:42:45,481 - root - INFO -   Processing audience: Innkeepr - Slow Aging - High Impact - Seed (68d4f82b0dd10e3a312f3bc3)
+2026-06-05 14:42:45,481 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68d4f82b0dd10e3a312f3bc3.parquet
+2026-06-05 14:42:45,644 - root - WARNING -     Could not read s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68d4f82b0dd10e3a312f3bc3.parquet: No files Found on: s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68d4f82b0dd10e3a312f3bc3.parquet.
+2026-06-05 14:42:45,645 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260604/68d4f82b0dd10e3a312f3bc3.parquet
+2026-06-05 14:43:14,759 - root - INFO -     Loaded 1634949 rows from date 20260604
+2026-06-05 14:43:15,264 - root - INFO - 68d4f82b0dd10e3a312f3bc3: treatment counts = treatment
+68d4f82b0dd10e3a312f3bc3     149976
+control                     1484731
+Name: anonymousId, dtype: int64, total = 1634707
+2026-06-05 14:43:15,264 - root - INFO -   Processing audience: Innkeepr - LED - ValueBased (68518c65a93b88d67a15d581)
+2026-06-05 14:43:15,264 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68518c65a93b88d67a15d581.parquet
+2026-06-05 14:43:19,672 - root - INFO -     Loaded 91654 rows from date 20260605
+2026-06-05 14:43:19,688 - root - INFO - 68518c65a93b88d67a15d581: treatment counts = treatment
+68518c65a93b88d67a15d581    91654
+Name: anonymousId, dtype: int64, total = 91654
+2026-06-05 14:43:19,688 - root - INFO -   Processing audience: Innkeepr - 360d Purchaser - Exclusion (6980e30ff7564868fe593b93)
+2026-06-05 14:43:19,688 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/6980e30ff7564868fe593b93.parquet
+2026-06-05 14:43:29,194 - root - INFO -     Loaded 276452 rows from date 20260605
+2026-06-05 14:43:29,253 - root - INFO - 6980e30ff7564868fe593b93: treatment counts = treatment
+6980e30ff7564868fe593b93    247856
+Name: anonymousId, dtype: int64, total = 247856
+2026-06-05 14:43:29,253 - root - INFO -   Processing audience: Innkeepr - Botanical - ValueBased (68518c34a93b88d67a15d001)
+2026-06-05 14:43:29,253 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68518c34a93b88d67a15d001.parquet
+2026-06-05 14:43:33,038 - root - INFO -     Loaded 91654 rows from date 20260605
+2026-06-05 14:43:33,053 - root - INFO - 68518c34a93b88d67a15d001: treatment counts = treatment
+68518c34a93b88d67a15d001    91654
+Name: anonymousId, dtype: int64, total = 91654
+2026-06-05 14:43:33,053 - root - INFO -   Processing audience: Innkeepr - Beauty Dock - High Impact - Seed (68d4f85a0dd10e3a312f5e4d)
+2026-06-05 14:43:33,054 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68d4f85a0dd10e3a312f5e4d.parquet
+2026-06-05 14:43:33,204 - root - WARNING -     Could not read s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68d4f85a0dd10e3a312f5e4d.parquet: No files Found on: s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68d4f85a0dd10e3a312f5e4d.parquet.
+2026-06-05 14:43:33,205 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260604/68d4f85a0dd10e3a312f5e4d.parquet
+2026-06-05 14:44:01,508 - root - INFO -     Loaded 1634949 rows from date 20260604
+2026-06-05 14:44:02,014 - root - INFO - 68d4f85a0dd10e3a312f5e4d: treatment counts = treatment
+68d4f85a0dd10e3a312f5e4d     149976
+control                     1484731
+Name: anonymousId, dtype: int64, total = 1634707
+2026-06-05 14:44:02,015 - root - INFO -   Processing audience: Innkeepr - NL - Sonstiges - Bestseller - High Impact - Seed (68e92747b236f679106a375c)
+2026-06-05 14:44:02,015 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68e92747b236f679106a375c.parquet
+2026-06-05 14:44:02,180 - root - WARNING -     Could not read s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68e92747b236f679106a375c.parquet: No files Found on: s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68e92747b236f679106a375c.parquet.
+2026-06-05 14:44:02,181 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260604/68e92747b236f679106a375c.parquet
+2026-06-05 14:44:35,743 - root - INFO -     Loaded 1569049 rows from date 20260604
+2026-06-05 14:44:36,081 - root - INFO - 68e92747b236f679106a375c: treatment counts = treatment
+68e92747b236f679106a375c     149968
+control                     1418834
+Name: anonymousId, dtype: int64, total = 1568802
+2026-06-05 14:44:36,081 - root - INFO -   Processing audience: Innkeepr - 30d Visitors - Exclusion (6980c569f7564868fec26d22)
+2026-06-05 14:44:36,081 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/6980c569f7564868fec26d22.parquet
+2026-06-05 14:44:48,234 - root - INFO -     Loaded 616400 rows from date 20260605
+2026-06-05 14:44:48,350 - root - INFO - 6980c569f7564868fec26d22: treatment counts = treatment
+6980c569f7564868fec26d22    308200
+control                     308200
+Name: anonymousId, dtype: int64, total = 616400
+2026-06-05 14:44:48,351 - root - INFO -   Processing audience: Innkeepr - Exclusion - Lifetime (68302cd3ef02595b6bea4be9)
+2026-06-05 14:44:48,351 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68302cd3ef02595b6bea4be9.parquet
+2026-06-05 14:45:44,939 - root - INFO -     Loaded 2902744 rows from date 20260605
+2026-06-05 14:45:45,914 - root - INFO - 68302cd3ef02595b6bea4be9: treatment counts = treatment
+68302cd3ef02595b6bea4be9    1450877
+control                     1451105
+Name: anonymousId, dtype: int64, total = 2901982
+2026-06-05 14:45:45,914 - root - INFO -   Processing audience: Innkeepr - LED Mask - Seed (678a5ca0f3abb5123264a902)
+2026-06-05 14:45:45,914 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/678a5ca0f3abb5123264a902.parquet
+2026-06-05 14:45:46,086 - root - WARNING -     Could not read s3://63eba9a1bfc19074666d7856/targeting.history/20260605/678a5ca0f3abb5123264a902.parquet: No files Found on: s3://63eba9a1bfc19074666d7856/targeting.history/20260605/678a5ca0f3abb5123264a902.parquet.
+2026-06-05 14:45:46,087 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260604/678a5ca0f3abb5123264a902.parquet
+2026-06-05 14:46:19,788 - root - INFO -     Loaded 1569049 rows from date 20260604
+2026-06-05 14:46:20,122 - root - INFO - 678a5ca0f3abb5123264a902: treatment counts = treatment
+678a5ca0f3abb5123264a902     149980
+control                     1418822
+Name: anonymousId, dtype: int64, total = 1568802
+2026-06-05 14:46:20,122 - root - INFO -   Processing audience: Innkeepr - BLEM - High Impact - Seed (67f61f9f0b17ce11bdc8960e)
+2026-06-05 14:46:20,122 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/67f61f9f0b17ce11bdc8960e.parquet
+2026-06-05 14:46:20,283 - root - WARNING -     Could not read s3://63eba9a1bfc19074666d7856/targeting.history/20260605/67f61f9f0b17ce11bdc8960e.parquet: No files Found on: s3://63eba9a1bfc19074666d7856/targeting.history/20260605/67f61f9f0b17ce11bdc8960e.parquet.
+2026-06-05 14:46:20,284 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260604/67f61f9f0b17ce11bdc8960e.parquet
+2026-06-05 14:46:53,555 - root - INFO -     Loaded 1569049 rows from date 20260604
+2026-06-05 14:46:53,883 - root - INFO - 67f61f9f0b17ce11bdc8960e: treatment counts = treatment
+67f61f9f0b17ce11bdc8960e     149971
+control                     1418831
+Name: anonymousId, dtype: int64, total = 1568802
+2026-06-05 14:46:53,883 - root - INFO -   Processing audience: Innkeepr - Exclusion - 365d (68302c5bef02595b6bea3cb5)
+2026-06-05 14:46:53,883 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/68302c5bef02595b6bea3cb5.parquet
+2026-06-05 14:47:51,269 - root - INFO -     Loaded 2902744 rows from date 20260605
+2026-06-05 14:47:52,132 - root - INFO - 68302c5bef02595b6bea3cb5: treatment counts = treatment
+68302c5bef02595b6bea3cb5    1450877
+control                     1451105
+Name: anonymousId, dtype: int64, total = 2901982
+2026-06-05 14:47:52,132 - root - INFO -   Processing audience: Innkeepr - Low AOV - Exclusion (67bc16baaaa1eaa63251f771)
+2026-06-05 14:47:52,132 - root - INFO -     Reading s3://63eba9a1bfc19074666d7856/targeting.history/20260605/67bc16baaaa1eaa63251f771.parquet
+2026-06-05 14:48:57,461 - root - INFO -     Loaded 2846447 rows from date 20260605
+2026-06-05 14:48:58,322 - root - INFO - 67bc16baaaa1eaa63251f771: treatment counts = treatment
+67bc16baaaa1eaa63251f771    1422739
+control                     1422938
+Name: anonymousId, dtype: int64, total = 2845677
+2026-06-05 14:48:58,323 - root - INFO - 
+Result (27 rows):
+   workspace                                                audience_name               audience_id  audienceSize  count_control_anonymousIds  count_treatment_anonymousIds  percentage targeting_date
+0   LILLYDOO                        Innkeepr - Exclusion - Bestandskunden  6811d9de879ec174109231bd        150000                      427999                        447083    0.510904       20260605
+1   LILLYDOO                              Innkeepr - Seed ES - ValueBased  68cacdfe77b55cfe7478372b        150000                           0                         33642    1.000000       20260605
+2   LILLYDOO                            Innkeepr - Seed CHAT - ValueBased  68cbfcaa77b55cfe74111c89        150000                           0                         33642    1.000000       20260605
+3   LILLYDOO                                    Innkeepr - Seed LSTM - IT  6811dc7e879ec174109280ba        150000                      287030                        150000    0.343226       20260604
+4   LILLYDOO                                       Innkeepr - Seed - LSTM  6811db64879ec17410925ee0        150000                      221266                        150000    0.404023       20260604
+5   LILLYDOO                                       Innkeepr - Seed - CHAT  6811dab9879ec17410924bf4        150000                      591732                        150000    0.202229       20260604
+6   LILLYDOO                                    Innkeepr - Seed LSTM - ES  6811dc2b879ec174109276ca        150000                      287030                        150000    0.343226       20260604
+7   LILLYDOO                              Innkeepr - Exclusion - Standard  6811db14879ec1741092565c        150000                      427999                        427998    0.499999       20260605
+8   LILLYDOO                                 Innkeepr - Seed - ValueBased  6836db0013526dc3d135eb7d        150000                           0                         33642    1.000000       20260605
+9   LILLYDOO                              Innkeepr - Seed IT - ValueBased  6836dbd913526dc3d1360591        150000                           0                         33705    1.000000       20260605
+10  Rosental                                        Innkeepr - EMS - Seed  6980c47ff7564868feb8123d        150000                      461442                        150000    0.245322       20260604
+11  Rosental                                  Innkeepr - EMS - ValueBased  6980c4eaf7564868fec2469d        150000                           0                        102193    1.000000       20260605
+12  Rosental                           Innkeepr - Beauty Doc - ValueBased  6980c50ef7564868fec25101        150000                           0                        102193    1.000000       20260605
+13  Rosental   Innkeepr - NL - BB Reihe - Bestseller - High Impact - Seed  68e926d4b236f67910699632        150000                     1454449                        149982    0.093480       20260604
+14  Rosental                                 Innkeepr - Beauty Doc - Seed  6980c4baf7564868fec23572        150000                     1484731                        149976    0.091745       20260604
+15  Rosental                   Innkeepr - Slow Aging - High Impact - Seed  68d4f82b0dd10e3a312f3bc3        150000                     1484731                        149976    0.091745       20260604
+16  Rosental                                  Innkeepr - LED - ValueBased  68518c65a93b88d67a15d581        150000                           0                         91654    1.000000       20260605
+17  Rosental                        Innkeepr - 360d Purchaser - Exclusion  6980e30ff7564868fe593b93        150000                           0                        247856    1.000000       20260605
+18  Rosental                            Innkeepr - Botanical - ValueBased  68518c34a93b88d67a15d001        150000                           0                         91654    1.000000       20260605
+19  Rosental                  Innkeepr - Beauty Dock - High Impact - Seed  68d4f85a0dd10e3a312f5e4d        150000                     1484731                        149976    0.091745       20260604
+20  Rosental  Innkeepr - NL - Sonstiges - Bestseller - High Impact - Seed  68e92747b236f679106a375c        150000                     1418834                        149968    0.095594       20260604
+21  Rosental                          Innkeepr - 30d Visitors - Exclusion  6980c569f7564868fec26d22        150000                      308200                        308200    0.500000       20260605
+22  Rosental                              Innkeepr - Exclusion - Lifetime  68302cd3ef02595b6bea4be9        150000                     1451105                       1450877    0.499961       20260605
+23  Rosental                                   Innkeepr - LED Mask - Seed  678a5ca0f3abb5123264a902        150000                     1418822                        149980    0.095602       20260604
+24  Rosental                         Innkeepr - BLEM - High Impact - Seed  67f61f9f0b17ce11bdc8960e        150000                     1418831                        149971    0.095596       20260604
+25  Rosental                                  Innkeepr - Exclusion - 365d  68302c5bef02595b6bea3cb5        150000                     1451105                       1450877    0.499961       20260605
+26  Rosental                               Innkeepr - Low AOV - Exclusion  67bc16baaaa1eaa63251f771        150000                     1422938                       1422739    0.499965       20260605
+2026-06-05 14:48:58,333 - root - INFO - === Workspace: Inside Beauty Magazine (65e97dea7d3371888d51e481) ===
+2026-06-05 14:48:58,333 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:48:58,520 - root - INFO - Fetched 0 elements
+2026-06-05 14:48:58,522 - root - INFO -   No audiences found — skipping
+2026-06-05 14:48:58,522 - root - INFO - === Workspace: to teach (6810a17e879ec174107609b1) ===
+2026-06-05 14:48:58,522 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:48:58,677 - root - INFO - Fetched 10 elements
+2026-06-05 14:48:58,682 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:48:58,835 - root - INFO - Fetched 4 elements
+2026-06-05 14:48:58,844 - root - INFO -   Active audiences: 8
+2026-06-05 14:48:58,845 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:48:58,996 - root - INFO - Fetched 1 elements
+2026-06-05 14:48:58,996 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:48:59,149 - root - INFO - Fetched 1 elements
+2026-06-05 14:48:59,149 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:48:59,304 - root - INFO - Fetched 1 elements
+2026-06-05 14:48:59,305 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:48:59,457 - root - INFO - Fetched 1 elements
+2026-06-05 14:48:59,458 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:48:59,615 - root - INFO - Fetched 1 elements
+2026-06-05 14:48:59,616 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:48:59,778 - root - INFO - Fetched 1 elements
+2026-06-05 14:48:59,779 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:48:59,930 - root - INFO - Fetched 1 elements
+2026-06-05 14:48:59,931 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:00,095 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:00,096 - root - INFO -   Audiences missing audienceSizePercentage: 0
+2026-06-05 14:49:00,097 - root - INFO - === Workspace: Whacky Food (67ca9c3a23595a2744523b0f) ===
+2026-06-05 14:49:00,097 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:49:00,247 - root - INFO - Fetched 0 elements
+2026-06-05 14:49:00,247 - root - INFO -   No audiences found — skipping
+2026-06-05 14:49:00,247 - root - INFO - === Workspace: Störtebekker (69b3e8d6deec4e2c9081687b) ===
+2026-06-05 14:49:00,247 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:49:00,399 - root - INFO - Fetched 13 elements
+2026-06-05 14:49:00,401 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:49:00,535 - root - INFO - Fetched 6 elements
+2026-06-05 14:49:00,540 - root - INFO -   Active audiences: 13
+2026-06-05 14:49:00,540 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:00,676 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:00,676 - root - INFO -   Audience 69f34a5f51f70b57e43153b5 (Innkeepr - Probierset - ValueBased) — model 6a18ee4badd569b2a35f43fa missing audienceSizePercentage
+2026-06-05 14:49:00,677 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:00,814 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:00,815 - root - INFO -   Audience 69ef864850b5382f00c19928 (Innkeepr - 30d Visitors - Exclusion) — model 6a18fa2badd569b2a35f4444 missing audienceSizePercentage
+2026-06-05 14:49:00,815 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:00,957 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:00,958 - root - INFO -   Audience 69ef865450b5382f00c28675 (Innkeepr - 360d Purchaser - Exclusion) — model 6a18e7acadd569b2a35f43f3 missing audienceSizePercentage
+2026-06-05 14:49:00,958 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:01,113 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:01,113 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:01,268 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:01,269 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:01,411 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:01,412 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:01,551 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:01,552 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:01,709 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:01,709 - root - INFO -   Audience 69f34a7151f70b57e4315623 (Innkeepr - Duschset - ValueBased) — model 6a18de6482c8f2e30d0acbb4 missing audienceSizePercentage
+2026-06-05 14:49:01,710 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:01,856 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:01,857 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:02,002 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:02,003 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:02,175 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:02,176 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:02,322 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:02,323 - root - INFO -   Audience 6a1dbe801370504ba657b511 (Innkeepr - 30-90d Visitors - Exclusion) — model 6a1e824c04dc34e56c4ab67b missing audienceSizePercentage
+2026-06-05 14:49:02,324 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:02,474 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:02,475 - root - INFO -   Audiences missing audienceSizePercentage: 5
+2026-06-05 14:49:02,638 - root - INFO -   Most recent targeting history date: 20260605
+2026-06-05 14:49:02,638 - root - INFO -   Processing audience: Innkeepr - Probierset - ValueBased (69f34a5f51f70b57e43153b5)
+2026-06-05 14:49:02,639 - root - INFO -     Reading s3://69b3e8d6deec4e2c9081687b/targeting.history/20260605/69f34a5f51f70b57e43153b5.parquet
+2026-06-05 14:49:04,090 - root - INFO -     Loaded 22040 rows from date 20260605
+2026-06-05 14:49:04,094 - root - INFO - 69f34a5f51f70b57e43153b5: treatment counts = treatment
+69f34a5f51f70b57e43153b5    22040
+Name: anonymousId, dtype: int64, total = 22040
+2026-06-05 14:49:04,094 - root - INFO -   Processing audience: Innkeepr - 30d Visitors - Exclusion (69ef864850b5382f00c19928)
+2026-06-05 14:49:04,094 - root - INFO -     Reading s3://69b3e8d6deec4e2c9081687b/targeting.history/20260605/69ef864850b5382f00c19928.parquet
+2026-06-05 14:49:07,426 - root - INFO -     Loaded 143113 rows from date 20260605
+2026-06-05 14:49:07,449 - root - INFO - 69ef864850b5382f00c19928: treatment counts = treatment
+69ef864850b5382f00c19928    71556
+control                     71557
+Name: anonymousId, dtype: int64, total = 143113
+2026-06-05 14:49:07,449 - root - INFO -   Processing audience: Innkeepr - 360d Purchaser - Exclusion (69ef865450b5382f00c28675)
+2026-06-05 14:49:07,449 - root - INFO -     Reading s3://69b3e8d6deec4e2c9081687b/targeting.history/20260605/69ef865450b5382f00c28675.parquet
+2026-06-05 14:49:08,666 - root - INFO -     Loaded 20896 rows from date 20260605
+2026-06-05 14:49:08,672 - root - INFO - 69ef865450b5382f00c28675: treatment counts = treatment
+69ef865450b5382f00c28675    20302
+Name: anonymousId, dtype: int64, total = 20302
+2026-06-05 14:49:08,672 - root - INFO -   Processing audience: Innkeepr - Duschset - ValueBased (69f34a7151f70b57e4315623)
+2026-06-05 14:49:08,672 - root - INFO -     Reading s3://69b3e8d6deec4e2c9081687b/targeting.history/20260605/69f34a7151f70b57e4315623.parquet
+2026-06-05 14:49:10,086 - root - INFO -     Loaded 21986 rows from date 20260605
+2026-06-05 14:49:10,093 - root - INFO - 69f34a7151f70b57e4315623: treatment counts = treatment
+69f34a7151f70b57e4315623    21986
+Name: anonymousId, dtype: int64, total = 21986
+2026-06-05 14:49:10,093 - root - INFO -   Processing audience: Innkeepr - 30-90d Visitors - Exclusion (6a1dbe801370504ba657b511)
+2026-06-05 14:49:10,093 - root - INFO -     Reading s3://69b3e8d6deec4e2c9081687b/targeting.history/20260605/6a1dbe801370504ba657b511.parquet
+2026-06-05 14:49:12,970 - root - INFO -     Loaded 113628 rows from date 20260605
+2026-06-05 14:49:12,989 - root - INFO - 6a1dbe801370504ba657b511: treatment counts = treatment
+6a1dbe801370504ba657b511    56814
+control                     56814
+Name: anonymousId, dtype: int64, total = 113628
+2026-06-05 14:49:12,990 - root - INFO - 
+Result (32 rows):
+       workspace                                                audience_name               audience_id  audienceSize  count_control_anonymousIds  count_treatment_anonymousIds  percentage targeting_date
+0       LILLYDOO                        Innkeepr - Exclusion - Bestandskunden  6811d9de879ec174109231bd        150000                      427999                        447083    0.510904       20260605
+1       LILLYDOO                              Innkeepr - Seed ES - ValueBased  68cacdfe77b55cfe7478372b        150000                           0                         33642    1.000000       20260605
+2       LILLYDOO                            Innkeepr - Seed CHAT - ValueBased  68cbfcaa77b55cfe74111c89        150000                           0                         33642    1.000000       20260605
+3       LILLYDOO                                    Innkeepr - Seed LSTM - IT  6811dc7e879ec174109280ba        150000                      287030                        150000    0.343226       20260604
+4       LILLYDOO                                       Innkeepr - Seed - LSTM  6811db64879ec17410925ee0        150000                      221266                        150000    0.404023       20260604
+5       LILLYDOO                                       Innkeepr - Seed - CHAT  6811dab9879ec17410924bf4        150000                      591732                        150000    0.202229       20260604
+6       LILLYDOO                                    Innkeepr - Seed LSTM - ES  6811dc2b879ec174109276ca        150000                      287030                        150000    0.343226       20260604
+7       LILLYDOO                              Innkeepr - Exclusion - Standard  6811db14879ec1741092565c        150000                      427999                        427998    0.499999       20260605
+8       LILLYDOO                                 Innkeepr - Seed - ValueBased  6836db0013526dc3d135eb7d        150000                           0                         33642    1.000000       20260605
+9       LILLYDOO                              Innkeepr - Seed IT - ValueBased  6836dbd913526dc3d1360591        150000                           0                         33705    1.000000       20260605
+10      Rosental                                        Innkeepr - EMS - Seed  6980c47ff7564868feb8123d        150000                      461442                        150000    0.245322       20260604
+11      Rosental                                  Innkeepr - EMS - ValueBased  6980c4eaf7564868fec2469d        150000                           0                        102193    1.000000       20260605
+12      Rosental                           Innkeepr - Beauty Doc - ValueBased  6980c50ef7564868fec25101        150000                           0                        102193    1.000000       20260605
+13      Rosental   Innkeepr - NL - BB Reihe - Bestseller - High Impact - Seed  68e926d4b236f67910699632        150000                     1454449                        149982    0.093480       20260604
+14      Rosental                                 Innkeepr - Beauty Doc - Seed  6980c4baf7564868fec23572        150000                     1484731                        149976    0.091745       20260604
+15      Rosental                   Innkeepr - Slow Aging - High Impact - Seed  68d4f82b0dd10e3a312f3bc3        150000                     1484731                        149976    0.091745       20260604
+16      Rosental                                  Innkeepr - LED - ValueBased  68518c65a93b88d67a15d581        150000                           0                         91654    1.000000       20260605
+17      Rosental                        Innkeepr - 360d Purchaser - Exclusion  6980e30ff7564868fe593b93        150000                           0                        247856    1.000000       20260605
+18      Rosental                            Innkeepr - Botanical - ValueBased  68518c34a93b88d67a15d001        150000                           0                         91654    1.000000       20260605
+19      Rosental                  Innkeepr - Beauty Dock - High Impact - Seed  68d4f85a0dd10e3a312f5e4d        150000                     1484731                        149976    0.091745       20260604
+20      Rosental  Innkeepr - NL - Sonstiges - Bestseller - High Impact - Seed  68e92747b236f679106a375c        150000                     1418834                        149968    0.095594       20260604
+21      Rosental                          Innkeepr - 30d Visitors - Exclusion  6980c569f7564868fec26d22        150000                      308200                        308200    0.500000       20260605
+22      Rosental                              Innkeepr - Exclusion - Lifetime  68302cd3ef02595b6bea4be9        150000                     1451105                       1450877    0.499961       20260605
+23      Rosental                                   Innkeepr - LED Mask - Seed  678a5ca0f3abb5123264a902        150000                     1418822                        149980    0.095602       20260604
+24      Rosental                         Innkeepr - BLEM - High Impact - Seed  67f61f9f0b17ce11bdc8960e        150000                     1418831                        149971    0.095596       20260604
+25      Rosental                                  Innkeepr - Exclusion - 365d  68302c5bef02595b6bea3cb5        150000                     1451105                       1450877    0.499961       20260605
+26      Rosental                               Innkeepr - Low AOV - Exclusion  67bc16baaaa1eaa63251f771        150000                     1422938                       1422739    0.499965       20260605
+27  Störtebekker                           Innkeepr - Probierset - ValueBased  69f34a5f51f70b57e43153b5        150000                           0                         22040    1.000000       20260605
+28  Störtebekker                          Innkeepr - 30d Visitors - Exclusion  69ef864850b5382f00c19928        150000                       71557                         71556    0.499997       20260605
+29  Störtebekker                        Innkeepr - 360d Purchaser - Exclusion  69ef865450b5382f00c28675        150000                           0                         20302    1.000000       20260605
+30  Störtebekker                             Innkeepr - Duschset - ValueBased  69f34a7151f70b57e4315623        150000                           0                         21986    1.000000       20260605
+31  Störtebekker                       Innkeepr - 30-90d Visitors - Exclusion  6a1dbe801370504ba657b511        150000                       56814                         56814    0.500000       20260605
+2026-06-05 14:49:12,992 - root - INFO - === Workspace: Kfzteile24 (675fc80864b2d9890edd1473) ===
+2026-06-05 14:49:12,992 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:49:13,149 - root - INFO - Fetched 18 elements
+2026-06-05 14:49:13,151 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:49:13,291 - root - INFO - Fetched 3 elements
+2026-06-05 14:49:13,297 - root - INFO -   Active audiences: 4
+2026-06-05 14:49:13,298 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:13,454 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:13,455 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:13,613 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:13,614 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:13,781 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:13,781 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:13,934 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:13,934 - root - INFO -   Audiences missing audienceSizePercentage: 0
+2026-06-05 14:49:13,935 - root - INFO - === Workspace: More (68c7cbc952d0b4ef38710f7e) ===
+2026-06-05 14:49:13,935 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 14:49:14,138 - root - INFO - Fetched 50 elements
+2026-06-05 14:49:14,142 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 14:49:14,289 - root - INFO - Fetched 3 elements
+2026-06-05 14:49:14,292 - root - INFO -   Active audiences: 38
+2026-06-05 14:49:14,292 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:14,438 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:14,438 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:14,580 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:14,580 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:14,738 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:14,739 - root - INFO -   Audience 68e3fa51120f694f53a5f863 (Innkeepr - 360d Purchaser - Exclusion) — model 6a1e3d1482c8f2e30d0aec39 missing audienceSizePercentage
+2026-06-05 14:49:14,739 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:14,892 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:14,893 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:15,050 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:15,051 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:15,195 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:15,196 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:15,355 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:15,355 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:15,504 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:15,505 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:15,657 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:15,658 - root - INFO -   Audience 69417cf5a5250a665d7bca71 (Innkeepr - 30d Visitors - Exclusion - NL) — model 6a1e453b4f8a22eab02b4f2a missing audienceSizePercentage
+2026-06-05 14:49:15,659 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:15,816 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:15,817 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:15,973 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:15,974 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:16,142 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:16,143 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:16,291 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:16,292 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:16,457 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:16,458 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:16,603 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:16,604 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:16,760 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:16,761 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:16,910 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:16,911 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:17,059 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:17,060 - root - INFO -   Audience 68e3fa6c120f694f53a63059 (Innkeepr - 30d Visitors - Exclusion) — model 6a1e422d04dc34e56c4ab52b missing audienceSizePercentage
+2026-06-05 14:49:17,060 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:17,211 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:17,212 - root - INFO -   Audience 69417d0ca5250a665d7bd0d8 (Innkeepr - 30d Visitors - Exclusion - UK) — model 6a1e43c904dc34e56c4ab532 missing audienceSizePercentage
+2026-06-05 14:49:17,212 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:17,357 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:17,358 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:17,512 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:17,513 - root - INFO -   Audience 69417ce0a5250a665d7bc47f (Innkeepr - 360d Purchaser - Exclusion - NL) — model 6a1e225f4f8a22eab02b4d89 missing audienceSizePercentage
+2026-06-05 14:49:17,513 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:17,673 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:17,673 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:17,820 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:17,821 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:17,974 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:17,975 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:18,126 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:18,127 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:18,275 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:18,276 - root - INFO -   Audience 693048ca4227124153d15ae9 (Innkeepr - VMS Search - RTG) — model 6a1e21de04dc34e56c4ab438 missing audienceSizePercentage
+2026-06-05 14:49:18,276 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:18,423 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:18,424 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:18,578 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:18,579 - root - INFO -   Audience 69417d1ca5250a665d7bd58b (Innkeepr - 360d Purchaser - Exclusion - UK) — model 6a1e4b81add569b2a35f5c16 missing audienceSizePercentage
+2026-06-05 14:49:18,579 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:18,724 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:18,724 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:18,869 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:18,870 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:19,023 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:19,024 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:19,178 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:19,179 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:19,332 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:19,333 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:19,492 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:19,493 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:19,644 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:19,645 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:19,801 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:19,802 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:19,953 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:19,954 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 14:49:20,091 - root - INFO - Fetched 1 elements
+2026-06-05 14:49:20,091 - root - INFO -   Audience 69456cdea5250a665df58135 (Innkeepr - 90d Brand - Exclusion) — model 6a1e4b83add569b2a35f5c17 missing audienceSizePercentage
+2026-06-05 14:49:20,091 - root - INFO -   Audiences missing audienceSizePercentage: 8
+2026-06-05 14:49:20,300 - root - INFO -   Most recent targeting history date: 20260605
+2026-06-05 14:49:20,300 - root - INFO -   Processing audience: Innkeepr - 360d Purchaser - Exclusion (68e3fa51120f694f53a5f863)
+2026-06-05 14:49:20,300 - root - INFO -     Reading s3://68c7cbc952d0b4ef38710f7e/targeting.history/20260605/68e3fa51120f694f53a5f863.parquet
+2026-06-05 14:50:21,489 - root - INFO -     Loaded 1918914 rows from date 20260605
+2026-06-05 14:50:22,051 - root - INFO - 68e3fa51120f694f53a5f863: treatment counts = treatment
+68e3fa51120f694f53a5f863    1590237
+Name: anonymousId, dtype: int64, total = 1590237
+2026-06-05 14:50:22,051 - root - INFO -   Processing audience: Innkeepr - 30d Visitors - Exclusion - NL (69417cf5a5250a665d7bca71)
+2026-06-05 14:50:22,051 - root - INFO -     Reading s3://68c7cbc952d0b4ef38710f7e/targeting.history/20260605/69417cf5a5250a665d7bca71.parquet
+2026-06-05 14:55:08,042 - root - INFO -     Loaded 11449549 rows from date 20260605
+2026-06-05 14:55:28,182 - root - INFO - 69417cf5a5250a665d7bca71: treatment counts = treatment
+69417cf5a5250a665d7bca71    5724774
+control                     5724775
+Name: anonymousId, dtype: int64, total = 11449549
+2026-06-05 14:55:28,183 - root - INFO -   Processing audience: Innkeepr - 30d Visitors - Exclusion (68e3fa6c120f694f53a63059)
+2026-06-05 14:55:28,183 - root - INFO -     Reading s3://68c7cbc952d0b4ef38710f7e/targeting.history/20260605/68e3fa6c120f694f53a63059.parquet
+2026-06-05 14:59:00,768 - root - INFO -     Loaded 6092855 rows from date 20260605
+2026-06-05 14:59:07,419 - root - INFO - 68e3fa6c120f694f53a63059: treatment counts = treatment
+68e3fa6c120f694f53a63059    3046427
+control                     3046428
+Name: anonymousId, dtype: int64, total = 6092855
+2026-06-05 14:59:07,419 - root - INFO -   Processing audience: Innkeepr - 30d Visitors - Exclusion - UK (69417d0ca5250a665d7bd0d8)
+2026-06-05 14:59:07,419 - root - INFO -     Reading s3://68c7cbc952d0b4ef38710f7e/targeting.history/20260605/69417d0ca5250a665d7bd0d8.parquet
+2026-06-05 15:04:35,804 - root - INFO -     Loaded 11449549 rows from date 20260605
+2026-06-05 15:04:41,428 - root - INFO - 69417d0ca5250a665d7bd0d8: treatment counts = treatment
+69417d0ca5250a665d7bd0d8    5724774
+control                     5724775
+Name: anonymousId, dtype: int64, total = 11449549
+2026-06-05 15:04:41,429 - root - INFO -   Processing audience: Innkeepr - 360d Purchaser - Exclusion - NL (69417ce0a5250a665d7bc47f)
+2026-06-05 15:04:41,429 - root - INFO -     Reading s3://68c7cbc952d0b4ef38710f7e/targeting.history/20260605/69417ce0a5250a665d7bc47f.parquet
+2026-06-05 15:06:07,348 - root - INFO -     Loaded 1918914 rows from date 20260605
+2026-06-05 15:06:08,005 - root - INFO - 69417ce0a5250a665d7bc47f: treatment counts = treatment
+69417ce0a5250a665d7bc47f    1590237
+Name: anonymousId, dtype: int64, total = 1590237
+2026-06-05 15:06:08,006 - root - INFO -   Processing audience: Innkeepr - VMS Search - RTG (693048ca4227124153d15ae9)
+2026-06-05 15:06:08,006 - root - INFO -     Reading s3://68c7cbc952d0b4ef38710f7e/targeting.history/20260605/693048ca4227124153d15ae9.parquet
+2026-06-05 15:06:08,864 - root - INFO -     Loaded 744 rows from date 20260605
+2026-06-05 15:06:08,866 - root - INFO - 693048ca4227124153d15ae9: treatment counts = treatment
+693048ca4227124153d15ae9    744
+Name: anonymousId, dtype: int64, total = 744
+2026-06-05 15:06:08,866 - root - INFO -   Processing audience: Innkeepr - 360d Purchaser - Exclusion - UK (69417d1ca5250a665d7bd58b)
+2026-06-05 15:06:08,866 - root - INFO -     Reading s3://68c7cbc952d0b4ef38710f7e/targeting.history/20260605/69417d1ca5250a665d7bd58b.parquet
+2026-06-05 15:07:09,894 - root - INFO -     Loaded 1918914 rows from date 20260605
+2026-06-05 15:07:10,478 - root - INFO - 69417d1ca5250a665d7bd58b: treatment counts = treatment
+69417d1ca5250a665d7bd58b    1590237
+Name: anonymousId, dtype: int64, total = 1590237
+2026-06-05 15:07:10,478 - root - INFO -   Processing audience: Innkeepr - 90d Brand - Exclusion (69456cdea5250a665df58135)
+2026-06-05 15:07:10,478 - root - INFO -     Reading s3://68c7cbc952d0b4ef38710f7e/targeting.history/20260605/69456cdea5250a665df58135.parquet
+2026-06-05 15:10:39,531 - root - INFO -     Loaded 9214390 rows from date 20260605
+2026-06-05 15:10:44,607 - root - INFO - 69456cdea5250a665df58135: treatment counts = treatment
+69456cdea5250a665df58135    4607195
+control                     4607195
+Name: anonymousId, dtype: int64, total = 9214390
+2026-06-05 15:10:44,631 - root - INFO - 
+Result (40 rows):
+       workspace                                                audience_name               audience_id  audienceSize  count_control_anonymousIds  count_treatment_anonymousIds  percentage targeting_date
+0       LILLYDOO                        Innkeepr - Exclusion - Bestandskunden  6811d9de879ec174109231bd        150000                      427999                        447083    0.510904       20260605
+1       LILLYDOO                              Innkeepr - Seed ES - ValueBased  68cacdfe77b55cfe7478372b        150000                           0                         33642    1.000000       20260605
+2       LILLYDOO                            Innkeepr - Seed CHAT - ValueBased  68cbfcaa77b55cfe74111c89        150000                           0                         33642    1.000000       20260605
+3       LILLYDOO                                    Innkeepr - Seed LSTM - IT  6811dc7e879ec174109280ba        150000                      287030                        150000    0.343226       20260604
+4       LILLYDOO                                       Innkeepr - Seed - LSTM  6811db64879ec17410925ee0        150000                      221266                        150000    0.404023       20260604
+5       LILLYDOO                                       Innkeepr - Seed - CHAT  6811dab9879ec17410924bf4        150000                      591732                        150000    0.202229       20260604
+6       LILLYDOO                                    Innkeepr - Seed LSTM - ES  6811dc2b879ec174109276ca        150000                      287030                        150000    0.343226       20260604
+7       LILLYDOO                              Innkeepr - Exclusion - Standard  6811db14879ec1741092565c        150000                      427999                        427998    0.499999       20260605
+8       LILLYDOO                                 Innkeepr - Seed - ValueBased  6836db0013526dc3d135eb7d        150000                           0                         33642    1.000000       20260605
+9       LILLYDOO                              Innkeepr - Seed IT - ValueBased  6836dbd913526dc3d1360591        150000                           0                         33705    1.000000       20260605
+10      Rosental                                        Innkeepr - EMS - Seed  6980c47ff7564868feb8123d        150000                      461442                        150000    0.245322       20260604
+11      Rosental                                  Innkeepr - EMS - ValueBased  6980c4eaf7564868fec2469d        150000                           0                        102193    1.000000       20260605
+12      Rosental                           Innkeepr - Beauty Doc - ValueBased  6980c50ef7564868fec25101        150000                           0                        102193    1.000000       20260605
+13      Rosental   Innkeepr - NL - BB Reihe - Bestseller - High Impact - Seed  68e926d4b236f67910699632        150000                     1454449                        149982    0.093480       20260604
+14      Rosental                                 Innkeepr - Beauty Doc - Seed  6980c4baf7564868fec23572        150000                     1484731                        149976    0.091745       20260604
+15      Rosental                   Innkeepr - Slow Aging - High Impact - Seed  68d4f82b0dd10e3a312f3bc3        150000                     1484731                        149976    0.091745       20260604
+16      Rosental                                  Innkeepr - LED - ValueBased  68518c65a93b88d67a15d581        150000                           0                         91654    1.000000       20260605
+17      Rosental                        Innkeepr - 360d Purchaser - Exclusion  6980e30ff7564868fe593b93        150000                           0                        247856    1.000000       20260605
+18      Rosental                            Innkeepr - Botanical - ValueBased  68518c34a93b88d67a15d001        150000                           0                         91654    1.000000       20260605
+19      Rosental                  Innkeepr - Beauty Dock - High Impact - Seed  68d4f85a0dd10e3a312f5e4d        150000                     1484731                        149976    0.091745       20260604
+20      Rosental  Innkeepr - NL - Sonstiges - Bestseller - High Impact - Seed  68e92747b236f679106a375c        150000                     1418834                        149968    0.095594       20260604
+21      Rosental                          Innkeepr - 30d Visitors - Exclusion  6980c569f7564868fec26d22        150000                      308200                        308200    0.500000       20260605
+22      Rosental                              Innkeepr - Exclusion - Lifetime  68302cd3ef02595b6bea4be9        150000                     1451105                       1450877    0.499961       20260605
+23      Rosental                                   Innkeepr - LED Mask - Seed  678a5ca0f3abb5123264a902        150000                     1418822                        149980    0.095602       20260604
+24      Rosental                         Innkeepr - BLEM - High Impact - Seed  67f61f9f0b17ce11bdc8960e        150000                     1418831                        149971    0.095596       20260604
+25      Rosental                                  Innkeepr - Exclusion - 365d  68302c5bef02595b6bea3cb5        150000                     1451105                       1450877    0.499961       20260605
+26      Rosental                               Innkeepr - Low AOV - Exclusion  67bc16baaaa1eaa63251f771        150000                     1422938                       1422739    0.499965       20260605
+27  Störtebekker                           Innkeepr - Probierset - ValueBased  69f34a5f51f70b57e43153b5        150000                           0                         22040    1.000000       20260605
+28  Störtebekker                          Innkeepr - 30d Visitors - Exclusion  69ef864850b5382f00c19928        150000                       71557                         71556    0.499997       20260605
+29  Störtebekker                        Innkeepr - 360d Purchaser - Exclusion  69ef865450b5382f00c28675        150000                           0                         20302    1.000000       20260605
+30  Störtebekker                             Innkeepr - Duschset - ValueBased  69f34a7151f70b57e4315623        150000                           0                         21986    1.000000       20260605
+31  Störtebekker                       Innkeepr - 30-90d Visitors - Exclusion  6a1dbe801370504ba657b511        150000                       56814                         56814    0.500000       20260605
+32          More                        Innkeepr - 360d Purchaser - Exclusion  68e3fa51120f694f53a5f863        150000                           0                       1590237    1.000000       20260605
+33          More                     Innkeepr - 30d Visitors - Exclusion - NL  69417cf5a5250a665d7bca71        150000                     5724775                       5724774    0.500000       20260605
+34          More                          Innkeepr - 30d Visitors - Exclusion  68e3fa6c120f694f53a63059        150000                     3046428                       3046427    0.500000       20260605
+35          More                     Innkeepr - 30d Visitors - Exclusion - UK  69417d0ca5250a665d7bd0d8        150000                     5724775                       5724774    0.500000       20260605
+36          More                   Innkeepr - 360d Purchaser - Exclusion - NL  69417ce0a5250a665d7bc47f        150000                           0                       1590237    1.000000       20260605
+37          More                                  Innkeepr - VMS Search - RTG  693048ca4227124153d15ae9        150000                           0                           744    1.000000       20260605
+38          More                   Innkeepr - 360d Purchaser - Exclusion - UK  69417d1ca5250a665d7bd58b        150000                           0                       1590237    1.000000       20260605
+39          More                             Innkeepr - 90d Brand - Exclusion  69456cdea5250a665df58135        150000                     4607195                       4607195    0.500000       20260605
+2026-06-05 15:10:44,678 - root - INFO - === Workspace: ESN (68b9534c5287866a2c94a8f5) ===
+2026-06-05 15:10:44,679 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 15:10:44,946 - root - INFO - Fetched 32 elements
+2026-06-05 15:10:44,958 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 15:10:45,102 - root - INFO - Fetched 4 elements
+2026-06-05 15:10:45,115 - root - INFO -   Active audiences: 17
+2026-06-05 15:10:45,115 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:45,267 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:45,268 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:45,399 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:45,400 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:45,529 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:45,529 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:45,668 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:45,669 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:45,815 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:45,815 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:45,955 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:45,956 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:46,095 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:46,095 - root - INFO -   Audience 69c2c41df56dab973544d7aa (Innkeepr - 30d Visitors - Exclusion - NL) — model 6a1e439504dc34e56c4ab531 missing audienceSizePercentage
+2026-06-05 15:10:46,096 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:46,249 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:46,250 - root - INFO -   Audience 69c2c432f56dab973544de2f (Innkeepr - 360d Purchaser - Exclusion - NL) — model 6a1e44be04dc34e56c4ab541 missing audienceSizePercentage
+2026-06-05 15:10:46,251 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:46,398 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:46,399 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:46,560 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:46,561 - root - INFO -   Audience 69c2c460f56dab973544ebac (Innkeepr - 360d Purchaser - Exclusion - FR) — model 6a1e34334f8a22eab02b4e8a missing audienceSizePercentage
+2026-06-05 15:10:46,561 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:46,714 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:46,715 - root - INFO -   Audience 69c2c46df56dab97354f0225 (Innkeepr - 30-90d Visitors - Exclusion - FR) — model 6a1e52b504dc34e56c4ab605 missing audienceSizePercentage
+2026-06-05 15:10:46,715 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:46,844 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:46,844 - root - INFO -   Audience 69c2c47af56dab97354f044d (Innkeepr - 30-90d Visitors - Exclusion - CH) — model 6a1e31734f8a22eab02b4e89 missing audienceSizePercentage
+2026-06-05 15:10:46,844 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:46,986 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:46,986 - root - INFO -   Audience 69c2c48ef56dab97354f0aef (Innkeepr - 360d Purchaser - Exclusion - CH) — model 6a1e47214f8a22eab02b4f6f missing audienceSizePercentage
+2026-06-05 15:10:46,986 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:47,132 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:47,132 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:47,277 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:47,277 - root - INFO -   Audience 68dd4512120f694f539c0faa (Innkeepr - 360d Purchaser - Exclusion) — model 6a1e2ddc82c8f2e30d0aebf1 missing audienceSizePercentage
+2026-06-05 15:10:47,277 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:47,420 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:47,421 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:10:47,562 - root - INFO - Fetched 1 elements
+2026-06-05 15:10:47,562 - root - INFO -   Audiences missing audienceSizePercentage: 7
+2026-06-05 15:10:47,785 - root - INFO -   Most recent targeting history date: 20260605
+2026-06-05 15:10:47,786 - root - INFO -   Processing audience: Innkeepr - 30d Visitors - Exclusion - NL (69c2c41df56dab973544d7aa)
+2026-06-05 15:10:47,786 - root - INFO -     Reading s3://68b9534c5287866a2c94a8f5/targeting.history/20260605/69c2c41df56dab973544d7aa.parquet
+2026-06-05 15:14:49,709 - root - INFO -     Loaded 10118666 rows from date 20260605
+2026-06-05 15:14:55,175 - root - INFO - 69c2c41df56dab973544d7aa: treatment counts = treatment
+69c2c41df56dab973544d7aa    5059333
+control                     5059333
+Name: anonymousId, dtype: int64, total = 10118666
+2026-06-05 15:14:55,176 - root - INFO -   Processing audience: Innkeepr - 360d Purchaser - Exclusion - NL (69c2c432f56dab973544de2f)
+2026-06-05 15:14:55,176 - root - INFO -     Reading s3://68b9534c5287866a2c94a8f5/targeting.history/20260605/69c2c432f56dab973544de2f.parquet
+2026-06-05 15:16:04,867 - root - INFO -     Loaded 2101875 rows from date 20260605
+2026-06-05 15:16:05,735 - root - INFO - 69c2c432f56dab973544de2f: treatment counts = treatment
+69c2c432f56dab973544de2f    1827230
+Name: anonymousId, dtype: int64, total = 1827230
+2026-06-05 15:16:05,736 - root - INFO -   Processing audience: Innkeepr - 360d Purchaser - Exclusion - FR (69c2c460f56dab973544ebac)
+2026-06-05 15:16:05,736 - root - INFO -     Reading s3://68b9534c5287866a2c94a8f5/targeting.history/20260605/69c2c460f56dab973544ebac.parquet
+2026-06-05 15:17:07,991 - root - INFO -     Loaded 2101875 rows from date 20260605
+2026-06-05 15:17:08,798 - root - INFO - 69c2c460f56dab973544ebac: treatment counts = treatment
+69c2c460f56dab973544ebac    1827230
+Name: anonymousId, dtype: int64, total = 1827230
+2026-06-05 15:17:08,798 - root - INFO -   Processing audience: Innkeepr - 30-90d Visitors - Exclusion - FR (69c2c46df56dab97354f0225)
+2026-06-05 15:17:08,798 - root - INFO -     Reading s3://68b9534c5287866a2c94a8f5/targeting.history/20260605/69c2c46df56dab97354f0225.parquet
+2026-06-05 15:20:44,773 - root - INFO -     Loaded 10118640 rows from date 20260605
+2026-06-05 15:20:49,451 - root - INFO - 69c2c46df56dab97354f0225: treatment counts = treatment
+69c2c46df56dab97354f0225    5059320
+control                     5059320
+Name: anonymousId, dtype: int64, total = 10118640
+2026-06-05 15:20:49,451 - root - INFO -   Processing audience: Innkeepr - 30-90d Visitors - Exclusion - CH (69c2c47af56dab97354f044d)
+2026-06-05 15:20:49,451 - root - INFO -     Reading s3://68b9534c5287866a2c94a8f5/targeting.history/20260605/69c2c47af56dab97354f044d.parquet
+2026-06-05 15:25:06,222 - root - INFO -     Loaded 10118666 rows from date 20260605
+2026-06-05 15:25:11,155 - root - INFO - 69c2c47af56dab97354f044d: treatment counts = treatment
+69c2c47af56dab97354f044d    5059333
+control                     5059333
+Name: anonymousId, dtype: int64, total = 10118666
+2026-06-05 15:25:11,155 - root - INFO -   Processing audience: Innkeepr - 360d Purchaser - Exclusion - CH (69c2c48ef56dab97354f0aef)
+2026-06-05 15:25:11,155 - root - INFO -     Reading s3://68b9534c5287866a2c94a8f5/targeting.history/20260605/69c2c48ef56dab97354f0aef.parquet
+2026-06-05 15:26:17,248 - root - INFO -     Loaded 2101875 rows from date 20260605
+2026-06-05 15:26:18,060 - root - INFO - 69c2c48ef56dab97354f0aef: treatment counts = treatment
+69c2c48ef56dab97354f0aef    1827230
+Name: anonymousId, dtype: int64, total = 1827230
+2026-06-05 15:26:18,060 - root - INFO -   Processing audience: Innkeepr - 360d Purchaser - Exclusion (68dd4512120f694f539c0faa)
+2026-06-05 15:26:18,060 - root - INFO -     Reading s3://68b9534c5287866a2c94a8f5/targeting.history/20260605/68dd4512120f694f539c0faa.parquet
+2026-06-05 15:27:19,789 - root - INFO -     Loaded 2101875 rows from date 20260605
+2026-06-05 15:27:20,635 - root - INFO - 68dd4512120f694f539c0faa: treatment counts = treatment
+68dd4512120f694f539c0faa    1827230
+Name: anonymousId, dtype: int64, total = 1827230
+2026-06-05 15:27:20,644 - root - INFO - 
+Result (47 rows):
+       workspace                                                audience_name               audience_id  audienceSize  count_control_anonymousIds  count_treatment_anonymousIds  percentage targeting_date
+0       LILLYDOO                        Innkeepr - Exclusion - Bestandskunden  6811d9de879ec174109231bd        150000                      427999                        447083    0.510904       20260605
+1       LILLYDOO                              Innkeepr - Seed ES - ValueBased  68cacdfe77b55cfe7478372b        150000                           0                         33642    1.000000       20260605
+2       LILLYDOO                            Innkeepr - Seed CHAT - ValueBased  68cbfcaa77b55cfe74111c89        150000                           0                         33642    1.000000       20260605
+3       LILLYDOO                                    Innkeepr - Seed LSTM - IT  6811dc7e879ec174109280ba        150000                      287030                        150000    0.343226       20260604
+4       LILLYDOO                                       Innkeepr - Seed - LSTM  6811db64879ec17410925ee0        150000                      221266                        150000    0.404023       20260604
+5       LILLYDOO                                       Innkeepr - Seed - CHAT  6811dab9879ec17410924bf4        150000                      591732                        150000    0.202229       20260604
+6       LILLYDOO                                    Innkeepr - Seed LSTM - ES  6811dc2b879ec174109276ca        150000                      287030                        150000    0.343226       20260604
+7       LILLYDOO                              Innkeepr - Exclusion - Standard  6811db14879ec1741092565c        150000                      427999                        427998    0.499999       20260605
+8       LILLYDOO                                 Innkeepr - Seed - ValueBased  6836db0013526dc3d135eb7d        150000                           0                         33642    1.000000       20260605
+9       LILLYDOO                              Innkeepr - Seed IT - ValueBased  6836dbd913526dc3d1360591        150000                           0                         33705    1.000000       20260605
+10      Rosental                                        Innkeepr - EMS - Seed  6980c47ff7564868feb8123d        150000                      461442                        150000    0.245322       20260604
+11      Rosental                                  Innkeepr - EMS - ValueBased  6980c4eaf7564868fec2469d        150000                           0                        102193    1.000000       20260605
+12      Rosental                           Innkeepr - Beauty Doc - ValueBased  6980c50ef7564868fec25101        150000                           0                        102193    1.000000       20260605
+13      Rosental   Innkeepr - NL - BB Reihe - Bestseller - High Impact - Seed  68e926d4b236f67910699632        150000                     1454449                        149982    0.093480       20260604
+14      Rosental                                 Innkeepr - Beauty Doc - Seed  6980c4baf7564868fec23572        150000                     1484731                        149976    0.091745       20260604
+15      Rosental                   Innkeepr - Slow Aging - High Impact - Seed  68d4f82b0dd10e3a312f3bc3        150000                     1484731                        149976    0.091745       20260604
+16      Rosental                                  Innkeepr - LED - ValueBased  68518c65a93b88d67a15d581        150000                           0                         91654    1.000000       20260605
+17      Rosental                        Innkeepr - 360d Purchaser - Exclusion  6980e30ff7564868fe593b93        150000                           0                        247856    1.000000       20260605
+18      Rosental                            Innkeepr - Botanical - ValueBased  68518c34a93b88d67a15d001        150000                           0                         91654    1.000000       20260605
+19      Rosental                  Innkeepr - Beauty Dock - High Impact - Seed  68d4f85a0dd10e3a312f5e4d        150000                     1484731                        149976    0.091745       20260604
+20      Rosental  Innkeepr - NL - Sonstiges - Bestseller - High Impact - Seed  68e92747b236f679106a375c        150000                     1418834                        149968    0.095594       20260604
+21      Rosental                          Innkeepr - 30d Visitors - Exclusion  6980c569f7564868fec26d22        150000                      308200                        308200    0.500000       20260605
+22      Rosental                              Innkeepr - Exclusion - Lifetime  68302cd3ef02595b6bea4be9        150000                     1451105                       1450877    0.499961       20260605
+23      Rosental                                   Innkeepr - LED Mask - Seed  678a5ca0f3abb5123264a902        150000                     1418822                        149980    0.095602       20260604
+24      Rosental                         Innkeepr - BLEM - High Impact - Seed  67f61f9f0b17ce11bdc8960e        150000                     1418831                        149971    0.095596       20260604
+25      Rosental                                  Innkeepr - Exclusion - 365d  68302c5bef02595b6bea3cb5        150000                     1451105                       1450877    0.499961       20260605
+26      Rosental                               Innkeepr - Low AOV - Exclusion  67bc16baaaa1eaa63251f771        150000                     1422938                       1422739    0.499965       20260605
+27  Störtebekker                           Innkeepr - Probierset - ValueBased  69f34a5f51f70b57e43153b5        150000                           0                         22040    1.000000       20260605
+28  Störtebekker                          Innkeepr - 30d Visitors - Exclusion  69ef864850b5382f00c19928        150000                       71557                         71556    0.499997       20260605
+29  Störtebekker                        Innkeepr - 360d Purchaser - Exclusion  69ef865450b5382f00c28675        150000                           0                         20302    1.000000       20260605
+30  Störtebekker                             Innkeepr - Duschset - ValueBased  69f34a7151f70b57e4315623        150000                           0                         21986    1.000000       20260605
+31  Störtebekker                       Innkeepr - 30-90d Visitors - Exclusion  6a1dbe801370504ba657b511        150000                       56814                         56814    0.500000       20260605
+32          More                        Innkeepr - 360d Purchaser - Exclusion  68e3fa51120f694f53a5f863        150000                           0                       1590237    1.000000       20260605
+33          More                     Innkeepr - 30d Visitors - Exclusion - NL  69417cf5a5250a665d7bca71        150000                     5724775                       5724774    0.500000       20260605
+34          More                          Innkeepr - 30d Visitors - Exclusion  68e3fa6c120f694f53a63059        150000                     3046428                       3046427    0.500000       20260605
+35          More                     Innkeepr - 30d Visitors - Exclusion - UK  69417d0ca5250a665d7bd0d8        150000                     5724775                       5724774    0.500000       20260605
+36          More                   Innkeepr - 360d Purchaser - Exclusion - NL  69417ce0a5250a665d7bc47f        150000                           0                       1590237    1.000000       20260605
+37          More                                  Innkeepr - VMS Search - RTG  693048ca4227124153d15ae9        150000                           0                           744    1.000000       20260605
+38          More                   Innkeepr - 360d Purchaser - Exclusion - UK  69417d1ca5250a665d7bd58b        150000                           0                       1590237    1.000000       20260605
+39          More                             Innkeepr - 90d Brand - Exclusion  69456cdea5250a665df58135        150000                     4607195                       4607195    0.500000       20260605
+40           ESN                     Innkeepr - 30d Visitors - Exclusion - NL  69c2c41df56dab973544d7aa        150000                     5059333                       5059333    0.500000       20260605
+41           ESN                   Innkeepr - 360d Purchaser - Exclusion - NL  69c2c432f56dab973544de2f        150000                           0                       1827230    1.000000       20260605
+42           ESN                   Innkeepr - 360d Purchaser - Exclusion - FR  69c2c460f56dab973544ebac        150000                           0                       1827230    1.000000       20260605
+43           ESN                  Innkeepr - 30-90d Visitors - Exclusion - FR  69c2c46df56dab97354f0225        150000                     5059320                       5059320    0.500000       20260605
+44           ESN                  Innkeepr - 30-90d Visitors - Exclusion - CH  69c2c47af56dab97354f044d        150000                     5059333                       5059333    0.500000       20260605
+45           ESN                   Innkeepr - 360d Purchaser - Exclusion - CH  69c2c48ef56dab97354f0aef        150000                           0                       1827230    1.000000       20260605
+46           ESN                        Innkeepr - 360d Purchaser - Exclusion  68dd4512120f694f539c0faa        150000                           0                       1827230    1.000000       20260605
+2026-06-05 15:27:20,659 - root - INFO - === Workspace: Plantura (69318836f827510c349e1839) ===
+2026-06-05 15:27:20,659 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 15:27:20,819 - root - INFO - Fetched 16 elements
+2026-06-05 15:27:20,821 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 15:27:20,960 - root - INFO - Fetched 5 elements
+2026-06-05 15:27:20,970 - root - INFO -   Active audiences: 16
+2026-06-05 15:27:20,970 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:21,141 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:21,141 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:21,285 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:21,286 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:21,433 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:21,434 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:21,594 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:21,595 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:21,734 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:21,735 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:21,890 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:21,890 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:22,030 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:22,031 - root - INFO -   Audience 699ea514f904fb1302a181f8 (Innkeepr - 30d Visitor - Exclusion) — model 6a20dd9b04dc34e56c4ac11a missing audienceSizePercentage
+2026-06-05 15:27:22,031 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:22,181 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:22,181 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:22,334 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:22,334 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:22,516 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:22,516 - root - INFO -   Audience 699ea502f904fb1302a17de7 (Innkeepr - 360d Purchaser - Exclusion) — model 6a2223ce04dc34e56c4acb8b missing audienceSizePercentage
+2026-06-05 15:27:22,517 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:22,670 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:22,671 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:22,819 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:22,820 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:22,977 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:22,979 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:23,133 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:23,133 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:23,286 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:23,286 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:23,434 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:23,434 - root - INFO -   Audiences missing audienceSizePercentage: 2
+2026-06-05 15:27:23,604 - root - INFO -   Most recent targeting history date: 20260605
+2026-06-05 15:27:23,605 - root - INFO -   Processing audience: Innkeepr - 30d Visitor - Exclusion (699ea514f904fb1302a181f8)
+2026-06-05 15:27:23,605 - root - INFO -     Reading s3://69318836f827510c349e1839/targeting.history/20260605/699ea514f904fb1302a181f8.parquet
+2026-06-05 15:27:40,927 - root - INFO -     Loaded 905252 rows from date 20260605
+2026-06-05 15:27:41,097 - root - INFO - 699ea514f904fb1302a181f8: treatment counts = treatment
+699ea514f904fb1302a181f8    452626
+control                     452626
+Name: anonymousId, dtype: int64, total = 905252
+2026-06-05 15:27:41,097 - root - INFO -   Processing audience: Innkeepr - 360d Purchaser - Exclusion (699ea502f904fb1302a17de7)
+2026-06-05 15:27:41,097 - root - INFO -     Reading s3://69318836f827510c349e1839/targeting.history/20260605/699ea502f904fb1302a17de7.parquet
+2026-06-05 15:27:45,174 - root - INFO -     Loaded 80706 rows from date 20260605
+2026-06-05 15:27:45,191 - root - INFO - 699ea502f904fb1302a17de7: treatment counts = treatment
+699ea502f904fb1302a17de7    76293
+Name: anonymousId, dtype: int64, total = 76293
+2026-06-05 15:27:45,193 - root - INFO - 
+Result (49 rows):
+       workspace                                                audience_name               audience_id  audienceSize  count_control_anonymousIds  count_treatment_anonymousIds  percentage targeting_date
+0       LILLYDOO                        Innkeepr - Exclusion - Bestandskunden  6811d9de879ec174109231bd        150000                      427999                        447083    0.510904       20260605
+1       LILLYDOO                              Innkeepr - Seed ES - ValueBased  68cacdfe77b55cfe7478372b        150000                           0                         33642    1.000000       20260605
+2       LILLYDOO                            Innkeepr - Seed CHAT - ValueBased  68cbfcaa77b55cfe74111c89        150000                           0                         33642    1.000000       20260605
+3       LILLYDOO                                    Innkeepr - Seed LSTM - IT  6811dc7e879ec174109280ba        150000                      287030                        150000    0.343226       20260604
+4       LILLYDOO                                       Innkeepr - Seed - LSTM  6811db64879ec17410925ee0        150000                      221266                        150000    0.404023       20260604
+5       LILLYDOO                                       Innkeepr - Seed - CHAT  6811dab9879ec17410924bf4        150000                      591732                        150000    0.202229       20260604
+6       LILLYDOO                                    Innkeepr - Seed LSTM - ES  6811dc2b879ec174109276ca        150000                      287030                        150000    0.343226       20260604
+7       LILLYDOO                              Innkeepr - Exclusion - Standard  6811db14879ec1741092565c        150000                      427999                        427998    0.499999       20260605
+8       LILLYDOO                                 Innkeepr - Seed - ValueBased  6836db0013526dc3d135eb7d        150000                           0                         33642    1.000000       20260605
+9       LILLYDOO                              Innkeepr - Seed IT - ValueBased  6836dbd913526dc3d1360591        150000                           0                         33705    1.000000       20260605
+10      Rosental                                        Innkeepr - EMS - Seed  6980c47ff7564868feb8123d        150000                      461442                        150000    0.245322       20260604
+11      Rosental                                  Innkeepr - EMS - ValueBased  6980c4eaf7564868fec2469d        150000                           0                        102193    1.000000       20260605
+12      Rosental                           Innkeepr - Beauty Doc - ValueBased  6980c50ef7564868fec25101        150000                           0                        102193    1.000000       20260605
+13      Rosental   Innkeepr - NL - BB Reihe - Bestseller - High Impact - Seed  68e926d4b236f67910699632        150000                     1454449                        149982    0.093480       20260604
+14      Rosental                                 Innkeepr - Beauty Doc - Seed  6980c4baf7564868fec23572        150000                     1484731                        149976    0.091745       20260604
+15      Rosental                   Innkeepr - Slow Aging - High Impact - Seed  68d4f82b0dd10e3a312f3bc3        150000                     1484731                        149976    0.091745       20260604
+16      Rosental                                  Innkeepr - LED - ValueBased  68518c65a93b88d67a15d581        150000                           0                         91654    1.000000       20260605
+17      Rosental                        Innkeepr - 360d Purchaser - Exclusion  6980e30ff7564868fe593b93        150000                           0                        247856    1.000000       20260605
+18      Rosental                            Innkeepr - Botanical - ValueBased  68518c34a93b88d67a15d001        150000                           0                         91654    1.000000       20260605
+19      Rosental                  Innkeepr - Beauty Dock - High Impact - Seed  68d4f85a0dd10e3a312f5e4d        150000                     1484731                        149976    0.091745       20260604
+20      Rosental  Innkeepr - NL - Sonstiges - Bestseller - High Impact - Seed  68e92747b236f679106a375c        150000                     1418834                        149968    0.095594       20260604
+21      Rosental                          Innkeepr - 30d Visitors - Exclusion  6980c569f7564868fec26d22        150000                      308200                        308200    0.500000       20260605
+22      Rosental                              Innkeepr - Exclusion - Lifetime  68302cd3ef02595b6bea4be9        150000                     1451105                       1450877    0.499961       20260605
+23      Rosental                                   Innkeepr - LED Mask - Seed  678a5ca0f3abb5123264a902        150000                     1418822                        149980    0.095602       20260604
+24      Rosental                         Innkeepr - BLEM - High Impact - Seed  67f61f9f0b17ce11bdc8960e        150000                     1418831                        149971    0.095596       20260604
+25      Rosental                                  Innkeepr - Exclusion - 365d  68302c5bef02595b6bea3cb5        150000                     1451105                       1450877    0.499961       20260605
+26      Rosental                               Innkeepr - Low AOV - Exclusion  67bc16baaaa1eaa63251f771        150000                     1422938                       1422739    0.499965       20260605
+27  Störtebekker                           Innkeepr - Probierset - ValueBased  69f34a5f51f70b57e43153b5        150000                           0                         22040    1.000000       20260605
+28  Störtebekker                          Innkeepr - 30d Visitors - Exclusion  69ef864850b5382f00c19928        150000                       71557                         71556    0.499997       20260605
+29  Störtebekker                        Innkeepr - 360d Purchaser - Exclusion  69ef865450b5382f00c28675        150000                           0                         20302    1.000000       20260605
+30  Störtebekker                             Innkeepr - Duschset - ValueBased  69f34a7151f70b57e4315623        150000                           0                         21986    1.000000       20260605
+31  Störtebekker                       Innkeepr - 30-90d Visitors - Exclusion  6a1dbe801370504ba657b511        150000                       56814                         56814    0.500000       20260605
+32          More                        Innkeepr - 360d Purchaser - Exclusion  68e3fa51120f694f53a5f863        150000                           0                       1590237    1.000000       20260605
+33          More                     Innkeepr - 30d Visitors - Exclusion - NL  69417cf5a5250a665d7bca71        150000                     5724775                       5724774    0.500000       20260605
+34          More                          Innkeepr - 30d Visitors - Exclusion  68e3fa6c120f694f53a63059        150000                     3046428                       3046427    0.500000       20260605
+35          More                     Innkeepr - 30d Visitors - Exclusion - UK  69417d0ca5250a665d7bd0d8        150000                     5724775                       5724774    0.500000       20260605
+36          More                   Innkeepr - 360d Purchaser - Exclusion - NL  69417ce0a5250a665d7bc47f        150000                           0                       1590237    1.000000       20260605
+37          More                                  Innkeepr - VMS Search - RTG  693048ca4227124153d15ae9        150000                           0                           744    1.000000       20260605
+38          More                   Innkeepr - 360d Purchaser - Exclusion - UK  69417d1ca5250a665d7bd58b        150000                           0                       1590237    1.000000       20260605
+39          More                             Innkeepr - 90d Brand - Exclusion  69456cdea5250a665df58135        150000                     4607195                       4607195    0.500000       20260605
+40           ESN                     Innkeepr - 30d Visitors - Exclusion - NL  69c2c41df56dab973544d7aa        150000                     5059333                       5059333    0.500000       20260605
+41           ESN                   Innkeepr - 360d Purchaser - Exclusion - NL  69c2c432f56dab973544de2f        150000                           0                       1827230    1.000000       20260605
+42           ESN                   Innkeepr - 360d Purchaser - Exclusion - FR  69c2c460f56dab973544ebac        150000                           0                       1827230    1.000000       20260605
+43           ESN                  Innkeepr - 30-90d Visitors - Exclusion - FR  69c2c46df56dab97354f0225        150000                     5059320                       5059320    0.500000       20260605
+44           ESN                  Innkeepr - 30-90d Visitors - Exclusion - CH  69c2c47af56dab97354f044d        150000                     5059333                       5059333    0.500000       20260605
+45           ESN                   Innkeepr - 360d Purchaser - Exclusion - CH  69c2c48ef56dab97354f0aef        150000                           0                       1827230    1.000000       20260605
+46           ESN                        Innkeepr - 360d Purchaser - Exclusion  68dd4512120f694f539c0faa        150000                           0                       1827230    1.000000       20260605
+47      Plantura                           Innkeepr - 30d Visitor - Exclusion  699ea514f904fb1302a181f8        150000                      452626                        452626    0.500000       20260605
+48      Plantura                        Innkeepr - 360d Purchaser - Exclusion  699ea502f904fb1302a17de7        150000                           0                         76293    1.000000       20260605
+2026-06-05 15:27:45,194 - root - INFO - === Workspace: Innkeepr (65531eea5147b583288c6c26) ===
+2026-06-05 15:27:45,194 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 15:27:45,323 - root - INFO - Fetched 2 elements
+2026-06-05 15:27:45,325 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 15:27:45,460 - root - INFO - Fetched 5 elements
+2026-06-05 15:27:45,468 - root - INFO -   Active audiences: 2
+2026-06-05 15:27:45,468 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:45,609 - root - INFO - Fetched 0 elements
+2026-06-05 15:27:45,610 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:45,751 - root - INFO - Fetched 0 elements
+2026-06-05 15:27:45,752 - root - INFO -   Audiences missing audienceSizePercentage: 0
+2026-06-05 15:27:45,752 - root - INFO - === Workspace: MissPompadour GmbH (69c682f3f7cc7ee4f85c9aac) ===
+2026-06-05 15:27:45,752 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 15:27:45,899 - root - INFO - Fetched 11 elements
+2026-06-05 15:27:45,904 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 15:27:46,046 - root - INFO - Fetched 4 elements
+2026-06-05 15:27:46,053 - root - INFO -   Active audiences: 11
+2026-06-05 15:27:46,054 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:46,209 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:46,209 - root - INFO -   Audience 6a1efe081370504ba68c9581 (Innkeepr – Bestperformer – Seed – Volume t20–30) — model 6a202dce04dc34e56c4abcb4 missing audienceSizePercentage
+2026-06-05 15:27:46,210 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:46,372 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:46,373 - root - INFO -   Audience 6a1efdf91370504ba68c933e (Innkeepr – Bestperformer – Seed – Growth t10–20) — model 6a202dc382c8f2e30d0af393 missing audienceSizePercentage
+2026-06-05 15:27:46,373 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:46,526 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:46,526 - root - INFO -   Audience 6a1efdb61370504ba68c8ad0 (Innkeepr - 360d Purchaser - Exclusion) — model 6a202e0d4f8a22eab02b592d missing audienceSizePercentage
+2026-06-05 15:27:46,527 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:46,677 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:46,678 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:46,820 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:46,821 - root - INFO -   Audience 6a1efda51370504ba68c88f7 (Innkeepr - 30d Visitors - Exclusion) — model 6a1fd3764f8a22eab02b592b missing audienceSizePercentage
+2026-06-05 15:27:46,822 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:46,974 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:46,975 - root - INFO -   Audience 6a1efde71370504ba68c916e (Innkeepr – Bestperformer – Seed – Premium t0–10) — model 6a202bc682c8f2e30d0af392 missing audienceSizePercentage
+2026-06-05 15:27:46,976 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:47,123 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:47,124 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:47,275 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:47,276 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:47,426 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:47,427 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:47,579 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:47,580 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:27:47,721 - root - INFO - Fetched 1 elements
+2026-06-05 15:27:47,721 - root - INFO -   Audiences missing audienceSizePercentage: 5
+2026-06-05 15:27:47,882 - root - INFO -   Most recent targeting history date: 20260605
+2026-06-05 15:27:47,883 - root - INFO -   Processing audience: Innkeepr – Bestperformer – Seed – Volume t20–30 (6a1efe081370504ba68c9581)
+2026-06-05 15:27:47,883 - root - INFO -     Reading s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260605/6a1efe081370504ba68c9581.parquet
+2026-06-05 15:27:48,028 - root - WARNING -     Could not read s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260605/6a1efe081370504ba68c9581.parquet: No files Found on: s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260605/6a1efe081370504ba68c9581.parquet.
+2026-06-05 15:27:48,032 - root - INFO -     Reading s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260604/6a1efe081370504ba68c9581.parquet
+2026-06-05 15:27:57,610 - root - INFO -     Loaded 509854 rows from date 20260604
+2026-06-05 15:27:57,699 - root - INFO - 6a1efe081370504ba68c9581: treatment counts = treatment
+6a1efe081370504ba68c9581     56288
+control                     453566
+Name: anonymousId, dtype: int64, total = 509854
+2026-06-05 15:27:57,699 - root - INFO -   Processing audience: Innkeepr – Bestperformer – Seed – Growth t10–20 (6a1efdf91370504ba68c933e)
+2026-06-05 15:27:57,699 - root - INFO -     Reading s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260605/6a1efdf91370504ba68c933e.parquet
+2026-06-05 15:27:57,825 - root - WARNING -     Could not read s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260605/6a1efdf91370504ba68c933e.parquet: No files Found on: s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260605/6a1efdf91370504ba68c933e.parquet.
+2026-06-05 15:27:57,825 - root - INFO -     Reading s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260604/6a1efdf91370504ba68c933e.parquet
+2026-06-05 15:28:07,347 - root - INFO -     Loaded 509854 rows from date 20260604
+2026-06-05 15:28:07,435 - root - INFO - 6a1efdf91370504ba68c933e: treatment counts = treatment
+6a1efdf91370504ba68c933e     56288
+control                     453566
+Name: anonymousId, dtype: int64, total = 509854
+2026-06-05 15:28:07,435 - root - INFO -   Processing audience: Innkeepr - 360d Purchaser - Exclusion (6a1efdb61370504ba68c8ad0)
+2026-06-05 15:28:07,435 - root - INFO -     Reading s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260605/6a1efdb61370504ba68c8ad0.parquet
+2026-06-05 15:28:08,711 - root - INFO -     Loaded 22211 rows from date 20260605
+2026-06-05 15:28:08,717 - root - INFO - 6a1efdb61370504ba68c8ad0: treatment counts = treatment
+6a1efdb61370504ba68c8ad0    18025
+Name: anonymousId, dtype: int64, total = 18025
+2026-06-05 15:28:08,717 - root - INFO -   Processing audience: Innkeepr - 30d Visitors - Exclusion (6a1efda51370504ba68c88f7)
+2026-06-05 15:28:08,717 - root - INFO -     Reading s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260605/6a1efda51370504ba68c88f7.parquet
+2026-06-05 15:28:13,290 - root - INFO -     Loaded 233140 rows from date 20260605
+2026-06-05 15:28:13,330 - root - INFO - 6a1efda51370504ba68c88f7: treatment counts = treatment
+6a1efda51370504ba68c88f7    116570
+control                     116570
+Name: anonymousId, dtype: int64, total = 233140
+2026-06-05 15:28:13,330 - root - INFO -   Processing audience: Innkeepr – Bestperformer – Seed – Premium t0–10 (6a1efde71370504ba68c916e)
+2026-06-05 15:28:13,330 - root - INFO -     Reading s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260605/6a1efde71370504ba68c916e.parquet
+2026-06-05 15:28:13,464 - root - WARNING -     Could not read s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260605/6a1efde71370504ba68c916e.parquet: No files Found on: s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260605/6a1efde71370504ba68c916e.parquet.
+2026-06-05 15:28:13,465 - root - INFO -     Reading s3://69c682f3f7cc7ee4f85c9aac/targeting.history/20260604/6a1efde71370504ba68c916e.parquet
+2026-06-05 15:28:19,724 - root - INFO -     Loaded 310136 rows from date 20260604
+2026-06-05 15:28:19,777 - root - INFO - 6a1efde71370504ba68c916e: treatment counts = treatment
+6a1efde71370504ba68c916e     35046
+control                     275090
+Name: anonymousId, dtype: int64, total = 310136
+2026-06-05 15:28:19,779 - root - INFO - 
+Result (54 rows):
+             workspace                                                audience_name               audience_id  audienceSize  count_control_anonymousIds  count_treatment_anonymousIds  percentage targeting_date
+0             LILLYDOO                        Innkeepr - Exclusion - Bestandskunden  6811d9de879ec174109231bd        150000                      427999                        447083    0.510904       20260605
+1             LILLYDOO                              Innkeepr - Seed ES - ValueBased  68cacdfe77b55cfe7478372b        150000                           0                         33642    1.000000       20260605
+2             LILLYDOO                            Innkeepr - Seed CHAT - ValueBased  68cbfcaa77b55cfe74111c89        150000                           0                         33642    1.000000       20260605
+3             LILLYDOO                                    Innkeepr - Seed LSTM - IT  6811dc7e879ec174109280ba        150000                      287030                        150000    0.343226       20260604
+4             LILLYDOO                                       Innkeepr - Seed - LSTM  6811db64879ec17410925ee0        150000                      221266                        150000    0.404023       20260604
+5             LILLYDOO                                       Innkeepr - Seed - CHAT  6811dab9879ec17410924bf4        150000                      591732                        150000    0.202229       20260604
+6             LILLYDOO                                    Innkeepr - Seed LSTM - ES  6811dc2b879ec174109276ca        150000                      287030                        150000    0.343226       20260604
+7             LILLYDOO                              Innkeepr - Exclusion - Standard  6811db14879ec1741092565c        150000                      427999                        427998    0.499999       20260605
+8             LILLYDOO                                 Innkeepr - Seed - ValueBased  6836db0013526dc3d135eb7d        150000                           0                         33642    1.000000       20260605
+9             LILLYDOO                              Innkeepr - Seed IT - ValueBased  6836dbd913526dc3d1360591        150000                           0                         33705    1.000000       20260605
+10            Rosental                                        Innkeepr - EMS - Seed  6980c47ff7564868feb8123d        150000                      461442                        150000    0.245322       20260604
+11            Rosental                                  Innkeepr - EMS - ValueBased  6980c4eaf7564868fec2469d        150000                           0                        102193    1.000000       20260605
+12            Rosental                           Innkeepr - Beauty Doc - ValueBased  6980c50ef7564868fec25101        150000                           0                        102193    1.000000       20260605
+13            Rosental   Innkeepr - NL - BB Reihe - Bestseller - High Impact - Seed  68e926d4b236f67910699632        150000                     1454449                        149982    0.093480       20260604
+14            Rosental                                 Innkeepr - Beauty Doc - Seed  6980c4baf7564868fec23572        150000                     1484731                        149976    0.091745       20260604
+15            Rosental                   Innkeepr - Slow Aging - High Impact - Seed  68d4f82b0dd10e3a312f3bc3        150000                     1484731                        149976    0.091745       20260604
+16            Rosental                                  Innkeepr - LED - ValueBased  68518c65a93b88d67a15d581        150000                           0                         91654    1.000000       20260605
+17            Rosental                        Innkeepr - 360d Purchaser - Exclusion  6980e30ff7564868fe593b93        150000                           0                        247856    1.000000       20260605
+18            Rosental                            Innkeepr - Botanical - ValueBased  68518c34a93b88d67a15d001        150000                           0                         91654    1.000000       20260605
+19            Rosental                  Innkeepr - Beauty Dock - High Impact - Seed  68d4f85a0dd10e3a312f5e4d        150000                     1484731                        149976    0.091745       20260604
+20            Rosental  Innkeepr - NL - Sonstiges - Bestseller - High Impact - Seed  68e92747b236f679106a375c        150000                     1418834                        149968    0.095594       20260604
+21            Rosental                          Innkeepr - 30d Visitors - Exclusion  6980c569f7564868fec26d22        150000                      308200                        308200    0.500000       20260605
+22            Rosental                              Innkeepr - Exclusion - Lifetime  68302cd3ef02595b6bea4be9        150000                     1451105                       1450877    0.499961       20260605
+23            Rosental                                   Innkeepr - LED Mask - Seed  678a5ca0f3abb5123264a902        150000                     1418822                        149980    0.095602       20260604
+24            Rosental                         Innkeepr - BLEM - High Impact - Seed  67f61f9f0b17ce11bdc8960e        150000                     1418831                        149971    0.095596       20260604
+25            Rosental                                  Innkeepr - Exclusion - 365d  68302c5bef02595b6bea3cb5        150000                     1451105                       1450877    0.499961       20260605
+26            Rosental                               Innkeepr - Low AOV - Exclusion  67bc16baaaa1eaa63251f771        150000                     1422938                       1422739    0.499965       20260605
+27        Störtebekker                           Innkeepr - Probierset - ValueBased  69f34a5f51f70b57e43153b5        150000                           0                         22040    1.000000       20260605
+28        Störtebekker                          Innkeepr - 30d Visitors - Exclusion  69ef864850b5382f00c19928        150000                       71557                         71556    0.499997       20260605
+29        Störtebekker                        Innkeepr - 360d Purchaser - Exclusion  69ef865450b5382f00c28675        150000                           0                         20302    1.000000       20260605
+30        Störtebekker                             Innkeepr - Duschset - ValueBased  69f34a7151f70b57e4315623        150000                           0                         21986    1.000000       20260605
+31        Störtebekker                       Innkeepr - 30-90d Visitors - Exclusion  6a1dbe801370504ba657b511        150000                       56814                         56814    0.500000       20260605
+32                More                        Innkeepr - 360d Purchaser - Exclusion  68e3fa51120f694f53a5f863        150000                           0                       1590237    1.000000       20260605
+33                More                     Innkeepr - 30d Visitors - Exclusion - NL  69417cf5a5250a665d7bca71        150000                     5724775                       5724774    0.500000       20260605
+34                More                          Innkeepr - 30d Visitors - Exclusion  68e3fa6c120f694f53a63059        150000                     3046428                       3046427    0.500000       20260605
+35                More                     Innkeepr - 30d Visitors - Exclusion - UK  69417d0ca5250a665d7bd0d8        150000                     5724775                       5724774    0.500000       20260605
+36                More                   Innkeepr - 360d Purchaser - Exclusion - NL  69417ce0a5250a665d7bc47f        150000                           0                       1590237    1.000000       20260605
+37                More                                  Innkeepr - VMS Search - RTG  693048ca4227124153d15ae9        150000                           0                           744    1.000000       20260605
+38                More                   Innkeepr - 360d Purchaser - Exclusion - UK  69417d1ca5250a665d7bd58b        150000                           0                       1590237    1.000000       20260605
+39                More                             Innkeepr - 90d Brand - Exclusion  69456cdea5250a665df58135        150000                     4607195                       4607195    0.500000       20260605
+40                 ESN                     Innkeepr - 30d Visitors - Exclusion - NL  69c2c41df56dab973544d7aa        150000                     5059333                       5059333    0.500000       20260605
+41                 ESN                   Innkeepr - 360d Purchaser - Exclusion - NL  69c2c432f56dab973544de2f        150000                           0                       1827230    1.000000       20260605
+42                 ESN                   Innkeepr - 360d Purchaser - Exclusion - FR  69c2c460f56dab973544ebac        150000                           0                       1827230    1.000000       20260605
+43                 ESN                  Innkeepr - 30-90d Visitors - Exclusion - FR  69c2c46df56dab97354f0225        150000                     5059320                       5059320    0.500000       20260605
+44                 ESN                  Innkeepr - 30-90d Visitors - Exclusion - CH  69c2c47af56dab97354f044d        150000                     5059333                       5059333    0.500000       20260605
+45                 ESN                   Innkeepr - 360d Purchaser - Exclusion - CH  69c2c48ef56dab97354f0aef        150000                           0                       1827230    1.000000       20260605
+46                 ESN                        Innkeepr - 360d Purchaser - Exclusion  68dd4512120f694f539c0faa        150000                           0                       1827230    1.000000       20260605
+47            Plantura                           Innkeepr - 30d Visitor - Exclusion  699ea514f904fb1302a181f8        150000                      452626                        452626    0.500000       20260605
+48            Plantura                        Innkeepr - 360d Purchaser - Exclusion  699ea502f904fb1302a17de7        150000                           0                         76293    1.000000       20260605
+49  MissPompadour GmbH              Innkeepr – Bestperformer – Seed – Volume t20–30  6a1efe081370504ba68c9581        150000                      453566                         56288    0.110400       20260604
+50  MissPompadour GmbH              Innkeepr – Bestperformer – Seed – Growth t10–20  6a1efdf91370504ba68c933e        150000                      453566                         56288    0.110400       20260604
+51  MissPompadour GmbH                        Innkeepr - 360d Purchaser - Exclusion  6a1efdb61370504ba68c8ad0        150000                           0                         18025    1.000000       20260605
+52  MissPompadour GmbH                          Innkeepr - 30d Visitors - Exclusion  6a1efda51370504ba68c88f7        150000                      116570                        116570    0.500000       20260605
+53  MissPompadour GmbH              Innkeepr – Bestperformer – Seed – Premium t0–10  6a1efde71370504ba68c916e        150000                      275090                         35046    0.113002       20260604
+2026-06-05 15:28:19,780 - root - INFO - === Workspace: Clockin (692ebce32c29275cb3ea5177) ===
+2026-06-05 15:28:19,780 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 15:28:19,919 - root - INFO - Fetched 3 elements
+2026-06-05 15:28:19,920 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 15:28:20,056 - root - INFO - Fetched 4 elements
+2026-06-05 15:28:20,061 - root - INFO -   Active audiences: 2
+2026-06-05 15:28:20,062 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:28:20,232 - root - INFO - Fetched 1 elements
+2026-06-05 15:28:20,233 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:28:20,383 - root - INFO - Fetched 1 elements
+2026-06-05 15:28:20,384 - root - INFO -   Audiences missing audienceSizePercentage: 0
+2026-06-05 15:28:20,384 - root - INFO - === Workspace: Tchibo (6870b934768354324d58e9cf) ===
+2026-06-05 15:28:20,384 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 15:28:20,577 - root - INFO - Fetched 36 elements
+2026-06-05 15:28:20,582 - root - INFO - Querying https://targeting.innkeepr.ai/api/sources/query
+2026-06-05 15:28:20,738 - root - INFO - Fetched 6 elements
+2026-06-05 15:28:20,744 - root - INFO -   Active audiences: 6
+2026-06-05 15:28:20,745 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:28:20,891 - root - INFO - Fetched 1 elements
+2026-06-05 15:28:20,892 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:28:21,040 - root - INFO - Fetched 1 elements
+2026-06-05 15:28:21,041 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:28:21,185 - root - INFO - Fetched 1 elements
+2026-06-05 15:28:21,185 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:28:21,331 - root - INFO - Fetched 1 elements
+2026-06-05 15:28:21,332 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:28:21,483 - root - INFO - Fetched 1 elements
+2026-06-05 15:28:21,484 - root - INFO - Querying https://targeting.innkeepr.ai/api/models/query
+2026-06-05 15:28:21,628 - root - INFO - Fetched 1 elements
+2026-06-05 15:28:21,628 - root - INFO -   Audiences missing audienceSizePercentage: 0
+2026-06-05 15:28:21,628 - root - INFO - === Workspace: Beyond Love (651588280e79fa255ef2e8c9) ===
+2026-06-05 15:28:21,628 - root - INFO - Querying https://targeting.innkeepr.ai/api/audiences/query
+2026-06-05 15:28:21,777 - root - INFO - Fetched 0 elements
+2026-06-05 15:28:21,778 - root - INFO -   No audiences found — skipping
+2026-06-05 15:28:21,787 - root - INFO - 
+Result (54 rows):
+             workspace                                                audience_name               audience_id  audienceSize  count_control_anonymousIds  count_treatment_anonymousIds  percentage targeting_date
+0             LILLYDOO                        Innkeepr - Exclusion - Bestandskunden  6811d9de879ec174109231bd        150000                      427999                        447083    0.510904       20260605
+1             LILLYDOO                              Innkeepr - Seed ES - ValueBased  68cacdfe77b55cfe7478372b        150000                           0                         33642    1.000000       20260605
+2             LILLYDOO                            Innkeepr - Seed CHAT - ValueBased  68cbfcaa77b55cfe74111c89        150000                           0                         33642    1.000000       20260605
+3             LILLYDOO                                    Innkeepr - Seed LSTM - IT  6811dc7e879ec174109280ba        150000                      287030                        150000    0.343226       20260604
+4             LILLYDOO                                       Innkeepr - Seed - LSTM  6811db64879ec17410925ee0        150000                      221266                        150000    0.404023       20260604
+5             LILLYDOO                                       Innkeepr - Seed - CHAT  6811dab9879ec17410924bf4        150000                      591732                        150000    0.202229       20260604
+6             LILLYDOO                                    Innkeepr - Seed LSTM - ES  6811dc2b879ec174109276ca        150000                      287030                        150000    0.343226       20260604
+7             LILLYDOO                              Innkeepr - Exclusion - Standard  6811db14879ec1741092565c        150000                      427999                        427998    0.499999       20260605
+8             LILLYDOO                                 Innkeepr - Seed - ValueBased  6836db0013526dc3d135eb7d        150000                           0                         33642    1.000000       20260605
+9             LILLYDOO                              Innkeepr - Seed IT - ValueBased  6836dbd913526dc3d1360591        150000                           0                         33705    1.000000       20260605
+10            Rosental                                        Innkeepr - EMS - Seed  6980c47ff7564868feb8123d        150000                      461442                        150000    0.245322       20260604
+11            Rosental                                  Innkeepr - EMS - ValueBased  6980c4eaf7564868fec2469d        150000                           0                        102193    1.000000       20260605
+12            Rosental                           Innkeepr - Beauty Doc - ValueBased  6980c50ef7564868fec25101        150000                           0                        102193    1.000000       20260605
+13            Rosental   Innkeepr - NL - BB Reihe - Bestseller - High Impact - Seed  68e926d4b236f67910699632        150000                     1454449                        149982    0.093480       20260604
+14            Rosental                                 Innkeepr - Beauty Doc - Seed  6980c4baf7564868fec23572        150000                     1484731                        149976    0.091745       20260604
+15            Rosental                   Innkeepr - Slow Aging - High Impact - Seed  68d4f82b0dd10e3a312f3bc3        150000                     1484731                        149976    0.091745       20260604
+16            Rosental                                  Innkeepr - LED - ValueBased  68518c65a93b88d67a15d581        150000                           0                         91654    1.000000       20260605
+17            Rosental                        Innkeepr - 360d Purchaser - Exclusion  6980e30ff7564868fe593b93        150000                           0                        247856    1.000000       20260605
+18            Rosental                            Innkeepr - Botanical - ValueBased  68518c34a93b88d67a15d001        150000                           0                         91654    1.000000       20260605
+19            Rosental                  Innkeepr - Beauty Dock - High Impact - Seed  68d4f85a0dd10e3a312f5e4d        150000                     1484731                        149976    0.091745       20260604
+20            Rosental  Innkeepr - NL - Sonstiges - Bestseller - High Impact - Seed  68e92747b236f679106a375c        150000                     1418834                        149968    0.095594       20260604
+21            Rosental                          Innkeepr - 30d Visitors - Exclusion  6980c569f7564868fec26d22        150000                      308200                        308200    0.500000       20260605
+22            Rosental                              Innkeepr - Exclusion - Lifetime  68302cd3ef02595b6bea4be9        150000                     1451105                       1450877    0.499961       20260605
+23            Rosental                                   Innkeepr - LED Mask - Seed  678a5ca0f3abb5123264a902        150000                     1418822                        149980    0.095602       20260604
+24            Rosental                         Innkeepr - BLEM - High Impact - Seed  67f61f9f0b17ce11bdc8960e        150000                     1418831                        149971    0.095596       20260604
+25            Rosental                                  Innkeepr - Exclusion - 365d  68302c5bef02595b6bea3cb5        150000                     1451105                       1450877    0.499961       20260605
+26            Rosental                               Innkeepr - Low AOV - Exclusion  67bc16baaaa1eaa63251f771        150000                     1422938                       1422739    0.499965       20260605
+27        Störtebekker                           Innkeepr - Probierset - ValueBased  69f34a5f51f70b57e43153b5        150000                           0                         22040    1.000000       20260605
+28        Störtebekker                          Innkeepr - 30d Visitors - Exclusion  69ef864850b5382f00c19928        150000                       71557                         71556    0.499997       20260605
+29        Störtebekker                        Innkeepr - 360d Purchaser - Exclusion  69ef865450b5382f00c28675        150000                           0                         20302    1.000000       20260605
+30        Störtebekker                             Innkeepr - Duschset - ValueBased  69f34a7151f70b57e4315623        150000                           0                         21986    1.000000       20260605
+31        Störtebekker                       Innkeepr - 30-90d Visitors - Exclusion  6a1dbe801370504ba657b511        150000                       56814                         56814    0.500000       20260605
+32                More                        Innkeepr - 360d Purchaser - Exclusion  68e3fa51120f694f53a5f863        150000                           0                       1590237    1.000000       20260605
+33                More                     Innkeepr - 30d Visitors - Exclusion - NL  69417cf5a5250a665d7bca71        150000                     5724775                       5724774    0.500000       20260605
+34                More                          Innkeepr - 30d Visitors - Exclusion  68e3fa6c120f694f53a63059        150000                     3046428                       3046427    0.500000       20260605
+35                More                     Innkeepr - 30d Visitors - Exclusion - UK  69417d0ca5250a665d7bd0d8        150000                     5724775                       5724774    0.500000       20260605
+36                More                   Innkeepr - 360d Purchaser - Exclusion - NL  69417ce0a5250a665d7bc47f        150000                           0                       1590237    1.000000       20260605
+37                More                                  Innkeepr - VMS Search - RTG  693048ca4227124153d15ae9        150000                           0                           744    1.000000       20260605
+38                More                   Innkeepr - 360d Purchaser - Exclusion - UK  69417d1ca5250a665d7bd58b        150000                           0                       1590237    1.000000       20260605
+39                More                             Innkeepr - 90d Brand - Exclusion  69456cdea5250a665df58135        150000                     4607195                       4607195    0.500000       20260605
+40                 ESN                     Innkeepr - 30d Visitors - Exclusion - NL  69c2c41df56dab973544d7aa        150000                     5059333                       5059333    0.500000       20260605
+41                 ESN                   Innkeepr - 360d Purchaser - Exclusion - NL  69c2c432f56dab973544de2f        150000                           0                       1827230    1.000000       20260605
+42                 ESN                   Innkeepr - 360d Purchaser - Exclusion - FR  69c2c460f56dab973544ebac        150000                           0                       1827230    1.000000       20260605
+43                 ESN                  Innkeepr - 30-90d Visitors - Exclusion - FR  69c2c46df56dab97354f0225        150000                     5059320                       5059320    0.500000       20260605
+44                 ESN                  Innkeepr - 30-90d Visitors - Exclusion - CH  69c2c47af56dab97354f044d        150000                     5059333                       5059333    0.500000       20260605
+45                 ESN                   Innkeepr - 360d Purchaser - Exclusion - CH  69c2c48ef56dab97354f0aef        150000                           0                       1827230    1.000000       20260605
+46                 ESN                        Innkeepr - 360d Purchaser - Exclusion  68dd4512120f694f539c0faa        150000                           0                       1827230    1.000000       20260605
+47            Plantura                           Innkeepr - 30d Visitor - Exclusion  699ea514f904fb1302a181f8        150000                      452626                        452626    0.500000       20260605
+48            Plantura                        Innkeepr - 360d Purchaser - Exclusion  699ea502f904fb1302a17de7        150000                           0                         76293    1.000000       20260605
+49  MissPompadour GmbH              Innkeepr – Bestperformer – Seed – Volume t20–30  6a1efe081370504ba68c9581        150000                      453566                         56288    0.110400       20260604
+50  MissPompadour GmbH              Innkeepr – Bestperformer – Seed – Growth t10–20  6a1efdf91370504ba68c933e        150000                      453566                         56288    0.110400       20260604
+51  MissPompadour GmbH                        Innkeepr - 360d Purchaser - Exclusion  6a1efdb61370504ba68c8ad0        150000                           0                         18025    1.000000       20260605
+52  MissPompadour GmbH                          Innkeepr - 30d Visitors - Exclusion  6a1efda51370504ba68c88f7        150000                      116570                        116570    0.500000       20260605
+53  MissPompadour GmbH              Innkeepr – Bestperformer – Seed – Premium t0–10  6a1efde71370504ba68c916e        150000                      275090                         35046    0.113002       20260604
+2026-06-05 15:28:21,790 - root - INFO - Saved → SprintStories/EN-3218-switch-all-to-audienceSizePerc/missing_audienceSizePerc_20260605.parquet
+https://targeting.innkeepr.ai/api/core/workspaces/query

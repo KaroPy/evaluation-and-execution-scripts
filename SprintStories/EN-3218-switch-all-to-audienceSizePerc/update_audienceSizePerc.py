@@ -19,13 +19,14 @@ url = return_api_url()
 
 # --- configure which workspaces to process -----------------------------------
 DESIRED_WORKSPACES: list[str] = [
-    "to teach"
+    "Junglueck"
     # "workspace-name-1",
     # "workspace-name-2",
 ]
+DRY_RUN: bool = False  # set to False to actually call models/store and audiences/update
 # -----------------------------------------------------------------------------
 
-INPUT_FILE = f"{PATH}missing_audienceSizePerc_20260527.parquet"
+INPUT_FILE = f"{PATH}missing_audienceSizePerc_20260605.parquet"
 
 
 def get_audience(account_id: str, audience_id: str) -> dict | None:
@@ -48,6 +49,8 @@ def store_model(account_id: str, model: dict, scope: str) -> str | None:
     """Post a new model (without id) and return the new model id."""
     if scope == "campaignBased":
         scope = "campaign"
+    elif scope == "usageBased":
+        scope = "treatment"
     else:
         raise ValueError(f"Unknown scope: {scope}")
     model["scope"] = scope
@@ -86,7 +89,7 @@ for _, row in df.iterrows():
     workspace_name = row["workspace"]
     audience_id = row["audience_id"]
     audience_name = row["audience_name"]
-    new_percentage = round(row["percentage"], 0)
+    new_percentage = round(row["percentage"], 2)
 
     account_id = workspace_lookup.get(workspace_name)
     if not account_id:
@@ -121,13 +124,22 @@ for _, row in df.iterrows():
     logger.info(f"  Setting audienceSizePercentage={new_percentage}, audienceSize=None")
 
     # 4. Store as new model
-    new_model_id = store_model(account_id, model, scope)
-    if not new_model_id:
-        logger.warning("  models/store returned no id — skipping audience update")
-        continue
+    if DRY_RUN:
+        logger.info(f"  [DRY RUN] Would call models/store with payload: {model} — skipping")
+        new_model_id = "test-dry-run"
+    else:
+        new_model_id = store_model(account_id, model, scope)
+        if not new_model_id:
+            logger.warning("  models/store returned no id — skipping audience update")
+            continue
 
     logger.info(f"  New model stored: {new_model_id}")
-
-    # 5. Point the audience at the new model
-    update_audience_model(account_id, audience_id, new_model_id)
-    logger.info(f"  Audience updated → model {new_model_id}")
+    if DRY_RUN:
+        logger.info(
+            f"  [DRY RUN] Would call audiences/update with payload: {audience_id}, {new_model_id} — skipping"
+        )
+        continue
+    else:
+        # 5. Point the audience at the new model
+        update_audience_model(account_id, audience_id, new_model_id)
+        logger.info(f"  Audience updated → model {new_model_id}")
