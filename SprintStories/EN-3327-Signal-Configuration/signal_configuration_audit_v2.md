@@ -1,12 +1,12 @@
 # Signal Configuration Audit
 
-Generated: 2026-06-09 13:30 UTC
+Generated: 2026-06-09 12:37 UTC
 
 ## Summary
 
 - **Total active audiences:** 224
-- **Correct configurations:** 188
-- **Incorrect configurations:** 36
+- **Correct configurations:** 181
+- **Incorrect configurations:** 43
 
 ## Default Configurations
 
@@ -17,9 +17,9 @@ Reference: [Signal Default Setups](https://coda.io/d/_dLhoSqeSHRj/Signal-Update-
 | Audience type | `targetingOutlookDays` | `audienceSize` | `audienceSizePercentage` | `conversionLag` |
 | --- | --- | --- | --- | --- |
 | Default | 90 | 150,000 | - | 180 (Seed #2) |
-| Seed – Premium (`t0-10p`) | 90 | - | 0 - 10 | - |
-| Seed – Growth (`t10-20p`) | 90 | - | 10 - 20 | - |
-| Seed – Volume (`t20-30p`) | 90 | - | 20 - 30 | - |
+| Seed – Premium (`t0-10p`) | 30 | 150,000 | 0 - 10 | - |
+| Seed – Growth (`t10-20p`) | 90 | 150,000 | 10 - 20 | - |
+| Seed – Volume (`t20-30p`) | 90 | 150,000 | 20 - 30 | - |
 | Seed – Custom tier (`t7-15p`, …) | 90 | 150,000 | max tier value / 100 | - |
 | Value-based | 90 | - | 1 or `-` | - |
 | Retargeting | 180 | 150,000 | 0.5 | - |
@@ -67,37 +67,35 @@ Reference: [Signal Default Setups](https://coda.io/d/_dLhoSqeSHRj/Signal-Update-
 | `Exclusion - 365d` | 365 | - | - | - |
 | `Exclusion - Lifetime` | 730 | - | - | - |
 
-Visitor exclusions (`30d`, `30-90d`, `90-180d`) require an explicit `audienceSizePercentage` (`0.1`, `0.3`, `0.5`); `None` is not allowed.
-
 `360d Purchaser` exclusions also allow `audienceSizePercentage` = `1`.
 
 ## exclusion
 
-**43** active audiences (43 correct, 0 incorrect).
+**43** active audiences (40 correct, 3 incorrect).
 
 ### Visitors
 
-**18** visitor exclusion audiences (18 correct, 0 incorrect).
+**18** visitor exclusion audiences (15 correct, 3 incorrect).
 
-- **30d Visitors:** 9 audiences (9 correct, 0 incorrect)
-- **30-90d Visitors:** 8 audiences (8 correct, 0 incorrect)
+- **30d Visitors:** 9 audiences (8 correct, 1 incorrect)
+- **30-90d Visitors:** 8 audiences (6 correct, 2 incorrect)
 - **90-180d Visitors:** 1 audience (1 correct, 0 incorrect)
 
 ### facebook
 
-**39** audiences (39 correct, 0 incorrect).
+**39** audiences (36 correct, 3 incorrect).
 
 | Status | Workspace | `audience.id` | Audience | Source | `model.type` | `audience.treatments.count` | Outlook | Size % | Size | `exclude_visitors` | Result |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| ✅ | ESN | 68dd4522120f694f539c286b | Innkeepr - 30-90d Visitors - Exclusion | facebook | conversion | 82 | 90 | 0.3 | - | 30 | test setup |
-| ✅ | ESN | 69c2c47af56dab97354f044d | Innkeepr - 30-90d Visitors - Exclusion - CH | facebook | conversion | 1 | 90 | 0.3 | - | 30 | Configuration matches defaults |
-| ✅ | ESN | 69c2c46df56dab97354f0225 | Innkeepr - 30-90d Visitors - Exclusion - FR | facebook | conversion | 0 | 90 | 0.3 | - | 30 | Configuration matches defaults |
-| ✅ | ESN | 69c2c41df56dab973544d7aa | Innkeepr - 30-90d Visitors - Exclusion - NL | facebook | conversion | 0 | 90 | 0.3 | - | 30 | Configuration matches defaults |
+| ❌ | ESN | 68dd4522120f694f539c286b | Innkeepr - 30-90d Visitors - Exclusion | facebook | conversion | 82 | 90 | 0.2 | - | 30 | audienceSizePercentage is 0.2, expected 0.3 or None; test setup |
+| ✅ | ESN | 69c2c47af56dab97354f044d | Innkeepr - 30-90d Visitors - Exclusion - CH | facebook | conversion | 1 | 90 | - | - | 30 | Configuration matches defaults |
+| ✅ | ESN | 69c2c46df56dab97354f0225 | Innkeepr - 30-90d Visitors - Exclusion - FR | facebook | conversion | 0 | 90 | - | - | 30 | Configuration matches defaults |
+| ✅ | ESN | 69c2c41df56dab973544d7aa | Innkeepr - 30-90d Visitors - Exclusion - NL | facebook | conversion | 0 | 90 | - | - | 30 | Configuration matches defaults |
 | ✅ | ESN | 68dd4512120f694f539c0faa | Innkeepr - 360d Purchaser - Exclusion | facebook | conversion | 82 | 180 | - | - | - | Configuration matches defaults |
 | ✅ | ESN | 69c2c48ef56dab97354f0aef | Innkeepr - 360d Purchaser - Exclusion - CH | facebook | conversion | 1 | 180 | - | - | - | Configuration matches defaults |
 | ✅ | ESN | 69c2c460f56dab973544ebac | Innkeepr - 360d Purchaser - Exclusion - FR | facebook | conversion | 0 | 180 | - | - | - | Configuration matches defaults |
 | ✅ | ESN | 69c2c432f56dab973544de2f | Innkeepr - 360d Purchaser - Exclusion - NL | facebook | conversion | 0 | 180 | - | - | - | Configuration matches defaults |
-| ✅ | Junglueck | 6a16fa6c1370504ba6c47dc8 | Innkeepr - 30-90d Visitors - Exclusion | facebook | conversion | 0 | 90 | 0.3 | - | 30 | Configuration matches defaults |
+| ❌ | Junglueck | 6a16fa6c1370504ba6c47dc8 | Innkeepr - 30-90d Visitors - Exclusion | facebook | conversion | 0 | 90 | 0.5 | - | 30 | audienceSizePercentage is 0.5, expected 0.3 or None |
 | ✅ | Junglueck | 69a07da22568bd24bccc0012 | Innkeepr - 30d Visitors - Exclusion | facebook | conversion | 3 | 30 | 0.1 | - | - | Configuration matches defaults |
 | ✅ | Junglueck | 69a07d7d2568bd24bca9a11e | Innkeepr - 360d Purchaser - Exclusion | facebook | conversion | 0 | 180 | 1 | - | - | Configuration matches defaults |
 | ✅ | Junglueck | 6a16fa931370504ba6c485ad | Innkeepr - 90-180d Visitors - Exclusion | facebook | conversion | 0 | 180 | 0.5 | - | 90 | Configuration matches defaults |
@@ -106,7 +104,7 @@ Visitor exclusions (`30d`, `30-90d`, `90-180d`) require an explicit `audienceSiz
 | ✅ | LILLYDOO | 6811db14879ec1741092565c | Innkeepr - Exclusion - Standard | facebook | conversion | 0 | 180 | - | - | - | Configuration matches defaults |
 | ✅ | MissPompadour GmbH | 6a1efda51370504ba68c88f7 | Innkeepr - 30d Visitors - Exclusion | facebook | conversion | 0 | 30 | 0.1 | - | - | Configuration matches defaults |
 | ✅ | MissPompadour GmbH | 6a1efdb61370504ba68c8ad0 | Innkeepr - 360d Purchaser - Exclusion | facebook | conversion | 0 | 180 | - | - | - | Configuration matches defaults |
-| ✅ | More | 68e3fa6c120f694f53a63059 | Innkeepr - 30-90d Visitors - Exclusion | facebook | conversion | 0 | 90 | 0.3 | - | 30 | Configuration matches defaults |
+| ✅ | More | 68e3fa6c120f694f53a63059 | Innkeepr - 30-90d Visitors - Exclusion | facebook | conversion | 0 | 90 | - | - | 30 | Configuration matches defaults |
 | ✅ | More | 69417cf5a5250a665d7bca71 | Innkeepr - 30d Visitors - Exclusion - NL | facebook | conversion | 25 | 30 | 0.1 | - | - | Configuration matches defaults |
 | ✅ | More | 69417d0ca5250a665d7bd0d8 | Innkeepr - 30d Visitors - Exclusion - UK | facebook | conversion | 0 | 30 | 0.1 | - | - | Configuration matches defaults |
 | ✅ | More | 68e3fa51120f694f53a5f863 | Innkeepr - 360d Purchaser - Exclusion | facebook | conversion | 1 | 180 | - | - | - | Configuration matches defaults |
@@ -114,18 +112,18 @@ Visitor exclusions (`30d`, `30-90d`, `90-180d`) require an explicit `audienceSiz
 | ✅ | More | 69417d1ca5250a665d7bd58b | Innkeepr - 360d Purchaser - Exclusion - UK | facebook | conversion | 0 | 180 | - | - | - | Configuration matches defaults |
 | ✅ | More | 69456cdea5250a665df58135 | Innkeepr - 90d Brand - Exclusion | facebook | conversion | 218 | 90 | - | - | - | Configuration matches defaults |
 | ✅ | Nikin | 6847ea1c57bdaeb51ed9e5ec | Innkeepr - General - Exclusion | facebook | conversion | 0 | 180 | - | - | - | Configuration matches defaults |
-| ✅ | Plantura | 699ea514f904fb1302a181f8 | Innkeepr - 30d Visitor - Exclusion | facebook | conversion | 0 | 30 | 0.1 | - | - | Configuration matches defaults |
+| ❌ | Plantura | 699ea514f904fb1302a181f8 | Innkeepr - 30d Visitor - Exclusion | facebook | conversion | 0 | 90 | - | - | 30 | targetingOutlookDays is 90, expected 30; Consider renaming to `Innkeepr - 30-90d Visitors - Exclusion` (configuration matches `Innkeepr - 30-90d Visitors - Exclusion` setup) |
 | ✅ | Plantura | 699ea502f904fb1302a17de7 | Innkeepr - 360d Purchaser - Exclusion | facebook | conversion | 0 | 180 | - | - | - | Configuration matches defaults |
-| ✅ | Rosental | 6980c569f7564868fec26d22 | Innkeepr - 30d Visitors - Exclusion | facebook | conversion | 0 | 30 | 0.1 | - | - | Configuration matches defaults |
+| ✅ | Rosental | 6980c569f7564868fec26d22 | Innkeepr - 30d Visitors - Exclusion | facebook | conversion | 0 | 30 | - | - | - | Configuration matches defaults |
 | ✅ | Rosental | 6980e30ff7564868fe593b93 | Innkeepr - 360d Purchaser - Exclusion | facebook | conversion | 0 | 180 | - | - | - | Configuration matches defaults |
 | ✅ | Rosental | 6949736ba5250a665d429f1a | Innkeepr - Brand - Exclusion | facebook | conversion | 0 | 90 | 0.5 | - | - | Configuration matches defaults |
 | ✅ | Rosental | 68302c5bef02595b6bea3cb5 | Innkeepr - Exclusion - 365d | facebook | conversion | 0 | 365 | - | - | - | Configuration matches defaults |
 | ✅ | Rosental | 68302cd3ef02595b6bea4be9 | Innkeepr - Exclusion - Lifetime | facebook | conversion | 0 | 730 | - | - | - | Configuration matches defaults |
 | ✅ | Rosental | 67bc16baaaa1eaa63251f771 | Innkeepr - Low AOV - Exclusion | facebook | conversion | 0 | 180 | - | - | - | Configuration matches defaults |
-| ✅ | Störtebekker | 6a1dbe801370504ba657b511 | Innkeepr - 30-90d Visitors - Exclusion | facebook | conversion | 0 | 90 | 0.3 | - | 30 | Configuration matches defaults |
+| ✅ | Störtebekker | 6a1dbe801370504ba657b511 | Innkeepr - 30-90d Visitors - Exclusion | facebook | conversion | 0 | 90 | - | - | 30 | Configuration matches defaults |
 | ✅ | Störtebekker | 69ef864850b5382f00c19928 | Innkeepr - 30d Visitors - Exclusion | facebook | conversion | 0 | 30 | 0.1 | - | - | test setup onboarding |
 | ✅ | Störtebekker | 69ef865450b5382f00c28675 | Innkeepr - 360d Purchaser - Exclusion | facebook | conversion | 0 | 180 | - | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a2289061370504ba6f63d01 | Innkeepr - 30-90d Visitors - Exclusion | facebook | conversion | 0 | 90 | 0.3 | - | 30 | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2289061370504ba6f63d01 | Innkeepr - 30-90d Visitors - Exclusion | facebook | conversion | 0 | 90 | - | - | 30 | Configuration matches defaults |
 | ✅ | ahead-nutrition.com | 6a2288ed1370504ba6f63ac8 | Innkeepr - 360d Purchaser - Exclusion | facebook | conversion | 0 | 180 | - | - | - | Configuration matches defaults |
 | ✅ | to teach | 68454a0b57bdaeb51e6a10c5 | Innkeepr - Exclusion - Standard | facebook | conversion | 1 | 180 | 0.5 | - | - | Configuration matches defaults |
 
@@ -194,76 +192,76 @@ A majority of signals in this type differ from the current defaults for the fiel
 
 ## seed
 
-**143** active audiences (126 correct, 17 incorrect).
+**143** active audiences (122 correct, 21 incorrect).
 
 ### facebook
 
-**98** audiences (94 correct, 4 incorrect).
+**98** audiences (90 correct, 8 incorrect).
 
 | Status | Workspace | `audience.id` | Audience | Source | `model.type` | `audience.treatments.count` | Outlook | Size % | Size | `exclude_visitors` | Result |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| ✅ | ESN | 693c07dda5250a665da38559 | Innkeepr - Bundles - Growth - Seed - t10-20p | facebook | conversion | 6 | 90 | 0.25 | - | - | Configuration matches defaults |
-| ✅ | ESN | 693c077ca5250a665da36c80 | Innkeepr - Bundles - Premium - Seed - t0-10p | facebook | conversion | 6 | 90 | 0.14 | - | - | Configuration matches defaults |
-| ✅ | ESN | 693c07eba5250a665da3892f | Innkeepr - Bundles - Volume - Seed - t20-30p | facebook | conversion | 6 | 90 | 0.36 | - | - | Configuration matches defaults |
-| ✅ | ESN | 69c2c346f56dab97354162de | Innkeepr - Creatin - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.25 | - | - | Configuration matches defaults |
-| ✅ | ESN | 69c2c32df56dab9735415a5e | Innkeepr - Creatin - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | 0.14 | - | - | Configuration matches defaults |
-| ✅ | ESN | 69c2c356f56dab97354166fb | Innkeepr - Creatin - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.36 | - | - | Configuration matches defaults |
-| ✅ | ESN | 693c0866a5250a665da3a7c4 | Innkeepr - Iso Clear - Premium - Seed - t0-10p | facebook | conversion | 1 | 90 | 0.14 | - | - | Configuration matches defaults |
+| ✅ | ESN | 693c07dda5250a665da38559 | Innkeepr - Bundles - Growth - Seed - t10-20p | facebook | conversion | 6 | 90 | 0.25 | 150000 | - | Configuration matches defaults |
+| ✅ | ESN | 693c077ca5250a665da36c80 | Innkeepr - Bundles - Premium - Seed - t0-10p | facebook | conversion | 6 | 30 | 0.14 | 150000 | - | Configuration matches defaults |
+| ✅ | ESN | 693c07eba5250a665da3892f | Innkeepr - Bundles - Volume - Seed - t20-30p | facebook | conversion | 6 | 90 | 0.36 | 150000 | - | Configuration matches defaults |
+| ✅ | ESN | 69c2c346f56dab97354162de | Innkeepr - Creatin - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.25 | 150000 | - | Configuration matches defaults |
+| ✅ | ESN | 69c2c32df56dab9735415a5e | Innkeepr - Creatin - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | 0.14 | 150000 | - | Configuration matches defaults |
+| ✅ | ESN | 69c2c356f56dab97354166fb | Innkeepr - Creatin - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.36 | 150000 | - | Configuration matches defaults |
+| ✅ | ESN | 693c0866a5250a665da3a7c4 | Innkeepr - Iso Clear - Premium - Seed - t0-10p | facebook | conversion | 1 | 30 | 0.14 | 150000 | - | Configuration matches defaults |
 | ❌ | Innkeepr | 6a2749781370504ba691c3c2 | Innkeepr Facebook Seed | facebook | - | 1 | - | - | - | - | targetingOutlookDays is None, expected 90; audienceSize is None, expected 150000 |
-| ✅ | Junglueck | 69a07f9e2568bd24bcd546d5 | Innkeepr - Kennenlernset - Growth - Seed - t10-20p | facebook | conversion | 11 | 90 | 0.3 | - | - | Configuration matches defaults |
-| ✅ | Junglueck | 69a07f6d2568bd24bcd5375d | Innkeepr - Kennenlernset - Premium - Seed - t0-10p | facebook | conversion | 11 | 90 | 0.15 | - | - | Configuration matches defaults |
-| ✅ | Junglueck | 69a07fb12568bd24bcd54c08 | Innkeepr - Kennenlernset - Volume - Seed - t20-30p | facebook | conversion | 11 | 90 | 0.4 | - | - | Configuration matches defaults |
+| ✅ | Junglueck | 69a07f9e2568bd24bcd546d5 | Innkeepr - Kennenlernset - Growth - Seed - t10-20p | facebook | conversion | 11 | 90 | 0.3 | 150000 | - | Configuration matches defaults |
+| ✅ | Junglueck | 69a07f6d2568bd24bcd5375d | Innkeepr - Kennenlernset - Premium - Seed - t0-10p | facebook | conversion | 11 | 30 | 0.15 | 150000 | - | Configuration matches defaults |
+| ✅ | Junglueck | 69a07fb12568bd24bcd54c08 | Innkeepr - Kennenlernset - Volume - Seed - t20-30p | facebook | conversion | 11 | 90 | 0.4 | 150000 | - | Configuration matches defaults |
 | ✅ | LILLYDOO | 69f33b0051f70b57e4d4d1de | Innkeepr - Abo - Seed | facebook | conversion | 1 | 90 | 0.5 | 150000 | - | Configuration matches defaults |
 | ❌ | LILLYDOO | 6811dab9879ec17410924bf4 | Innkeepr - Seed - CHAT | facebook | conversion | 33 | 180 | - | 150000 | - | targetingOutlookDays is 180, expected 90 |
 | ✅ | LILLYDOO | 6811db64879ec17410925ee0 | Innkeepr - Seed - LSTM | facebook | causal | 123 | 90 | - | 150000 | - | Configuration matches defaults |
 | ✅ | LILLYDOO | 6811dc2b879ec174109276ca | Innkeepr - Seed LSTM - ES | facebook | conversion | 60 | 90 | - | 150000 | - | Configuration matches defaults |
 | ✅ | LILLYDOO | 6811dc7e879ec174109280ba | Innkeepr - Seed LSTM - IT | facebook | conversion | 60 | 90 | - | 150000 | - | Configuration matches defaults |
-| ✅ | MissPompadour GmbH | 6a1efdf91370504ba68c933e | Innkeepr – Bestperformer – Seed – Growth t10–20 | facebook | conversion | 2 | 90 | - | - | - | Configuration matches defaults |
-| ✅ | MissPompadour GmbH | 6a1efde71370504ba68c916e | Innkeepr – Bestperformer – Seed – Premium t0–10 | facebook | conversion | 0 | 90 | - | - | - | Configuration matches defaults |
-| ✅ | MissPompadour GmbH | 6a1efe081370504ba68c9581 | Innkeepr – Bestperformer – Seed – Volume t20–30 | facebook | conversion | 1 | 90 | - | - | - | Configuration matches defaults |
-| ✅ | More | 696769a1a5250a665d0ac727 | Innkeepr - Bars - Growth - Seed - t10-20p | facebook | conversion | 4 | 90 | 0.22 | - | - | Configuration matches defaults |
-| ✅ | More | 69bacbf012f9f4e3bf577932 | Innkeepr - Bars - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.22 | - | - | Configuration matches defaults |
-| ✅ | More | 69676960a5250a665d0aaf9b | Innkeepr - Bars - Premium - Seed - t0-10p | facebook | conversion | 4 | 90 | 0.1 | - | - | Configuration matches defaults |
-| ✅ | More | 69bacc0112f9f4e3bf577d03 | Innkeepr - Bars - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | 0.1 | - | - | Configuration matches defaults |
-| ✅ | More | 696769b0a5250a665d0acb95 | Innkeepr - Bars - Volume - Seed - t20-30p | facebook | conversion | 4 | 90 | 0.33 | - | - | Configuration matches defaults |
-| ✅ | More | 69bacbe112f9f4e3bf5775d4 | Innkeepr - Bars - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.33 | - | - | Configuration matches defaults |
-| ✅ | More | 69bacb5712f9f4e3bf574fcc | Innkeepr - Chunky - Growth - Seed - t10-20p | facebook | conversion | 1 | 90 | 0.22 | - | - | Configuration matches defaults |
-| ✅ | More | 69bacb3312f9f4e3bf574642 | Innkeepr - Chunky - Premium - Seed - t0-10p | facebook | conversion | 1 | 90 | 0.1 | - | - | Configuration matches defaults |
-| ✅ | More | 69bacb6a12f9f4e3bf575573 | Innkeepr - Chunky - Volume - Seed - t20-30p | facebook | conversion | 1 | 90 | 0.33 | - | - | Configuration matches defaults |
-| ✅ | More | 69bacedb12f9f4e3bf88cbbe | Innkeepr - Iced Coffee - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.22 | - | - | Configuration matches defaults |
-| ✅ | More | 69299a11459c17df5fb18137 | Innkeepr - Iced Coffee - Growth - Seed - t10-20p | facebook | conversion | 4 | 90 | 0.22 | - | - | Configuration matches defaults |
-| ✅ | More | 68e24526120f694f532fc29c | Innkeepr - Iced Coffee - Premium - Seed - t0-10p | facebook | conversion | 4 | 90 | 0.11 | - | - | Configuration matches defaults |
-| ✅ | More | 69bacec412f9f4e3bf88c61f | Innkeepr - Iced Coffee - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | 0.11 | - | - | Configuration matches defaults |
-| ✅ | More | 69baceea12f9f4e3bf88d143 | Innkeepr - Iced Coffee - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.33 | - | - | Configuration matches defaults |
-| ✅ | More | 69299a42459c17df5fb4eeac | Innkeepr - Iced Coffee - Volume - Seed - t20-30p | facebook | conversion | 4 | 90 | 0.33 | - | - | Configuration matches defaults |
-| ✅ | More | 69299b23459c17df5fc459bf | Innkeepr - Matcha - Growth - Seed - t10-20p | facebook | conversion | 4 | 90 | 0.22 | - | - | Configuration matches defaults |
-| ✅ | More | 68e24566120f694f53318325 | Innkeepr - Matcha - Premium - Seed - t0-10p | facebook | conversion | 4 | 90 | 0.11 | - | - | Configuration matches defaults |
-| ✅ | More | 69299b35459c17df5fc460d5 | Innkeepr - Matcha - Volume - Seed - t20-30p | facebook | conversion | 4 | 90 | 0.33 | - | - | Configuration matches defaults |
-| ✅ | More | 69de663b0908b35406f68c89 | Innkeepr - Proteinsahne - NL - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.22 | - | - | Configuration matches defaults |
-| ✅ | More | 69de662d2751dd75ae38bbef | Innkeepr - Proteinsahne - NL - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | 0.1 | - | - | Configuration matches defaults |
-| ✅ | More | 69de66530908b35406f68c8c | Innkeepr - Proteinsahne - NL - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.33 | - | - | Configuration matches defaults |
-| ✅ | More | 69676be0a5250a665d55453f | Innkeepr - VMS - CH - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.22 | - | - | Configuration matches defaults |
-| ✅ | More | 69676bf7a5250a665d554d7f | Innkeepr - VMS - CH - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | 0.1 | - | - | Configuration matches defaults |
-| ✅ | More | 69676bcda5250a665d553e46 | Innkeepr - VMS - CH - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.33 | - | - | Configuration matches defaults |
-| ✅ | More | 69676c12a5250a665d5555f5 | Innkeepr - VMS - Growth - Seed - t10-20p | facebook | conversion | 9 | 90 | 0.21 | - | - | Configuration matches defaults |
-| ✅ | More | 69676c06a5250a665d55528e | Innkeepr - VMS - Premium - Seed - t0-10p | facebook | conversion | 9 | 90 | 0.1 | - | - | Configuration matches defaults |
-| ✅ | More | 69676c25a5250a665d555ceb | Innkeepr - VMS - Volume - Seed - t20-30p | facebook | conversion | 9 | 90 | 0.33 | - | - | Configuration matches defaults |
-| ✅ | More | 69299c53459c17df5fe7e2f9 | Innkeepr - Zerup - Growth - Seed - t10-20p | facebook | conversion | 4 | 90 | 0.22 | - | - | Configuration matches defaults |
-| ✅ | More | 68e246b9120f694f533b9fc1 | Innkeepr - Zerup - Premium - Seed - t0-10p | facebook | conversion | 4 | 90 | 0.1 | - | - | Configuration matches defaults |
-| ✅ | More | 69299c6a459c17df5fe92393 | Innkeepr - Zerup - Volume - Seed - t20-30p | facebook | conversion | 4 | 90 | 0.33 | - | - | Configuration matches defaults |
+| ✅ | MissPompadour GmbH | 6a1efdf91370504ba68c933e | Innkeepr – Bestperformer – Seed – Growth t10–20 | facebook | conversion | 2 | 90 | - | 150000 | - | Configuration matches defaults |
+| ❌ | MissPompadour GmbH | 6a1efde71370504ba68c916e | Innkeepr – Bestperformer – Seed – Premium t0–10 | facebook | conversion | 0 | 30 | - | 150000 | - | targetingOutlookDays is 30, expected 90 |
+| ✅ | MissPompadour GmbH | 6a1efe081370504ba68c9581 | Innkeepr – Bestperformer – Seed – Volume t20–30 | facebook | conversion | 1 | 90 | - | 150000 | - | Configuration matches defaults |
+| ✅ | More | 696769a1a5250a665d0ac727 | Innkeepr - Bars - Growth - Seed - t10-20p | facebook | conversion | 4 | 90 | 0.22 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69bacbf012f9f4e3bf577932 | Innkeepr - Bars - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.22 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69676960a5250a665d0aaf9b | Innkeepr - Bars - Premium - Seed - t0-10p | facebook | conversion | 4 | 30 | 0.1 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69bacc0112f9f4e3bf577d03 | Innkeepr - Bars - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | 0.1 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 696769b0a5250a665d0acb95 | Innkeepr - Bars - Volume - Seed - t20-30p | facebook | conversion | 4 | 90 | 0.33 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69bacbe112f9f4e3bf5775d4 | Innkeepr - Bars - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.33 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69bacb5712f9f4e3bf574fcc | Innkeepr - Chunky - Growth - Seed - t10-20p | facebook | conversion | 1 | 90 | 0.22 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69bacb3312f9f4e3bf574642 | Innkeepr - Chunky - Premium - Seed - t0-10p | facebook | conversion | 1 | 30 | 0.1 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69bacb6a12f9f4e3bf575573 | Innkeepr - Chunky - Volume - Seed - t20-30p | facebook | conversion | 1 | 90 | 0.33 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69bacedb12f9f4e3bf88cbbe | Innkeepr - Iced Coffee - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.22 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69299a11459c17df5fb18137 | Innkeepr - Iced Coffee - Growth - Seed - t10-20p | facebook | conversion | 4 | 90 | 0.22 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 68e24526120f694f532fc29c | Innkeepr - Iced Coffee - Premium - Seed - t0-10p | facebook | conversion | 4 | 30 | 0.11 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69bacec412f9f4e3bf88c61f | Innkeepr - Iced Coffee - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | 0.11 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69baceea12f9f4e3bf88d143 | Innkeepr - Iced Coffee - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.33 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69299a42459c17df5fb4eeac | Innkeepr - Iced Coffee - Volume - Seed - t20-30p | facebook | conversion | 4 | 90 | 0.33 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69299b23459c17df5fc459bf | Innkeepr - Matcha - Growth - Seed - t10-20p | facebook | conversion | 4 | 90 | 0.22 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 68e24566120f694f53318325 | Innkeepr - Matcha - Premium - Seed - t0-10p | facebook | conversion | 4 | 30 | 0.11 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69299b35459c17df5fc460d5 | Innkeepr - Matcha - Volume - Seed - t20-30p | facebook | conversion | 4 | 90 | 0.33 | 150000 | - | Configuration matches defaults |
+| ❌ | More | 69de663b0908b35406f68c89 | Innkeepr - Proteinsahne - NL - Growth - Seed - t10-20p | facebook | conversion | 0 | 30 | 0.22 | 150000 | - | targetingOutlookDays is 30, expected 90 |
+| ✅ | More | 69de662d2751dd75ae38bbef | Innkeepr - Proteinsahne - NL - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | 0.1 | 150000 | - | Configuration matches defaults |
+| ❌ | More | 69de66530908b35406f68c8c | Innkeepr - Proteinsahne - NL - Volume - Seed - t20-30p | facebook | conversion | 0 | 30 | 0.33 | 150000 | - | targetingOutlookDays is 30, expected 90 |
+| ✅ | More | 69676be0a5250a665d55453f | Innkeepr - VMS - CH - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.22 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69676bf7a5250a665d554d7f | Innkeepr - VMS - CH - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | 0.1 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69676bcda5250a665d553e46 | Innkeepr - VMS - CH - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.33 | 150000 | - | Configuration matches defaults |
+| ❌ | More | 69676c12a5250a665d5555f5 | Innkeepr - VMS - Growth - Seed - t10-20p | facebook | conversion | 9 | 30 | 0.21 | 150000 | - | targetingOutlookDays is 30, expected 90 |
+| ✅ | More | 69676c06a5250a665d55528e | Innkeepr - VMS - Premium - Seed - t0-10p | facebook | conversion | 9 | 30 | 0.1 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69676c25a5250a665d555ceb | Innkeepr - VMS - Volume - Seed - t20-30p | facebook | conversion | 9 | 90 | 0.33 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69299c53459c17df5fe7e2f9 | Innkeepr - Zerup - Growth - Seed - t10-20p | facebook | conversion | 4 | 90 | 0.22 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 68e246b9120f694f533b9fc1 | Innkeepr - Zerup - Premium - Seed - t0-10p | facebook | conversion | 4 | 30 | 0.1 | 150000 | - | Configuration matches defaults |
+| ✅ | More | 69299c6a459c17df5fe92393 | Innkeepr - Zerup - Volume - Seed - t20-30p | facebook | conversion | 4 | 90 | 0.33 | 150000 | - | Configuration matches defaults |
 | ✅ | Nikin | 6847ea3657bdaeb51ed9e87d | Innkeepr - General - Seed | facebook | conversion | 0 | 90 | 0.5 | 150000 | - | Configuration matches defaults |
-| ✅ | Plantura | 69a0825b2568bd24bcf3d2a6 | Innkeepr - Outdoor Pflanzen - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.25 | - | - | Configuration matches defaults |
-| ✅ | Plantura | 69a082382568bd24bcf3c9f4 | Innkeepr - Outdoor Pflanzen - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | 0.15 | - | - | Configuration matches defaults |
-| ✅ | Plantura | 69a082742568bd24bcf3daac | Innkeepr - Outdoor Pflanzen - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.36 | - | - | Configuration matches defaults |
-| ✅ | Plantura | 69a082982568bd24bcf3e4ee | Innkeepr - Retterboxen - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.25 | - | - | Configuration matches defaults |
-| ✅ | Plantura | 69a082862568bd24bcf3de51 | Innkeepr - Retterboxen - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | 0.15 | - | - | Configuration matches defaults |
-| ✅ | Plantura | 69a082a72568bd24bcf3e8a7 | Innkeepr - Retterboxen - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.35 | - | - | Configuration matches defaults |
+| ✅ | Plantura | 69a0825b2568bd24bcf3d2a6 | Innkeepr - Outdoor Pflanzen - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.25 | 150000 | - | Configuration matches defaults |
+| ✅ | Plantura | 69a082382568bd24bcf3c9f4 | Innkeepr - Outdoor Pflanzen - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | 0.15 | 150000 | - | Configuration matches defaults |
+| ✅ | Plantura | 69a082742568bd24bcf3daac | Innkeepr - Outdoor Pflanzen - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.36 | 150000 | - | Configuration matches defaults |
+| ✅ | Plantura | 69a082982568bd24bcf3e4ee | Innkeepr - Retterboxen - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.25 | 150000 | - | Configuration matches defaults |
+| ✅ | Plantura | 69a082862568bd24bcf3de51 | Innkeepr - Retterboxen - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | 0.15 | 150000 | - | Configuration matches defaults |
+| ✅ | Plantura | 69a082a72568bd24bcf3e8a7 | Innkeepr - Retterboxen - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.35 | 150000 | - | Configuration matches defaults |
 | ✅ | Rosental | 67f61f9f0b17ce11bdc8960e | Innkeepr - BLEM - High Impact - Seed | facebook | causal | 18 | 90 | - | 150000 | - | Configuration matches defaults |
 | ✅ | Rosental | 6980c4baf7564868fec23572 | Innkeepr - Beauty Doc - Seed | facebook | conversion | 0 | 90 | - | 150000 | - | Configuration matches defaults |
 | ✅ | Rosental | 68d4f85a0dd10e3a312f5e4d | Innkeepr - Beauty Dock - High Impact - Seed | facebook | conversion | 0 | 90 | - | 150000 | - | Configuration matches defaults |
-| ✅ | Rosental | 69b3bbe6deec4e2c906b3fdf | Innkeepr - Botanical - Growth - Seed - t10-20p | facebook | conversion | 1 | 90 | 0.25 | - | - | Configuration matches defaults |
-| ✅ | Rosental | 69b3bbbedeec4e2c906b3679 | Innkeepr - Botanical - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | 0.14 | - | - | Configuration matches defaults |
-| ✅ | Rosental | 69b3bbf4deec4e2c906b42f4 | Innkeepr - Botanical - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.36 | - | - | Configuration matches defaults |
+| ✅ | Rosental | 69b3bbe6deec4e2c906b3fdf | Innkeepr - Botanical - Growth - Seed - t10-20p | facebook | conversion | 1 | 90 | 0.25 | 150000 | - | Configuration matches defaults |
+| ✅ | Rosental | 69b3bbbedeec4e2c906b3679 | Innkeepr - Botanical - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | 0.14 | 150000 | - | Configuration matches defaults |
+| ✅ | Rosental | 69b3bbf4deec4e2c906b42f4 | Innkeepr - Botanical - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.36 | 150000 | - | Configuration matches defaults |
 | ❌ | Rosental | 6980c47ff7564868feb8123d | Innkeepr - EMS - Seed | facebook | conversion | 0 | 30 | - | 150000 | - | targetingOutlookDays is 30, expected 90 |
 | ✅ | Rosental | 678a5ca0f3abb5123264a902 | Innkeepr - LED Mask - Seed | facebook | causal | 40 | 90 | - | 150000 | - | Configuration matches defaults |
 | ✅ | Rosental | 68e926d4b236f67910699632 | Innkeepr - NL - BB Reihe - Bestseller - High Impact - Seed | facebook | conversion | 23 | 90 | - | 150000 | - | Configuration matches defaults |
@@ -275,28 +273,28 @@ A majority of signals in this type differ from the current defaults for the fiel
 | ✅ | Rosental | 68e92747b236f679106a375c | Innkeepr - NL - Sonstiges - Bestseller - High Impact - Seed | facebook | causal | 35 | 90 | - | 150000 | - | Configuration matches defaults |
 | ✅ | Rosental | 69245b61105ef186b0d680dd | Innkeepr - NL - Sonstiges - Bestseller - Seed - t10-20p | facebook | causal | 34 | 90 | 0.3 | - | - | Configuration matches defaults |
 | ✅ | Rosental | 69245bba105ef186b0db413c | Innkeepr - NL - Sonstiges - Bestseller - Seed - t20-30p | facebook | causal | 35 | 90 | 0.3 | - | - | Configuration matches defaults |
-| ✅ | Rosental | 6942b89ba5250a665d35d601 | Innkeepr - Slow Aging - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.25 | - | - | Configuration matches defaults |
+| ✅ | Rosental | 6942b89ba5250a665d35d601 | Innkeepr - Slow Aging - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.25 | 150000 | - | Configuration matches defaults |
 | ✅ | Rosental | 68d4f82b0dd10e3a312f3bc3 | Innkeepr - Slow Aging - High Impact - Seed | facebook | conversion | 0 | 90 | - | 150000 | - | Configuration matches defaults |
-| ✅ | Rosental | 6942b951a5250a665d360549 | Innkeepr - Slow Aging - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.36 | - | - | Configuration matches defaults |
-| ✅ | Störtebekker | 69ef861d50b5382f00c18e3d | Innkeepr - Duschset - Growth - Seed - t10-20p | facebook | conversion | 1 | 90 | 0.22 | - | - | Configuration matches defaults |
-| ✅ | Störtebekker | 69ef862d50b5382f00c1924d | Innkeepr - Duschset - Premium - Seed - t0-10p | facebook | conversion | 3 | 90 | 0.11 | - | - | Configuration matches defaults |
-| ✅ | Störtebekker | 69ef861050b5382f00c18a78 | Innkeepr - Duschset - Volume - Seed - t20-30p | facebook | conversion | 1 | 90 | 0.34 | - | - | Configuration matches defaults |
-| ✅ | Störtebekker | 69ef85e250b5382f00c17d88 | Innkeepr - Probierset - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.23 | - | - | Configuration matches defaults |
-| ✅ | Störtebekker | 69ef85d050b5382f00c178d3 | Innkeepr - Probierset - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | 0.11 | - | - | Configuration matches defaults |
-| ✅ | Störtebekker | 69ef85f050b5382f00c18130 | Innkeepr - Probierset - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.34 | - | - | Configuration matches defaults |
+| ✅ | Rosental | 6942b951a5250a665d360549 | Innkeepr - Slow Aging - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.36 | 150000 | - | Configuration matches defaults |
+| ✅ | Störtebekker | 69ef861d50b5382f00c18e3d | Innkeepr - Duschset - Growth - Seed - t10-20p | facebook | conversion | 1 | 90 | 0.22 | 150000 | - | Configuration matches defaults |
+| ✅ | Störtebekker | 69ef862d50b5382f00c1924d | Innkeepr - Duschset - Premium - Seed - t0-10p | facebook | conversion | 3 | 30 | 0.11 | 150000 | - | Configuration matches defaults |
+| ✅ | Störtebekker | 69ef861050b5382f00c18a78 | Innkeepr - Duschset - Volume - Seed - t20-30p | facebook | conversion | 1 | 90 | 0.34 | 150000 | - | Configuration matches defaults |
+| ✅ | Störtebekker | 69ef85e250b5382f00c17d88 | Innkeepr - Probierset - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.23 | 150000 | - | Configuration matches defaults |
+| ✅ | Störtebekker | 69ef85d050b5382f00c178d3 | Innkeepr - Probierset - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | 0.11 | 150000 | - | Configuration matches defaults |
+| ✅ | Störtebekker | 69ef85f050b5382f00c18130 | Innkeepr - Probierset - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.34 | 150000 | - | Configuration matches defaults |
 | ❌ | Vioneers | 63d7b7692393f1ea76dd8531 | Innkeepr - General - Seed | facebook | conversion | 10 | 720 | 0.6 | - | - | targetingOutlookDays is 720, expected 90; small customer setup |
-| ✅ | ahead-nutrition.com | 6a2288d11370504ba6f636b8 | Innkeepr - Schokoriegel - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | - | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a2287e81370504ba6f61bf0 | Innkeepr - Schokoriegel - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | - | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a2288c31370504ba6f634d9 | Innkeepr - Schokoriegel CH - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | - | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a2287f61370504ba6f61d6a | Innkeepr - Schokoriegel CH - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.34 | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a2287991370504ba6f612ca | Innkeepr - Spreads - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.24 | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a22871b1370504ba6f604ba | Innkeepr - Spreads - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | - | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a2287cd1370504ba6f61866 | Innkeepr - Spreads - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | - | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a2287a91370504ba6f614e4 | Innkeepr - Spreads CH - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.22 | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a2287871370504ba6f610c7 | Innkeepr - Spreads CH - Premium - Seed - t0-10p | facebook | conversion | 0 | 90 | - | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a2287bd1370504ba6f61682 | Innkeepr - Spreads CH - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | - | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a2288131370504ba6f620dc | nnkeepr - Schokoriegel - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | - | - | - | Configuration matches defaults |
-| ✅ | ahead-nutrition.com | 6a2288041370504ba6f61ed2 | nnkeepr - Schokoriegel CH - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | - | - | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2288d11370504ba6f636b8 | Innkeepr - Schokoriegel - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | - | 150000 | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2287e81370504ba6f61bf0 | Innkeepr - Schokoriegel - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | - | 150000 | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2288c31370504ba6f634d9 | Innkeepr - Schokoriegel CH - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | - | 150000 | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2287f61370504ba6f61d6a | Innkeepr - Schokoriegel CH - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | 0.34 | 150000 | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2287991370504ba6f612ca | Innkeepr - Spreads - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.24 | 150000 | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a22871b1370504ba6f604ba | Innkeepr - Spreads - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | - | 150000 | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2287cd1370504ba6f61866 | Innkeepr - Spreads - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | - | 150000 | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2287a91370504ba6f614e4 | Innkeepr - Spreads CH - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | 0.22 | 150000 | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2287871370504ba6f610c7 | Innkeepr - Spreads CH - Premium - Seed - t0-10p | facebook | conversion | 0 | 30 | - | 150000 | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2287bd1370504ba6f61682 | Innkeepr - Spreads CH - Volume - Seed - t20-30p | facebook | conversion | 0 | 90 | - | 150000 | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2288131370504ba6f620dc | nnkeepr - Schokoriegel - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | - | 150000 | - | Configuration matches defaults |
+| ✅ | ahead-nutrition.com | 6a2288041370504ba6f61ed2 | nnkeepr - Schokoriegel CH - Growth - Seed - t10-20p | facebook | conversion | 0 | 90 | - | 150000 | - | Configuration matches defaults |
 | ✅ | to teach | 684549f157bdaeb51e6a09c0 | Innkeepr - Existing Registrations - Seed | facebook | conversion | 11 | 90 | 0.91 | - | - | Configuration matches defaults |
 | ✅ | to teach | 684549de57bdaeb51e6a04e2 | Innkeepr - Likely Registrations - Seed | facebook | conversion | 6 | 90 | 0.96 | - | - | Configuration matches defaults |
 | ✅ | to teach | 68c82905d594535196566f11 | Innkeepr - Subscription - Seed | facebook | conversion | 1 | 90 | 0.9 | - | - | Configuration matches defaults |

@@ -54,25 +54,28 @@ DEFAULT_CONFIGS_DOC_URL = (
 # Special exclusion overrides (name-dependent, from EN-3327 spec).
 EXCLUSION_NAME_OVERRIDES = {
     "Innkeepr - 30d Visitors - Exclusion": {
-        "targetingOutlookDays": 180,
-        "exclude_visitors": 30,
+        "targetingOutlookDays": 30,
+        "exclude_visitors": None,
+        "audienceSizePerc": 0.1,
     },
     "Innkeepr - 30-90d Visitors - Exclusion": {
         "targetingOutlookDays": 90,
         "exclude_visitors": 30,
+        "audienceSizePerc": 0.3,
     },
     "Innkeepr - 90-180d Visitors - Exclusion": {
         "targetingOutlookDays": 180,
         "exclude_visitors": 90,
+        "audienceSizePerc": 0.5,
     },
 }
 
 # Additional exclusion defaults inferred from Signal Default Setups patterns.
 EXCLUSION_PATTERN_DEFAULTS = [
-    (r"30d Visitor", {"targetingOutlookDays": 180, "exclude_visitors": 30}),
-    (r"30d Visitors", {"targetingOutlookDays": 180, "exclude_visitors": 30}),
-    (r"30-90d Visitors", {"targetingOutlookDays": 90, "exclude_visitors": 30}),
-    (r"90-180d Visitors", {"targetingOutlookDays": 180, "exclude_visitors": 90}),
+    (r"30d Visitor", {"targetingOutlookDays": 30, "exclude_visitors": None, "audienceSizePerc": 0.1}),
+    (r"30d Visitors", {"targetingOutlookDays": 30, "exclude_visitors": None, "audienceSizePerc": 0.1}),
+    (r"30-90d Visitors", {"targetingOutlookDays": 90, "exclude_visitors": 30, "audienceSizePerc": 0.3}),
+    (r"90-180d Visitors", {"targetingOutlookDays": 180, "exclude_visitors": 90, "audienceSizePerc": 0.5}),
     (r"360d Purchaser", {"targetingOutlookDays": 180, "exclude_visitors": None}),
     (r"Low AOV", {"targetingOutlookDays": 180, "exclude_visitors": None}),
     (r"90d Brand", {"targetingOutlookDays": 90, "exclude_visitors": None}),
@@ -217,15 +220,26 @@ def is_retargeting_audience(audience_name: str, audience_type: str) -> bool:
     return audience_type == "retargeting" or is_retargeting_signal(audience_name)
 
 
+def normalize_exclusion_overrides(overrides: dict) -> dict:
+    normalized = dict(overrides)
+    if "audienceSizePerc" in normalized:
+        normalized["audienceSizePercentage"] = normalized.pop("audienceSizePerc")
+    return normalized
+
+
 def build_exclusion_defaults(overrides: dict | None = None) -> dict:
     defaults = {
         "audienceSize": None,
-        "audienceSizePercentage": DEFAULT_AUDIENCE_PERC_EXCLUSION,
         "exclude_visitors": None,
         "targetingOutlookDays": None,
     }
     if overrides:
-        defaults.update(overrides)
+        normalized = normalize_exclusion_overrides(overrides)
+        if "audienceSizePercentage" in normalized:
+            defaults["requires_audienceSizePercentage"] = True
+        defaults.update(normalized)
+    if "audienceSizePercentage" not in defaults:
+        defaults["audienceSizePercentage"] = DEFAULT_AUDIENCE_PERC_EXCLUSION
     return defaults
 
 
@@ -373,8 +387,23 @@ def is_standard_tier_signal(audience_name: str, audience_type: str = "") -> bool
     return get_custom_tier_seed_percentage(audience_name, audience_type) is None
 
 
-def get_meta_targeting_outlook(audience_name: str) -> int:
-    """Meta tier signals use 30d for Premium (t0-10p) and 90d for Growth/Volume."""
+def is_premium_seed(audience_name: str, audience_type: str) -> bool:
+    return audience_type == "seed" and bool(
+        re.search(r"Premium", audience_name, re.IGNORECASE)
+    )
+
+
+def is_meta_tier_seed_none_audience_size(audience_name: str, audience_type: str) -> bool:
+    """Premium, Growth, and Volume Meta seeds expect audienceSize = None."""
+    return audience_type == "seed" and bool(
+        re.search(r"Premium|Growth|Volume", audience_name, re.IGNORECASE)
+    )
+
+
+def get_meta_targeting_outlook(audience_name: str, audience_type: str = "") -> int:
+    """Meta Premium seeds use 90d; other t0-10p tiers use 30d; Growth/Volume use 90d."""
+    if is_premium_seed(audience_name, audience_type):
+        return 90
     if re.search(r"t0-10p", audience_name, re.IGNORECASE):
         return 30
     if re.search(r"t10-20p|t20-30p", audience_name, re.IGNORECASE):
@@ -398,13 +427,56 @@ def is_360d_purchaser_exclusion(audience_name: str) -> bool:
     return bool(re.search(r"360d Purchaser", audience_name, re.IGNORECASE))
 
 
-def is_valid_exclusion_percentage(actual_perc, audience_name: str = "") -> bool:
+def is_valid_exclusion_percentage(
+    actual_perc,
+    audience_name: str = "",
+    expected: dict | None = None,
+) -> bool:
+    expected_perc = (
+        expected.get("audienceSizePercentage")
+        if expected is not None
+        else None
+    )
+    if expected_perc is not None:
+        if values_equal(actual_perc, expected_perc):
+            return True
+        requires_explicit = (
+            expected.get("requires_audienceSizePercentage", False)
+            if expected is not None
+            else False
+        )
+        if not requires_explicit and actual_perc is None:
+            return True
+        if is_360d_purchaser_exclusion(audience_name) and values_equal(actual_perc, 1):
+            return True
+        return False
+
     if actual_perc is None or values_equal(actual_perc, DEFAULT_AUDIENCE_PERC_EXCLUSION):
         return True
     return is_360d_purchaser_exclusion(audience_name) and values_equal(actual_perc, 1)
 
 
-def expected_exclusion_percentage_label(audience_name: str = "") -> str:
+def expected_exclusion_percentage_label(
+    audience_name: str = "",
+    expected: dict | None = None,
+) -> str:
+    expected_perc = (
+        expected.get("audienceSizePercentage")
+        if expected is not None
+        else None
+    )
+    if expected_perc is not None:
+        requires_explicit = (
+            expected.get("requires_audienceSizePercentage", False)
+            if expected is not None
+            else False
+        )
+        label = str(expected_perc)
+        if not requires_explicit:
+            label = f"None, {expected_perc}"
+        if is_360d_purchaser_exclusion(audience_name):
+            return f"{label} or 1"
+        return label
     if is_360d_purchaser_exclusion(audience_name):
         return "None, 0.5, or 1"
     return "None or 0.5"
@@ -443,11 +515,15 @@ def get_platform_defaults(connection_name: str, audience_name: str, audience_typ
         meta_outlook = (
             DEFAULT_TARGETING_OUTLOOK_DAYS_RETARGETING
             if is_retargeting
-            else get_meta_targeting_outlook(audience_name)
+            else get_meta_targeting_outlook(audience_name, audience_type)
         )
         return {
             "targetingOutlookDays": meta_outlook,
-            "audienceSize": DEFAULT_AUDIENCE_SIZE,
+            "audienceSize": (
+                None
+                if is_meta_tier_seed_none_audience_size(audience_name, audience_type)
+                else DEFAULT_AUDIENCE_SIZE
+            ),
             "audienceSizePercentage": custom_tier_percentage,
             "conversionLag": DEFAULT_CONVERSION_LAG_SEED_2 if "#2" in audience_name else None,
             "exclude_visitors": None,
@@ -528,10 +604,15 @@ def validate_configuration(
     is_standard_tier = is_standard_tier_signal(audience_name, audience_type)
     is_ga_seed = audience_type == "seed" and connection_name == "googleAnalytics"
     is_meta_seed_audience = is_meta_seed(audience_type, connection_name)
+    tier_seed_none_size = is_meta_tier_seed_none_audience_size(
+        audience_name, audience_type
+    )
 
     if "audienceSize" in expected and not is_exclusion and audience_type != "value-based":
         if not is_ga_seed and not (
-            is_meta_seed_audience and meta_seed_allows_none_audience_size(actual_perc)
+            is_meta_seed_audience
+            and meta_seed_allows_none_audience_size(actual_perc)
+            and not tier_seed_none_size
         ):
             expected_size = expected["audienceSize"]
             if expected_size is not None and not values_equal(actual_size, expected_size):
@@ -552,10 +633,10 @@ def validate_configuration(
                     f"{custom_tier_percentage} (max tier value)"
                 )
         elif is_exclusion:
-            if not is_valid_exclusion_percentage(actual_perc, audience_name):
+            if not is_valid_exclusion_percentage(actual_perc, audience_name, expected):
                 issues.append(
                     f"audienceSizePercentage is {actual_perc}, expected "
-                    f"{expected_exclusion_percentage_label(audience_name)}"
+                    f"{expected_exclusion_percentage_label(audience_name, expected)}"
                 )
         elif is_ga_seed:
             if actual_perc is None:
@@ -724,6 +805,9 @@ def get_row_context(row: pd.Series) -> dict:
         "is_standard_tier": is_standard_tier_signal(audience_name, audience_type),
         "is_ga_seed": audience_type == "seed" and connection_name == "googleAnalytics",
         "is_meta_seed": is_meta_seed(audience_type, connection_name),
+        "is_tier_seed_none_audience_size": is_meta_tier_seed_none_audience_size(
+            audience_name, audience_type
+        ),
         "expected": get_platform_defaults(connection_name, audience_name, audience_type),
         "actuals": {
             "targetingOutlookDays": normalize_audit_value(row["audience.targetingOutlookDays"]),
@@ -741,8 +825,10 @@ def field_is_checked(context: dict, field: str) -> bool:
     if field == "audienceSize":
         if context["is_exclusion"] or audience_type == "value-based" or context["is_ga_seed"]:
             return False
-        if context["is_meta_seed"] and meta_seed_allows_none_audience_size(
-            context["actuals"]["audienceSizePercentage"]
+        if (
+            context["is_meta_seed"]
+            and meta_seed_allows_none_audience_size(context["actuals"]["audienceSizePercentage"])
+            and not context["is_tier_seed_none_audience_size"]
         ):
             return False
         return True
@@ -765,8 +851,10 @@ def field_matches_default(context: dict, field: str) -> bool:
         return actual is None or context["is_exclusion"]
 
     if field == "audienceSize":
-        if context["is_meta_seed"] and meta_seed_allows_none_audience_size(
-            context["actuals"]["audienceSizePercentage"]
+        if (
+            context["is_meta_seed"]
+            and meta_seed_allows_none_audience_size(context["actuals"]["audienceSizePercentage"])
+            and not context["is_tier_seed_none_audience_size"]
         ):
             return True
         if expected is None:
@@ -779,7 +867,9 @@ def field_matches_default(context: dict, field: str) -> bool:
         if context["custom_tier_percentage"] is not None:
             return values_equal(actual, context["custom_tier_percentage"])
         if context["is_exclusion"]:
-            return is_valid_exclusion_percentage(actual, context["audience_name"])
+            return is_valid_exclusion_percentage(
+                actual, context["audience_name"], context["expected"]
+            )
         if context["is_ga_seed"]:
             return actual is not None and values_equal(actual, DEFAULT_AUDIENCE_PERC_GOOGLE)
         if expected is None:
@@ -887,9 +977,9 @@ def _build_meta_defaults_section() -> list[str]:
             SOURCE_OVERVIEW_HEADERS,
             [
                 ["Default", "90", f"{DEFAULT_AUDIENCE_SIZE:,}", "-", f"{DEFAULT_CONVERSION_LAG_SEED_2} (Seed #2)"],
-                ["Seed – Premium (`t0-10p`)", "30", f"{DEFAULT_AUDIENCE_SIZE:,}", "0 - 10", "-"],
-                ["Seed – Growth (`t10-20p`)", "90", f"{DEFAULT_AUDIENCE_SIZE:,}", "10 - 20", "-"],
-                ["Seed – Volume (`t20-30p`)", "90", f"{DEFAULT_AUDIENCE_SIZE:,}", "20 - 30", "-"],
+                ["Seed – Premium (`t0-10p`)", "90", "-", "0 - 10", "-"],
+                ["Seed – Growth (`t10-20p`)", "90", "-", "10 - 20", "-"],
+                ["Seed – Volume (`t20-30p`)", "90", "-", "20 - 30", "-"],
                 [
                     "Seed – Custom tier (`t7-15p`, …)",
                     "90",
@@ -1003,23 +1093,25 @@ def _build_exclusions_defaults_section() -> list[str]:
         ["Default", "per signal / pattern", "`-`", default_percentage, "from `customer_specifications.yaml`"],
     ]
     for name, defaults in EXCLUSION_NAME_OVERRIDES.items():
+        normalized = normalize_exclusion_overrides(defaults)
         rows.append(
             [
                 f"`{name}`",
-                str(defaults["targetingOutlookDays"]),
+                str(normalized["targetingOutlookDays"]),
                 "-",
-                "-",
-                format_markdown_value(defaults["exclude_visitors"]),
+                format_markdown_value(normalized.get("audienceSizePercentage")),
+                format_markdown_value(normalized["exclude_visitors"]),
             ]
         )
     for pattern, defaults in EXCLUSION_PATTERN_DEFAULTS:
+        normalized = normalize_exclusion_overrides(defaults)
         rows.append(
             [
                 f"`{pattern}`",
-                format_markdown_value(defaults["targetingOutlookDays"]),
+                format_markdown_value(normalized["targetingOutlookDays"]),
                 "-",
-                "-",
-                format_markdown_value(defaults["exclude_visitors"]),
+                format_markdown_value(normalized.get("audienceSizePercentage")),
+                format_markdown_value(normalized["exclude_visitors"]),
             ]
         )
 
@@ -1027,6 +1119,9 @@ def _build_exclusions_defaults_section() -> list[str]:
         "### Exclusions (all platforms)",
         "",
         *_source_overview_table(EXCLUSION_OVERVIEW_HEADERS, rows),
+        "",
+        "Visitor exclusions (`30d`, `30-90d`, `90-180d`) require an explicit "
+        "`audienceSizePercentage` (`0.1`, `0.3`, `0.5`); `None` is not allowed.",
         "",
         "`360d Purchaser` exclusions also allow `audienceSizePercentage` = `1`.",
         "",
@@ -1168,7 +1263,7 @@ def build_type_section_markdown(audience_type: str, type_table: pd.DataFrame) ->
     for source, source_table in type_table.groupby("audience.source", dropna=False, sort=True):
         source_label = str(source) if pd.notna(source) else "unknown"
         source_table = source_table.sort_values(
-            by=["audience.name", "workspace.name"],
+            by=["workspace.name", "audience.name"],
             na_position="last",
         )
         source_correct = int(source_table["label"].sum())
