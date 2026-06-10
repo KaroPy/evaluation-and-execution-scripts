@@ -22,7 +22,8 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 
-from check_signal_configuration import LOGS_DIR, SCRIPT_DIR, api_post
+from check_signal_configuration import api_post
+from src.paths import CONVERSIONS_LOGS_DIR as LOGS_DIR, SCRIPT_DIR
 
 DEFAULT_DAYS = 14
 DEFAULT_GOAL = "checkout_completed"
@@ -200,7 +201,7 @@ def parse_args() -> argparse.Namespace:
         "--log-file",
         type=Path,
         default=None,
-        help="Path for log output (default: logs/conversions_<timestamp>.log)",
+        help="Path for log output (default: conversions/logs/conversions_<timestamp>.log)",
     )
     parser.add_argument(
         "--workspace",

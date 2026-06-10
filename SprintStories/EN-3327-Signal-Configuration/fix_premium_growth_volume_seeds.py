@@ -26,17 +26,22 @@ import requests
 from dotenv import load_dotenv
 
 from check_signal_configuration import (
-    DATA_DIR,
-    LOGS_DIR,
-    SCRIPT_DIR,
     api_post,
     fetch_model,
     get_platform_defaults,
     is_meta_tier_seed_none_audience_size,
 )
+from src.paths import (
+    FIX_PREMIUM_GROWTH_VOLUME_SEEDS_DATA_DIR,
+    FIX_PREMIUM_GROWTH_VOLUME_SEEDS_LOGS_DIR as LOGS_DIR,
+    SCRIPT_DIR,
+    SIGNAL_CONFIGURATION_DATA_DIR,
+)
 
-AUDIT_CSV_PATH = DATA_DIR / "signal_configuration_audit.csv"
-PLAN_OUTPUT_PATH = DATA_DIR / "fix_premium_growth_volume_seeds_plan.json"
+AUDIT_CSV_PATH = SIGNAL_CONFIGURATION_DATA_DIR / "signal_configuration_audit.csv"
+PLAN_OUTPUT_PATH = (
+    FIX_PREMIUM_GROWTH_VOLUME_SEEDS_DATA_DIR / "fix_premium_growth_volume_seeds_plan.json"
+)
 META_SOURCE = "facebook"
 SEED_TYPE = "seed"
 

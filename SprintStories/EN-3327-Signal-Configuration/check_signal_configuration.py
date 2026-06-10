@@ -21,9 +21,12 @@ import requests
 import yaml
 from dotenv import load_dotenv
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-DATA_DIR = SCRIPT_DIR / "data"
-LOGS_DIR = SCRIPT_DIR / "logs"
+from src.paths import (
+    SCRIPT_DIR,
+    SIGNAL_CONFIGURATION_DATA_DIR as DATA_DIR,
+    SIGNAL_CONFIGURATION_LOGS_DIR as LOGS_DIR,
+)
+
 MANUAL_COMMENTS_PATH = DATA_DIR / "manually_change_comments.json"
 CUSTOMER_SPECS_PATH = (
     Path(__file__).resolve().parents[3]

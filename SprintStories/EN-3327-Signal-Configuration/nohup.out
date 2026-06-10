@@ -1,0 +1,64 @@
+Logging to /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/audience_model_treatments/logs/trigger_conversion_retraining_20260610_155459.log
+Dry-run mode (pass --apply to trigger Prefect flows)
+Loaded 28 eligible audience(s) with treatment_conv_count.total >= 500
+Traceback (most recent call last):
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 470, in <module>
+    main()
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 449, in main
+    results = run(
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 262, in run
+    deployment_index = asyncio.run(build_retraining_deployment_index())
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 123, in build_retraining_deployment_index
+    from prefect.client.orchestration import get_client
+ModuleNotFoundError: No module named 'prefect'
+Logging to /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/audience_model_treatments/logs/trigger_conversion_retraining_20260610_155517.log
+Loaded 28 eligible audience(s) with treatment_conv_count.total >= 500
+Traceback (most recent call last):
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 470, in <module>
+    main()
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 449, in main
+    results = run(
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 262, in run
+    deployment_index = asyncio.run(build_retraining_deployment_index())
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 123, in build_retraining_deployment_index
+    from prefect.client.orchestration import get_client
+ModuleNotFoundError: No module named 'prefect'
+Logging to /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/audience_model_treatments/logs/trigger_conversion_retraining_20260610_155550.log
+Loaded 28 eligible audience(s) with treatment_conv_count.total >= 500
+Traceback (most recent call last):
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 470, in <module>
+    main()
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 449, in main
+    results = run(
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 262, in run
+    deployment_index = asyncio.run(build_retraining_deployment_index())
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/trigger_conversion_retraining.py", line 123, in build_retraining_deployment_index
+    from prefect.client.orchestration import get_client
+ModuleNotFoundError: No module named 'prefect'
+Logging to /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/audience_model_treatments/logs/trigger_conversion_retraining_20260610_155637.log
+Loaded 28 eligible audience(s) with treatment_conv_count.total >= 500
+Indexed 223 k8-retraining deployment(s)
+Checking ESN / Innkeepr - Bundles - Growth - Seed - t10-20p (1004 sessions)
+Resolved existing deployment id=2361345f-d5fb-488c-9aa6-6fa27f07f8ae name=k8-retraining/k8-retraining-esn-693c07dda5250a665da38559-InnBunGroSeet1020p
+Triggering existing deployment id=2361345f-d5fb-488c-9aa6-6fa27f07f8ae name=k8-retraining/k8-retraining-esn-693c07dda5250a665da38559-InnBunGroSeet1020p
+Running: prefect deployment run --id 2361345f-d5fb-488c-9aa6-6fa27f07f8ae -p tenant="esn" -p audience="693c07dda5250a665da38559" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-esn-693c07dda5250a665da38559-InnBunGroSeet1020p'...
+Created flow run 'thankful-wildebeest'.
+└── UUID: 81d190ad-8538-4d39-ac7c-ce302a0a140f
+└── Parameters: {'is_dev': False, 'tenant': 'esn', 'audience': '693c07dda5250a665da38559', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 17:56:53 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/81d190ad-8538-4d39-ac7c-ce302a0a140f
+Waiting 90 seconds before next trigger
