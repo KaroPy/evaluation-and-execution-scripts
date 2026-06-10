@@ -26,7 +26,9 @@ from dotenv import load_dotenv
 
 from check_signal_configuration import (
     CUSTOMER_SPECS_PATH,
+    DATA_DIR,
     EXCLUSION_NAME_OVERRIDES,
+    LOGS_DIR,
     SCRIPT_DIR,
     api_post,
     fetch_model,
@@ -39,13 +41,14 @@ TARGET_EXCLUSION_ALIASES = (
     TARGET_EXCLUSION_NAME,
     "Innkeepr - 30d Visitor - Exclusion",
 )
-AUDIT_CSV_PATH = SCRIPT_DIR / "signal_configuration_audit.csv"
-PLAN_OUTPUT_PATH = SCRIPT_DIR / "fix_30d_visitors_exclusion_plan.json"
+AUDIT_CSV_PATH = DATA_DIR / "signal_configuration_audit.csv"
+PLAN_OUTPUT_PATH = DATA_DIR / "fix_30d_visitors_exclusion_plan.json"
 
 
 def default_log_path() -> Path:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
-    return SCRIPT_DIR / f"fix_30d_visitors_exclusion_{stamp}.log"
+    LOGS_DIR.mkdir(parents=True, exist_ok=True)
+    return LOGS_DIR / f"fix_30d_visitors_exclusion_{stamp}.log"
 
 
 def setup_logging(log_path: Path) -> None:

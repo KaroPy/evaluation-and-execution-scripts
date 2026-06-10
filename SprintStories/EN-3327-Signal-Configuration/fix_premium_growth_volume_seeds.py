@@ -26,6 +26,8 @@ import requests
 from dotenv import load_dotenv
 
 from check_signal_configuration import (
+    DATA_DIR,
+    LOGS_DIR,
     SCRIPT_DIR,
     api_post,
     fetch_model,
@@ -33,15 +35,16 @@ from check_signal_configuration import (
     is_meta_tier_seed_none_audience_size,
 )
 
-AUDIT_CSV_PATH = SCRIPT_DIR / "signal_configuration_audit.csv"
-PLAN_OUTPUT_PATH = SCRIPT_DIR / "fix_premium_growth_volume_seeds_plan.json"
+AUDIT_CSV_PATH = DATA_DIR / "signal_configuration_audit.csv"
+PLAN_OUTPUT_PATH = DATA_DIR / "fix_premium_growth_volume_seeds_plan.json"
 META_SOURCE = "facebook"
 SEED_TYPE = "seed"
 
 
 def default_log_path() -> Path:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
-    return SCRIPT_DIR / f"fix_premium_growth_volume_seeds_{stamp}.log"
+    LOGS_DIR.mkdir(parents=True, exist_ok=True)
+    return LOGS_DIR / f"fix_premium_growth_volume_seeds_{stamp}.log"
 
 
 def setup_logging(log_path: Path) -> None:

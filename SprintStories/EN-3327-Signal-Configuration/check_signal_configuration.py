@@ -22,7 +22,9 @@ import yaml
 from dotenv import load_dotenv
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-MANUAL_COMMENTS_PATH = SCRIPT_DIR / "manually_change_comments.json"
+DATA_DIR = SCRIPT_DIR / "data"
+LOGS_DIR = SCRIPT_DIR / "logs"
+MANUAL_COMMENTS_PATH = DATA_DIR / "manually_change_comments.json"
 CUSTOMER_SPECS_PATH = (
     Path(__file__).resolve().parents[3]
     / "innkeepr-analytics"
@@ -1335,6 +1337,7 @@ def save_audit_tables(table: pd.DataFrame, output_dir: Path) -> list[Path]:
 
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(message)s")
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
     load_dotenv(SCRIPT_DIR / ".env")
 
     api_url = os.environ["TARGETING_URL"].rstrip("/")
@@ -1347,8 +1350,8 @@ def main() -> None:
         build_audit_table(api_url, token, customer_specs, manual_comments)
     )
 
-    saved_paths = save_audit_tables(table, SCRIPT_DIR)
-    markdown_path = save_audit_markdown(table, SCRIPT_DIR)
+    saved_paths = save_audit_tables(table, DATA_DIR)
+    markdown_path = save_audit_markdown(table, DATA_DIR)
     saved_paths.append(markdown_path)
 
     incorrect = table[table["label"] == False]  # noqa: E712
