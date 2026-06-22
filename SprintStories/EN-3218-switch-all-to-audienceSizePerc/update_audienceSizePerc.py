@@ -19,14 +19,14 @@ url = return_api_url()
 
 # --- configure which workspaces to process -----------------------------------
 DESIRED_WORKSPACES: list[str] = [
-    "Junglueck"
+    # "Rosental"
     # "workspace-name-1",
     # "workspace-name-2",
 ]
 DRY_RUN: bool = False  # set to False to actually call models/store and audiences/update
 # -----------------------------------------------------------------------------
 
-INPUT_FILE = f"{PATH}missing_audienceSizePerc_20260605.parquet"
+INPUT_FILE = f"{PATH}missing_audienceSizePerc_20260615.parquet"
 
 
 def get_audience(account_id: str, audience_id: str) -> dict | None:

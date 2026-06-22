@@ -1,5 +1,5 @@
 """
-Audit active audiences for treatments and model type.
+Audit active and new audiences for treatments and model type.
 
 Extracts audience.id, audience.name, workspace, model.id, model.type, and
 treatments count, then labels each row:
@@ -13,9 +13,10 @@ Exclusions are ignored.
 For rows labeled "check causal model", runs one Databricks SQL query per
 workspace (only when at least one audience needs a causal check) combining
 innkeepr_databricks.<workspace.id>.features_view_30_outlook_train and
-features_view_365_outlook_train: deduplicate by session, treatment, conv_name,
-then group by treatment and conv_name and count distinct sessions. Results are
-aggregated per audience using audience.treatments and filtered to
+features_view_365_outlook_train: optionally filter by created >= cut_date
+(yyyy-mm-dd), deduplicate by session, treatment, conv_name, then group by
+treatment and conv_name and count distinct sessions. Results are aggregated
+per audience using audience.treatments and filtered to
 audience.goal.conversionEvents.
 """
 
@@ -41,9 +42,13 @@ from check_signal_configuration import (
 from src.databricks_sql_client import DatabricksSQLClient
 from src.paths import (
     AUDIENCE_MODEL_TREATMENTS_CAUSAL_CHECKS_DIR as CAUSAL_CHECKS_DIR,
+)
+from src.paths import (
     AUDIENCE_MODEL_TREATMENTS_DATA_DIR,
-    AUDIENCE_MODEL_TREATMENTS_LOGS_DIR as LOGS_DIR,
     SCRIPT_DIR,
+)
+from src.paths import (
+    AUDIENCE_MODEL_TREATMENTS_LOGS_DIR as LOGS_DIR,
 )
 
 OUTPUT_CSV_PATH = AUDIENCE_MODEL_TREATMENTS_DATA_DIR / "audience_model_treatments_audit.csv"
@@ -51,6 +56,24 @@ OUTPUT_MD_PATH = AUDIENCE_MODEL_TREATMENTS_DATA_DIR / "audience_model_treatments
 OUTPUT_CAUSAL_RESULTS_PATH = (
     AUDIENCE_MODEL_TREATMENTS_DATA_DIR / "audience_model_treatments_causal_results.csv"
 )
+CAUSAL_RESULTS_COLUMNS = [
+    "workspace.name",
+    "audience.id",
+    "audience.name",
+    "treatment_conv_count.total",
+    "potential sync bug",
+    "audience.source",
+    "audience.source.urlCampaignParam",
+    "audience.source.urlTrackingParam",
+    "audience.treatmentSyncStrategy",
+    "label",
+    "model.type",
+    "audience.goal",
+    "audience.goal.name",
+    "audience.goal.conversionEvents",
+    "audience.treatments",
+    "workspace.id",
+]
 DATABRICKS_CATALOG = "innkeepr_databricks"
 FEATURES_TABLE_SUFFIXES = (
     "features_view_30_outlook_train",
@@ -59,6 +82,8 @@ FEATURES_TABLE_SUFFIXES = (
 LABEL_CHECK_CAUSAL = "check causal model"
 LABEL_WRONG_TREATMENT_SYNC = "wrong_treatment_sync"
 EXPECTED_TREATMENT_SYNC_STRATEGY = "campaignBased"
+AUDIENCE_STATUSES = frozenset({"active", "new"})
+CREATED_DATE_FORMAT = "%Y-%m-%d"
 
 
 def causal_check_output_path(workspace_name: str, workspace_id: str) -> Path:
@@ -190,19 +215,38 @@ def normalize_conversion_events(value: object) -> list[str]:
     return [str(value)] if value else []
 
 
-def build_causal_check_sql(workspace_id: str) -> str:
+def normalize_cut_date(cut_date: str | datetime | None) -> str | None:
+    if cut_date is None:
+        return None
+    if isinstance(cut_date, datetime):
+        return cut_date.strftime(CREATED_DATE_FORMAT)
+    return datetime.strptime(str(cut_date), CREATED_DATE_FORMAT).strftime(CREATED_DATE_FORMAT)
+
+
+def build_causal_check_sql(
+    workspace_id: str,
+    cut_date: str | datetime | None = None,
+) -> str:
+    cut_date_sql = normalize_cut_date(cut_date)
     table_selects = "\n  UNION ALL\n".join(
-        f"  SELECT session, treatment, conv_name\n"
+        f"  SELECT session, treatment, conv_name, created\n"
         f"  FROM {build_features_table_name(workspace_id, table_suffix)}"
         for table_suffix in FEATURES_TABLE_SUFFIXES
     )
+    if cut_date_sql:
+        deduped_sql = (
+            f"  SELECT DISTINCT session, treatment, conv_name\n"
+            f"  FROM combined\n"
+            f"  WHERE to_date(created) >= DATE '{cut_date_sql}'"
+        )
+    else:
+        deduped_sql = "  SELECT DISTINCT session, treatment, conv_name\n  FROM combined"
     return f"""
 WITH combined AS (
 {table_selects}
 ),
 deduped AS (
-  SELECT DISTINCT session, treatment, conv_name
-  FROM combined
+{deduped_sql}
 )
 SELECT treatment, conv_name, COUNT(DISTINCT session) AS session_count
 FROM deduped
@@ -218,22 +262,28 @@ def has_databricks_sql_config() -> bool:
     )
 
 
-def query_causal_check_via_sql(workspace_id: str) -> pd.DataFrame:
+def query_causal_check_via_sql(
+    workspace_id: str,
+    cut_date: str | datetime | None = None,
+) -> pd.DataFrame:
     client = DatabricksSQLClient()
-    sql_statement = build_causal_check_sql(workspace_id)
+    sql_statement = build_causal_check_sql(workspace_id, cut_date=cut_date)
     with client.connect() as connection:
         with connection.cursor() as cursor:
             cursor.execute(sql_statement)
             return cursor.fetchall_arrow().to_pandas()
 
 
-def query_causal_check(workspace_id: str) -> tuple[pd.DataFrame, str]:
+def query_causal_check(
+    workspace_id: str,
+    cut_date: str | datetime | None = None,
+) -> tuple[pd.DataFrame, str]:
     if not has_databricks_sql_config():
         raise RuntimeError(
             "Databricks SQL config required: set DATABRICKS_HOST and "
             "DATABRICKS_WAREHOUSE_ID (or DATABRICKS_HTTP_PATH)"
         )
-    return query_causal_check_via_sql(workspace_id), "databricks_sql"
+    return query_causal_check_via_sql(workspace_id, cut_date=cut_date), "databricks_sql"
 
 
 def format_causal_check_error(exc: Exception) -> str:
@@ -305,6 +355,29 @@ def treatment_conv_counts_for_audience(
     return {treatment_id: int(counts.get(treatment_id, 0)) for treatment_id in treatments}
 
 
+def label_treatment_conv(conv_count: int, status: str | None) -> str:
+    if conv_count == 0 and status == "active":
+        return "error"
+    return "fine"
+
+
+def build_treatment_conv_summary(
+    treatments: list,
+    conv_counts: dict[str, int],
+    get_status,
+) -> dict[str, dict]:
+    summary: dict[str, dict] = {}
+    for treatment_id in treatments:
+        conv_count = int(conv_counts.get(treatment_id, 0))
+        status = get_status(treatment_id)
+        summary[treatment_id] = {
+            "conv_count": conv_count,
+            "status": status,
+            "label": label_treatment_conv(conv_count, status),
+        }
+    return summary
+
+
 def build_causal_treatment_results(
     table: pd.DataFrame,
     workspace_results: dict[str, pd.DataFrame],
@@ -312,13 +385,16 @@ def build_causal_treatment_results(
     token: str,
 ) -> pd.DataFrame:
     rows: list[dict] = []
-    causal_rows = table.loc[table.apply(
-        lambda row: needs_causal_check(
-            row.get("audience.treatments.count"),
-            row.get("model.type"),
-        ),
-        axis=1,
-    )]
+    status_cache: dict[tuple[str, str], str | None] = {}
+    causal_rows = table.loc[
+        table.apply(
+            lambda row: needs_causal_check(
+                row.get("audience.treatments.count"),
+                row.get("model.type"),
+            ),
+            axis=1,
+        )
+    ]
 
     for _, row in causal_rows.iterrows():
         workspace_id = row["workspace.id"]
@@ -328,33 +404,38 @@ def build_causal_treatment_results(
         conversion_events = normalize_conversion_events(row.get("audience.goal.conversionEvents"))
         result = workspace_results.get(workspace_id, pd.DataFrame())
         conv_counts = treatment_conv_counts_for_audience(result, treatments, conversion_events)
-        missing_treatment_ids = treatments_missing_in_data(result, treatments)
+        treatment_conv_count_total = sum(conv_counts.values())
 
-        treatment_conv_count = {
-            treatment_id: int(conv_counts.get(treatment_id, 0)) for treatment_id in treatments
-        }
-        treatment_conv_count_total = sum(treatment_conv_count.values())
+        def get_treatment_status(treatment_id: str) -> str | None:
+            cache_key = (workspace_id, treatment_id)
+            if cache_key not in status_cache:
+                status_cache[cache_key] = fetch_treatment_status(
+                    api_url, token, workspace_id, treatment_id
+                )
+            return status_cache[cache_key]
 
-        missing_treatments: dict[str, str | None] = {}
-        missing_log_parts: list[str] = []
-        for treatment_id in missing_treatment_ids:
-            status = fetch_treatment_status(api_url, token, workspace_id, treatment_id)
-            missing_treatments[treatment_id] = status
-            missing_log_parts.append(f"{treatment_id} ({status or 'unknown'})")
-
-        if missing_log_parts:
+        treatment_summary = build_treatment_conv_summary(
+            treatments, conv_counts, get_treatment_status
+        )
+        error_treatments = [
+            treatment_id
+            for treatment_id, details in treatment_summary.items()
+            if details["label"] == "error"
+        ]
+        if error_treatments:
             logging.info(
-                "Audience %s missing treatments in data: %s",
+                "Audience %s active treatments with 0 conv sessions: %s",
                 audience_id,
-                ", ".join(missing_log_parts),
+                ", ".join(error_treatments),
             )
 
         rows.append(
             {
                 "workspace.name": workspace_name,
-                "workspace.id": workspace_id,
                 "audience.id": audience_id,
                 "audience.name": row["audience.name"],
+                "treatment_conv_count.total": treatment_conv_count_total,
+                "potential sync bug": "potential sync bug" if error_treatments else "",
                 "audience.source": row.get("audience.source"),
                 "audience.source.urlCampaignParam": row.get("audience.source.urlCampaignParam"),
                 "audience.source.urlTrackingParam": row.get("audience.source.urlTrackingParam"),
@@ -364,37 +445,15 @@ def build_causal_treatment_results(
                 "audience.goal": row.get("audience.goal"),
                 "audience.goal.name": row.get("audience.goal.name"),
                 "audience.goal.conversionEvents": conversion_events,
-                "treatment_conv_count.total": treatment_conv_count_total,
-                "audience.treatments": treatments,
-                "treatment_conv_count": treatment_conv_count,
-                "missing_treatments": missing_treatments,
+                "audience.treatments": treatment_summary,
+                "workspace.id": workspace_id,
             }
         )
 
     if not rows:
-        return pd.DataFrame(
-            columns=[
-                "workspace.name",
-                "workspace.id",
-                "audience.id",
-                "audience.name",
-                "audience.source",
-                "audience.source.urlCampaignParam",
-                "audience.source.urlTrackingParam",
-                "audience.treatmentSyncStrategy",
-                "label",
-                "model.type",
-                "audience.goal",
-                "audience.goal.name",
-                "audience.goal.conversionEvents",
-                "audience.treatments",
-                "treatment_conv_count",
-                "treatment_conv_count.total",
-                "missing_treatments",
-            ]
-        )
+        return pd.DataFrame(columns=CAUSAL_RESULTS_COLUMNS)
 
-    return pd.DataFrame(rows)
+    return pd.DataFrame(rows)[CAUSAL_RESULTS_COLUMNS]
 
 
 def summarize_causal_check_for_audience(
@@ -417,6 +476,7 @@ def summarize_causal_check_for_audience(
 def enrich_causal_checks(
     table: pd.DataFrame,
     read_existing_data: bool = False,
+    cut_date: str | datetime | None = None,
 ) -> tuple[pd.DataFrame, dict[str, pd.DataFrame]]:
     enriched = table.copy()
     for column in [
@@ -465,7 +525,7 @@ def enrich_causal_checks(
                 method = "cached_csv"
                 output_path = cached_path
             else:
-                result, method = query_causal_check(workspace_id)
+                result, method = query_causal_check(workspace_id, cut_date=cut_date)
                 result.to_csv(output_path, index=False)
             workspace_results[workspace_id] = result
             workspace_methods[workspace_id] = method
@@ -548,7 +608,7 @@ def build_audit_table(
         )
 
         for audience in audiences:
-            if audience.get("status") != "active":
+            if audience.get("status") not in AUDIENCE_STATUSES:
                 continue
 
             audience_id = audience["id"]
@@ -618,7 +678,7 @@ def build_markdown(table: pd.DataFrame) -> str:
         "",
         "Exclusions are ignored.",
         "",
-        f"- **Total active audiences:** {len(table)}",
+        f"- **Total audiences (active + new):** {len(table)}",
     ]
     for label, count in sorted(label_counts.items()):
         summary_lines.append(f"- **{label}:** {count}")
@@ -642,13 +702,18 @@ def build_markdown(table: pd.DataFrame) -> str:
     summary_lines.append("| " + " | ".join(headers) + " |")
     summary_lines.append("| " + " | ".join(["---"] * len(headers)) + " |")
 
+    sorted_table = table.sort_values(
+        ["workspace.name", "audience.name"],
+        na_position="last",
+    )
+
     status_icon = {
         "add treatments": "❌",
         LABEL_CHECK_CAUSAL: "⚠️",
         LABEL_WRONG_TREATMENT_SYNC: "❌",
         "ok": "✅",
     }
-    for _, row in table.iterrows():
+    for _, row in sorted_table.iterrows():
         label = row["label"]
         icon = status_icon.get(label, "")
         summary_lines.append(
@@ -676,7 +741,7 @@ def build_markdown(table: pd.DataFrame) -> str:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description=("Audit active audiences for treatments count and model type labeling.")
+        description=("Audit active and new audiences for treatments count and model type labeling.")
     )
     parser.add_argument(
         "--output-csv",
@@ -724,6 +789,11 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument(
+        "--cut-date",
+        metavar="DATE",
+        help=f"Only include rows with created >= DATE (format: {CREATED_DATE_FORMAT})",
+    )
+    parser.add_argument(
         "--log-file",
         type=Path,
         default=None,
@@ -751,7 +821,7 @@ def main() -> None:
     if customer_filter:
         logging.info("Filtering to customers: %s", ", ".join(sorted(customer_filter)))
 
-    logging.info("Querying workspaces and active audiences (exclusions ignored)...")
+    logging.info("Querying workspaces and audiences with status active/new (exclusions ignored)...")
     table = build_audit_table(api_url, token, customer_filter)
 
     causal_audience_count = int(
@@ -776,6 +846,11 @@ def main() -> None:
                 CAUSAL_CHECKS_DIR,
             )
         else:
+            if args.cut_date:
+                logging.info(
+                    "Causal check created filter: created >= %s",
+                    normalize_cut_date(args.cut_date),
+                )
             logging.info(
                 "Running Databricks causal checks for %s audiences...",
                 causal_audience_count,
@@ -783,6 +858,7 @@ def main() -> None:
         table, workspace_results = enrich_causal_checks(
             table,
             read_existing_data=args.read_existing_data,
+            cut_date=args.cut_date,
         )
         causal_results = build_causal_treatment_results(table, workspace_results, api_url, token)
         args.output_causal_results.parent.mkdir(parents=True, exist_ok=True)
@@ -790,12 +866,11 @@ def main() -> None:
         json_columns = (
             "audience.treatments",
             "audience.goal.conversionEvents",
-            "treatment_conv_count",
-            "missing_treatments",
         )
         for column in json_columns:
             if column in causal_results_for_csv.columns:
                 causal_results_for_csv[column] = causal_results_for_csv[column].apply(json.dumps)
+        causal_results_for_csv = causal_results_for_csv[CAUSAL_RESULTS_COLUMNS]
         causal_results_for_csv.to_csv(args.output_causal_results, index=False)
         logging.info("Saved causal results to %s", args.output_causal_results)
 

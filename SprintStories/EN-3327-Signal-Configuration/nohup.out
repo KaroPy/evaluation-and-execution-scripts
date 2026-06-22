@@ -62,3 +62,329 @@ Created flow run 'thankful-wildebeest'.
 └── Scheduled start time: 2026-06-10 17:56:53 CEST (now)
 └── URL: https://prefect.innkeepr.ai/runs/flow-run/81d190ad-8538-4d39-ac7c-ce302a0a140f
 Waiting 90 seconds before next trigger
+Checking ESN / Innkeepr - Bundles - Premium - Seed - t0-10p (1004 sessions)
+Resolved existing deployment id=2503fc06-1da7-4baa-be12-b36d41376d74 name=k8-retraining/k8-retraining-esn-693c077ca5250a665da36c80-InnBunPreSeet010p
+Triggering existing deployment id=2503fc06-1da7-4baa-be12-b36d41376d74 name=k8-retraining/k8-retraining-esn-693c077ca5250a665da36c80-InnBunPreSeet010p
+Running: prefect deployment run --id 2503fc06-1da7-4baa-be12-b36d41376d74 -p tenant="esn" -p audience="693c077ca5250a665da36c80" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-esn-693c077ca5250a665da36c80-InnBunPreSeet010p'...
+Created flow run 'discreet-tody'.
+└── UUID: 7e4519a8-aff3-43bc-acdf-5c43cbbfd25a
+└── Parameters: {'is_dev': False, 'tenant': 'esn', 'audience': '693c077ca5250a665da36c80', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 17:58:28 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/7e4519a8-aff3-43bc-acdf-5c43cbbfd25a
+Waiting 90 seconds before next trigger
+Checking ESN / Innkeepr - Bundles - Volume - Seed - t20-30p (1004 sessions)
+Resolved existing deployment id=ce43402d-3a27-4d3e-8c87-41fdfa3a51ec name=k8-retraining/k8-retraining-esn-693c07eba5250a665da3892f-InnBunVolSeet2030p
+Triggering existing deployment id=ce43402d-3a27-4d3e-8c87-41fdfa3a51ec name=k8-retraining/k8-retraining-esn-693c07eba5250a665da3892f-InnBunVolSeet2030p
+Running: prefect deployment run --id ce43402d-3a27-4d3e-8c87-41fdfa3a51ec -p tenant="esn" -p audience="693c07eba5250a665da3892f" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-esn-693c07eba5250a665da3892f-InnBunVolSeet2030p'...
+Created flow run 'nimble-cuttlefish'.
+└── UUID: d439b700-434c-4e22-8c11-0feb20cf5e8b
+└── Parameters: {'is_dev': False, 'tenant': 'esn', 'audience': '693c07eba5250a665da3892f', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:00:01 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/d439b700-434c-4e22-8c11-0feb20cf5e8b
+Waiting 90 seconds before next trigger
+Checking Kfzteile24 / Innkeepr - Catch All - Seed #1 (6274 sessions)
+Resolved existing deployment id=e7120f41-fce8-445b-ad23-7770589caed3 name=k8-retraining/k8-retraining-kfzteile24-6835d72d13526dc3d1229132-InnCatAllSee1
+Triggering existing deployment id=e7120f41-fce8-445b-ad23-7770589caed3 name=k8-retraining/k8-retraining-kfzteile24-6835d72d13526dc3d1229132-InnCatAllSee1
+Running: prefect deployment run --id e7120f41-fce8-445b-ad23-7770589caed3 -p tenant="kfzteile24" -p audience="6835d72d13526dc3d1229132" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-kfzteile24-6835d72d13526dc3d1229132-InnCatAllSee1'...
+Created flow run 'lean-cuscus'.
+└── UUID: 7c15357d-5054-4165-be52-c1ac5c81d23e
+└── Parameters: {'is_dev': False, 'tenant': 'kfzteile24', 'audience': '6835d72d13526dc3d1229132', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:01:35 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/7c15357d-5054-4165-be52-c1ac5c81d23e
+Waiting 90 seconds before next trigger
+Checking Kfzteile24 / Innkeepr - Catch All - Seed #2 (6274 sessions)
+Resolved existing deployment id=b5db543e-7290-444b-9975-807af8b471a6 name=k8-retraining/k8-retraining-kfzteile24-6835d77813526dc3d1229978-InnCatAllSee2
+Triggering existing deployment id=b5db543e-7290-444b-9975-807af8b471a6 name=k8-retraining/k8-retraining-kfzteile24-6835d77813526dc3d1229978-InnCatAllSee2
+Running: prefect deployment run --id b5db543e-7290-444b-9975-807af8b471a6 -p tenant="kfzteile24" -p audience="6835d77813526dc3d1229978" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-kfzteile24-6835d77813526dc3d1229978-InnCatAllSee2'...
+Created flow run 'merry-malamute'.
+└── UUID: 9a4813f6-071a-442b-b438-6accca52d9b4
+└── Parameters: {'is_dev': False, 'tenant': 'kfzteile24', 'audience': '6835d77813526dc3d1229978', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:03:08 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/9a4813f6-071a-442b-b438-6accca52d9b4
+Waiting 90 seconds before next trigger
+Checking LILLYDOO / Innkeepr - Seed - ValueBased (2082 sessions)
+Resolved existing deployment id=b5ee96f5-39c8-40a9-a477-92e6008e756c name=k8-retraining/k8-retraining-lillydoo-6836db0013526dc3d135eb7d-InnSeeVal
+Triggering existing deployment id=b5ee96f5-39c8-40a9-a477-92e6008e756c name=k8-retraining/k8-retraining-lillydoo-6836db0013526dc3d135eb7d-InnSeeVal
+Running: prefect deployment run --id b5ee96f5-39c8-40a9-a477-92e6008e756c -p tenant="lillydoo" -p audience="6836db0013526dc3d135eb7d" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-lillydoo-6836db0013526dc3d135eb7d-InnSeeVal'...
+Created flow run 'fortunate-mandrill'.
+└── UUID: ee1b3b69-e1f3-4b7a-969c-7c543f101407
+└── Parameters: {'is_dev': False, 'tenant': 'lillydoo', 'audience': '6836db0013526dc3d135eb7d', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:04:42 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/ee1b3b69-e1f3-4b7a-969c-7c543f101407
+Waiting 90 seconds before next trigger
+Checking LILLYDOO / Innkeepr - Seed LSTM - IT (557 sessions)
+Resolved existing deployment id=73dad983-8d84-4657-8716-476255dd6724 name=k8-retraining/k8-retraining-lillydoo-6811dc7e879ec174109280ba-InnSeeLSTIT
+Triggering existing deployment id=73dad983-8d84-4657-8716-476255dd6724 name=k8-retraining/k8-retraining-lillydoo-6811dc7e879ec174109280ba-InnSeeLSTIT
+Running: prefect deployment run --id 73dad983-8d84-4657-8716-476255dd6724 -p tenant="lillydoo" -p audience="6811dc7e879ec174109280ba" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-lillydoo-6811dc7e879ec174109280ba-InnSeeLSTIT'...
+Created flow run 'passionate-axolotl'.
+└── UUID: 918c37ea-68e0-4ae5-85c8-6621f3a3e272
+└── Parameters: {'is_dev': False, 'tenant': 'lillydoo', 'audience': '6811dc7e879ec174109280ba', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:06:15 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/918c37ea-68e0-4ae5-85c8-6621f3a3e272
+Waiting 90 seconds before next trigger
+Checking More / Innkeepr - Iced Coffee - Growth - Seed - t10-20p (1292 sessions)
+Resolved existing deployment id=e8bd88b9-524a-4a9c-9f15-38c017eddfcf name=k8-retraining/k8-retraining-more-69299a11459c17df5fb18137-InnIceCofGroSeet1020p
+Triggering existing deployment id=e8bd88b9-524a-4a9c-9f15-38c017eddfcf name=k8-retraining/k8-retraining-more-69299a11459c17df5fb18137-InnIceCofGroSeet1020p
+Running: prefect deployment run --id e8bd88b9-524a-4a9c-9f15-38c017eddfcf -p tenant="more" -p audience="69299a11459c17df5fb18137" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-more-69299a11459c17df5fb18137-InnIceCofGroSeet1020p'...
+Created flow run 'sepia-falcon'.
+└── UUID: 73d3b0aa-2e48-40f3-bed1-f9f951fb69c0
+└── Parameters: {'is_dev': False, 'tenant': 'more', 'audience': '69299a11459c17df5fb18137', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:07:49 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/73d3b0aa-2e48-40f3-bed1-f9f951fb69c0
+Waiting 90 seconds before next trigger
+Checking More / Innkeepr - Iced Coffee - Premium - Seed - t0-10p (1292 sessions)
+Resolved existing deployment id=1d68b75c-5585-4c11-aaae-cd496219f119 name=k8-retraining/k8-retraining-more-68e24526120f694f532fc29c-InnIceCofPreSeet010p
+Triggering existing deployment id=1d68b75c-5585-4c11-aaae-cd496219f119 name=k8-retraining/k8-retraining-more-68e24526120f694f532fc29c-InnIceCofPreSeet010p
+Running: prefect deployment run --id 1d68b75c-5585-4c11-aaae-cd496219f119 -p tenant="more" -p audience="68e24526120f694f532fc29c" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-more-68e24526120f694f532fc29c-InnIceCofPreSeet010p'...
+Created flow run 'astute-guillemot'.
+└── UUID: 64e5e00b-07b3-4a1a-85f5-c0785d697c72
+└── Parameters: {'is_dev': False, 'tenant': 'more', 'audience': '68e24526120f694f532fc29c', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:09:23 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/64e5e00b-07b3-4a1a-85f5-c0785d697c72
+Waiting 90 seconds before next trigger
+Checking More / Innkeepr - Iced Coffee - Volume - Seed - t20-30p (1292 sessions)
+Resolved existing deployment id=26776ebc-cd06-42bd-ac9f-1b8b56ef236d name=k8-retraining/k8-retraining-more-69299a42459c17df5fb4eeac-InnIceCofVolSeet2030p
+Triggering existing deployment id=26776ebc-cd06-42bd-ac9f-1b8b56ef236d name=k8-retraining/k8-retraining-more-69299a42459c17df5fb4eeac-InnIceCofVolSeet2030p
+Running: prefect deployment run --id 26776ebc-cd06-42bd-ac9f-1b8b56ef236d -p tenant="more" -p audience="69299a42459c17df5fb4eeac" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-more-69299a42459c17df5fb4eeac-InnIceCofVolSeet2030p'...
+Created flow run 'lurking-walrus'.
+└── UUID: 9a6d4690-050d-4ab0-8510-1fad559258f8
+└── Parameters: {'is_dev': False, 'tenant': 'more', 'audience': '69299a42459c17df5fb4eeac', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:10:56 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/9a6d4690-050d-4ab0-8510-1fad559258f8
+Waiting 90 seconds before next trigger
+Checking More / Innkeepr - VMS - Growth - Seed - t10-20p (906 sessions)
+Resolved existing deployment id=13d4122c-36a7-4ec9-bcae-5f05225f3d2e name=k8-retraining/k8-retraining-more-69676c12a5250a665d5555f5-InnVMSGroSeet1020p
+Triggering existing deployment id=13d4122c-36a7-4ec9-bcae-5f05225f3d2e name=k8-retraining/k8-retraining-more-69676c12a5250a665d5555f5-InnVMSGroSeet1020p
+Running: prefect deployment run --id 13d4122c-36a7-4ec9-bcae-5f05225f3d2e -p tenant="more" -p audience="69676c12a5250a665d5555f5" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-more-69676c12a5250a665d5555f5-InnVMSGroSeet1020p'...
+Created flow run 'adaptable-boobook'.
+└── UUID: bdb5775e-698d-49bd-af85-0c894332f49e
+└── Parameters: {'is_dev': False, 'tenant': 'more', 'audience': '69676c12a5250a665d5555f5', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:12:30 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/bdb5775e-698d-49bd-af85-0c894332f49e
+Waiting 90 seconds before next trigger
+Checking More / Innkeepr - VMS - Premium - Seed - t0-10p (906 sessions)
+Resolved existing deployment id=f5238f37-5c53-4e67-8f3b-bd9863c6570e name=k8-retraining/k8-retraining-more-69676c06a5250a665d55528e-InnVMSPreSeet010p
+Triggering existing deployment id=f5238f37-5c53-4e67-8f3b-bd9863c6570e name=k8-retraining/k8-retraining-more-69676c06a5250a665d55528e-InnVMSPreSeet010p
+Running: prefect deployment run --id f5238f37-5c53-4e67-8f3b-bd9863c6570e -p tenant="more" -p audience="69676c06a5250a665d55528e" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-more-69676c06a5250a665d55528e-InnVMSPreSeet010p'...
+Created flow run 'grumpy-magpie'.
+└── UUID: 21b070fa-9489-4c3d-8b54-138c2d099ce4
+└── Parameters: {'is_dev': False, 'tenant': 'more', 'audience': '69676c06a5250a665d55528e', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:14:04 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/21b070fa-9489-4c3d-8b54-138c2d099ce4
+Waiting 90 seconds before next trigger
+Checking More / Innkeepr - VMS - Volume - Seed - t20-30p (906 sessions)
+Resolved existing deployment id=ed2e8637-3e05-4adb-839f-744ac6e18b95 name=k8-retraining/k8-retraining-more-69676c25a5250a665d555ceb-InnVMSVolSeet2030p
+Triggering existing deployment id=ed2e8637-3e05-4adb-839f-744ac6e18b95 name=k8-retraining/k8-retraining-more-69676c25a5250a665d555ceb-InnVMSVolSeet2030p
+Running: prefect deployment run --id ed2e8637-3e05-4adb-839f-744ac6e18b95 -p tenant="more" -p audience="69676c25a5250a665d555ceb" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-more-69676c25a5250a665d555ceb-InnVMSVolSeet2030p'...
+Created flow run 'famous-eagle'.
+└── UUID: 262a4c33-c82f-4201-afd0-e44f3a2bd776
+└── Parameters: {'is_dev': False, 'tenant': 'more', 'audience': '69676c25a5250a665d555ceb', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:15:37 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/262a4c33-c82f-4201-afd0-e44f3a2bd776
+Waiting 90 seconds before next trigger
+Checking More / Innkeepr - Zerup - Growth - Seed - t10-20p (942 sessions)
+Resolved existing deployment id=ae528699-2fae-4890-822a-c4273dc23019 name=k8-retraining/k8-retraining-more-69299c53459c17df5fe7e2f9-InnZerGroSeet1020p
+Triggering existing deployment id=ae528699-2fae-4890-822a-c4273dc23019 name=k8-retraining/k8-retraining-more-69299c53459c17df5fe7e2f9-InnZerGroSeet1020p
+Running: prefect deployment run --id ae528699-2fae-4890-822a-c4273dc23019 -p tenant="more" -p audience="69299c53459c17df5fe7e2f9" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-more-69299c53459c17df5fe7e2f9-InnZerGroSeet1020p'...
+Created flow run 'uptight-reindeer'.
+└── UUID: feb8c29a-a018-4356-ba26-c3925fc8b893
+└── Parameters: {'is_dev': False, 'tenant': 'more', 'audience': '69299c53459c17df5fe7e2f9', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:17:10 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/feb8c29a-a018-4356-ba26-c3925fc8b893
+Waiting 90 seconds before next trigger
+Checking More / Innkeepr - Zerup - Premium - Seed - t0-10p (942 sessions)
+Resolved existing deployment id=1575cb5c-4e37-403f-86ec-a3dc804b1938 name=k8-retraining/k8-retraining-more-68e246b9120f694f533b9fc1-InnZerPreSeet010p
+Triggering existing deployment id=1575cb5c-4e37-403f-86ec-a3dc804b1938 name=k8-retraining/k8-retraining-more-68e246b9120f694f533b9fc1-InnZerPreSeet010p
+Running: prefect deployment run --id 1575cb5c-4e37-403f-86ec-a3dc804b1938 -p tenant="more" -p audience="68e246b9120f694f533b9fc1" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-more-68e246b9120f694f533b9fc1-InnZerPreSeet010p'...
+Created flow run 'lovely-cobra'.
+└── UUID: d62fbe93-03e5-4d84-93c1-fd808077e6e9
+└── Parameters: {'is_dev': False, 'tenant': 'more', 'audience': '68e246b9120f694f533b9fc1', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:18:44 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/d62fbe93-03e5-4d84-93c1-fd808077e6e9
+Waiting 90 seconds before next trigger
+Checking More / Innkeepr - Zerup - Volume - Seed - t20-30p (942 sessions)
+Resolved existing deployment id=f00eebbc-3388-45c2-a702-547444420042 name=k8-retraining/k8-retraining-more-69299c6a459c17df5fe92393-InnZerVolSeet2030p
+Triggering existing deployment id=f00eebbc-3388-45c2-a702-547444420042 name=k8-retraining/k8-retraining-more-69299c6a459c17df5fe92393-InnZerVolSeet2030p
+Running: prefect deployment run --id f00eebbc-3388-45c2-a702-547444420042 -p tenant="more" -p audience="69299c6a459c17df5fe92393" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-more-69299c6a459c17df5fe92393-InnZerVolSeet2030p'...
+Created flow run 'incredible-moose'.
+└── UUID: c4e0e7fe-3389-4b28-a961-e8e35e88d14b
+└── Parameters: {'is_dev': False, 'tenant': 'more', 'audience': '69299c6a459c17df5fe92393', 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:20:17 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/c4e0e7fe-3389-4b28-a961-e8e35e88d14b
+Waiting 90 seconds before next trigger
+Checking Plantura / Innkeepr - DE_2024_PMAX_Mid-Lowseller - Seed #1 (6446 sessions)
+Resolved existing deployment id=004d7d63-1625-425d-b30b-6edd6950d7de name=k8-retraining/k8-retraining-plantura-69956f91bf21699e6ec8fcff-InnDE_LowSee1
+Triggering existing deployment id=004d7d63-1625-425d-b30b-6edd6950d7de name=k8-retraining/k8-retraining-plantura-69956f91bf21699e6ec8fcff-InnDE_LowSee1
+Running: prefect deployment run --id 004d7d63-1625-425d-b30b-6edd6950d7de -p tenant="plantura" -p audience="69956f91bf21699e6ec8fcff" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-plantura-69956f91bf21699e6ec8fcff-InnDE_LowSee1'...
+Created flow run 'wooden-capuchin'.
+└── UUID: 31405554-ae34-495d-9b15-0411362de29c
+└── Parameters: {'is_dev': False, 'tenant': 'plantura', 'audience': '69956f91bf21699e6ec8fcff', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:21:51 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/31405554-ae34-495d-9b15-0411362de29c
+Waiting 90 seconds before next trigger
+Checking Plantura / Innkeepr - DE_2024_PMAX_Mid-Lowseller - Seed #2 (6446 sessions)
+Resolved existing deployment id=971ccbca-b3c3-4995-bfd0-882c558bfde6 name=k8-retraining/k8-retraining-plantura-69956facbf21699e6ec90585-InnDE_LowSee2
+Triggering existing deployment id=971ccbca-b3c3-4995-bfd0-882c558bfde6 name=k8-retraining/k8-retraining-plantura-69956facbf21699e6ec90585-InnDE_LowSee2
+Running: prefect deployment run --id 971ccbca-b3c3-4995-bfd0-882c558bfde6 -p tenant="plantura" -p audience="69956facbf21699e6ec90585" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-plantura-69956facbf21699e6ec90585-InnDE_LowSee2'...
+Created flow run 'mega-starling'.
+└── UUID: ae860f80-f286-4690-a246-5370cbebd5fd
+└── Parameters: {'is_dev': False, 'tenant': 'plantura', 'audience': '69956facbf21699e6ec90585', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:23:24 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/ae860f80-f286-4690-a246-5370cbebd5fd
+Waiting 90 seconds before next trigger
+Checking Plantura / Innkeepr - DE_2024_PMAX_Motten - Seed #1 (7823 sessions)
+Resolved existing deployment id=7cb06bcb-3139-45a7-ab82-c15a3d539e46 name=k8-retraining/k8-retraining-plantura-69956feebf21699e6ec9181b-InnDE_See1
+Triggering existing deployment id=7cb06bcb-3139-45a7-ab82-c15a3d539e46 name=k8-retraining/k8-retraining-plantura-69956feebf21699e6ec9181b-InnDE_See1
+Running: prefect deployment run --id 7cb06bcb-3139-45a7-ab82-c15a3d539e46 -p tenant="plantura" -p audience="69956feebf21699e6ec9181b" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-plantura-69956feebf21699e6ec9181b-InnDE_See1'...
+Created flow run 'blond-hare'.
+└── UUID: c4b35825-1845-4c1d-8651-884f83f9c566
+└── Parameters: {'is_dev': False, 'tenant': 'plantura', 'audience': '69956feebf21699e6ec9181b', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:24:58 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/c4b35825-1845-4c1d-8651-884f83f9c566
+Waiting 90 seconds before next trigger
+Checking Plantura / Innkeepr - DE_2024_PMAX_Motten - Seed #2 (7823 sessions)
+Resolved existing deployment id=2ddffcd1-2ef4-42a5-bc08-b11db9cbd006 name=k8-retraining/k8-retraining-plantura-69957000bf21699e6ec91ea6-InnDE_See2
+Triggering existing deployment id=2ddffcd1-2ef4-42a5-bc08-b11db9cbd006 name=k8-retraining/k8-retraining-plantura-69957000bf21699e6ec91ea6-InnDE_See2
+Running: prefect deployment run --id 2ddffcd1-2ef4-42a5-bc08-b11db9cbd006 -p tenant="plantura" -p audience="69957000bf21699e6ec91ea6" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-plantura-69957000bf21699e6ec91ea6-InnDE_See2'...
+Created flow run 'thundering-lizard'.
+└── UUID: 2de69853-5b89-4821-bfca-92ad9a6d3327
+└── Parameters: {'is_dev': False, 'tenant': 'plantura', 'audience': '69957000bf21699e6ec91ea6', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:26:32 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/2de69853-5b89-4821-bfca-92ad9a6d3327
+Waiting 90 seconds before next trigger
+Checking Plantura / Innkeepr - DE_2024_PMAX_Outdoor - Seed #1 (2477 sessions)
+Resolved existing deployment id=bb2b2058-a834-4247-8ddc-3a3b9e31c2b8 name=k8-retraining/k8-retraining-plantura-699570c8bf21699e6eda4a8f-InnDE_See1
+Triggering existing deployment id=bb2b2058-a834-4247-8ddc-3a3b9e31c2b8 name=k8-retraining/k8-retraining-plantura-699570c8bf21699e6eda4a8f-InnDE_See1
+Running: prefect deployment run --id bb2b2058-a834-4247-8ddc-3a3b9e31c2b8 -p tenant="plantura" -p audience="699570c8bf21699e6eda4a8f" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-plantura-699570c8bf21699e6eda4a8f-InnDE_See1'...
+Created flow run 'fanatic-ibex'.
+└── UUID: dd8c1539-2697-483a-aadf-a02a7c71c93f
+└── Parameters: {'is_dev': False, 'tenant': 'plantura', 'audience': '699570c8bf21699e6eda4a8f', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:28:06 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/dd8c1539-2697-483a-aadf-a02a7c71c93f
+Waiting 90 seconds before next trigger
+Checking Plantura / Innkeepr - DE_2024_PMAX_Outdoor - Seed #2 (2477 sessions)
+Resolved existing deployment id=519a9ffc-b929-4fc0-8451-237e5f9c7752 name=k8-retraining/k8-retraining-plantura-69957073bf21699e6eda3055-InnDE_See2
+Triggering existing deployment id=519a9ffc-b929-4fc0-8451-237e5f9c7752 name=k8-retraining/k8-retraining-plantura-69957073bf21699e6eda3055-InnDE_See2
+Running: prefect deployment run --id 519a9ffc-b929-4fc0-8451-237e5f9c7752 -p tenant="plantura" -p audience="69957073bf21699e6eda3055" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-plantura-69957073bf21699e6eda3055-InnDE_See2'...
+Created flow run 'clay-octopus'.
+└── UUID: 30bd8baa-e1cd-4c3c-afb9-e2490445b801
+└── Parameters: {'is_dev': False, 'tenant': 'plantura', 'audience': '69957073bf21699e6eda3055', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:29:39 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/30bd8baa-e1cd-4c3c-afb9-e2490445b801
+Waiting 90 seconds before next trigger
+Checking Tchibo / Innkeepr - Active - Likely Purchaser  - RTG #1 (3856 sessions)
+Resolved existing deployment id=f49d32fa-bb00-4736-a5be-2d29d33c2aea name=k8-retraining/k8-retraining-tchibo-696dec4fa5250a665d00c48f-InnActLikPurRTG1
+Triggering existing deployment id=f49d32fa-bb00-4736-a5be-2d29d33c2aea name=k8-retraining/k8-retraining-tchibo-696dec4fa5250a665d00c48f-InnActLikPurRTG1
+Running: prefect deployment run --id f49d32fa-bb00-4736-a5be-2d29d33c2aea -p tenant="tchibo" -p audience="696dec4fa5250a665d00c48f" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-tchibo-696dec4fa5250a665d00c48f-InnActLikPurRTG1'...
+Created flow run 'tested-boa'.
+└── UUID: 590b368d-c11f-4913-ae31-8189fe97fe46
+└── Parameters: {'is_dev': False, 'tenant': 'tchibo', 'audience': '696dec4fa5250a665d00c48f', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:31:13 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/590b368d-c11f-4913-ae31-8189fe97fe46
+Waiting 90 seconds before next trigger
+Checking Tchibo / Innkeepr - Active - Likely Purchaser  - RTG #2 (3856 sessions)
+Resolved existing deployment id=76a44e73-9927-4d26-8572-5692da3d925c name=k8-retraining/k8-retraining-tchibo-696dec8da5250a665d00d63d-InnActLikPurRTG2
+Triggering existing deployment id=76a44e73-9927-4d26-8572-5692da3d925c name=k8-retraining/k8-retraining-tchibo-696dec8da5250a665d00d63d-InnActLikPurRTG2
+Running: prefect deployment run --id 76a44e73-9927-4d26-8572-5692da3d925c -p tenant="tchibo" -p audience="696dec8da5250a665d00d63d" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-tchibo-696dec8da5250a665d00d63d-InnActLikPurRTG2'...
+Created flow run 'chirpy-sloth'.
+└── UUID: d995748d-ddc3-4f44-958e-99cca684d533
+└── Parameters: {'is_dev': False, 'tenant': 'tchibo', 'audience': '696dec8da5250a665d00d63d', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:32:47 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/d995748d-ddc3-4f44-958e-99cca684d533
+Waiting 90 seconds before next trigger
+Checking Tchibo / Innkeepr - BabyKids - Likely Purchaser  - Seed #1 (2979 sessions)
+Resolved existing deployment id=ab90790d-872e-4a0e-9f3a-7e74664e0d04 name=k8-retraining/k8-retraining-tchibo-68b69dff2e5f2d9a58cce692-InnBabLikPurSee1
+Triggering existing deployment id=ab90790d-872e-4a0e-9f3a-7e74664e0d04 name=k8-retraining/k8-retraining-tchibo-68b69dff2e5f2d9a58cce692-InnBabLikPurSee1
+Running: prefect deployment run --id ab90790d-872e-4a0e-9f3a-7e74664e0d04 -p tenant="tchibo" -p audience="68b69dff2e5f2d9a58cce692" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-tchibo-68b69dff2e5f2d9a58cce692-InnBabLikPurSee1'...
+Created flow run 'fantastic-gibbon'.
+└── UUID: 8cfdda8d-c2c2-4f95-89cd-6b650b0badc1
+└── Parameters: {'is_dev': False, 'tenant': 'tchibo', 'audience': '68b69dff2e5f2d9a58cce692', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:34:20 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/8cfdda8d-c2c2-4f95-89cd-6b650b0badc1
+Waiting 90 seconds before next trigger
+Checking Tchibo / Innkeepr - BabyKids - Likely Purchaser  - Seed #2 (2979 sessions)
+Resolved existing deployment id=33ffb992-eb9b-4cbc-a1b1-fe5668ed4a5c name=k8-retraining/k8-retraining-tchibo-68b69e392e5f2d9a58cd0e63-InnBabLikPurSee2
+Triggering existing deployment id=33ffb992-eb9b-4cbc-a1b1-fe5668ed4a5c name=k8-retraining/k8-retraining-tchibo-68b69e392e5f2d9a58cd0e63-InnBabLikPurSee2
+Running: prefect deployment run --id 33ffb992-eb9b-4cbc-a1b1-fe5668ed4a5c -p tenant="tchibo" -p audience="68b69e392e5f2d9a58cd0e63" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-tchibo-68b69e392e5f2d9a58cd0e63-InnBabLikPurSee2'...
+Created flow run 'successful-markhor'.
+└── UUID: 3ad51ba7-8f82-4fbc-8d0c-6ec80f9d5f6b
+└── Parameters: {'is_dev': False, 'tenant': 'tchibo', 'audience': '68b69e392e5f2d9a58cd0e63', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:35:54 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/3ad51ba7-8f82-4fbc-8d0c-6ec80f9d5f6b
+Waiting 90 seconds before next trigger
+Checking Tchibo / Innkeepr - Body - Likely Purchaser - Seed #1 (4760 sessions)
+Resolved existing deployment id=95851f74-f983-4d34-b549-ec5867a6d4b2 name=k8-retraining/k8-retraining-tchibo-68b69fa72e5f2d9a58ce2652-InnBodLikPurSee1
+Triggering existing deployment id=95851f74-f983-4d34-b549-ec5867a6d4b2 name=k8-retraining/k8-retraining-tchibo-68b69fa72e5f2d9a58ce2652-InnBodLikPurSee1
+Running: prefect deployment run --id 95851f74-f983-4d34-b549-ec5867a6d4b2 -p tenant="tchibo" -p audience="68b69fa72e5f2d9a58ce2652" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-tchibo-68b69fa72e5f2d9a58ce2652-InnBodLikPurSee1'...
+Created flow run 'hallowed-penguin'.
+└── UUID: fb7f483a-0b45-46f0-a8c6-11475bb205a0
+└── Parameters: {'is_dev': False, 'tenant': 'tchibo', 'audience': '68b69fa72e5f2d9a58ce2652', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:37:27 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/fb7f483a-0b45-46f0-a8c6-11475bb205a0
+Waiting 90 seconds before next trigger
+Checking Tchibo / Innkeepr - Body - Likely Purchaser - Seed #2 (4760 sessions)
+Resolved existing deployment id=0f0bc5af-6e0a-4738-8923-53500e973926 name=k8-retraining/k8-retraining-tchibo-68b69fb82e5f2d9a58ce3439-InnBodLikPurSee2
+Triggering existing deployment id=0f0bc5af-6e0a-4738-8923-53500e973926 name=k8-retraining/k8-retraining-tchibo-68b69fb82e5f2d9a58ce3439-InnBodLikPurSee2
+Running: prefect deployment run --id 0f0bc5af-6e0a-4738-8923-53500e973926 -p tenant="tchibo" -p audience="68b69fb82e5f2d9a58ce3439" -p reset_lstm=true -p max_model_age_in_days=0
+Creating flow run for deployment 'k8-retraining/k8-retraining-tchibo-68b69fb82e5f2d9a58ce3439-InnBodLikPurSee2'...
+Created flow run 'eminent-ant'.
+└── UUID: caf083ba-37de-4e71-9eac-325ed9c9d96e
+└── Parameters: {'is_dev': False, 'tenant': 'tchibo', 'audience': '68b69fb82e5f2d9a58ce3439', 'use_proxy_api': True, 'max_model_age_in_days': 0, 'reset_lstm': True}
+└── Job Variables: {}
+└── Scheduled start time: 2026-06-10 18:39:01 CEST (now)
+└── URL: https://prefect.innkeepr.ai/runs/flow-run/caf083ba-37de-4e71-9eac-325ed9c9d96e
+Summary: {'triggered': 28}
+Wrote results CSV to /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/audience_model_treatments/logs/trigger_conversion_retraining_20260610_155637.csv
+Wrote results to log file /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/EN-3327-Signal-Configuration/audience_model_treatments/logs/trigger_conversion_retraining_20260610_155637.log

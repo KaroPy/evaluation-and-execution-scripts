@@ -1,17 +1,16 @@
 import json
+
 import requests
 
-from general_functions.constants import return_service_token, return_api_url
+from general_functions.constants import return_api_url, return_service_token
 
 
 def return_workspace_ids(tracking_started=False):
     url = return_api_url()
-    url = f"{url}/core/workspaces/query"
+    url = f"{url}api/core/workspaces/query"
     print(url)
 
-    payload = json.dumps(
-        {"content": {}, "context": {"serviceToken": return_service_token()}}
-    )
+    payload = json.dumps({"content": {}, "context": {"serviceToken": return_service_token()}})
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {return_service_token()}",
@@ -35,9 +34,7 @@ def return_accounts():
     url = f"{url}/core/accounts/query"
     print(url)
 
-    payload = json.dumps(
-        {"content": {}, "context": {"serviceToken": return_service_token()}}
-    )
+    payload = json.dumps({"content": {}, "context": {"serviceToken": return_service_token()}})
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {return_service_token()}",

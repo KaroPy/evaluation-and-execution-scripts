@@ -1,7 +1,7 @@
 """
 Fix audiences with treatmentSyncStrategy != campaignBased.
 
-Reads audience_model_treatments_causal_results.csv, filters rows where
+Reads audience_model_treatments_audit.csv, filters rows where
 audience.treatmentSyncStrategy is not campaignBased, and updates each audience
 via api/audiences/update with:
 
@@ -31,8 +31,8 @@ from src.paths import (
     SCRIPT_DIR,
 )
 
-CAUSAL_RESULTS_CSV_PATH = (
-    AUDIENCE_MODEL_TREATMENTS_DATA_DIR / "audience_model_treatments_causal_results.csv"
+AUDIT_CSV_PATH = (
+    AUDIENCE_MODEL_TREATMENTS_DATA_DIR / "audience_model_treatments_audit.csv"
 )
 PLAN_OUTPUT_PATH = (
     FIX_TREATMENT_SYNC_STRATEGY_DATA_DIR / "fix_treatment_sync_strategy_plan.json"
@@ -238,14 +238,14 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
             "Fix audiences with treatmentSyncStrategy != campaignBased "
-            "from audience_model_treatments_causal_results.csv."
+            "from audience_model_treatments_audit.csv."
         )
     )
     parser.add_argument(
         "--csv",
         type=Path,
-        default=CAUSAL_RESULTS_CSV_PATH,
-        help="Path to audience_model_treatments_causal_results.csv",
+        default=AUDIT_CSV_PATH,
+        help="Path to audience_model_treatments_audit.csv",
     )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
