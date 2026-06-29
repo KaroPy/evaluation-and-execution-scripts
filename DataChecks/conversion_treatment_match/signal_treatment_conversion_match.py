@@ -11,6 +11,10 @@ Usage (from repo root):
     python DataChecks/conversion_treatment_match/signal_treatment_conversion_match.py \\
         --workspace-id 63eba9a1bfc19074666d7856 --signal-id 69245bba105ef186b0db413c \\
         --outlook 365 --cut-date 2026-01-01 --output /tmp/match.csv
+
+    python DataChecks/conversion_treatment_match/signal_treatment_conversion_match.py \\
+        --customer Tchibo --signal-id 68b69fe02e5f2d9a58ce5239 --outlook 30 \\
+        --all-treatments
 """
 
 from __future__ import annotations
@@ -75,6 +79,11 @@ def parse_args() -> argparse.Namespace:
         default=DEFAULT_OUTPUT,
         help=f"CSV output path (default: {DEFAULT_OUTPUT.name})",
     )
+    parser.add_argument(
+        "--all-treatments",
+        action="store_true",
+        help="Query all treatment/conversion counts in the features table (no signal treatment filter)",
+    )
     return parser.parse_args()
 
 
@@ -134,24 +143,29 @@ def features_table_for_outlook(workspace_id: str, outlook: int) -> str:
 def build_treatment_conversion_match_sql(
     workspace_id: str,
     outlook: int,
-    treatments: list[str],
+    treatments: list[str] | None = None,
     cut_date: str | None = None,
+    all_treatments: bool = False,
 ) -> str:
-    if not treatments:
-        raise ValueError("Signal has no treatments in config.treatments")
-
-    treatment_literals = ", ".join(sql_literal(treatment) for treatment in treatments)
     table_name = features_table_for_outlook(workspace_id, outlook)
     cut_date_sql = normalize_cut_date(cut_date)
     created_filter = f"\n  WHERE to_date(created) >= DATE '{cut_date_sql}'" if cut_date_sql else ""
+
+    if all_treatments:
+        treatment_filter = ""
+    else:
+        if not treatments:
+            raise ValueError("Signal has no treatments in config.treatments")
+        treatment_literals = ", ".join(sql_literal(treatment) for treatment in treatments)
+        treatment_filter = f"\nWHERE treatment IN ({treatment_literals})"
+
     return f"""
 WITH deduped AS (
   SELECT DISTINCT session, treatment, conv_name
   FROM {table_name}{created_filter}
 )
 SELECT treatment, conv_name, COUNT(DISTINCT session) AS session_count
-FROM deduped
-WHERE treatment IN ({treatment_literals})
+FROM deduped{treatment_filter}
 GROUP BY treatment, conv_name
 ORDER BY conv_name, treatment
 """.strip()
@@ -268,10 +282,18 @@ def main() -> None:
         args.outlook,
         treatments,
         cut_date=args.cut_date,
+        all_treatments=args.all_treatments,
     )
     logger.info("Querying %s", features_table_for_outlook(workspace_id, args.outlook))
+    if args.all_treatments:
+        logger.info("Returning all treatment/conversion counts (no signal treatment filter)")
     raw_result = query_databricks_sql(sql_statement)
     logger.info("Databricks returned %s treatment/conv_name rows", len(raw_result))
+
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    raw_output = args.output.with_name(f"{args.output.stem}_raw{args.output.suffix}")
+    raw_result.to_csv(raw_output, index=False)
+    logger.info("Saved raw query result to %s", raw_output)
 
     detail, summary = build_report(
         raw_result,
@@ -284,7 +306,6 @@ def main() -> None:
         args.cut_date,
     )
 
-    args.output.parent.mkdir(parents=True, exist_ok=True)
     detail.to_csv(args.output, index=False)
     summary_path = args.output.with_name(f"{args.output.stem}_summary{args.output.suffix}")
     summary.to_csv(summary_path, index=False)
@@ -309,3 +330,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    # Example
+    # python DataChecks/conversion_treatment_match/signal_treatment_conversion_match.py --customer Tchibo --signal-id 69f71b921ef3b5814527d000 --outlook 365 --all-treatments
