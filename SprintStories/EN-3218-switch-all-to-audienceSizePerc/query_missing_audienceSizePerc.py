@@ -22,11 +22,11 @@ url = return_api_url()
 workspaces = return_workspace_ids()
 s3 = S3Connection()
 
-MAX_DATE_FALLBACK = 5
+MAX_DATE_FALLBACK = 720
 
 
 def get_model_by_id(account_id: str, model_id: str) -> dict | None:
-    models = call_api_with_accountId(f"{url}/models/query", account_id, {"id": model_id}, logger)
+    models = call_api_with_accountId(f"{url}api/models/query", account_id, {"id": model_id}, logger)
     if not models:
         return None
     return models[0]
@@ -53,12 +53,12 @@ def load_targeting_history(
     """Try dates from most recent, fall back up to MAX_DATE_FALLBACK days."""
     for date in dates[:MAX_DATE_FALLBACK]:
         path = f"s3://{account_id}/targeting.history/{date}/{audience_id}.parquet"
-        logger.info(f"    Reading {path}")
         try:
             df = wr.s3.read_parquet(path)
+            logger.info(f"    Loaded {len(df)} rows from date {date}")
             return df, date
-        except Exception as e:
-            logger.warning(f"    Could not read {path}: {e}")
+        except Exception:
+            continue
     return pd.DataFrame(), None
 
 
@@ -94,28 +94,28 @@ for workspace in workspaces:
     if audiences.empty:
         logger.info("  No audiences found — skipping")
         continue
-    audiences = audiences[audiences["status"] == "active"]
-    if audiences.empty:
-        logger.info("  No active audiences — skipping")
-        continue
-    logger.info(f"  Active audiences: {len(audiences)}")
+    logger.info(f"  All audiences: {len(audiences)}")
 
     # 2. For each audience query the current model (config.model) and filter
     #    for missing audienceSizePercentage
     affected_audiences = []
     for _, audience in audiences.iterrows():
-        model_id = audience.get("config.model")
+        model_id = audience.get("model")
         if not model_id:
             continue
         model = get_model_by_id(account_id, model_id)
         if model is None:
+            logger.warning(f"  Model {model_id} not found for audience {audience['id']} — skipping")
             continue
         if model.get("audienceSizePercentage") is None:
             logger.info(
                 f"  Audience {audience['id']} ({audience.get('name')}) "
                 f"— model {model_id} missing audienceSizePercentage"
             )
-            affected_audiences.append(
+            if audience.get("config.size", None) is not None:
+                logger.info("  Audience has size entry in config, skipping")
+                continue
+r            affected_audiences.append(
                 {
                     "id": audience["id"],
                     "name": audience.get("name", ""),

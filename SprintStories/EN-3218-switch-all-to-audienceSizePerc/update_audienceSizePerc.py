@@ -26,12 +26,12 @@ DESIRED_WORKSPACES: list[str] = [
 DRY_RUN: bool = False  # set to False to actually call models/store and audiences/update
 # -----------------------------------------------------------------------------
 
-INPUT_FILE = f"{PATH}missing_audienceSizePerc_20260615.parquet"
+INPUT_FILE = f"{PATH}missing_audienceSizePerc_20260629.parquet"
 
 
 def get_audience(account_id: str, audience_id: str) -> dict | None:
     result = call_api_with_accountId(
-        f"{url}/audiences/query", account_id, {"id": audience_id}, logger
+        f"{url}api/signals/query", account_id, {"id": audience_id}, logger
     )
     if not result:
         return None
@@ -39,7 +39,7 @@ def get_audience(account_id: str, audience_id: str) -> dict | None:
 
 
 def get_model(account_id: str, model_id: str) -> dict | None:
-    result = call_api_with_accountId(f"{url}/models/query", account_id, {"id": model_id}, logger)
+    result = call_api_with_accountId(f"{url}api/models/query", account_id, {"id": model_id}, logger)
     if not result:
         return None
     return result[0]
@@ -47,30 +47,32 @@ def get_model(account_id: str, model_id: str) -> dict | None:
 
 def store_model(account_id: str, model: dict, scope: str) -> str | None:
     """Post a new model (without id) and return the new model id."""
-    if scope == "campaignBased":
+    if scope == "campaign":
         scope = "campaign"
-    elif scope == "usageBased":
+    elif scope == "treatment":
         scope = "treatment"
     else:
         raise ValueError(f"Unknown scope: {scope}")
     model["scope"] = scope
     payload = model.copy()
     payload.pop("id", None)
+    if payload.get("f1Score") is None:
+        payload.pop("f1Score")
     now = datetime.now(timezone.utc)
     payload["created"] = now.strftime("%Y-%m-%dT%H:%M:%S.") + f"{now.microsecond // 1000:03d}Z"
     logger.info(f"Update model with payload: {payload}")
-    result = call_api_with_accountId(f"{url}/models/store", account_id, payload, logger)
+    result = call_api_with_accountId(f"{url}api/models/store", account_id, payload, logger)
     logger.info(f"Updated model: {result}")
     if not result:
         return None
     return result["id"]
 
 
-def update_audience_model(account_id: str, audience_id: str, model_id: str) -> None:
+def update_audience_model(account_id: str, audience_id: str, size: float, model_id: str) -> None:
     call_api_with_accountId(
-        f"{url}/audiences/update",
+        f"{url}api/signals/update",
         account_id,
-        {"id": audience_id, "config": {"model": model_id}},
+        {"id": audience_id, "config": {"size": size}, "model": model_id},
         logger,
     )
 
@@ -104,11 +106,11 @@ for _, row in df.iterrows():
         logger.warning("  Audience not found — skipping")
         continue
 
-    model_id = audience.get("config", {}).get("model")
+    model_id = audience.get("model")
     if not model_id:
         logger.warning("  No model set on audience — skipping")
 
-    scope = audience.get("config", {}).get("treatmentSyncStrategy", None)
+    scope = audience.get("config", {}).get("treatments", {}).get("scope", None)
 
     # 2. Query the current model
     model = get_model(account_id, model_id)
@@ -128,18 +130,23 @@ for _, row in df.iterrows():
         logger.info(f"  [DRY RUN] Would call models/store with payload: {model} — skipping")
         new_model_id = "test-dry-run"
     else:
-        new_model_id = store_model(account_id, model, scope)
-        if not new_model_id:
-            logger.warning("  models/store returned no id — skipping audience update")
-            continue
+        if audience.get("status") != "active":
+            logger.info("Audience is not active — skipping model update")
+            new_model_id = audience.get("model")
+        else:
+            logger.info("Update model as well.")
+            new_model_id = store_model(account_id, model, scope)
+            if not new_model_id:
+                logger.warning("  models/store returned no id — skipping audience update")
+                continue
 
     logger.info(f"  New model stored: {new_model_id}")
     if DRY_RUN:
         logger.info(
-            f"  [DRY RUN] Would call audiences/update with payload: {audience_id}, {new_model_id} — skipping"
+            f"  [DRY RUN] Would call audiences/update with payload: {audience_id}, {new_percentage}, {new_model_id} — skipping"
         )
         continue
     else:
         # 5. Point the audience at the new model
-        update_audience_model(account_id, audience_id, new_model_id)
+        update_audience_model(account_id, audience_id, new_percentage, new_model_id)
         logger.info(f"  Audience updated → model {new_model_id}")
