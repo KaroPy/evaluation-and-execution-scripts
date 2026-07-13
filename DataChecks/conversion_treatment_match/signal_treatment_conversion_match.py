@@ -66,7 +66,7 @@ def parse_args() -> argparse.Namespace:
         type=int,
         choices=SUPPORTED_OUTLOOKS,
         default=30,
-        help="Outlook window for features table (default: 30)",
+        help="Outlook window for features table (default: 30). Values > 30 query both 30 and 365.",
     )
     parser.add_argument(
         "--cut-date",
@@ -257,6 +257,7 @@ def main() -> None:
     workspace_id, workspace_name = resolve_workspace_id(args.customer, args.workspace_id)
     signal = fetch_signal(api_url, workspace_id, args.signal_id)
     config = signal.get("config") or {}
+    logger.info(f"config = {config}")
     treatments = get_signal_treatments(config)
     if not treatments:
         raise ValueError(f"Signal {args.signal_id} has no config.treatments")
@@ -267,53 +268,75 @@ def main() -> None:
         (goal or {}).get("conversionEvents") if goal else []
     )
 
+    outlooks_to_query = (30, 365) if args.outlook > 30 else (args.outlook,)
     logger.info(
-        "Signal %s (%s) | workspace %s | outlook %s | treatments=%s | conversionEvents=%s",
+        "Signal %s (%s) | workspace %s | outlook %s (querying %s) | treatments=%s | conversionEvents=%s",
         signal.get("name"),
         args.signal_id,
         workspace_name,
         args.outlook,
+        ", ".join(str(o) for o in outlooks_to_query),
         len(treatments),
         conversion_events,
     )
-
-    sql_statement = build_treatment_conversion_match_sql(
-        workspace_id,
-        args.outlook,
-        treatments,
-        cut_date=args.cut_date,
-        all_treatments=args.all_treatments,
-    )
-    logger.info("Querying %s", features_table_for_outlook(workspace_id, args.outlook))
     if args.all_treatments:
         logger.info("Returning all treatment/conversion counts (no signal treatment filter)")
-    raw_result = query_databricks_sql(sql_statement)
-    logger.info("Databricks returned %s treatment/conv_name rows", len(raw_result))
+
+    raw_frames: list[pd.DataFrame] = []
+    detail_frames: list[pd.DataFrame] = []
+    summary_frames: list[pd.DataFrame] = []
+
+    for outlook in outlooks_to_query:
+        sql_statement = build_treatment_conversion_match_sql(
+            workspace_id,
+            outlook,
+            treatments,
+            cut_date=args.cut_date,
+            all_treatments=args.all_treatments,
+        )
+        logger.info("Querying %s", features_table_for_outlook(workspace_id, outlook))
+        raw_result = query_databricks_sql(sql_statement)
+        logger.info(
+            "Databricks returned %s treatment/conv_name rows (outlook %s)", len(raw_result), outlook
+        )
+        raw_frames.append(raw_result.assign(outlook=outlook))
+
+        detail, summary = build_report(
+            raw_result,
+            treatments,
+            conversion_events,
+            workspace_name,
+            workspace_id,
+            signal,
+            outlook,
+            args.cut_date,
+        )
+        detail_frames.append(detail)
+        summary_frames.append(summary)
+
+    raw_result = pd.concat(raw_frames, ignore_index=True) if raw_frames else pd.DataFrame()
+    detail = pd.concat(detail_frames, ignore_index=True) if detail_frames else pd.DataFrame()
+    summary = pd.concat(summary_frames, ignore_index=True) if summary_frames else pd.DataFrame()
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     raw_output = args.output.with_name(f"{args.output.stem}_raw{args.output.suffix}")
     raw_result.to_csv(raw_output, index=False)
     logger.info("Saved raw query result to %s", raw_output)
 
-    detail, summary = build_report(
-        raw_result,
-        treatments,
-        conversion_events,
-        workspace_name,
-        workspace_id,
-        signal,
-        args.outlook,
-        args.cut_date,
-    )
-
     detail.to_csv(args.output, index=False)
     summary_path = args.output.with_name(f"{args.output.stem}_summary{args.output.suffix}")
     summary.to_csv(summary_path, index=False)
 
-    total_match_sessions = int(summary["session_count"].sum()) if not summary.empty else 0
-    logger.info(
-        "Total conversion-match sessions (per treatment, deduped in SQL): %s", total_match_sessions
-    )
+    for outlook in outlooks_to_query:
+        outlook_summary = summary[summary["outlook"] == outlook] if not summary.empty else summary
+        total_match_sessions = (
+            int(outlook_summary["session_count"].sum()) if not outlook_summary.empty else 0
+        )
+        logger.info(
+            "Total conversion-match sessions (outlook %s, per treatment, deduped in SQL): %s",
+            outlook,
+            total_match_sessions,
+        )
     logger.info("Saved detail to %s", args.output)
     logger.info("Saved per-treatment summary to %s", summary_path)
 
@@ -331,4 +354,4 @@ def main() -> None:
 if __name__ == "__main__":
     main()
     # Example
-    # python DataChecks/conversion_treatment_match/signal_treatment_conversion_match.py --customer Tchibo --signal-id 69f71b921ef3b5814527d000 --outlook 365 --all-treatments
+    # python DataChecks/conversion_treatment_match/signal_treatment_conversion_match.py --customer 'MissPompadour GmbH' --signal-id 6a2ade071370504ba6ff7177 --outlook 365 --all-treatments
