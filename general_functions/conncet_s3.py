@@ -38,27 +38,36 @@ class S3Connection:
         self, bucket_name: str, source_prefix: str, dest_prefix: str
     ):
         """Copy all files from source_prefix to dest_prefix recursively"""
-        print(f"Copying all files from {source_prefix} to {dest_prefix}")
+        source_prefix_normalized = source_prefix.rstrip("/") + "/"
+        dest_prefix_normalized = dest_prefix.rstrip("/")
+        print(
+            f"Copying all files from {source_prefix_normalized} to {dest_prefix_normalized}"
+        )
 
         # Use paginator to handle large number of files
         paginator = self.s3.get_paginator("list_objects_v2")
-        pages = paginator.paginate(Bucket=bucket_name, Prefix=source_prefix)
+        pages = paginator.paginate(Bucket=bucket_name, Prefix=source_prefix_normalized)
 
         for page in pages:
             if "Contents" not in page:
-                print(f"No files found in {source_prefix}")
+                print(f"No files found in {source_prefix_normalized}")
                 continue
 
             for obj in page["Contents"]:
                 source_key = obj["Key"]
 
-                # Skip if it's just the prefix itself (folder)
-                if source_key == source_prefix:
+                # Skip folder placeholders and the prefix itself
+                if source_key in {source_prefix_normalized, source_prefix_normalized.rstrip("/")}:
                     continue
 
-                # Calculate destination key by replacing source prefix with dest prefix
-                relative_path = source_key[len(source_prefix) :].lstrip("/")
-                dest_key = f"{dest_prefix}/{relative_path}"
+                if not source_key.startswith(source_prefix_normalized):
+                    continue
+
+                relative_path = source_key[len(source_prefix_normalized) :]
+                if not relative_path:
+                    continue
+
+                dest_key = f"{dest_prefix_normalized}/{relative_path}"
 
                 # Use your copy_s3_file method
                 self.copy_s3_file(bucket_name, source_key, dest_key)
