@@ -42,7 +42,8 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from general_functions.call_api_with_account_id import (  # noqa: E402
     call_api_with_accountId,
-    send_to_innkeepr_api_paginated,
+    make_http_post_call,
+    validate_response,
 )
 from general_functions.conncet_s3 import S3Connection  # noqa: E402
 from general_functions.constants import return_api_url  # noqa: E402
@@ -118,7 +119,24 @@ def utc_now_iso() -> str:
 
 
 def query_all(endpoint_url: str, account_id: str, content: dict, logger: logging.Logger) -> list:
-    return send_to_innkeepr_api_paginated(endpoint_url, account_id, content, logger)
+    logger.info("Querying %s", endpoint_url)
+    next_page = 1
+    data: list = []
+    while next_page is not None:
+        payload = json.dumps(
+            {
+                "content": content,
+                "pagination": {"page": next_page},
+                "context": {"accountId": account_id},
+            }
+        )
+        json_body = make_http_post_call(endpoint_url, payload, logger)
+        validate_response(json_body, logger)
+        data.extend(json_body["data"])
+        pagination = json_body.get("pagination") or {}
+        next_page = pagination.get("next")
+    logger.info("Fetched %s elements", len(data))
+    return data
 
 
 def targeting_bucket(workspace_name: str, model_path: str | None = None) -> str:
@@ -461,7 +479,6 @@ def build_model_store_payload(
         if not payload["scope"]:
             payload.pop("scope")
     payload["created"] = utc_now_iso()
-    print("Model payload:", payload)
     return payload
 
 
@@ -471,6 +488,7 @@ def store_model(
     payload: dict,
     logger: logging.Logger,
 ) -> str | None:
+    logging.info(f"store_model payload: {payload}")
     result = call_api_with_accountId(f"{api_url}/api/models/store", account_id, payload, logger)
     if not result:
         return None
@@ -944,6 +962,79 @@ def print_plan_summary(plans: pd.DataFrame) -> None:
             row["model.path.target"],
             row["s3.copy.needed"],
         )
+
+
+def models_without_objective(
+    models: list[dict],
+    *,
+    ignore_exp_paths: bool = True,
+) -> list[dict]:
+    remaining: list[dict] = []
+    for model in models:
+        path = model.get("path") or ""
+        if ignore_exp_paths and "-exp-" in path:
+            continue
+        if not model.get("objective"):
+            remaining.append(model)
+    return remaining
+
+
+def report_remaining_models_without_objective(
+    api_url: str,
+    workspaces: list[dict],
+    logger: logging.Logger,
+) -> dict:
+    rows: list[dict] = []
+    total_remaining = 0
+
+    for workspace in workspaces:
+        workspace_name = workspace["name"]
+        account_id = workspace["id"]
+        models = query_all(f"{api_url}/api/models/query", account_id, {}, logger)
+        remaining = models_without_objective(models)
+        total_remaining += len(remaining)
+
+        logger.info(
+            "Workspace %s: %s models still without objective",
+            workspace_name,
+            len(remaining),
+        )
+        for model in remaining[:20]:
+            logger.info(
+                "  model %s | type=%s | audience=%s | goal=%s | path=%s",
+                model.get("id"),
+                model.get("type"),
+                model.get("audience"),
+                model.get("goal"),
+                model.get("path"),
+            )
+        if len(remaining) > 20:
+            logger.info("  ... and %s more", len(remaining) - 20)
+
+        for model in remaining:
+            rows.append(
+                {
+                    "workspace.name": workspace_name,
+                    "workspace.id": account_id,
+                    "model.id": model.get("id"),
+                    "model.type": model.get("type"),
+                    "model.goal": model.get("goal"),
+                    "model.audience": model.get("audience"),
+                    "model.path": model.get("path"),
+                    "model.created": model.get("created"),
+                }
+            )
+
+    summary = {
+        "workspaces": len(workspaces),
+        "remaining_without_objective": total_remaining,
+    }
+    logger.info(
+        "Post-apply check: %s models still without objective across %s workspace(s)",
+        total_remaining,
+        len(workspaces),
+    )
+    return {"summary": summary, "remaining_without_objective": rows}
 
 
 def parse_args() -> argparse.Namespace:

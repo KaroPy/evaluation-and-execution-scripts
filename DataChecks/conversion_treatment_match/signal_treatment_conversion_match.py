@@ -32,7 +32,7 @@ EN3327_DIR = REPO_ROOT / "SprintStories/EN-3327-Signal-Configuration"
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(EN3327_DIR))
 
-from check_audience_model_treatments import (  # type: ignore[import-not-found]  # noqa: E402
+from check_audience_model_treatments import (  # type: ignore[import-not-found]  # ruff:ignore[module-import-not-at-top-of-file]
     filter_causal_check_for_audience,
     normalize_conversion_events,
     normalize_cut_date,
@@ -42,9 +42,15 @@ from src.databricks_sql_client import (
     DatabricksSQLClient,  # type: ignore[import-not-found]
 )
 
-from general_functions.call_api_with_account_id import call_api_with_accountId  # noqa: E402
-from general_functions.constants import return_api_url  # noqa: E402
-from general_functions.return_workspace_ids import return_workspace_ids  # noqa: E402
+from general_functions.call_api_with_account_id import (
+    call_api_with_accountId,
+)
+from general_functions.constants import (
+    return_api_url,
+)
+from general_functions.return_workspace_ids import (
+    return_workspace_ids,
+)
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT = SCRIPT_DIR / "signal_treatment_conversion_match.csv"
@@ -354,4 +360,4 @@ def main() -> None:
 if __name__ == "__main__":
     main()
     # Example
-    # python DataChecks/conversion_treatment_match/signal_treatment_conversion_match.py --customer 'MissPompadour GmbH' --signal-id 6a2ade071370504ba6ff7177 --outlook 365 --all-treatments
+    # python DataChecks/conversion_treatment_match/signal_treatment_conversion_match.py --customer 'MissPompadour GmbH' --signal-id 6a2addee1370504ba6ff6dfe --outlook 365 --all-treatments
