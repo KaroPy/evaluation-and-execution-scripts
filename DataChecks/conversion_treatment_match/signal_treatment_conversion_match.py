@@ -55,7 +55,7 @@ from general_functions.return_workspace_ids import (
 SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT = SCRIPT_DIR / "signal_treatment_conversion_match.csv"
 DATABRICKS_CATALOG = "innkeepr_databricks"
-SUPPORTED_OUTLOOKS = (30, 365)
+SUPPORTED_OUTLOOKS = (30, 365, 90)
 CREATED_DATE_FORMAT = "%Y-%m-%d"
 
 
@@ -275,6 +275,7 @@ def main() -> None:
     )
 
     outlooks_to_query = (30, 365) if args.outlook > 30 else (args.outlook,)
+    outlooks_to_query = (30, 90) if args.outlook == 90 else outlooks_to_query
     logger.info(
         "Signal %s (%s) | workspace %s | outlook %s (querying %s) | treatments=%s | conversionEvents=%s",
         signal.get("name"),
@@ -361,3 +362,5 @@ if __name__ == "__main__":
     main()
     # Example
     # python DataChecks/conversion_treatment_match/signal_treatment_conversion_match.py --customer 'MissPompadour GmbH' --signal-id 6a2addee1370504ba6ff6dfe --outlook 365 --all-treatments
+    # python DataChecks/conversion_treatment_match/signal_treatment_conversion_match.py --customer 'Tchibo' --signal-id 69d8a8eeaf22b56ab033c994 --outlook 365 --all-treatments
+    # python DataChecks/conversion_treatment_match/signal_treatment_conversion_match.py --customer 'ahead-nutrition.com' --signal-id 6a50f90c4d59db27ddd330c9 --outlook 365 --all-treatments
