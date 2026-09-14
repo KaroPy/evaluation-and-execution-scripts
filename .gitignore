@@ -9,7 +9,9 @@ data/
 analysis/data/
 analysis/backup_scripts/
 analysis/figures/
-
+scripts/ModelShapValues/models/
+scripts/ModelShapValues/shap_output/
+scripts/ModelShapValues/tmp_data/
 __pycache__
 *.png
 *.csv
@@ -26,6 +28,7 @@ temp.json
 __pychache__/
 *.pyc
 .claude/
+nohup.out
 
 
 configs/databricks_template.share
