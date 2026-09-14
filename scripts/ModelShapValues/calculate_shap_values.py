@@ -286,6 +286,15 @@ def parse_args() -> argparse.Namespace:
         help="Background size for LSTM Gradient/Kernel explainer (default: 50)",
     )
     parser.add_argument(
+        "--kernel-explain-samples",
+        default="200",
+        help=(
+            "Max rows KernelExplainer explains when GradientExplainer fails "
+            "(integer, or 'all' to use the full --max-samples subset; default: 200). "
+            "Kernel SHAP is O(n·features·nsamples) — large values are slow."
+        ),
+    )
+    parser.add_argument(
         "--random-state",
         type=int,
         default=42,
@@ -460,7 +469,7 @@ def resolve_feature_columns(
     return feature_names
 
 
-def parse_max_samples(value: str | int | None) -> int | None:
+def parse_sample_size(value: str | int | None, flag_name: str) -> int | None:
     """Return an int sample size, or None to use the full dataset."""
     if value is None:
         return None
@@ -471,11 +480,15 @@ def parse_max_samples(value: str | int | None) -> int | None:
         size = int(text)
     except ValueError as exc:
         raise SystemExit(
-            f"Invalid --max-samples '{value}'. Use a positive integer or 'all'."
+            f"Invalid {flag_name} '{value}'. Use a positive integer or 'all'."
         ) from exc
     if size <= 0:
-        raise SystemExit("--max-samples must be a positive integer or 'all'.")
+        raise SystemExit(f"{flag_name} must be a positive integer or 'all'.")
     return size
+
+
+def parse_max_samples(value: str | int | None) -> int | None:
+    return parse_sample_size(value, "--max-samples")
 
 
 def sample_frame(frame: pd.DataFrame, max_samples: int | None, random_state: int) -> pd.DataFrame:
@@ -549,6 +562,7 @@ def compute_shap_values(
     x_plot: pd.DataFrame,
     background_samples: int,
     random_state: int,
+    kernel_explain_samples: int | None = 200,
 ) -> np.ndarray:
     if backend == "xgb":
         # Prefer native XGBoost contributions (robust to shap/numpy version skew).
@@ -590,8 +604,17 @@ def compute_shap_values(
             preds = np.asarray(preds).reshape(len(data), -1)
             return preds[:, -1]
 
-        # KernelExplainer is expensive — explain a smaller subset if needed
-        explain_n = min(len(x_plot), 200)
+        # KernelExplainer is expensive — optionally cap how many rows to explain
+        if kernel_explain_samples is None:
+            explain_n = len(x_plot)
+        else:
+            explain_n = min(len(x_plot), kernel_explain_samples)
+        logging.getLogger("calculate_shap_values").info(
+            "KernelExplainer explaining %s / %s rows (cap=%s)",
+            explain_n,
+            len(x_plot),
+            "all" if kernel_explain_samples is None else kernel_explain_samples,
+        )
         x_small = x_plot.iloc[:explain_n].to_numpy(dtype=np.float32)
         bg_2d = x_plot.iloc[bg_idx].to_numpy(dtype=np.float32)
         explainer = shap.KernelExplainer(predict_fn, bg_2d)
@@ -876,6 +899,7 @@ def process_setting(
     random_state: int,
     output_dir: Path,
     logger: logging.Logger,
+    kernel_explain_samples: int | None = 200,
 ) -> list[dict]:
     artifacts = discover_artifacts(setting_dir, roles, cvs, skip_lstm)
     if not artifacts:
@@ -915,6 +939,7 @@ def process_setting(
                 x_plot,
                 background_samples,
                 random_state,
+                kernel_explain_samples=kernel_explain_samples,
             )
             result = save_outputs(
                 output_dir,
@@ -968,10 +993,17 @@ def main() -> None:
 
     data = load_feature_frame(data_path)
     max_samples = parse_max_samples(args.max_samples)
+    kernel_explain_samples = parse_sample_size(
+        args.kernel_explain_samples, "--kernel-explain-samples"
+    )
     logger.info("loaded data shape=%s columns=%s", data.shape, list(data.columns))
     logger.info(
         "max_samples=%s",
         "all" if max_samples is None else max_samples,
+    )
+    logger.info(
+        "kernel_explain_samples=%s",
+        "all" if kernel_explain_samples is None else kernel_explain_samples,
     )
 
     all_results: list[dict] = []
@@ -988,6 +1020,7 @@ def main() -> None:
                 random_state=args.random_state,
                 output_dir=output_dir,
                 logger=logger,
+                kernel_explain_samples=kernel_explain_samples,
             )
         )
 
