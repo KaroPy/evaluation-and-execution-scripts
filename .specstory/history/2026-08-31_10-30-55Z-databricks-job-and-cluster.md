@@ -1186,3 +1186,392 @@ _**Agent (grok-4.6)**_
 <summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/agent-tools/18a1182a-9bdd-432b-a96e-e945a1ab0e03.txt</summary>
 
 </details></tool-use>
+
+---
+
+_**User**_
+
+In SprintStories/Project-Intervention-Logging/intervention-logging-table-insights.ipynb map workspace_id to workspace_name (via api core/workspaces/query)
+
+---
+
+_**Agent (grok-4.6)**_
+
+<think><details><summary>Thought Process</summary>
+I'll add a mapping from workspace_id to workspace_name in the intervention logging notebook. This will use the core/workspaces/query API endpoint.
+
+Reading the notebook and searching for existing workspace ID mappings in the codebase.
+</details></think>
+
+_**Agent (grok-4.6)**_
+
+I'll inspect the notebook and how other scripts query `core/workspaces/query` so we can map `workspace_id` to `workspace_name`.
+
+_**Agent (grok-4.6)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/Project-Intervention-Logging/intervention-logging-table-insights.ipynb</summary>
+
+</details></tool-use>
+
+_**Agent (grok-4.6)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{py,ipynb}",
+  "pattern": "core/workspaces/query|workspace_id"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "pattern": "core/workspaces/query|workspace_id",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "SprintStories/EN_2669_incident_action_probs/en-2669-check-switch-to-previous-model.ipynb"
+    },
+    {
+      "matchCount": 7,
+      "uri": "SprintStories/EN-xx-goals-to-objectives/final_merge_check_all_signals.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "SprintStories/EN-2944-bucket-size-rule/define-bucket-size-rule.ipynb"
+    },
+    {
+      "matchCount": 3,
+      "uri": "scripts/interventions/check_signal_model_parameters.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "DataChecks/treatments/treatments_via_audience_id.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "DataChecks/sessions/check_sessions copy 4.ipynb"
+    },
+    {
+      "matchCount": 1,
+      "uri": "DataChecks/accounts_with_tracking/return_all_workspaces_and_ids.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "DataChecks/conversions/conversions.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "SprintStories/EN-3218-switch-all-to-audienceSizePerc/update_manual_config.py"
+    },
+    {
+      "matchCount": 6,
+      "uri": "SprintStories/EN-xx-goals-to-objectives/check_model_created_vs_path_date.py"
+    },
+    {
+      "matchCount": 5,
+      "uri": "SprintStories/EN-3162-Polars/check_cost_queries.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "SprintStories/EN-3218-switch-all-to-audienceSizePerc/query_missing_audienceSizePerc.py"
+    },
+    {
+      "matchCount": 4,
+      "uri": "SprintStories/EN-3032-BigQuery/bigquery_spark_functions.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "DataChecks/sessions/check_sessions copy 3.ipynb"
+    },
+    {
+      "matchCount": 6,
+      "uri": "SprintStories/EN-3090-traffic-comparison/esn-traffic-comparison.ipynb"
+    },
+    {
+      "matchCount": 4,
+      "uri": "SprintStories/EN-xx-goals-to-objectives/extract_runned_workspaces_from_logs.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "DataChecks/audiences/audiences_query.ipynb"
+    },
+    {
+      "matchCount": 6,
+      "uri": "SprintStories/EN-3327-Signal-Configuration/fix_30d_visitors_exclusion.py"
+    }
+  ],
+  "totalFiles": 18,
+  "totalMatches": 754
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (grok-4.6)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{py,ipynb}",
+  "pattern": "return_workspace_ids"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "pattern": "return_workspace_ids",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "DataChecks/targeting_history_ga_conversion_update/Backup/check_test_metrics.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "DataChecks/targeting_history_meta_conversion_update/check_conversion_action_history.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "DataChecks/sessions/check_sessions.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "SprintStories/Project-Intervention-Logging/incident_cases_table_insights.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "scripts/PerformanceReview/match_signal_usage_treatments.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "Analysis/SignalInsights/extract_signals_find_multiple_createdBy_per_source.py"
+    },
+    {
+      "matchCount": 3,
+      "uri": "DataChecks/treatments/test_url_paramters_and_session_treatment_matches.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "DataChecks/performance_review/check_performance_review.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "SprintStories/EN-3032-BigQuery/first-insights-bigquery-v2.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "scripts/S3/tag_bucket_models.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "SprintStories/EN_2669_incident_action_probs/en-2669-check-switch-to-previous-model-single-steps.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "DataChecks/targeting_history_ga_conversion_update/analyze_history.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "SprintStories/EN-2874-brand-vs-generic/brand-vs-generic-traffic-v2.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "DataChecks/targeting_history_meta_conversion_update/check_conversion_action_history_test.ipynb"
+    },
+    {
+      "matchCount": 1,
+      "uri": "DataChecks/conversion_probabilities/check_conversion_probabilities.ipynb"
+    }
+  ],
+  "totalFiles": 15,
+  "totalMatches": 265
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (grok-4.6)**_
+
+<think><details><summary>Thought Process</summary>
+The notebook already imports `return_workspace_ids`, which queries `core/workspaces/query`.
+
+Checking sibling notebooks and the dataframe structure to see how to add workspace names mapped from workspace IDs.
+</details></think>
+
+_**Agent (grok-4.6)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/general_functions/return_workspace_ids.py</summary>
+
+</details></tool-use>
+
+_**Agent (grok-4.6)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "SprintStories/Project-Intervention-Logging/**/*",
+  "pattern": "workspace_name|workspace_id.*name|id.*name"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "pattern": "workspace_name|workspace_id.*name|id.*name",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "./SprintStories/Project-Intervention-Logging/intervention-logging-table-insights.ipynb"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./SprintStories/Project-Intervention-Logging/data/_incident_detection.csv"
+    },
+    {
+      "matchCount": 110,
+      "uri": "./SprintStories/Project-Intervention-Logging/data/_incident_cases_2026-09-06 12:28:22.235180.csv"
+    },
+    {
+      "matchCount": 3,
+      "uri": "./SprintStories/Project-Intervention-Logging/incident_detection_taable_insights.ipynb"
+    },
+    {
+      "matchCount": 3,
+      "uri": "./SprintStories/Project-Intervention-Logging/incident_cases_table_insights.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "./SprintStories/Project-Intervention-Logging/case_events_tabale_insights.ipynb"
+    },
+    {
+      "matchCount": 108,
+      "uri": "./SprintStories/Project-Intervention-Logging/data/_incident_cases.csv"
+    }
+  ],
+  "totalFiles": 7,
+  "totalMatches": 229
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (grok-4.6)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/Project-Intervention-Logging/incident_cases_table_insights.ipynb</summary>
+
+</details></tool-use>
+
+_**Agent (grok-4.6)**_
+
+<think><details><summary>Thought Process</summary>
+The notebook already calls `return_workspace_ids()`, which queries `api/core/workspaces/query`.
+
+The cleanest approach is to build a dictionary mapping workspace IDs to names from `return_workspace_ids()`, then add a `workspace_name` column to the loaded dataframe.
+
+The mapping will be built in cell 2 from `workspace_id_lists` and applied after loading the dataframe. `workspace_name` will be placed next to `workspace_id` in the reduced CSV export.
+
+Workspace IDs are hex strings, so the mapping dictionary must handle string keys. The current customer filter is unused, confirming that all rows need mapping. I will edit the notebook cells directly.
+
+I will insert the `workspace_name` column immediately after `workspace_id` in the loaded dataframe. This keeps the display tidy. The `tracking_started=False` parameter is correct because the workspace list includes all workspaces regardless of event tracking status.
+</details></think>
+
+_**Agent (grok-4.6)**_
+
+The notebook already loads workspaces from that API. I'll add an id-to-name lookup and map it onto the intervention table.
+
+_**Agent (grok-4.6)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/Project-Intervention-Logging/intervention-logging-table-insights.ipynb</summary>
+
+</details></tool-use>
+
+_**Agent (grok-4.6)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/Project-Intervention-Logging/intervention-logging-table-insights.ipynb</summary>
+
+</details></tool-use>
+
+_**Agent (grok-4.6)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/SprintStories/Project-Intervention-Logging/intervention-logging-table-insights.ipynb</summary>
+
+</details></tool-use>
+
+_**Agent (grok-4.6)**_
+
+<think><details><summary>Thought Process</summary>
+The mapping changes are complete. No browser verification is needed since this is a notebook update rather than a web UI change.
+
+The mapping uses `_workspace_ids()`, which POSTs to `api/core/workspaces/query`. Unknown workspace IDs resolve to NaN via `.map()`.
+</details></think>
+
+_**Agent (grok-4.6)**_
+
+`workspace_name` is now filled from `core/workspaces/query` via `return_workspace_ids()`.
+
+After the table loads, each `workspace_id` is mapped to its name and inserted next to `workspace_id`. The CSV export includes `workspace_name` as well. Re-run from the workspaces-query cell so the lookup exists before the table is loaded.
+
+---
+
+_**User**_
+
+Predictive Optimization databricks - possible to tag it?
+
+---
+
+_**Agent (grok-4.6)**_
+
+<think><details><summary>Thought Process</summary>
+Checking whether Databricks Predictive Optimization supports tagging.
+
+Predictive Optimization runs automatic background operations like OPTIMIZE and VACUUM. These processes often incur costs that appear untagged or mismatched in Databricks cost dashboards.
+</details></think>
+
+_**Agent (grok-4.6)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_search"><details>
+<summary>Tool use: **web_search**</summary>
+Cancelled
+</details></tool-use>
+
+_**Agent (grok-4.6)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_search"><details>
+<summary>Tool use: **web_search**</summary>
+Cancelled
+</details></tool-use>
+
+_**Agent (grok-4.6)**_
+
+I'll check how Databricks bills Predictive Optimization and whether those workloads can carry custom tags.

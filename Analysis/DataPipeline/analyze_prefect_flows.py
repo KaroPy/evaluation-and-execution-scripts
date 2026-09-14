@@ -48,4 +48,4 @@ if __name__ == "__main__":
 
     main(flow_names=ast.literal_eval(sys.argv[1]), window_in_days=int(sys.argv[2]))
 
-# python Analysis/DataPipeline/analyze_prefect_flows.py '["etlFlow","k8-targeting","k8-retraining","googleConversionUpdate","metaConversionUpdate","updateConversionTable"]' 27
+# python Analysis/DataPipeline/analyze_prefect_flows.py '["etlFlow","k8-targeting","k8-retraining","googleConversionUpdate","metaConversionUpdate","updateConversionTable"]' 90
