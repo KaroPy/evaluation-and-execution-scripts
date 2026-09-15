@@ -30,14 +30,6 @@ Return a short user-facing explanation of the fix options and any code changes m
 
 _**Agent (default)**_
 
-<think><details><summary>Thought Process</summary>
-I will explain how to increase the SHAP sample size beyond the hardcoded 200 for LSTM KernelExplainer. I may also suggest making that limit configurable in the code.
-
-I am now examining the script to implement the fix.
-</details></think>
-
-_**Agent (default)**_
-
 I'll inspect the KernelExplainer sample cap and CLI flags so we can make explain-n configurable.
 
 _**Agent (default)**_
@@ -45,42 +37,6 @@ _**Agent (default)**_
 <tool-use data-tool-type="unknown" data-tool-name="update_current_step"><details>
 <summary>Tool use: **update_current_step**</summary>
 An unknown error occurred
-</details></tool-use>
-
-_**Agent (default)**_
-
-<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
-<summary>Tool use: **ripgrep_raw_search**</summary>
-
-Parameters:
-
-```json
-{
-  "caseInsensitive": false,
-  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
-  "pattern": "explain_n|KernelExplainer|max.samples|background.samples|200"
-}
-```
-Additional data:
-
-```json
-{
-  "isPruned": true,
-  "outputMode": "content",
-  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
-  "pattern": "explain_n|KernelExplainer|max.samples|background.samples|200",
-  "topFiles": [
-    {
-      "matchCount": 27,
-      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
-    }
-  ],
-  "totalFiles": 1,
-  "totalMatches": 27
-}
-```
-Status: **completed**
-
 </details></tool-use>
 
 _**Agent (default)**_
@@ -121,14 +77,37 @@ Status: **completed**
 
 _**Agent (default)**_
 
-<think><details><summary>Thought Process</summary>
-Reading the script to locate the SHAP sample cap and understand the surrounding logic.
-</details></think>
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
 
-_**Agent (default)**_
+Parameters:
 
-<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
-<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "explain_n|KernelExplainer|max.samples|background.samples|200"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "explain_n|KernelExplainer|max.samples|background.samples|200",
+  "topFiles": [
+    {
+      "matchCount": 27,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 27
+}
+```
+Status: **completed**
 
 </details></tool-use>
 
@@ -155,13 +134,10 @@ _**Agent (default)**_
 
 _**Agent (default)**_
 
-<think><details><summary>Thought Process</summary>
-A `--kernel-explain-samples` flag will be added. It defaults to 200 to preserve current behavior. It can be increased or set to "all".
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
 
-A dedicated flag is preferable to reusing `--max-samples`. KernelExplainer scales poorly with sample count, so a large value could stall indefinitely. The parameter accepts integers or "all" and propagates through the call chain.
-
-Checking `save_outputs` for the KernelExplainer subset alignment comment.
-</details></think>
+</details></tool-use>
 
 _**Agent (default)**_
 
@@ -190,14 +166,6 @@ _**Agent (default)**_
 
 _**Agent (default)**_
 
-<think><details><summary>Thought Process</summary>
-A `--kernel-explain-samples` CLI argument will be added. It defaults to 200 but accepts an integer or "all".
-
-A shared `parse_sample_size` helper will handle both flags. The value will thread through `process_setting` and `compute_shap_values` to replace the hardcoded 200 limit. A brief docstring update may follow.
-</details></think>
-
-_**Agent (default)**_
-
 <tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
 <summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
 
@@ -242,15 +210,6 @@ _**Agent (default)**_
 
 <tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
 <summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
-Status: **loading**
-
-</details></tool-use>
-
-_**Agent (default)**_
-
-<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
-<summary>Tool use: **ripgrep_raw_search**</summary>
-Status: **loading**
 
 </details></tool-use>
 
@@ -260,3 +219,66 @@ _**Agent (default)**_
 <summary>Tool use: **update_current_step**</summary>
 An unknown error occurred
 </details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts",
+  "pattern": "compute_shap_values|kernel.explain"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts",
+  "pattern": "compute_shap_values|kernel.explain",
+  "topFiles": [
+    {
+      "matchCount": 14,
+      "uri": "./scripts/ModelShapValues/calculate_shap_values.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./.specstory/history/2026-09-14_14-02-16Z-shap-values-evaluation-summary.md"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 15
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+**Why LSTM was stuck at 200:** `--max-samples all` only sizes the input frame. For LSTM, GradientExplainer failed, then KernelExplainer used a hard-coded `min(..., 200)`. XGB never hits that path, so it kept the full dataset.
+
+**How to get a bigger LSTM sample now**
+
+```bash
+python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer ... --data-path ... \
+  --max-samples all \
+  --kernel-explain-samples 2000
+```
+
+- `--max-samples` — rows loaded for SHAP (default 1000; `all` = full data)
+- `--kernel-explain-samples` — **new**; KernelExplainer row cap when Gradient fails (default **200**; use an int or `all`)
+- `--background-samples` — background size only (default 50), not explain-n
+
+Kernel SHAP is expensive; start around 1k–5k before `all`.
+
+**Code change:** the hardcoded `200` is replaced by `--kernel-explain-samples` in `calculate_shap_values.py`.
+
+**Better long-term:** fix GradientExplainer (`'NoneType' object cannot be interpreted as an integer`) so LSTM uses gradients on the full `--max-samples` set and skips Kernel entirely.

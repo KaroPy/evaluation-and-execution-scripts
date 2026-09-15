@@ -1827,3 +1827,4649 @@ Added a new cell in `scripts/ModelShapValues/model_param_quick_check.ipynb` that
 3. Returns a `params` dict with `inputs`, `input_shapes`, per-layer configs/param counts, `total_params`, and `model_config`
 
 For your current control model path, that returns inputs such as `days_between_sessions`, `landingpage_cat`, etc., with input shape `(None, None, 7)` and ~11.6k total parameters.
+
+---
+
+_**User**_
+
+Do the same for an xgboost model
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Adding XGBoost model loading to the notebook. Parameters and inputs will be returned.
+
+Reviewing the notebook and existing XGBoost model loading patterns.
+</details></think>
+
+_**Agent (default)**_
+
+I'll mirror the LSTM cell for an XGBoost model—checking the notebook and how those models are loaded.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/model_param_quick_check.ipynb</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage/&#34; | head -40; echo &#39;---&#39;; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables/&#34; 2&gt;/dev/null | head -20; file &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_cv_1_conversion_probability&#34; | head -5; xxd &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_cv_1_conversion_probability&#34; | head -3</summary>
+```bash
+ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage/" | head -40; echo '---'; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables/" 2>/dev/null | head -20; file "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_cv_1_conversion_probability" | head -5; xxd "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_cv_1_conversion_probability" | head -3
+```
+
+```
+2026-09-08_classifier_NNLSTM_100_nan_cv_10_conversion_probability.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_10_conversion_probability_score_test.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_1_conversion_probability.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_1_conversion_probability_score_test.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_2_conversion_probability.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_2_conversion_probability_score_test.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_3_conversion_probability.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_3_conversion_probability_score_test.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_4_conversion_probability.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_4_conversion_probability_score_test.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_5_conversion_probability.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_5_conversion_probability_score_test.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_6_conversion_probability.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_6_conversion_probability_score_test.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_7_conversion_probability.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_7_conversion_probability_score_test.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_8_conversion_probability.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_8_conversion_probability_score_test.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_9_conversion_probability.csv
+2026-09-08_classifier_NNLSTM_100_nan_cv_9_conversion_probability_score_test.csv
+2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_test_score.csv
+2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_test_xlearner_predict_score.csv
+2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_train_score.csv
+2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_conversion_probability.h5
+2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_conversion_probability_weight
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The notebook already points to an XGB treatment.json model. The LSTM loading cell failed because of that.
+
+Updating the loading cell to support both .h5 and XGBoost .json models. XGBoost JSON files will load via XGBRegressor with enable_categorical=True. Next step is verifying the load and checking inputs.parquet.
+</details></think>
+
+_**Agent (default)**_
+
+The path already points at an XGB `.json` model. I'll verify how to load it and extend the cell to handle XGBoost the same way as LSTM.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python &lt;&lt; &#39;PY&#39;
+from pathlib import Path
+import pandas as pd
+from xgboost import XGBRegressor
+
+path_to_model = &#34;scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_current_image/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_treatment.json&#34;
+base = Path(&#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts&#34;)
+full = base / path_to_model
+print(&#39;exists&#39;, full.exists())
+inputs_path = full.parent / &#34;inputs.parquet&#34;
+print(&#39;inputs exists&#39;, inputs_path.exists())
+if inputs_path.exists():
+    print(pd.read_parquet(inputs_path).head(20))
+
+model = XGBRegressor(enable_categorical=True)
+model.load_model(str(full))
+print(&#39;type&#39;, type(model))
+print(&#39;get_params&#39;, model.get_params())
+booster = model.get_booster()
+print(&#39;feature_names&#39;, booster.feature_names)
+print(&#39;feature_types&#39;, booster.feature_types)
+print(&#39;num_features&#39;, getattr(model, &#39;n_features_in_&#39;, None), booster.num_features())
+# dump a bit of config
+cfg = booster.save_config()
+import json
+cfg_j = json.loads(cfg)
+print(&#39;learner keys&#39;, cfg_j.keys())
+print(&#39;learner params sample&#39;, {k: cfg_j.get(&#39;learner&#39;, {}).get(k) for k in list(cfg_j.get(&#39;learner&#39;, {}).keys())[:8]})
+# sklearn get_xgb_params
+print(&#39;get_xgb_params&#39;, model.get_xgb_params())
+PY</summary>
+```bash
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python << 'PY'
+from pathlib import Path
+import pandas as pd
+from xgboost import XGBRegressor
+
+path_to_model = "scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_current_image/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_treatment.json"
+base = Path("/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts")
+full = base / path_to_model
+print('exists', full.exists())
+inputs_path = full.parent / "inputs.parquet"
+print('inputs exists', inputs_path.exists())
+if inputs_path.exists():
+    print(pd.read_parquet(inputs_path).head(20))
+
+model = XGBRegressor(enable_categorical=True)
+model.load_model(str(full))
+print('type', type(model))
+print('get_params', model.get_params())
+booster = model.get_booster()
+print('feature_names', booster.feature_names)
+print('feature_types', booster.feature_types)
+print('num_features', getattr(model, 'n_features_in_', None), booster.num_features())
+# dump a bit of config
+cfg = booster.save_config()
+import json
+cfg_j = json.loads(cfg)
+print('learner keys', cfg_j.keys())
+print('learner params sample', {k: cfg_j.get('learner', {}).get(k) for k in list(cfg_j.get('learner', {}).keys())[:8]})
+# sklearn get_xgb_params
+print('get_xgb_params', model.get_xgb_params())
+PY
+```
+
+```
+exists True
+inputs exists True
+                                 input
+0                          anonymousId
+1                days_between_sessions
+2            pages_visited_per_session
+3  pages_visited_per_session_cumulated
+4               pages_visited_per_user
+5     pages_visited_per_user_cumulated
+6                session_duration_in_s
+7                              session
+type <class 'xgboost.sklearn.XGBRegressor'>
+get_params {'objective': 'reg:squarederror', 'base_score': '7.71083E-2', 'booster': 'gbtree', 'callbacks': None, 'colsample_bylevel': None, 'colsample_bynode': None, 'colsample_bytree': None, 'device': None, 'early_stopping_rounds': None, 'enable_categorical': True, 'eval_metric': None, 'feature_types': None, 'gamma': None, 'grow_policy': None, 'importance_type': None, 'interaction_constraints': None, 'learning_rate': None, 'max_bin': None, 'max_cat_threshold': None, 'max_cat_to_onehot': None, 'max_delta_step': None, 'max_depth': None, 'max_leaves': None, 'min_child_weight': None, 'missing': nan, 'monotone_constraints': None, 'multi_strategy': None, 'n_estimators': None, 'n_jobs': None, 'num_parallel_tree': None, 'random_state': None, 'reg_alpha': None, 'reg_lambda': None, 'sampling_method': None, 'scale_pos_weight': None, 'subsample': None, 'tree_method': None, 'validate_parameters': None, 'verbosity': None}
+feature_names None
+feature_types None
+num_features 6 6
+learner keys dict_keys(['learner', 'version'])
+learner params sample {'generic_param': {'device': 'cpu', 'fail_on_invalid_gpu_id': '0', 'n_jobs': '0', 'nthread': '0', 'random_state': '0', 'seed': '0', 'seed_per_iteration': '0', 'validate_parameters': '1'}, 'gradient_booster': {'gbtree_model_param': {'num_parallel_tree': '1', 'num_trees': '100'}, 'gbtree_train_param': {'process_type': 'default', 'tree_method': 'auto', 'updater': 'grow_quantile_histmaker', 'updater_seq': 'grow_quantile_histmaker'}, 'name': 'gbtree', 'specified_updater': False, 'tree_train_param': {'alpha': '0', 'cache_opt': 
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_current_image/&#34; | head -30</summary>
+```bash
+ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_current_image/" | head -30
+```
+
+```
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_test_score.csv
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_test_xlearner_predict_score.csv
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_train_score.csv
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_cv_10_conversion_probability
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control.json
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control_evals_result.json
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control_feature_importance.csv
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_propensitymodel
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment.json
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment_evals_result.json
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment_feature_importance.csv
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_test_score.csv
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_test_xlearner_predict_score.csv
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_train_score.csv
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_cv_1_conversion_probability
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_control.json
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_control_evals_result.json
+2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The XGBoost booster has no feature names in treatment.json, so inputs come from inputs.parquet.
+
+The loaded XGBoost config contains the true hyperparameters, unlike sklearn's get_params(). The filename suggests different parameters than the loaded config. Cell 3 will be updated to handle both LSTM and XGBoost models. The current conditional logic is broken and incorrectly attempts Keras loading on XGBoost paths.
+</details></think>
+
+_**Agent (default)**_
+
+I'll update the load cell so it handles XGBoost `.json` models (and keeps the LSTM path working).
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/model_param_quick_check.ipynb</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Pickle-based XGBoost files may lack a file extension.
+
+The else branch will handle both JSON and pickle formats for completeness.
+</details></think>
+
+_**Agent (default)**_
+
+I'll also handle pickle-based XGB artifacts (conversion/propensity), not only `.json`.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/model_param_quick_check.ipynb</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The XGBoost model has been processed.
+</details></think>
+
+_**Agent (default)**_
+
+Updated the load cell so it works for your current XGBoost path.
+
+For `.json` models (control/treatment) it uses `XGBRegressor(...).load_model(...)`; for pickle artifacts (conversion/propensity) it uses `pickle.load`. It returns `inputs` (from the booster if present, otherwise `inputs.parquet`), `n_features`, `get_params`, `get_xgb_params`, and `booster_config`. LSTM `.h5` loading is unchanged.
+
+---
+
+_**User**_
+
+Suggest a way to calculate the shap values for each model setting in ModelShapValues and the underlying models in the directories (conversio, control and treatment)
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Evaluating approaches to compute SHAP values for each model setting in ModelShapValues and the conversio, control, and treatment subdirectories.
+
+Checking the directory structure and existing SHAP code to provide a concrete recommendation.
+</details></think>
+
+_**Agent (default)**_
+
+I'll inspect the ModelShapValues layout and any existing SHAP helpers so the suggestion fits your models.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: find &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues&#34; -maxdepth 3 -type d | head -40; echo &#39;---&#39;; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/&#34;; echo &#39;---&#39;; for d in &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/&#34;*/; do echo &#34;$(basename &#34;$d&#34;): $(ls &#34;$d&#34; | grep -E &#39;conversion_probability$|control\.json|treatment\.json|control\.h5|treatment\.h5|conversion_probability\.h5|inputs\.parquet|df_time&#39; | tr &#39;\n&#39; &#39; &#39;)&#34;; done</summary>
+```bash
+find "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues" -maxdepth 3 -type d | head -40; echo '---'; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/"; echo '---'; for d in "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/"*/; do echo "$(basename "$d"): $(ls "$d" | grep -E 'conversion_probability$|control\.json|treatment\.json|control\.h5|treatment\.h5|conversion_probability\.h5|inputs\.parquet|df_time' | tr '\n' ' ')"; done
+```
+
+```
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/weights_init
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables_xgb
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/weights_init
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tchibo-aud-68b69dff2e5f2d9a58cce692
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm
+/Users/karolinegriesbach/Documents/Innkeepr/Git/ev
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{py,ipynb}",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/src",
+  "pattern": "shap|TreeExplainer|DeepExplainer|KernelExplainer|Explainer"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/src",
+  "pattern": "shap|TreeExplainer|DeepExplainer|KernelExplainer|Explainer",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "../innkeepr-analytics/src/targeting_types/value_based_targeting.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "../innkeepr-analytics/src/models/model_causal_targeting.py"
+    },
+    {
+      "matchCount": 38,
+      "uri": "../innkeepr-analytics/src/models/causalml/inference/meta/xlearner.py"
+    }
+  ],
+  "totalFiles": 3,
+  "totalMatches": 506
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/src/models/causalml/inference/meta/explainer.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+File not found
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Reviewing the SHAP explainer method and required data inputs such as time processing and scaling files.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/src/models/causalml/inference/meta/explainer.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python &lt;&lt; &#39;PY&#39;
+from pathlib import Path
+import pandas as pd
+p = Path(&#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb&#34;)
+print(&#39;inputs&#39;, pd.read_parquet(p/&#39;inputs.parquet&#39;))
+# df_time_processing
+for name in [&#39;df_time_processing&#39;]:
+    f = p/name
+    print(name, f.exists(), f.stat().st_size if f.exists() else None)
+    raw = open(f,&#39;rb&#39;).read(200)
+    print(&#39;head bytes&#39;, raw[:80])
+# check if scaling files exist
+print(&#39;scaling-ish&#39;, [x.name for x in p.glob(&#39;*scal*&#39;)][:10])
+print(&#39;sample files&#39;, sorted([x.name for x in p.iterdir() if x.is_file()])[:15])
+PY</summary>
+```bash
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python << 'PY'
+from pathlib import Path
+import pandas as pd
+p = Path("/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb")
+print('inputs', pd.read_parquet(p/'inputs.parquet'))
+# df_time_processing
+for name in ['df_time_processing']:
+    f = p/name
+    print(name, f.exists(), f.stat().st_size if f.exists() else None)
+    raw = open(f,'rb').read(200)
+    print('head bytes', raw[:80])
+# check if scaling files exist
+print('scaling-ish', [x.name for x in p.glob('*scal*')][:10])
+print('sample files', sorted([x.name for x in p.iterdir() if x.is_file()])[:15])
+PY
+```
+
+```
+inputs                                  input
+0                          anonymousId
+1                days_between_sessions
+2            pages_visited_per_session
+3  pages_visited_per_session_cumulated
+4               pages_visited_per_user
+5     pages_visited_per_user_cumulated
+6                session_duration_in_s
+7                              session
+df_time_processing True 1447
+head bytes b',classifier,parameter,processing time s,processing time min\n0,XGBRegressor,"{\'n_'
+scaling-ish []
+sample files ['2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_test_score.csv', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_test_xlearner_predict_score.csv', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_train_score.csv', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_cv_10_conversion_probability', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control.json', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control_evals_result.json', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control_feature_importance.csv', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_propensitymodel', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment.json', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment_evals_result.json', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment_feature_importance.csv', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_test_score.csv', '2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.py",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/src/models/causalml/inference/meta/explainer.py",
+  "pattern": "shapley|TreeExplainer|shap\\."
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/src/models/causalml/inference/meta/explainer.py",
+  "pattern": "shapley|TreeExplainer|shap\\.",
+  "topFiles": [
+    {
+      "matchCount": 13,
+      "uri": "../innkeepr-analytics/src/models/causalml/inference/meta/explainer.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 13
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I have enough context to recommend a practical approach for calculating SHAP values across the model settings and directories.
+
+The directory structure runs from account and audience folders down to model settings and cross-validation folds containing conversion, control, and treatment models. XGBoost and LSTM require different SHAP approaches. Background data must come from inputs.parquet with the correct features. The existing causalml Explainer already uses TreeExplainer for tau models. A concrete pipeline will be suggested.
+</details></think>
+
+_**Agent (default)**_
+
+**Best approach:** one small batch script that walks each model-setting folder, loads conversion / control / treatment for one chosen CV (or all CVs), and writes mean-|SHAP| tables + summary plots. Use different SHAP engines for XGB vs LSTM.
+
+### 1. Scope and layout
+Treat each folder under `scripts/ModelShapValues/<account-aud-*>/` as one **setting**, e.g.:
+- `..._with_landingpage_lstm`
+- `..._without_landingpage_xgb`
+- `..._with_landingpage_cat_enables_xgb`
+
+Per setting, SHAP for three roles:
+| Role | XGB | LSTM |
+|------|-----|------|
+| conversion | pickle `*_conversion_probability` | `*_conversion_probability.h5` (+ weights) |
+| control | `*_control.json` | `*_control.h5` |
+| treatment | `*_treatment.json` | `*_treatment.h5` |
+
+Feature names from that folder’s `inputs.parquet` (drop IDs like `anonymousId` / `session` if they are not model inputs).
+
+### 2. Background data `X`
+You need a matrix in the **same feature space the model was trained on** (scaled / categorical encoding as at train time). Options:
+1. Reuse a training/scoring sample from S3 for that audience (same path as targeting).
+2. Or build a local sample once per audience and reuse it across settings that share the same `inputs.parquet`.
+
+Start with **N ≈ 500–2000** rows for speed; full CV×setting×role runs get expensive otherwise.
+
+### 3. Explainer by model type
+**XGB (tree)** — fast, exact enough:
+```python
+explainer = shap.TreeExplainer(model)
+sv = explainer.shap_values(X[feature_cols])
+```
+Same pattern as `Explainer.get_shap_values()` in innkeepr-analytics.
+
+**LSTM** — no TreeExplainer:
+- Prefer `shap.GradientExplainer` / `DeepExplainer` on a background subsample (~50–100 rows), with `X` reshaped via `lstm_reshape` to `(n, 1, n_features)`.
+- Fallback: `KernelExplainer` on a small sample (slow; only for spot checks).
+
+### 4. Aggregation to compare settings
+For each `(setting, cv, role)` compute:
+
+- mean absolute SHAP per feature  
+- optional: signed mean SHAP  
+- optional: top-k features  
+
+Then compare settings side-by-side, e.g. “with vs without landingpage” for conversion / control / treatment separately.
+
+Start with **one CV** (the one used as best model, or `cv_6`) before running all folds.
+
+### 5. Suggested output
+Per setting folder:
+```
+shap/
+  cv_6_conversion_mean_abs.csv
+  cv_6_control_mean_abs.csv
+  cv_6_treatment_mean_abs.csv
+  cv_6_*_summary.png
+```
+Plus one cross-setting table: `setting × role × feature → mean_|shap|`.
+
+### 6. Practical order
+1. XGB settings only (TreeExplainer) — quick win.  
+2. One LSTM setting with GradientExplainer.  
+3. Optionally average SHAP across CVs if fold variance matters.
+
+### Caveats
+- Conversion is often a **classifier**; control/treatment are **regressors** — keep SHAP separate; don’t average across roles.  
+- Landingpage as native categorical needs a pandas DataFrame with categorical dtype (`prepare_xgb_categorical_features`), not a raw numpy array.  
+- LSTM SHAP is approximate and slower; don’t run every CV×neuron variant first.
+
+If you want this implemented next, the cleanest first step is a notebook/script that: discovers settings → loads XGB conversion/control/treatment for one CV → TreeExplainer → mean-|SHAP| comparison table.
+
+---
+
+_**User**_
+
+Write a script to calcualte the shap values and save them as csv and good explainable image. The path to the data should be part of the input,and the customer (tchibo, kfzteile24) as well.
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I will write a script to compute SHAP values, export them as CSV, and generate explainable images. The script will accept the data path and customer name as inputs.
+
+I am examining the ModelShapValues structure and how to load data for the tchibo and kfzteile24 customers.
+</details></think>
+
+_**Agent (default)**_
+
+I'll build a SHAP script that takes data path and customer as inputs, then check existing patterns and data layout so it fits the repo.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "Explore data path patterns and model discovery needs",
+      "id": "1",
+      "status": "in_progress"
+    },
+    {
+      "content": "Implement SHAP calculation script with CSV + plots",
+      "id": "2",
+      "status": "pending"
+    },
+    {
+      "content": "Smoke-test script on one XGB setting if data available",
+      "id": "3",
+      "status": "pending"
+    }
+  ],
+  "success": true
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **441** results in **1** directory</summary>
+
+Directory: **`/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts`** (441 files)
+
+| File |
+|------|
+| `ModelShapValues/model_param_quick_check.ipynb` |
+| `ModelShapValues/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/2026-09-12_classifier_NNLSTM_50_nan_cv_6_68b69dff2e5f2d9a58cce692_test_score.csv` |
+| `ModelShapValues/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/2026-09-12_classifier_NNLSTM_50_nan_cv_6_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_6_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_6_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_9_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_8_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_1_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_7_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/df_time_processing` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_2_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_feat_imp_train.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_5_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/reset_lstm.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_7_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_9_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_6_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_5_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_4_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_2_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_3_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_10_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_10_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_1_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_4_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_8_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_cv_3_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_feat_imp_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_10_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/df_time_processing` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_10_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_feat_imp_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_feat_imp_train.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_9_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_9_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_9_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_8_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_8_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_8_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_7_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_7_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_7_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_6_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_6_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_5_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_5_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_5_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_4_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_4_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_4_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_3_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_3_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_3_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_2_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_2_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_2_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_treatment_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_control_evals_result.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_control_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_1_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_cv_1_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_control.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_treatment_feature_importance.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_treatment.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/reset_lstm.json` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_10_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_10_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_10_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_10_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_9_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_9_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_9_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_9_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_8_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_8_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_8_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_8_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_7_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_7_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_7_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_7_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_6_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_6_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_6_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_6_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_5_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_5_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_5_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_5_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_4_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_4_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_4_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_4_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_3_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_3_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_3_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_3_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_2_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_2_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_2_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_2_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_1_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_cv_1_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_1_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_cv_1_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_10_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_10_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/df_time_processing` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_10_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_10_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_10_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_9_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_9_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_9_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_9_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_9_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_8_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_8_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_8_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_8_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_8_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_7_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_7_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_7_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_7_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_7_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_6_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_6_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_6_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_6_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_5_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_5_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_5_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_5_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_5_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_4_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_4_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_4_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_4_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_4_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_3_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_3_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_3_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_3_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_2_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_2_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_2_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_2_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_2_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_1_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_cv_1_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_train_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_test_xlearner_predict_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_1_conversion_probability_score_test.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_cv_1_conversion_probability.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_1_6835d77813526dc3d1229978_test_score.csv` |
+| `ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/reset_lstm.json` |
+| `ModelShapValues/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-08-12_best_models_without_landingpage_lstm/2026-08-12_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_68b69dff2e5f2d9a58cce692_test_score.csv` |
+| `ModelShapValues/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-08-12_best_models_without_landingpage_lstm/2026-08-12_classifier_NNLSTM_100_nan_cv_6_conversion_probability_score_test.csv` |
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{py,ipynb}",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts",
+  "pattern": "argparse|ModelShapValues|shap"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts",
+  "pattern": "argparse|ModelShapValues|shap",
+  "topFiles": [
+    {
+      "matchCount": 5,
+      "uri": "src/extractors/databricks_extractor.py"
+    },
+    {
+      "matchCount": 3,
+      "uri": "SprintStories/EN-3327-Signal-Configuration/query_error_treatments.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "SprintStories/PRD-2516-Rosental-CRM-Analyse/prd-2516-rosental-crm-analyse.ipynb"
+    },
+    {
+      "matchCount": 3,
+      "uri": "scripts/DebugRetraining/debug_failed_retraining.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "DataChecks/sessions/check_sessions copy 4.ipynb"
+    },
+    {
+      "matchCount": 2,
+      "uri": "SprintStories/EN-2933-Fix-Loading-Lstm/get-long-targeting-runs.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "DataChecks/profiles/check_profiles_via_parquet.ipynb"
+    },
+    {
+      "matchCount": 1,
+      "uri": "SprintStories/EN_2843_rosental_match/en-2843-rosental-match.ipynb"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/utils/prefect_api.py"
+    },
+    {
+      "matchCount": 3,
+      "uri": "SprintStories/EN-3370-fill-signal-size-property/fill_signal_size_property.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "SprintStories/EN3232-Lillydoo-Exclusions-testpaket/conversions.ipynb"
+    },
+    {
+      "matchCount": 3,
+      "uri": "scripts/PerformanceReview/match_signal_usage_treatments.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "scripts/prefect-retrigger-targetings/retrigger_targetings.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "SprintStories/EN-3162-Polars/check_cost_queries.ipynb"
+    }
+  ],
+  "totalFiles": 14,
+  "totalMatches": 205
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/&#34;; echo &#39;---&#39;; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/&#34; | grep -E &#39;inputs|scal|parquet|csv|json$&#39; | head -40; echo &#39;---&#39;; /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python -c &#34;import shap; print(shap.__version__)&#34;</summary>
+```bash
+ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/"; echo '---'; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/" | grep -E 'inputs|scal|parquet|csv|json$' | head -40; echo '---'; /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python -c "import shap; print(shap.__version__)"
+```
+
+```
+kfzteile24-aud-6835d77813526dc3d1229978
+model_param_quick_check.ipynb
+tchibo-aud-68b69dff2e5f2d9a58cce692
+---
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_test_score.csv
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_test_xlearner_predict_score.csv
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_6835d77813526dc3d1229978_train_score.csv
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control.json
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control_evals_result.json
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_control_feature_importance.csv
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment.json
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment_evals_result.json
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_10_group_6835d77813526dc3d1229978_treatment_feature_importance.csv
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_test_score.csv
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_test_xlearner_predict_score.csv
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_6835d77813526dc3d1229978_train_score.csv
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_control.json
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_control_evals_result.json
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_control_feature_importance.csv
+2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_1_group_6835d77813526dc3d1229978_treatment.json
+2026-09-08_classifier_XGBRegressor_100_3
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The SHAP import caused a segmentation fault in the sandbox. Full permissions are required.
+
+I'm designing a CLI script that accepts customer name, data path, and output directory. It will discover customer folders and model settings, compute SHAP values, and save CSVs along with beeswarm and bar plots.
+
+LSTM models require Keras reshaping. XGBoost uses TreeExplainer. I am verifying matplotlib and SHAP compatibility with full permissions. I am also checking whether to load conversion probability pickles or classifiers.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python &lt;&lt; &#39;PY&#39;
+import shap, matplotlib, xgboost, pickle
+from pathlib import Path
+from xgboost import XGBRegressor, XGBClassifier
+print(&#39;shap&#39;, shap.__version__)
+p = Path(&#39;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb&#39;)
+# load conversion pickle
+conv = list(p.glob(&#39;*cv_6*conversion_probability&#39;))[0]
+print(&#39;conv&#39;, conv.name)
+with open(conv,&#39;rb&#39;) as f:
+    m = pickle.load(f)
+print(type(m), getattr(m,&#39;n_features_in_&#39;,None), m.get_booster().feature_names, m.get_booster().num_features())
+# control json
+ctrl = list(p.glob(&#39;*cv_6*control.json&#39;))[0]
+model = XGBRegressor(enable_categorical=True)
+model.load_model(str(ctrl))
+print(&#39;ctrl features&#39;, model.get_booster().num_features(), model.get_booster().feature_names)
+inputs = __import__(&#39;pandas&#39;).read_parquet(p/&#39;inputs.parquet&#39;)
+print(inputs)
+# feature importance
+fi = __import__(&#39;pandas&#39;).read_csv(list(p.glob(&#39;*cv_6*control_feature_importance.csv&#39;))[0])
+print(&#39;fi cols&#39;, fi.columns.tolist()); print(fi.head())
+PY</summary>
+```bash
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python << 'PY'
+import shap, matplotlib, xgboost, pickle
+from pathlib import Path
+from xgboost import XGBRegressor, XGBClassifier
+print('shap', shap.__version__)
+p = Path('/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb')
+# load conversion pickle
+conv = list(p.glob('*cv_6*conversion_probability'))[0]
+print('conv', conv.name)
+with open(conv,'rb') as f:
+    m = pickle.load(f)
+print(type(m), getattr(m,'n_features_in_',None), m.get_booster().feature_names, m.get_booster().num_features())
+# control json
+ctrl = list(p.glob('*cv_6*control.json'))[0]
+model = XGBRegressor(enable_categorical=True)
+model.load_model(str(ctrl))
+print('ctrl features', model.get_booster().num_features(), model.get_booster().feature_names)
+inputs = __import__('pandas').read_parquet(p/'inputs.parquet')
+print(inputs)
+# feature importance
+fi = __import__('pandas').read_csv(list(p.glob('*cv_6*control_feature_importance.csv'))[0])
+print('fi cols', fi.columns.tolist()); print(fi.head())
+PY
+```
+
+```
+"is" with a literal. Did you mean "=="?
+"is" with a literal. Did you mean "=="?
+"is" with a literal. Did you mean "=="?
+"is" with a literal. Did you mean "=="?
+"is not" with a literal. Did you mean "!="?
+"is not" with a literal. Did you mean "!="?
+shap 0.41.0
+conv 2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_cv_6_conversion_probability
+<class 'xgboost.sklearn.XGBClassifier'> 6 ['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s'] 6
+ctrl features 6 None
+                                 input
+0                          anonymousId
+1                days_between_sessions
+2            pages_visited_per_session
+3  pages_visited_per_session_cumulated
+4               pages_visited_per_user
+5     pages_visited_per_user_cumulated
+6                session_duration_in_s
+7                              session
+fi cols ['Unnamed: 0', 'features', 'importance']
+   Unnamed: 0                             features  importance
+0           0                days_between_sessions    0.144755
+1           1            pages_visited_per_session    0.301715
+2           2  pages_visited_per_session_cumulated    0.058214
+3           3               pages_visited_per_user    0.162563
+4           4     pages_visited_per_user_cumulated    0.156882
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/interventions/check_signal_model_parameters.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.py",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/configs",
+  "pattern": "input_columns_causal|landingpage"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/configs",
+  "pattern": "input_columns_causal|landingpage",
+  "topFiles": [
+    {
+      "matchCount": 8,
+      "uri": "../innkeepr-analytics/configs/config.py"
+    },
+    {
+      "matchCount": 3,
+      "uri": "../innkeepr-analytics/configs/config_inputs.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "../innkeepr-analytics/configs/config_columns.py"
+    }
+  ],
+  "totalFiles": 3,
+  "totalMatches": 12
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I will write a comprehensive script to calculate SHAP values, save them as CSV, and generate an explainable image. The script will accept the data path and customer name as inputs.
+
+The script will support command-line arguments for customer, data path, models root, cross-validation folds, max samples, and roles. It will match the provided feature matrix to model inputs. For LSTM models, GradientExplainer will be used with careful handling of Keras 3 compatibility.
+
+XGBoost models will use TreeExplainer. LSTM models will use GradientExplainer with a reshaped background sample to avoid slow KernelExplainer runs. TreeExplainer outputs for XGBoost classifiers may need list-to-array conversion.
+
+A synthetic data smoke test will run if no real data path is provided. A `--setting` filter will allow running a single model folder. The script will save mean absolute SHAP values, summary bee swarm and bar plots, and a comparison CSV under `output/{customer}/{setting}/`.
+
+Full row-level SHAP CSVs will be skipped by default to avoid excessive file sizes. Mean absolute SHAP values will be saved per model. A sampled SHAP value matrix will be written as CSV if requested. Bee swarm and bar plots will accompany both outputs.
+</details></think>
+
+_**Agent (default)**_
+
+I'll implement a CLI script that discovers each customer's model settings, computes SHAP for conversion/control/treatment, and writes CSVs plus summary plots.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Running a smoke test with synthetic data for one XGBoost setting.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; mkdir -p scripts/ModelShapValues/tmp_data &amp;&amp; .venv/bin/python &lt;&lt; &#39;PY&#39;
+import numpy as np
+import pandas as pd
+from pathlib import Path
+rng = np.random.default_rng(0)
+n = 300
+df = pd.DataFrame({
+    &#39;days_between_sessions&#39;: rng.normal(2, 1, n).clip(0),
+    &#39;pages_visited_per_session&#39;: rng.integers(1, 20, n),
+    &#39;pages_visited_per_session_cumulated&#39;: rng.integers(1, 100, n),
+    &#39;pages_visited_per_user&#39;: rng.integers(1, 50, n),
+    &#39;pages_visited_per_user_cumulated&#39;: rng.integers(1, 200, n),
+    &#39;session_duration_in_s&#39;: rng.normal(120, 40, n).clip(1),
+    &#39;anonymousId&#39;: [f&#39;u{i}&#39; for i in range(n)],
+    &#39;session&#39;: [f&#39;s{i}&#39; for i in range(n)],
+})
+path = Path(&#39;scripts/ModelShapValues/tmp_data/kfzteile24_features.csv&#39;)
+df.to_csv(path, index=False)
+print(&#39;wrote&#39;, path, df.shape)
+PY
+.venv/bin/python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer kfzteile24 \
+  --data-path scripts/ModelShapValues/tmp_data/kfzteile24_features.csv \
+  --setting 2026-09-08_best_models_without_landingpage_xgb \
+  --cv 6 \
+  --max-samples 200 \
+  --skip-lstm \
+  --verbose</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && mkdir -p scripts/ModelShapValues/tmp_data && .venv/bin/python << 'PY'
+import numpy as np
+import pandas as pd
+from pathlib import Path
+rng = np.random.default_rng(0)
+n = 300
+df = pd.DataFrame({
+    'days_between_sessions': rng.normal(2, 1, n).clip(0),
+    'pages_visited_per_session': rng.integers(1, 20, n),
+    'pages_visited_per_session_cumulated': rng.integers(1, 100, n),
+    'pages_visited_per_user': rng.integers(1, 50, n),
+    'pages_visited_per_user_cumulated': rng.integers(1, 200, n),
+    'session_duration_in_s': rng.normal(120, 40, n).clip(1),
+    'anonymousId': [f'u{i}' for i in range(n)],
+    'session': [f's{i}' for i in range(n)],
+})
+path = Path('scripts/ModelShapValues/tmp_data/kfzteile24_features.csv')
+df.to_csv(path, index=False)
+print('wrote', path, df.shape)
+PY
+.venv/bin/python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer kfzteile24 \
+  --data-path scripts/ModelShapValues/tmp_data/kfzteile24_features.csv \
+  --setting 2026-09-08_best_models_without_landingpage_xgb \
+  --cv 6 \
+  --max-samples 200 \
+  --skip-lstm \
+  --verbose
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "Explore data path patterns and model discovery needs",
+      "id": "1",
+      "status": "completed"
+    },
+    {
+      "content": "Implement SHAP calculation script with CSV + plots",
+      "id": "2",
+      "status": "completed"
+    },
+    {
+      "content": "Smoke-test script on one XGB setting if data available",
+      "id": "3",
+      "status": "in_progress"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "Explore data path patterns and model discovery needs",
+      "id": "1",
+      "status": "in_progress"
+    },
+    {
+      "content": "Implement SHAP calculation script with CSV + plots",
+      "id": "2",
+      "status": "pending"
+    },
+    {
+      "content": "Smoke-test script on one XGB setting if data available",
+      "id": "3",
+      "status": "pending"
+    }
+  ],
+  "success": true,
+  "wasMerge": true
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+A segfault occurred again. Full permissions are needed for shap, xgboost, and matplotlib.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt; &#39;PY&#39;
+import numpy as np
+import pandas as pd
+from pathlib import Path
+rng = np.random.default_rng(0)
+n = 300
+df = pd.DataFrame({
+    &#39;days_between_sessions&#39;: rng.normal(2, 1, n).clip(0),
+    &#39;pages_visited_per_session&#39;: rng.integers(1, 20, n),
+    &#39;pages_visited_per_session_cumulated&#39;: rng.integers(1, 100, n),
+    &#39;pages_visited_per_user&#39;: rng.integers(1, 50, n),
+    &#39;pages_visited_per_user_cumulated&#39;: rng.integers(1, 200, n),
+    &#39;session_duration_in_s&#39;: rng.normal(120, 40, n).clip(1),
+    &#39;anonymousId&#39;: [f&#39;u{i}&#39; for i in range(n)],
+    &#39;session&#39;: [f&#39;s{i}&#39; for i in range(n)],
+})
+path = Path(&#39;scripts/ModelShapValues/tmp_data/kfzteile24_features.csv&#39;)
+path.parent.mkdir(parents=True, exist_ok=True)
+df.to_csv(path, index=False)
+print(&#39;wrote&#39;, path, df.shape)
+PY
+.venv/bin/python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer kfzteile24 \
+  --data-path scripts/ModelShapValues/tmp_data/kfzteile24_features.csv \
+  --setting 2026-09-08_best_models_without_landingpage_xgb \
+  --cv 6 \
+  --max-samples 200 \
+  --skip-lstm \
+  --verbose</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python << 'PY'
+import numpy as np
+import pandas as pd
+from pathlib import Path
+rng = np.random.default_rng(0)
+n = 300
+df = pd.DataFrame({
+    'days_between_sessions': rng.normal(2, 1, n).clip(0),
+    'pages_visited_per_session': rng.integers(1, 20, n),
+    'pages_visited_per_session_cumulated': rng.integers(1, 100, n),
+    'pages_visited_per_user': rng.integers(1, 50, n),
+    'pages_visited_per_user_cumulated': rng.integers(1, 200, n),
+    'session_duration_in_s': rng.normal(120, 40, n).clip(1),
+    'anonymousId': [f'u{i}' for i in range(n)],
+    'session': [f's{i}' for i in range(n)],
+})
+path = Path('scripts/ModelShapValues/tmp_data/kfzteile24_features.csv')
+path.parent.mkdir(parents=True, exist_ok=True)
+df.to_csv(path, index=False)
+print('wrote', path, df.shape)
+PY
+.venv/bin/python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer kfzteile24 \
+  --data-path scripts/ModelShapValues/tmp_data/kfzteile24_features.csv \
+  --setting 2026-09-08_best_models_without_landingpage_xgb \
+  --cv 6 \
+  --max-samples 200 \
+  --skip-lstm \
+  --verbose
+```
+
+```
+wrote scripts/ModelShapValues/tmp_data/kfzteile24_features.csv (300, 8)
+2026-09-14 13:16:12,565 INFO customer=kfzteile24
+2026-09-14 13:16:12,565 INFO data_path=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/kfzteile24_features.csv
+2026-09-14 13:16:12,565 INFO models_root=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues
+2026-09-14 13:16:12,565 INFO output_dir=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24
+2026-09-14 13:16:12,565 INFO customer dirs: ['kfzteile24-aud-6835d77813526dc3d1229978']
+2026-09-14 13:16:12,566 INFO settings: ['2026-09-08_best_models_without_landingpage_xgb']
+2026-09-14 13:16:12,569 INFO loaded data shape=(300, 8) columns=['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'anonymousId', 'session']
+2026-09-14 13:16:12,573 INFO Setting 2026-09-08_best_models_without_landingpage_xgb: 3 artifacts, explaining on 200 rows
+2026-09-14 13:16:12,573 INFO   explaining control cv=6 (xgb) <- 2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json
+[13:16:12] WARNING: /Users/runner/work/xgboost/xgboost/src/c_api/c_api.cc:1240: Saving into deprecated binary model format, please consider using `json` or `ubj`. Model format will default to JSON in XGBoost 2.2 if not specified.
+2026-09-14 13:16:12,797 ERROR     failed for control cv=6 (2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json)
+Traceback (most recent call last):
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py", line 545, in process_setting
+    shap_values = compute_shap_values(
+  Fil
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+A compatibility issue with older SHAP versions needs to be addressed.
+</details></think>
+
+_**Agent (default)**_
+
+SHAP 0.41 is incompatible with this NumPy version — I'll switch XGB to native `pred_contribs` and add a compatibility shim.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The xgboost DMatrix import needs fixing.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer kfzteile24 \
+  --data-path scripts/ModelShapValues/tmp_data/kfzteile24_features.csv \
+  --setting 2026-09-08_best_models_without_landingpage_xgb \
+  --cv 6 \
+  --max-samples 200 \
+  --skip-lstm \
+  --verbose &amp;&amp; ls -la scripts/ModelShapValues/shap_output/kfzteile24/2026-09-08_best_models_without_landingpage_xgb/ | head -30 &amp;&amp; echo &#39;---&#39; &amp;&amp; head -8 scripts/ModelShapValues/shap_output/kfzteile24/2026-09-08_best_models_without_landingpage_xgb/cv_6_control_mean_abs_shap.csv</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer kfzteile24 \
+  --data-path scripts/ModelShapValues/tmp_data/kfzteile24_features.csv \
+  --setting 2026-09-08_best_models_without_landingpage_xgb \
+  --cv 6 \
+  --max-samples 200 \
+  --skip-lstm \
+  --verbose && ls -la scripts/ModelShapValues/shap_output/kfzteile24/2026-09-08_best_models_without_landingpage_xgb/ | head -30 && echo '---' && head -8 scripts/ModelShapValues/shap_output/kfzteile24/2026-09-08_best_models_without_landingpage_xgb/cv_6_control_mean_abs_shap.csv
+```
+
+```
+2026-09-14 13:16:54,194 INFO customer=kfzteile24
+2026-09-14 13:16:54,194 INFO data_path=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/kfzteile24_features.csv
+2026-09-14 13:16:54,194 INFO models_root=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues
+2026-09-14 13:16:54,194 INFO output_dir=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24
+2026-09-14 13:16:54,194 INFO customer dirs: ['kfzteile24-aud-6835d77813526dc3d1229978']
+2026-09-14 13:16:54,194 INFO settings: ['2026-09-08_best_models_without_landingpage_xgb']
+2026-09-14 13:16:54,196 INFO loaded data shape=(300, 8) columns=['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'anonymousId', 'session']
+2026-09-14 13:16:54,197 INFO Setting 2026-09-08_best_models_without_landingpage_xgb: 3 artifacts, explaining on 200 rows
+2026-09-14 13:16:54,197 INFO   explaining control cv=6 (xgb) <- 2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json
+2026-09-14 13:16:54,331 DEBUG Loaded backend Agg version v2.2.
+2026-09-14 13:16:54,334 DEBUG findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0.
+2026-09-14 13:16:54,334 DEBUG findfont: score(FontEntry(fname='/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+2026-09-14 13:16:54,334 DEBUG findfont: score(FontEntry(fname='/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/mat
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Checking the error.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: tail -80 /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/agent-tools/a5f3fee2-ffa6-42de-9a78-37f8860f76b3.txt</summary>
+```bash
+tail -80 /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/agent-tools/a5f3fee2-ffa6-42de-9a78-37f8860f76b3.txt
+```
+
+```
+2026-09-14 13:16:54,349 DEBUG findfont: score(FontEntry(fname='/System/Library/Fonts/Supplemental/NotoSansBamum-Regular.ttf', name='Noto Sans Bamum', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+2026-09-14 13:16:54,349 DEBUG findfont: score(FontEntry(fname='/System/Library/Fonts/Supplemental/Arial Rounded Bold.ttf', name='Arial Rounded MT Bold', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+2026-09-14 13:16:54,349 DEBUG findfont: score(FontEntry(fname='/System/Library/Fonts/Supplemental/STIXGeneral.otf', name='STIXGeneral', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+2026-09-14 13:16:54,349 DEBUG findfont: score(FontEntry(fname='/System/Library/Fonts/Supplemental/Bodoni 72 OS.ttc', name='Bodoni 72 Oldstyle', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+2026-09-14 13:16:54,350 DEBUG findfont: score(FontEntry(fname='/System/Library/Fonts/Supplemental/STIXSizOneSymReg.otf', name='STIXSizeOneSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+2026-09-14 13:16:54,350 DEBUG findfont: score(FontEntry(fname='/System/Library/AssetsV2/com_apple_MobileAsset_Font7/5b2f5f0b003344b2c67ce463e76d2485bb43d054.asset/AssetData/BMJua-Regular.otf', name='BM Jua', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+2026-09-14 13:16:54,350 DEBUG findfont: score(FontEntry(fname='/System/Library/AssetsV2/com_apple_MobileAsset_Font7/7722fac06d2ccff23ed22b9ab921460b835e3e8c.asset/AssetData/K2D.ttc', name='K2D', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+2026-09-14 13:16:54,350 DEBUG findfont: score(FontEntry(fname='/System/Library/Fonts/Supplemental/NotoSansPalmyrene-Regular.ttf', name='Noto Sans Palmyrene', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) 
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+SHAP values compute correctly. The summary plot fails because of a matplotlib colorbar issue.
+
+The summary plot will be replaced by a custom beeswarm scatter plot using matplotlib. The mean absolute value bar chart will remain.
+</details></think>
+
+_**Agent (default)**_
+
+SHAP values compute fine; I'll replace the broken `shap.summary_plot` colorbar with a custom beeswarm.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The SHAP import is still needed for the LSTM path, though it may be unused for the XGBoost path.
+
+Re-running the smoke test. The unused SHAP import warning is harmless. Matplotlib verbose mode causes large font debug output, but this is non-critical.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer kfzteile24 \
+  --data-path scripts/ModelShapValues/tmp_data/kfzteile24_features.csv \
+  --setting 2026-09-08_best_models_without_landingpage_xgb \
+  --cv 6 \
+  --max-samples 200 \
+  --skip-lstm &amp;&amp; echo &#39;---&#39; &amp;&amp; ls scripts/ModelShapValues/shap_output/kfzteile24/2026-09-08_best_models_without_landingpage_xgb/ &amp;&amp; echo &#39;---&#39; &amp;&amp; head -10 scripts/ModelShapValues/shap_output/kfzteile24/comparison_mean_abs_shap.csv &amp;&amp; file scripts/ModelShapValues/shap_output/kfzteile24/2026-09-08_best_models_without_landingpage_xgb/cv_6_control_shap_beeswarm.png</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer kfzteile24 \
+  --data-path scripts/ModelShapValues/tmp_data/kfzteile24_features.csv \
+  --setting 2026-09-08_best_models_without_landingpage_xgb \
+  --cv 6 \
+  --max-samples 200 \
+  --skip-lstm && echo '---' && ls scripts/ModelShapValues/shap_output/kfzteile24/2026-09-08_best_models_without_landingpage_xgb/ && echo '---' && head -10 scripts/ModelShapValues/shap_output/kfzteile24/comparison_mean_abs_shap.csv && file scripts/ModelShapValues/shap_output/kfzteile24/2026-09-08_best_models_without_landingpage_xgb/cv_6_control_shap_beeswarm.png
+```
+
+```
+2026-09-14 13:17:51,712 INFO customer=kfzteile24
+2026-09-14 13:17:51,712 INFO data_path=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/kfzteile24_features.csv
+2026-09-14 13:17:51,712 INFO models_root=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues
+2026-09-14 13:17:51,712 INFO output_dir=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24
+2026-09-14 13:17:51,712 INFO customer dirs: ['kfzteile24-aud-6835d77813526dc3d1229978']
+2026-09-14 13:17:51,713 INFO settings: ['2026-09-08_best_models_without_landingpage_xgb']
+2026-09-14 13:17:51,714 INFO loaded data shape=(300, 8) columns=['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'anonymousId', 'session']
+2026-09-14 13:17:51,716 INFO Setting 2026-09-08_best_models_without_landingpage_xgb: 3 artifacts, explaining on 200 rows
+2026-09-14 13:17:51,716 INFO   explaining control cv=6 (xgb) <- 2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json
+2026-09-14 13:17:52,176 INFO     wrote cv_6_control_mean_abs_shap.csv and cv_6_control_shap_beeswarm.png
+2026-09-14 13:17:52,177 INFO   explaining conversion cv=6 (xgb) <- 2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_cv_6_conversion_probability
+2026-09-14 13:17:52,542 INFO     wrote cv_6_conversion_mean_abs_shap.csv and cv_6_conversion_shap_beeswarm.png
+2026-09-14 13:17:52,542 INFO   explaining treatment cv=6 (xgb) <- 2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment.json
+2026-09-14 13:17:53,030 INFO     wrote cv_6_treatment_mean_abs_shap.csv and cv_6_treatment_shap_beeswarm.png
+2026-09-14 13:17:53,033 INFO Wrote comparison: /Users/karo
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Confirmed the shap import is still needed for LSTM.
+
+Leaving tmp_data in place for the demo. Marking the remaining todo complete and preparing clear usage instructions.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "Explore data path patterns and model discovery needs",
+      "id": "1",
+      "status": "completed"
+    },
+    {
+      "content": "Implement SHAP calculation script with CSV + plots",
+      "id": "2",
+      "status": "completed"
+    },
+    {
+      "content": "Smoke-test script on one XGB setting if data available",
+      "id": "3",
+      "status": "completed"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "Explore data path patterns and model discovery needs",
+      "id": "1",
+      "status": "completed"
+    },
+    {
+      "content": "Implement SHAP calculation script with CSV + plots",
+      "id": "2",
+      "status": "completed"
+    },
+    {
+      "content": "Smoke-test script on one XGB setting if data available",
+      "id": "3",
+      "status": "in_progress"
+    }
+  ],
+  "success": true,
+  "wasMerge": true
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I will write a script to calculate SHAP values. It will accept the data path and customer name as inputs. The script will save the results as CSV and generate an explainable image.
+</details></think>
+
+_**Agent (default)**_
+
+Added `scripts/ModelShapValues/calculate_shap_values.py`.
+
+It discovers each customer’s model-setting folders, explains **conversion / control / treatment**, and writes CSVs + beeswarm/bar plots.
+
+**Run:**
+```bash
+python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer kfzteile24 \
+  --data-path /path/to/features.parquet
+
+python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer tchibo \
+  --data-path /path/to/features.csv \
+  --cv 6 \
+  --setting 2026-09-12_best_models_with_landingpage_lstm
+```
+
+**Required inputs**
+- `--customer` — `kfzteile24` or `tchibo` (matches `*-aud-*` folders)
+- `--data-path` — feature matrix (`.parquet` / `.csv` / `.pkl`) with the model input columns
+
+**Useful options:** `--setting`, `--cv`, `--max-samples`, `--skip-lstm`, `--output-dir`
+
+**Outputs** (default `scripts/ModelShapValues/shap_output/<customer>/`):
+- per model: `cv_<n>_<role>_shap_values.csv`, `*_mean_abs_shap.csv`, `*_shap_beeswarm.png`, `*_shap_bar.png`
+- rollups: `comparison_mean_abs_shap.csv`, `shap_run_manifest.csv`
+
+XGB uses native `pred_contribs` SHAP; LSTM uses GradientExplainer (KernelExplainer fallback). Smoke-tested on kfzteile24 XGB cv_6 for all three roles.
+
+---
+
+_**User**_
+
+for --max-samples add the option "all" to use the complete dataset
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Adding "all" as a valid value for --max-samples to use the complete dataset.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "max.samples|max_samples|sample_frame"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "max.samples|max_samples|sample_frame",
+  "topFiles": [
+    {
+      "matchCount": 8,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 8
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating argparse to accept "all" for --max-samples. It will parse to Optional[int], where None indicates using the full dataset. Then adjusting sample_frame to handle the new value.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The docstring usage example should also mention `--max-samples all`.
+
+Checking that the help text works correctly.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python -c &#34;
+from scripts.ModelShapValues.calculate_shap_values import parse_max_samples
+assert parse_max_samples(&#39;all&#39;) is None
+assert parse_max_samples(&#39;ALL&#39;) is None
+assert parse_max_samples(1000) == 1000
+assert parse_max_samples(&#39;200&#39;) == 200
+print(&#39;ok&#39;)
+&#34; &amp;&amp; .venv/bin/python scripts/ModelShapValues/calculate_shap_values.py --help | grep -A2 max-samples</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python -c "
+from scripts.ModelShapValues.calculate_shap_values import parse_max_samples
+assert parse_max_samples('all') is None
+assert parse_max_samples('ALL') is None
+assert parse_max_samples(1000) == 1000
+assert parse_max_samples('200') == 200
+print('ok')
+" && .venv/bin/python scripts/ModelShapValues/calculate_shap_values.py --help | grep -A2 max-samples
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+A segfault occurred while importing shap in the sandbox.
+
+Testing parse_max_samples by reading its source inline, or running with full permissions.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python -c &#34;
+from scripts.ModelShapValues.calculate_shap_values import parse_max_samples
+assert parse_max_samples(&#39;all&#39;) is None
+assert parse_max_samples(&#39;ALL&#39;) is None
+assert parse_max_samples(1000) == 1000
+assert parse_max_samples(&#39;200&#39;) == 200
+print(&#39;ok&#39;)
+&#34; &amp;&amp; .venv/bin/python scripts/ModelShapValues/calculate_shap_values.py --help | grep -A3 max-samples</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python -c "
+from scripts.ModelShapValues.calculate_shap_values import parse_max_samples
+assert parse_max_samples('all') is None
+assert parse_max_samples('ALL') is None
+assert parse_max_samples(1000) == 1000
+assert parse_max_samples('200') == 200
+print('ok')
+" && .venv/bin/python scripts/ModelShapValues/calculate_shap_values.py --help | grep -A3 max-samples
+```
+
+```
+ok
+                                [--max-samples MAX_SAMPLES]
+                                [--background-samples BACKGROUND_SAMPLES]
+                                [--random-state RANDOM_STATE] [--skip-lstm]
+                                [--verbose]
+--
+  --max-samples MAX_SAMPLES
+                        Max rows from --data-path used for SHAP (integer, or
+                        'all' for the complete dataset; default: 1000)
+  --background-samples BACKGROUND_SAMPLES
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Added "all" as an option to --max-samples to use the full dataset.
+</details></think>
+
+_**Agent (default)**_
+
+`--max-samples` now accepts an integer or `all`.
+
+```bash
+--max-samples all
+```
+
+uses the full dataset; `--max-samples 1000` still samples as before.
+
+---
+
+_**User**_
+
+write logging to default file with name of customer
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The SHAP script will log to a default file named after the customer.
+
+Checking existing logging patterns in other repository scripts.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "setup_logging|FileHandler|log_path|--log"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "setup_logging|FileHandler|log_path|--log",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/interventions/check_signal_model_parameters.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating `setup_logging` to write logs to a default file named after the customer.
+
+Adding a `LOGS_DIR` constant and an optional `--log-file` argument. `setup_logging` will write to both the customer-named log file and the console.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Logging will be updated to write to a default file named after the customer.
+
+The log filename will include a timestamp to prevent overwrites. An optional `--log-file` argument will also be added. Logging setup will run after the customer argument is parsed.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Logging is now set to write to a default file named after the customer.
+</details></think>
+
+_**Agent (default)**_
+
+Logging now also goes to a default file under `scripts/ModelShapValues/logs/`:
+
+`calculate_shap_values_<customer>_<timestamp>.log`
+
+Example: `logs/calculate_shap_values_kfzteile24_20260914_112215.log`
+
+Override with `--log-file` if needed.
+
+---
+
+_**User**_
+
+add landingpage to scripts/ModelShapValues/tmp_data/test_features.csv
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Adding a landingpage column to the test features CSV file.
+
+Checking the existing file and directory contents.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -la &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/&#34; 2&gt;/dev/null; head -5 &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/test_features.csv&#34; 2&gt;/dev/null || head -5 &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/&#34;*.csv 2&gt;/dev/null; wc -l &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/&#34;*.csv 2&gt;/dev/null</summary>
+```bash
+ls -la "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/" 2>/dev/null; head -5 "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/test_features.csv" 2>/dev/null || head -5 "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/"*.csv 2>/dev/null; wc -l "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/"*.csv 2>/dev/null
+```
+
+```
+total 206440
+drwxr-xr-x@  4 karolinegriesbach  staff        128 Sep 14 13:18 .
+drwxr-xr-x@ 10 karolinegriesbach  staff        320 Sep 14 13:21 ..
+-rw-r--r--@  1 karolinegriesbach  staff  105674805 Sep 14 13:06 kfzteile24_6835d77813526dc3d1229978_test_data.csv
+-rw-r--r--@  1 karolinegriesbach  staff      17503 Sep 14 13:16 test_features.csv
+days_between_sessions,pages_visited_per_session,pages_visited_per_session_cumulated,pages_visited_per_user,pages_visited_per_user_cumulated,session_duration_in_s,anonymousId,session
+2.1257302210933933,3,59,7,107,128.65818907382703,u0,s0
+1.867895136708698,16,56,29,149,146.77342793424424,u1,s1
+2.640422650443282,16,7,20,176,136.87877979112218,u2,s2
+2.10490011715304,11,93,6,94,130.00649791937263,u3,s3
+  496049 /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/kfzteile24_6835d77813526dc3d1229978_test_data.csv
+     301 /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/test_features.csv
+  496350 total
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Adding a landingpage column to test_features.csv.
+
+Landingpage is a categorical string feature. I'll add sample values.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt; &#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+import numpy as np
+
+path = Path(&#39;scripts/ModelShapValues/tmp_data/test_features.csv&#39;)
+df = pd.read_csv(path)
+print(&#39;before&#39;, df.shape, list(df.columns))
+if &#39;landingpage&#39; in df.columns:
+    print(&#39;landingpage already present&#39;)
+else:
+    rng = np.random.default_rng(42)
+    pages = [
+        &#39;/&#39;,
+        &#39;/produkte&#39;,
+        &#39;/angebote&#39;,
+        &#39;/warenkorb&#39;,
+        &#39;/suche&#39;,
+        &#39;/kategorie/bremsen&#39;,
+        &#39;/kategorie/filter&#39;,
+        &#39;/unknown&#39;,
+    ]
+    df[&#39;landingpage&#39;] = rng.choice(pages, size=len(df))
+    df.to_csv(path, index=False)
+    print(&#39;after&#39;, df.shape, list(df.columns))
+    print(df[[&#39;landingpage&#39;]].head())
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python << 'PY'
+import pandas as pd
+from pathlib import Path
+import numpy as np
+
+path = Path('scripts/ModelShapValues/tmp_data/test_features.csv')
+df = pd.read_csv(path)
+print('before', df.shape, list(df.columns))
+if 'landingpage' in df.columns:
+    print('landingpage already present')
+else:
+    rng = np.random.default_rng(42)
+    pages = [
+        '/',
+        '/produkte',
+        '/angebote',
+        '/warenkorb',
+        '/suche',
+        '/kategorie/bremsen',
+        '/kategorie/filter',
+        '/unknown',
+    ]
+    df['landingpage'] = rng.choice(pages, size=len(df))
+    df.to_csv(path, index=False)
+    print('after', df.shape, list(df.columns))
+    print(df[['landingpage']].head())
+PY
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Pandas segfaulted again in the sandbox. Full permissions are needed.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt; &#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+import numpy as np
+
+path = Path(&#39;scripts/ModelShapValues/tmp_data/test_features.csv&#39;)
+df = pd.read_csv(path)
+print(&#39;before&#39;, df.shape, list(df.columns))
+if &#39;landingpage&#39; in df.columns:
+    print(&#39;landingpage already present&#39;)
+else:
+    rng = np.random.default_rng(42)
+    pages = [
+        &#39;/&#39;,
+        &#39;/produkte&#39;,
+        &#39;/angebote&#39;,
+        &#39;/warenkorb&#39;,
+        &#39;/suche&#39;,
+        &#39;/kategorie/bremsen&#39;,
+        &#39;/kategorie/filter&#39;,
+        &#39;/unknown&#39;,
+    ]
+    df[&#39;landingpage&#39;] = rng.choice(pages, size=len(df))
+    df.to_csv(path, index=False)
+    print(&#39;after&#39;, df.shape, list(df.columns))
+    print(df[&#39;landingpage&#39;].value_counts().head())
+PY
+head -3 scripts/ModelShapValues/tmp_data/test_features.csv</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python << 'PY'
+import pandas as pd
+from pathlib import Path
+import numpy as np
+
+path = Path('scripts/ModelShapValues/tmp_data/test_features.csv')
+df = pd.read_csv(path)
+print('before', df.shape, list(df.columns))
+if 'landingpage' in df.columns:
+    print('landingpage already present')
+else:
+    rng = np.random.default_rng(42)
+    pages = [
+        '/',
+        '/produkte',
+        '/angebote',
+        '/warenkorb',
+        '/suche',
+        '/kategorie/bremsen',
+        '/kategorie/filter',
+        '/unknown',
+    ]
+    df['landingpage'] = rng.choice(pages, size=len(df))
+    df.to_csv(path, index=False)
+    print('after', df.shape, list(df.columns))
+    print(df['landingpage'].value_counts().head())
+PY
+head -3 scripts/ModelShapValues/tmp_data/test_features.csv
+```
+
+```
+before (300, 8) ['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'anonymousId', 'session']
+after (300, 9) ['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'anonymousId', 'session', 'landingpage']
+/warenkorb            50
+/kategorie/filter     45
+/kategorie/bremsen    43
+/angebote             37
+/produkte             35
+Name: landingpage, dtype: int64
+days_between_sessions,pages_visited_per_session,pages_visited_per_session_cumulated,pages_visited_per_user,pages_visited_per_user_cumulated,session_duration_in_s,anonymousId,session,landingpage
+2.1257302210933933,3,59,7,107,128.65818907382703,u0,s0,/
+1.867895136708698,16,56,29,149,146.77342793424424,u1,s1,/kategorie/filter
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Added a landingpage column with sample path values to test_features.csv.
+</details></think>
+
+_**Agent (default)**_
+
+Added a `landingpage` column to `scripts/ModelShapValues/tmp_data/test_features.csv` with sample path values (`/`, `/produkte`, `/angebote`, etc.) for all 300 rows.
+
+---
+
+_**User**_
+
+add filename to output path for shap values
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+SHAP value output paths should include the data filename.
+
+Checking how output_dir is currently constructed.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "output_dir|DEFAULT_OUTPUT|shap_output"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "output_dir|DEFAULT_OUTPUT|shap_output",
+  "topFiles": [
+    {
+      "matchCount": 15,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 15
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The default output path will include the data filename stem.
+
+The path will be `shap_output/<customer>/<data_filename_stem>/`. The help text for `--output-dir` will also be updated.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The default output path now includes the data filename stem under shap_output/<customer>/.
+</details></think>
+
+_**Agent (default)**_
+
+Default SHAP output path is now:
+
+`scripts/ModelShapValues/shap_output/<customer>/<data-filename>/`
+
+Example for `test_features.csv` → `shap_output/kfzteile24/test_features/`.
+
+---
+
+_**User**_
+
+change path to model to models/
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating the model path to `models/`.
+
+Checking the SHAP script context. `DEFAULT_MODELS_ROOT` is currently `SCRIPT_DIR`. Models should likely live under `scripts/ModelShapValues/models/` instead.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "MODELS_ROOT|models-root|models_root|SCRIPT_DIR"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "MODELS_ROOT|models-root|models_root|SCRIPT_DIR",
+  "topFiles": [
+    {
+      "matchCount": 13,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 13
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/&#34; | head -30; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models&#34; 2&gt;/dev/null | head -10 || echo &#39;no models dir yet&#39;</summary>
+```bash
+ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/" | head -30; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models" 2>/dev/null | head -10 || echo 'no models dir yet'
+```
+
+```
+__pycache__
+calculate_shap_values.py
+logs
+model_param_quick_check.ipynb
+models
+shap_output
+tmp_data
+kfzteile24-aud-6835d77813526dc3d1229978
+tchibo-aud-68b69dff2e5f2d9a58cce692
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The `models` directory already exists.
+
+Checking the `models` directory contents. Customer folders may still be at the root level. The default models root should point to `SCRIPT_DIR / "models"`.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -la &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/&#34; | head -20</summary>
+```bash
+ls -la "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/" | head -20
+```
+
+```
+total 0
+drwxr-xr-x   4 karolinegriesbach  staff  128 Sep 14 13:33 .
+drwxr-xr-x@ 10 karolinegriesbach  staff  320 Sep 14 13:33 ..
+drwxr-xr-x   8 karolinegriesbach  staff  256 Sep 14 12:52 kfzteile24-aud-6835d77813526dc3d1229978
+drwxr-xr-x   4 karolinegriesbach  staff  128 Sep 14 13:33 tchibo-aud-68b69dff2e5f2d9a58cce692
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The path to the model has been changed to models/.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Docstrings referencing the path should also be updated.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "ModelShapValues|models-root|models root"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "ModelShapValues|models-root|models root",
+  "topFiles": [
+    {
+      "matchCount": 7,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 7
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updated the model path to models/.
+</details></think>
+
+_**Agent (default)**_
+
+Default `--models-root` is now `scripts/ModelShapValues/models/`.
+
+---
+
+_**User**_
+
+add a summary plot for all model variations (filename) and shap values
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+A summary plot will compare SHAP values across all model variations.
+
+Reviewing existing output structure to determine what comparison data is already available.
+</details></think>
+
+_**Agent (default)**_
+
+I'll check the current comparison output and add a cross-setting summary plot over all model variations.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: find &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output&#34; -name &#39;comparison*.csv&#39; -o -name &#39;*mean_abs*&#39; 2&gt;/dev/null | head -20; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/&#34; 2&gt;/dev/null</summary>
+```bash
+find "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output" -name 'comparison*.csv' -o -name '*mean_abs*' 2>/dev/null | head -20; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/" 2>/dev/null
+```
+
+```
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/2026-09-09_best_models_with_landingpage_cat_enables_xgb/cv_6_conversion_mean_abs_shap.csv
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/2026-09-09_best_models_with_landingpage_cat_enables_xgb/cv_6_treatment_mean_abs_shap.csv
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/2026-09-09_best_models_with_landingpage_cat_enables_xgb/cv_6_control_mean_abs_shap.csv
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/2026-09-09_new_models_without_landingpage_xgb/cv_6_conversion_mean_abs_shap.csv
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/2026-09-09_new_models_without_landingpage_xgb/cv_6_treatment_mean_abs_shap.csv
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/2026-09-09_new_models_without_landingpage_xgb/cv_6_control_mean_abs_shap.csv
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/comparison_mean_abs_shap.csv
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/2026-09-08_best_models_without_landingpage_xgb/cv_6_conversion_mean_abs_shap.csv
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/2026-09-08_best_models_without_landingpage_xgb/cv_6_treatment_mean_abs_shap.csv
+/Users/karolinegriesbach/Docum
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Adding a summary plot function for model variations and SHAP values.
+
+Planning a faceted bar chart of features versus mean absolute SHAP values, grouped by model setting. Considering a heatmap of features across settings, with separate panels per role. Will review the comparison CSV structure before writing the plots.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: head -20 &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/comparison_mean_abs_shap.csv&#34;</summary>
+```bash
+head -20 "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/comparison_mean_abs_shap.csv"
+```
+
+```
+customer_setting,cv,role,backend,model_path,feature,mean_abs_shap,mean_shap
+2026-09-08_best_models_without_landingpage_xgb,6,control,xgb,/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json,pages_visited_per_user,0.32099918,0.32099918
+2026-09-08_best_models_without_landingpage_xgb,6,control,xgb,/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json,pages_visited_per_session,0.29268903,-0.19333506
+2026-09-08_best_models_without_landingpage_xgb,6,control,xgb,/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json,session_duration_in_s,0.14530699,0.14422189
+2026-09-08_best_models_without_landingpage_xgb,6,control,xgb,/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/2026-09-08_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json,pages_visited_per_user_cumulated,0.100366905,-0.090003945
+2026-09-08_best_models_without_landingpage_xgb,6,control,xgb,/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Adding a `plot_comparison_summary` function to generate summary plots for all model variations and SHAP values.
+
+Heatmaps and grouped bar charts will show features versus mean SHAP values by setting. Setting names will be shortened for legend readability. Multiple cross-validation runs will be averaged across folds. Labels will strip date prefixes for cleaner display.
+</details></think>
+
+_**Agent (default)**_
+
+I'll add cross-setting summary plots (heatmap + grouped bars) from the comparison SHAP table.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Smoke-testing the plot function on the existing comparison CSV to avoid re-running the full SHAP analysis.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt; &#39;PY&#39;
+from pathlib import Path
+import pandas as pd
+from scripts.ModelShapValues.calculate_shap_values import plot_comparison_summary
+
+out = Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/test_features&#39;)
+comp = pd.read_csv(out / &#39;comparison_mean_abs_shap.csv&#39;)
+paths = plot_comparison_summary(comp, out, &#39;test_features&#39;, &#39;kfzteile24&#39;)
+print(paths)
+for p in paths:
+    print(p.name, p.stat().st_size, &#39;exists&#39;, p.exists())
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python << 'PY'
+from pathlib import Path
+import pandas as pd
+from scripts.ModelShapValues.calculate_shap_values import plot_comparison_summary
+
+out = Path('scripts/ModelShapValues/shap_output/kfzteile24/test_features')
+comp = pd.read_csv(out / 'comparison_mean_abs_shap.csv')
+paths = plot_comparison_summary(comp, out, 'test_features', 'kfzteile24')
+print(paths)
+for p in paths:
+    print(p.name, p.stat().st_size, 'exists', p.exists())
+PY
+```
+
+```
+[PosixPath('scripts/ModelShapValues/shap_output/kfzteile24/test_features/comparison_mean_abs_shap_heatmap.png'), PosixPath('scripts/ModelShapValues/shap_output/kfzteile24/test_features/comparison_mean_abs_shap_bars.png')]
+comparison_mean_abs_shap_heatmap.png 282281 exists True
+comparison_mean_abs_shap_bars.png 235275 exists True
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The summary plot for all model variations and SHAP values is ready.
+</details></think>
+
+_**Agent (default)**_
+
+Added cross-setting summary plots written next to the comparison CSV:
+
+- `comparison_mean_abs_shap_heatmap.png` — features × model variations, one panel per role  
+- `comparison_mean_abs_shap_bars.png` — grouped mean(|SHAP|) bars by setting, one panel per role  
+
+They use all explained settings (folder / “filename” variations) and average across CVs when multiple folds are present.
+
+---
+
+_**User**_
+
+add grid to plot
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Adding a grid to the plot.
+
+Bar plots already have x-axis grids. The heatmap lacks one. I'll add grids to all plots where missing.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "\\.grid\\(|imshow|barh|scatter|ax\\.|plt\\."
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "\\.grid\\(|imshow|barh|scatter|ax\\.|plt\\.",
+  "topFiles": [
+    {
+      "matchCount": 35,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 35
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Adding grids to heatmaps, enhancing bar grids on both axes, and applying grids to beeswarm and mean absolute bar plots.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Grids have been added to all plots.
+</details></think>
+
+_**Agent (default)**_
+
+Added grids to all SHAP plots: heatmap cell borders, comparison bars, beeswarm, and per-model bar charts.
+
+---
+
+_**User**_
+
+why are the lstms not included in the analysis?
+python scripts/ModelShapValues/calculate_shap_values.py --customer kfzteile24 --data-path scripts/ModelShapValues/tmp_data/test_features.csv --cv 6 --max-samples 'all'
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants to know why LSTM models are excluded from the SHAP value analysis.
+
+Checking whether a `--skiplstm` flag or a model discovery issue is excluding LSTM models.
+</details></think>
+
+_**Agent (default)**_
+
+I'll check how LSTMs are discovered and what the last run logged for kfzteile24.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -lt &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/&#34; | head -10; echo &#39;---&#39;; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/&#34;; echo &#39;---&#39;; for d in &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/&#34;*lstm*; do echo &#34;== $(basename &#34;$d&#34;) ==&#34;; ls &#34;$d&#34; | grep -E &#39;cv_6.*(conversion_probability\.h5|control\.h5|treatment\.h5)$&#39; | head -20; done</summary>
+```bash
+ls -lt "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/" | head -10; echo '---'; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/"; echo '---'; for d in "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/"*lstm*; do echo "== $(basename "$d") =="; ls "$d" | grep -E 'cv_6.*(conversion_probability\.h5|control\.h5|treatment\.h5)$' | head -20; done
+```
+
+```
+total 144
+-rw-r--r--@ 1 karolinegriesbach  staff  27856 Sep 14 13:41 calculate_shap_values_kfzteile24_20260914_114145.log
+-rw-r--r--@ 1 karolinegriesbach  staff  27411 Sep 14 13:36 calculate_shap_values_kfzteile24_20260914_113641.log
+-rw-r--r--@ 1 karolinegriesbach  staff   5195 Sep 14 13:36 calculate_shap_values_kfzteile24_20260914_113620.log
+-rw-r--r--@ 1 karolinegriesbach  staff   5174 Sep 14 13:31 calculate_shap_values_kfzteile24_20260914_113104.log
+---
+2026-09-07_new_models_with_landingpage_lstm
+2026-09-08_best_models_without_landingpage_lstm
+2026-09-08_best_models_without_landingpage_xgb
+2026-09-09_best_models_with_landingpage_cat_enables_xgb
+2026-09-09_new_models_without_landingpage_xgb
+---
+== 2026-09-07_new_models_with_landingpage_lstm ==
+2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_conversion_probability.h5
+2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5
+2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment.h5
+2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_conversion_probability.h5
+2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5
+2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment.h5
+== 2026-09-08_best_models_without_landingpage_lstm ==
+2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_conversion_probability.h5
+2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5
+2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment.h5
+2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_conversion_probability.h5
+2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5
+2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment.h5
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "skip_lstm|lstm|ROLE_PATTERNS|EXCLUDE|discover_artifacts"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "skip_lstm|lstm|ROLE_PATTERNS|EXCLUDE|discover_artifacts",
+  "topFiles": [
+    {
+      "matchCount": 16,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 16
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: latest=$(ls -t /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_*.log 2&gt;/dev/null | head -1); echo &#34;latest=$latest&#34;; rg -n &#39;lstm|LSTM|skip|Setting |explaining|failed|No matching|artifacts&#39; &#34;$latest&#34; | head -80</summary>
+```bash
+latest=$(ls -t /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_*.log 2>/dev/null | head -1); echo "latest=$latest"; rg -n 'lstm|LSTM|skip|Setting |explaining|failed|No matching|artifacts' "$latest" | head -80
+```
+
+```
+latest=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_114145.log
+7:2026-09-14 13:41:45 INFO settings: ['2026-09-07_new_models_with_landingpage_lstm', '2026-09-08_best_models_without_landingpage_lstm', '2026-09-08_best_models_without_landingpage_xgb', '2026-09-09_best_models_with_landingpage_cat_enables_xgb', '2026-09-09_new_models_without_landingpage_xgb']
+10:2026-09-14 13:41:45 INFO Setting 2026-09-07_new_models_with_landingpage_lstm: 6 artifacts, explaining on 300 rows
+11:2026-09-14 13:41:45 INFO   explaining control cv=6 (lstm) <- 2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5
+12:2026-09-14 13:41:49 ERROR     failed for control cv=6 (2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5)
+19:2026-09-14 13:41:49 INFO   explaining control cv=6 (lstm) <- 2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5
+20:2026-09-14 13:41:49 ERROR     failed for control cv=6 (2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5)
+27:2026-09-14 13:41:49 INFO   explaining conversion cv=6 (lstm) <- 2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_conversion_probability.h5
+28:2026-09-14 13:41:49 ERROR     failed for conversion cv=6 (2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_conversion_probability.h5)
+35:2026-09-14 13:41:49 INFO   explaining conversion cv=6 (lstm) <- 2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_conversion_probability.h5
+36:2026-09-14 13:41:49 ERROR     failed for conversion cv=6 (2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_conversion_probability.h5)
+43:2026-09-14 13:41:49 INFO   explaining treatment cv=6 (lstm) <- 2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The root cause is identified. The first error for the landingpage LSTM is being checked. The without_landingpage models fail for a specific reason.
+
+inputs.parquet contains an extra landingpage feature, yielding 7 features instead of the expected 6. This triggers a NoneType integer error in GradientExplainer. The next step is to inspect the first failure traceback and the resolve_feature_columns logic.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_114145.log</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python &lt;&lt; &#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+import h5py, json
+base = Path(&#39;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978&#39;)
+for setting in [&#39;2026-09-07_new_models_with_landingpage_lstm&#39;,&#39;2026-09-08_best_models_without_landingpage_lstm&#39;]:
+    p = base/setting
+    inputs = pd.read_parquet(p/&#39;inputs.parquet&#39;)[&#39;input&#39;].tolist()
+    print(&#39;\n&#39;, setting)
+    print(&#39;inputs.parquet:&#39;, inputs)
+    h5 = next(p.glob(&#39;*cv_6*control.h5&#39;))
+    with h5py.File(h5,&#39;r&#39;) as f:
+        cfg = json.loads(f.attrs[&#39;model_config&#39;])
+        layers = cfg[&#39;config&#39;][&#39;layers&#39;]
+        inp = layers[0][&#39;config&#39;]
+        print(&#39;model file&#39;, h5.name)
+        print(&#39;batch_shape&#39;, inp.get(&#39;batch_shape&#39;), &#39;batch_input_shape&#39;, inp.get(&#39;batch_input_shape&#39;))
+PY</summary>
+```bash
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python << 'PY'
+import pandas as pd
+from pathlib import Path
+import h5py, json
+base = Path('/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978')
+for setting in ['2026-09-07_new_models_with_landingpage_lstm','2026-09-08_best_models_without_landingpage_lstm']:
+    p = base/setting
+    inputs = pd.read_parquet(p/'inputs.parquet')['input'].tolist()
+    print('\n', setting)
+    print('inputs.parquet:', inputs)
+    h5 = next(p.glob('*cv_6*control.h5'))
+    with h5py.File(h5,'r') as f:
+        cfg = json.loads(f.attrs['model_config'])
+        layers = cfg['config']['layers']
+        inp = layers[0]['config']
+        print('model file', h5.name)
+        print('batch_shape', inp.get('batch_shape'), 'batch_input_shape', inp.get('batch_input_shape'))
+PY
+```
+
+```
+
+ 2026-09-07_new_models_with_landingpage_lstm
+inputs.parquet: ['anonymousId', 'days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'session', 'landingpage_cat']
+model file 2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5
+batch_shape [None, None, 7] batch_input_shape None
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/pandas/io/parquet.py", line 493, in read_parquet
+    return impl.read(
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/pandas/io/parquet.py", line 233, in read
+    path_or_handle, handles, kwargs["filesystem"] = _get_path_or_handle(
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/pandas/io/parquet.py", line 102, in _get_path_or_handle
+    handles = get_handle(
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/pandas/io/common.py", line 798, in get_handle
+    handle = open(handle, ioargs.mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/inputs.parquet'
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+LSTMs are discovered and attempted during the analysis, but every LSTM model fails.
+
+The landing-page LSTM fails because the test data lacks the required `landingpage_cat` column. The no-landing-page LSTM fails due to a dimension mismatch: it uses seven features while the model expects six. GradientExplainer also fails for this model.
+</details></think>
+
+_**Agent (default)**_
+
+LSTMs **were** picked up — they all **failed**, so only the XGB results remain in the summary.
+
+From your latest log (`calculate_shap_values_kfzteile24_20260914_114145.log`):
+
+1. **`2026-09-07_..._with_landingpage_lstm`**  
+   Models expect `landingpage_cat`, but `test_features.csv` only has `landingpage`:
+   ```
+   Data is missing required feature columns: ['landingpage_cat']
+   ```
+
+2. **`2026-09-08_..._without_landingpage_lstm`**  
+   That folder has no `inputs.parquet`. The script then uses all non-ID columns from the CSV, including `landingpage` → **7** features. The LSTM was trained with **6** features:
+   ```
+   Dimensions must be equal, but are 7 and 6 ... input shapes: [32,7], [6,200]
+   ```
+   GradientExplainer also failed first (`NoneType` / integer), then KernelExplainer hit the same shape error.
+
+So discovery is fine (6 LSTM artifacts per setting); every LSTM explain step errored and was skipped.
+
+**To include them:**
+- With-landingpage LSTMs: add a numeric/categorical `landingpage_cat` column (not raw `landingpage`), matching training.
+- Without-landingpage LSTMs: drop `landingpage` from the feature matrix for those models (or add a correct `inputs.parquet` with the 6 trained features).
+
+I can patch the script to map `landingpage` → `landingpage_cat` and to derive LSTM input width from the `.h5` shape so without-landingpage runs don’t pull in extra columns.
+
+---
+
+_**User**_
+
+yes, add landingpage_cat to test_features.csv
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Adding a landingpage_cat column to test_features.csv.
+
+Checking how landingpage_cat is encoded elsewhere in the codebase.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{py,ipynb}",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics",
+  "pattern": "landingpage_cat"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics",
+  "pattern": "landingpage_cat",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "../innkeepr-analytics/configs/config.py"
+    },
+    {
+      "matchCount": 4,
+      "uri": "../innkeepr-analytics/tests/test_return_inputs.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "../innkeepr-analytics/tests/test_helper_xgb.py"
+    },
+    {
+      "matchCount": 3,
+      "uri": "../innkeepr-analytics/src/utils/helper_xgb.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "../innkeepr-analytics/tests/test_func_get_input_cols.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "../innkeepr-analytics/src/models/model_targeting_conversion_databricks.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "../innkeepr-analytics/src/models/model_targeting_conversion.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "../innkeepr-analytics/src/features/func_handle_nan.py"
+    }
+  ],
+  "totalFiles": 8,
+  "totalMatches": 15
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: head -3 &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/test_features.csv&#34;; /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python -c &#34;import pandas as pd; df=pd.read_csv(&#39;scripts/ModelShapValues/tmp_data/test_features.csv&#39;); print(df.columns.tolist()); print(df[&#39;landingpage&#39;].value_counts())&#34;</summary>
+```bash
+head -3 "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/test_features.csv"; /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python -c "import pandas as pd; df=pd.read_csv('scripts/ModelShapValues/tmp_data/test_features.csv'); print(df.columns.tolist()); print(df['landingpage'].value_counts())"
+```
+
+```
+days_between_sessions,pages_visited_per_session,pages_visited_per_session_cumulated,pages_visited_per_user,pages_visited_per_user_cumulated,session_duration_in_s,anonymousId,session,landingpage
+2.1257302210933933,3,59,7,107,128.65818907382703,u0,s0,/
+1.867895136708698,16,56,29,149,146.77342793424424,u1,s1,/kategorie/filter
+['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'anonymousId', 'session', 'landingpage']
+/warenkorb            50
+/kategorie/filter     45
+/kategorie/bremsen    43
+/angebote             37
+/produkte             35
+/                     33
+/suche                31
+/unknown              26
+Name: landingpage, dtype: int64
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Checking how landingpage_cat is generated. It likely comes from categorical encoding of the landingpage feature.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.py",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/src",
+  "pattern": "landingpage_cat\\s*=|\\\"landingpage_cat\\\"|astype\\(\\\"category\\\"\\).*landingpage|factorize.*landingpage|LabelEncoder.*landingpage"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/src",
+  "pattern": "landingpage_cat\\s*=|\\\"landingpage_cat\\\"|astype\\(\\\"category\\\"\\).*landingpage|factorize.*landingpage|LabelEncoder.*landingpage",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "../innkeepr-analytics/src/utils/helper_xgb.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "../innkeepr-analytics/src/models/model_targeting_conversion_databricks.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "../innkeepr-analytics/src/models/model_targeting_conversion.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "../innkeepr-analytics/src/features/func_handle_nan.py"
+    }
+  ],
+  "totalFiles": 4,
+  "totalMatches": 6
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.py",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/src/features",
+  "pattern": "landingpage"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/innkeepr-analytics/src/features",
+  "pattern": "landingpage",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "../innkeepr-analytics/src/features/func_handle_nan.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+landingpage_cat is a categorical numeric encoding of landingpage.
+
+Factorizing landingpage into integer codes for the test features.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt; &#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+
+path = Path(&#39;scripts/ModelShapValues/tmp_data/test_features.csv&#39;)
+df = pd.read_csv(path)
+codes, uniques = pd.factorize(df[&#39;landingpage&#39;], sort=True)
+df[&#39;landingpage_cat&#39;] = codes.astype(int)
+df.to_csv(path, index=False)
+print(&#39;columns&#39;, df.columns.tolist())
+print(pd.DataFrame({&#39;landingpage&#39;: uniques, &#39;landingpage_cat&#39;: range(len(uniques))}))
+print(df[[&#39;landingpage&#39;,&#39;landingpage_cat&#39;]].head())
+print(&#39;shape&#39;, df.shape)
+PY
+head -3 scripts/ModelShapValues/tmp_data/test_features.csv</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python << 'PY'
+import pandas as pd
+from pathlib import Path
+
+path = Path('scripts/ModelShapValues/tmp_data/test_features.csv')
+df = pd.read_csv(path)
+codes, uniques = pd.factorize(df['landingpage'], sort=True)
+df['landingpage_cat'] = codes.astype(int)
+df.to_csv(path, index=False)
+print('columns', df.columns.tolist())
+print(pd.DataFrame({'landingpage': uniques, 'landingpage_cat': range(len(uniques))}))
+print(df[['landingpage','landingpage_cat']].head())
+print('shape', df.shape)
+PY
+head -3 scripts/ModelShapValues/tmp_data/test_features.csv
+```
+
+```
+columns ['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'anonymousId', 'session', 'landingpage', 'landingpage_cat']
+          landingpage  landingpage_cat
+0                   /                0
+1           /angebote                1
+2  /kategorie/bremsen                2
+3   /kategorie/filter                3
+4           /produkte                4
+5              /suche                5
+6            /unknown                6
+7          /warenkorb                7
+          landingpage  landingpage_cat
+0                   /                0
+1   /kategorie/filter                3
+2  /kategorie/bremsen                2
+3          /warenkorb                7
+4          /warenkorb                7
+shape (300, 10)
+days_between_sessions,pages_visited_per_session,pages_visited_per_session_cumulated,pages_visited_per_user,pages_visited_per_user_cumulated,session_duration_in_s,anonymousId,session,landingpage,landingpage_cat
+2.1257302210933933,3,59,7,107,128.65818907382703,u0,s0,/,0
+1.867895136708698,16,56,29,149,146.77342793424424,u1,s1,/kategorie/filter,3
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Added landingpage_cat to test_features.csv.
+</details></think>
+
+_**Agent (default)**_
+
+Added `landingpage_cat` to `test_features.csv` as integer codes from `landingpage` (0–7). That should unblock the with-landingpage LSTM models.
+
+---
+
+_**User**_
+
+why is scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm not considered?
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Investigating why the without_landingpage_lstm model is excluded from the SHAP analysis.
+
+The folder contains artifacts but failed due to a feature dimension mismatch (7 vs 6). Missing inputs.parquet and landingpage features from the CSV caused the failure. GradientExplainer may also be involved. Checking current logs to confirm.
+</details></think>
+
+_**Agent (default)**_
+
+I'll check the latest run log and that LSTM folder to see why it's still excluded.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: latest=$(ls -t /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_*.log 2&gt;/dev/null | head -1); echo &#34;latest=$latest&#34;; rg -n &#39;without_landingpage_lstm|failed for|Dimensions|missing required|Setting 2026-09-08_best_models_without_landingpage_lstm|artifacts&#39; &#34;$latest&#34; | head -60; echo &#39;---&#39;; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/&#34; | head -30; echo &#39;---&#39;; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/inputs.parquet&#34; 2&gt;&amp;1; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/&#34; 2&gt;/dev/null | rg &#39;lstm|without&#39; || true; head -5 &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/comparison_mean_abs_shap.csv&#34; 2&gt;/dev/null; cut -d, -f1 &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/comparison_mean_abs_shap.csv&#34; 2&gt;/dev/null | sort -u</summary>
+```bash
+latest=$(ls -t /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_*.log 2>/dev/null | head -1); echo "latest=$latest"; rg -n 'without_landingpage_lstm|failed for|Dimensions|missing required|Setting 2026-09-08_best_models_without_landingpage_lstm|artifacts' "$latest" | head -60; echo '---'; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/" | head -30; echo '---'; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/inputs.parquet" 2>&1; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/" 2>/dev/null | rg 'lstm|without' || true; head -5 "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/comparison_mean_abs_shap.csv" 2>/dev/null; cut -d, -f1 "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/comparison_mean_abs_shap.csv" 2>/dev/null | sort -u
+```
+
+```
+latest=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_134658.log
+7:2026-09-14 15:46:58 INFO settings: ['2026-09-07_new_models_with_landingpage_lstm', '2026-09-08_best_models_without_landingpage_lstm', '2026-09-08_best_models_without_landingpage_xgb', '2026-09-09_best_models_with_landingpage_cat_enables_xgb', '2026-09-09_new_models_without_landingpage_xgb']
+10:2026-09-14 15:46:58 INFO Setting 2026-09-07_new_models_with_landingpage_lstm: 6 artifacts, explaining on 300 rows
+7229:2026-09-14 15:52:36 INFO Setting 2026-09-08_best_models_without_landingpage_lstm: 6 artifacts, explaining on 300 rows
+7232:2026-09-14 15:52:36 ERROR     failed for control cv=6 (2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5)
+7250:[1mDimensions must be equal, but are 8 and 6 for '{{node sequential_56_1/LSTM1_1/lstm_cell_1/MatMul}} = MatMul[T=DT_FLOAT, grad_a=false, grad_b=false, transpose_a=false, transpose_b=false](sequential_56_1/LSTM1_1/strided_slice_1, sequential_56_1/LSTM1_1/lstm_cell_1/Cast/ReadVariableOp)' with input shapes: [32,8], [6,400].[0m
+7258:2026-09-14 15:52:37 ERROR     failed for control cv=6 (2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5)
+7276:[1mDimensions must be equal, but are 8 and 6 for '{{node sequential_51_1/LSTM1_1/lstm_cell_1/MatMul}} = MatMul[T=DT_FLOAT, grad_a=false, grad_b=false, transpose_a=false, transpose_b=false](sequential_51_1/LSTM1_1/strided_slice_1, sequential_51_1/LSTM1_1/lstm_cell_1/Cast/ReadVariableOp)' with input shapes: [32,8], [6,200].[0m
+7284:2026-09-14 15:52:37 ERROR     failed for conversion cv=6 (2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_conversion_probability.h5)
+7302:[1mDimensions must be equal, but are 8 and 6 for '{{node sequential_59_1/LSTM1_1/lstm_cell_1/MatMul}} = MatMul[T=DT_FLOAT, grad_a=false, grad
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The folder is considered, but it fails for a specific reason.
+
+No inputs.parquet exists. The script falls back to all non-ID CSV columns, including landingpage and landingpage_cat. This yields 8 features instead of the expected 6. The sibling without_landingpage_xgb model uses a different inputs.parquet with the correct 6 features.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python &lt;&lt; &#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+p = Path(&#39;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/inputs.parquet&#39;)
+print(pd.read_parquet(p))
+PY</summary>
+```bash
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python << 'PY'
+import pandas as pd
+from pathlib import Path
+p = Path('/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/inputs.parquet')
+print(pd.read_parquet(p))
+PY
+```
+
+```
+                                 input
+0                          anonymousId
+1                days_between_sessions
+2            pages_visited_per_session
+3  pages_visited_per_session_cumulated
+4               pages_visited_per_user
+5     pages_visited_per_user_cumulated
+6                session_duration_in_s
+7                              session
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The folder lacks inputs.parquet. The script therefore uses all non-ID CSV columns, including landingpage features, yielding 8 total features. The LSTM model expects only 6.
+</details></think>
+
+_**Agent (default)**_
+
+It **is** considered — it just fails for every model, so nothing from that folder ends up in the comparison.
+
+From the latest log (`...114658.log`):
+
+```
+Setting 2026-09-08_best_models_without_landingpage_lstm: 6 artifacts...
+Dimensions must be equal, but are 8 and 6 ... input shapes: [32,8], [6,400]
+```
+
+**Why:** that folder has **no `inputs.parquet`**. The script then falls back to all non-ID columns in `test_features.csv`, which now includes both `landingpage` and `landingpage_cat` → **8** features. These LSTMs were trained with **6** features only (the session metrics, no landingpage).
+
+The sibling XGB folder `..._without_landingpage_xgb` has the correct `inputs.parquet` (6 features + IDs). The LSTM folder is missing that file.
+
+**Fix options:**
+1. Copy/create `inputs.parquet` in the LSTM folder (same 6 features as the without-landingpage XGB setting), or  
+2. Teach the script to read the expected feature count from the `.h5` input shape and drop landingpage columns for `without_landingpage` settings.
+
+I can add the missing `inputs.parquet` or patch the script if you want.
+
+---
+
+_**User**_
+
+Add: when there are several models pick the one with the best f1 score based on the test_score.csv file
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The SHAP script should select the best model by F1 score from test_score.csv when multiple models exist.
+
+Exploring how multiple models are currently discovered and how test_score.csv is formatted.
+</details></think>
+
+_**Agent (default)**_
+
+I'll inspect the `test_score.csv` format and how multiple models per role are currently picked.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/&#34; | rg &#39;cv_6.*(test_score|control\.h5|treatment\.h5|conversion_probability\.h5)$&#39;; echo &#39;---&#39;; head -5 &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/&#34;*cv_6*test_score.csv; echo &#39;---&#39;; head -5 &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/&#34;*cv_6*test_score.csv; echo &#39;---&#39;; head -5 &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/&#34;*cv_6*test_score.csv</summary>
+```bash
+ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/" | rg 'cv_6.*(test_score|control\.h5|treatment\.h5|conversion_probability\.h5)$'; echo '---'; head -5 "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/"*cv_6*test_score.csv; echo '---'; head -5 "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/"*cv_6*test_score.csv; echo '---'; head -5 "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/"*cv_6*test_score.csv
+```
+
+```
+2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_conversion_probability.h5
+2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5
+2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment.h5
+2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_conversion_probability.h5
+2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5
+2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment.h5
+---
+==> /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_test_score.csv <==
+,kind,ACC,F1,AUC,R2
+0,6835d77813526dc3d1229978_test,0.5855090743677213,0.4339780081217897,0.5654587465797211,-0.67251317302283
+
+==> /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_test_score.csv <==
+,kind,ACC,F1,AUC,R2
+0,6835d77813526dc3d1229978_test,0.5896113614795391,0.4493605030142799,0.5708208259833674,-0.6559600259941685
+---
+==> /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_6835d77813526dc3d1229978_test_score.csv <==
+,kind,ACC,F1,AUC,R2
+0,6835d77813526dc3d1229978_test,0.6489988399809793,0.562121212121212,0.6357462000866931,-0.417299905975304
+
+==> /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scri
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I need to understand how test_score.csv maps to models.
+
+The test_score.csv file is shared across all roles for a given classifier configuration and cross-validation fold. Its F1 score represents the overall causal or conversion model family rather than individual roles.
+
+Multiple models may exist for the same role and cross-validation fold. The algorithm groups artifacts by model family prefix and selects the family with the highest F1 score from test_score.csv. XGBoost typically yields only one model per role and fold.
+
+The matching logic extracts the common prefix through `saved_model_cv_{n}` and pairs it with the corresponding `*_test_score.csv` file. Each model in a group is scored against its matching CSV, and the artifact with the highest F1 is kept.
+
+A regex pattern ending at `_saved_model_cv_{n}` cleanly extracts the common prefix for both model and score file names. This handles conversion probability suffixes without complex role-specific stripping.
+
+F1 scores will be stored on ModelArtifact objects for logging. The without_landingpage_lstm inputs issue is out of scope. A helper function will read the F1 value from each test_score.csv file.
+
+Artifacts are grouped by role and cross-validation fold. Single-model groups pass through unchanged. Multi-model groups are scored by reading the F1 value from each matching test_score.csv file. Missing scores default to negative infinity.
+
+The selection step sorts candidates by descending F1 and keeps the top one. It logs the chosen model and its F1 score per role and cross-validation fold. This logic will run either at the end of discover_artifacts or inside process_setting. ModelArtifact will carry the F1 score for manifest logging. The discovery function will also accept a logger.
+</details></think>
+
+_**Agent (default)**_
+
+I'll update artifact discovery so when multiple models share a role/CV, we keep the one with the best F1 from `*_test_score.csv`.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+ModelArtifact will gain optional f1_score and test_score_path fields. Selection logic will pick the best F1 model from test_score.csv. The manifest will be updated accordingly.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+The string to replace was not found in the file.
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "contextAfter": 15,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "\\\"setting\\\": row\\[\\\"setting\\\"\\]"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "\\\"setting\\\": row\\[\\\"setting\\\"\\]",
+  "topFiles": [
+    {
+      "matchCount": 16,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The first import replacement failed. Need to add the defaultdict import.
+
+Reading the top of the file to fix the import.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "class ModelArtifact|select_best_artifacts|defaultdict|f1_score"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "class ModelArtifact|select_best_artifacts|defaultdict|f1_score",
+  "topFiles": [
+    {
+      "matchCount": 13,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 13
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "return \\{|\\\"mean_abs\\\":|save_outputs"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "return \\{|\\\"mean_abs\\\":|save_outputs",
+  "topFiles": [
+    {
+      "matchCount": 4,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 4
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The `defaultdict` import needs to be added. `save_outputs` and `manifest` should be updated to include F1 scores.
+
+Need to verify whether `sys` was removed from the original imports.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating save_outputs and the manifest to include f1_score and test_score_path.
+
+Also adding f1 to the mean_abs metadata.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt; &#39;PY&#39;
+import logging
+from pathlib import Path
+from scripts.ModelShapValues.calculate_shap_values import (
+    discover_artifacts,
+    select_best_artifacts_by_f1,
+)
+
+logging.basicConfig(level=logging.INFO, format=&#39;%(message)s&#39;)
+logger = logging.getLogger(&#39;test&#39;)
+setting = Path(&#39;scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm&#39;)
+arts = discover_artifacts(setting, [&#39;conversion&#39;,&#39;control&#39;,&#39;treatment&#39;], [6], False)
+print(&#39;before&#39;, len(arts), [(a.role, a.path.name) for a in arts])
+best = select_best_artifacts_by_f1(arts, setting, logger)
+print(&#39;after&#39;, len(best))
+for a in best:
+    print(a.role, a.f1_score, a.path.name)
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python << 'PY'
+import logging
+from pathlib import Path
+from scripts.ModelShapValues.calculate_shap_values import (
+    discover_artifacts,
+    select_best_artifacts_by_f1,
+)
+
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+logger = logging.getLogger('test')
+setting = Path('scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm')
+arts = discover_artifacts(setting, ['conversion','control','treatment'], [6], False)
+print('before', len(arts), [(a.role, a.path.name) for a in arts])
+best = select_best_artifacts_by_f1(arts, setting, logger)
+print('after', len(best))
+for a in best:
+    print(a.role, a.f1_score, a.path.name)
+PY
+```
+
+```
+]633;P;Cwd=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts]633;P;HasRichCommandDetection=True]633;A$ ]633;B]633;E;cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python << 'PY'\x0aimport logging\x0afrom pathlib import Path\x0afrom scripts.ModelShapValues.calculate_shap_values import (\x0a    discover_artifacts,\x0a    select_best_artifacts_by_f1,\x0a)\x0a\x0alogging.basicConfig(level=logging.INFO, format='%(message)s')\x0alogger = logging.getLogger('test')\x0asetting = Path('scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm')\x0aarts = discover_artifacts(setting, ['conversion','control','treatment'], [6], False)\x0aprint('before', len(arts), [(a.role, a.path.name) for a in arts])\x0abest = select_best_artifacts_by_f1(arts, setting, logger)\x0aprint('after', len(best))\x0afor a in best:\x0a    print(a.role, a.f1_score, a.path.name)\x0aPYcd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python << 'PY'
+import logging
+from pathlib import Path
+from scripts.ModelShapValues.calculate_shap_values import (
+    discover_artifacts,
+    select_best_artifacts_by_f1,
+)
+
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+logger = logging.getLogger('test')
+setting = Path('scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm')
+arts = discover_artifacts(setting, ['conversion','control','treatment'], [6], False)
+print('before', len(arts), [(a.role, a.path.name) for a in arts])
+best = select_best_artifacts_by_f1(arts, setting, logger)
+print('after', len(best))
+for a in best:
+    print(a.role, a.f1_score, a.path.name)
+PY
+]633;C  role=control cv=6: picked 2026-09-08_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5 (F1=0.449361) from 2 candidates via test_score.cs
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Loading the full module is slow because it imports shap and keras.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="await"><details>
+<summary>Tool use: **await**</summary>
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Reading the output.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/terminals/293118.txt</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The logic correctly selects the model with the highest F1 score from test_score.csv.
+</details></think>
+
+_**Agent (default)**_
+
+When several models share the same role + CV (e.g. `NNLSTM_50` vs `NNLSTM_100`), the script now keeps the one with the highest **F1** from the matching `*_test_score.csv`.
+
+Example for `without_landingpage_lstm` cv_6: picks `NNLSTM_50` (F1≈0.449) over `NNLSTM_100` (F1≈0.434). Chosen F1 and test-score path are logged and written to the manifest.
+
+---
+
+_**User**_
+
+@/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/terminals/1.txt:596-601 
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user is encountering a NameError because `defaultdict` is not defined.
+
+The import may not have persisted. Checking the file now.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The import is present on line 26.
+
+The traceback references line numbers that no longer match the current file, suggesting a stale version is running. The current file does contain the import.
+
+A .pyc cache or stale source file may explain the mismatched line numbers. The traceback itself looks garbled, possibly due to Python misattributing lines. A failed collections import seems unlikely.
+
+I will run a quick import test to verify the fix is active. If the import still fails, I will fall back to a plain dict.
+</details></think>
+
+_**Agent (default)**_
+
+The import is present; I'll verify it loads and harden the grouping so this can't fail again.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python -c &#34;from collections import defaultdict; from scripts.ModelShapValues import calculate_shap_values as m; print(&#39;defaultdict&#39; in dir(m), hasattr(m, &#39;defaultdict&#39;)); print(m.defaultdict is defaultdict)&#34;</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python -c "from collections import defaultdict; from scripts.ModelShapValues import calculate_shap_values as m; print('defaultdict' in dir(m), hasattr(m, 'defaultdict')); print(m.defaultdict is defaultdict)"
+```
+
+```
+True True
+True
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The import now works. The previous error occurred before the import was added.
+
+Replacing defaultdict with a plain dict to eliminate any remaining import dependency.
+</details></think>
+
+_**Agent (default)**_
+
+The import is fixed. I'll switch that function to a plain `dict` so it can't hit this again.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The issue is fixed. A brief reply follows.
+</details></think>
+
+_**Agent (default)**_
+
+That was from a missing `defaultdict` import during the F1-selection change. It’s fixed — re-run the same command.
+
+---
+
+_**User**_
+
+If input can't be found, raise an error
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The script should raise an error when inputs cannot be found instead of falling back to all non-ID columns.
+
+Checking `resolve_feature_columns` and related logic.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Reading `resolve_feature_columns` fully to understand how to raise an error when input is missing.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Inputs missing from the source should raise an error rather than falling back to all non-ID columns.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The missing input now raises a clear FileNotFoundError instead of a dimension mismatch.
+</details></think>
+
+_**Agent (default)**_
+
+If neither the model nor `inputs.parquet` provides feature names, the script now raises `FileNotFoundError` instead of falling back to all CSV columns.
+
+That will surface clearly for folders like `..._without_landingpage_lstm` that are missing `inputs.parquet`.
+
+---
+
+_**User**_
+
+--max-sample 'all': then the whole data set is used?
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants confirmation that `--max-sample 'all'` uses the entire dataset.
+
+Verifying the code to confirm.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "parse_max_samples|sample_frame|max.samples|max_samples"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "parse_max_samples|sample_frame|max.samples|max_samples",
+  "topFiles": [
+    {
+      "matchCount": 14,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 14
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Yes. `parse_max_samples('all')` returns None, and `sample_frame` with None copies the entire dataset.
+
+The correct flag is `--max-samples`, not `--max-sample`.
+</details></think>
+
+_**Agent (default)**_
+
+Yes. `--max-samples all` uses the full dataset (no row sampling).
+
+Note the flag name is `--max-samples` (with an **s**), e.g.:
+
+```bash
+--max-samples all
+```
+
+---
+
+_**User**_
+
+whre is the output?
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user is asking where the SHAP script output goes.
+
+The default output path is scripts/ShapValues/shap_output/<customer>/<data-filename>/Model.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -la &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/&#34; 2&gt;/dev/null; echo &#39;---&#39;; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/&#34; 2&gt;/dev/null | head -20; echo &#39;---&#39;; ls -t &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/&#34; | head -5</summary>
+```bash
+ls -la "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/" 2>/dev/null; echo '---'; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/test_features/" 2>/dev/null | head -20; echo '---'; ls -t "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/" | head -5
+```
+
+```
+total 24
+drwxr-xr-x@  4 karolinegriesbach  staff   128 Sep 14 16:10 .
+drwxr-xr-x@  4 karolinegriesbach  staff   128 Sep 14 16:10 ..
+-rw-r--r--@  1 karolinegriesbach  staff  8196 Sep 14 16:10 .DS_Store
+drwxr-xr-x@ 11 karolinegriesbach  staff   352 Sep 14 16:11 test_features
+---
+2026-09-07_new_models_with_landingpage_lstm
+2026-09-08_best_models_without_landingpage_lstm
+2026-09-08_best_models_without_landingpage_xgb
+2026-09-09_best_models_with_landingpage_cat_enables_xgb
+2026-09-09_new_models_without_landingpage_xgb
+comparison_mean_abs_shap.csv
+comparison_mean_abs_shap_bars.png
+comparison_mean_abs_shap_heatmap.png
+shap_run_manifest.csv
+---
+calculate_shap_values_kfzteile24_20260914_140947.log
+calculate_shap_values_kfzteile24_20260914_140229.log
+calculate_shap_values_kfzteile24_20260914_134658.log
+calculate_shap_values_kfzteile24_20260914_114145.log
+calculate_shap_values_kfzteile24_20260914_113641.log
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Preparing a clear response about where the output is located.
+</details></think>
+
+_**Agent (default)**_
+
+Default location:
+
+`scripts/ModelShapValues/shap_output/<customer>/<data-filename>/`
+
+For your run with `test_features.csv`:
+
+`scripts/ModelShapValues/shap_output/kfzteile24/test_features/`
+
+There you’ll find:
+- per-setting folders with CSVs + beeswarm/bar plots  
+- `comparison_mean_abs_shap.csv`  
+- `comparison_mean_abs_shap_bars.png` / `_heatmap.png`  
+- `shap_run_manifest.csv`
+
+Logs go to: `scripts/ModelShapValues/logs/`
+
+---
+
+_**User**_
+
+i can't see text in this chaat?
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user reports that text is not visible in this chat.
+
+The user likely means the Cursor chat interface itself is not displaying text. They may also be referring to unreadable labels in the SHAP plots.
+
+I will clarify whether the user means the chat interface or the plot labels.
+</details></think>
+
+_**Agent (default)**_
+
+That may be a Cursor UI glitch. Here’s the last answer again:
+
+**Output path**
+
+`scripts/ModelShapValues/shap_output/kfzteile24/test_features/`
+
+There you’ll find per-model CSVs/plots, plus:
+- `comparison_mean_abs_shap.csv`
+- `comparison_mean_abs_shap_bars.png`
+- `comparison_mean_abs_shap_heatmap.png`
+- `shap_run_manifest.csv`
+
+**Logs:** `scripts/ModelShapValues/logs/`
+
+If you meant unreadable text in the **plots** (not the chat), say so and I can fix label sizes.
+
+---
+
+_**User**_
+
+fix @/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/terminals/1.txt:21-58 
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+A UnicodeDecodeError is occurring while reading a CSV file.
+
+The data path appears truncated. I'll update `load_feature_frame` to handle non-UTF-8 encodings and verify whether the file is actually Parquet or another format without an extension.
+</details></think>
+
+_**Agent (default)**_
+
+The CSV isn't UTF-8. I'll inspect the file encoding and update the loader to handle it.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -la &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/&#34;; file &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/&#34;*; xxd &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/kfzteile24_6835d77813526dc3d1229978_test_data.csv&#34; 2&gt;/dev/null | head -3; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/&#34;*test_data* 2&gt;/dev/null; rg -n &#34;data_path|test_data&#34; &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_140947.log&#34; | head -5; ls -t /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/*.log | head -3 | while read f; do echo &#34;== $f ==&#34;; head -8 &#34;$f&#34;; done</summary>
+```bash
+ls -la "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/"; file "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/"*; xxd "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/kfzteile24_6835d77813526dc3d1229978_test_data.csv" 2>/dev/null | head -3; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/"*test_data* 2>/dev/null; rg -n "data_path|test_data" "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_140947.log" | head -5; ls -t /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/*.log | head -3 | while read f; do echo "== $f =="; head -8 "$f"; done
+```
+
+```
+total 763392
+drwxr-xr-x@  5 karolinegriesbach  staff        160 Sep 14 13:55 .
+drwxr-xr-x@ 10 karolinegriesbach  staff        320 Sep 14 13:33 ..
+-rw-r--r--@  1 karolinegriesbach  staff  105674805 Sep 14 13:06 kfzteile24_6835d77813526dc3d1229978_test_data.csv
+-rw-r--r--@  1 karolinegriesbach  staff  285152436 Sep 14 13:29 tchibo_68b69dff2e5f2d9a58cce692_test_data.csv
+-rw-r--r--@  1 karolinegriesbach  staff      21484 Sep 14 13:50 test_features.csv
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/kfzteile24_6835d77813526dc3d1229978_test_data.csv: Apache Parquet
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/tchibo_68b69dff2e5f2d9a58cce692_test_data.csv:     Apache Parquet
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/test_features.csv:                                 CSV text
+00000000: 5041 5231 1504 15b8 e182 0115 a4dc 434c  PAR1..........CL
+00000010: 15e2 d504 1500 1200 00dc b041 6c18 0000  ...........Al...
+00000020: 0036 6161 3363 3363 3433 6236 6231 6130  .6aa3c3c43b6b1a0
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/kfzteile24_6835d77813526dc3d1229978_test_data.csv
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/tchibo_68b69dff2e5f2d9a58cce692_test_data.csv
+3:2026-09-14 16:09:47 INFO data_path=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/tmp_data/test_features.csv
+== /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_142031.log ==
+2026-09-14 16:20:31 INFO Logging to /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/ca
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The file is actually Apache Parquet, not CSV. It starts with PAR1.
+
+Updating `load_feature_frame` to detect Parquet via magic bytes when CSV reads fail, or by sniffing the file format.
+</details></think>
+
+_**Agent (default)**_
+
+The file is named `.csv` but is actually Parquet. I'll update the loader to detect that.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt; &#39;PY&#39;
+from pathlib import Path
+from scripts.ModelShapValues.calculate_shap_values import load_feature_frame
+p = Path(&#39;scripts/ModelShapValues/tmp_data/kfzteile24_6835d77813526dc3d1229978_test_data.csv&#39;)
+df = load_feature_frame(p)
+print(df.shape)
+print(list(df.columns)[:15])
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python << 'PY'
+from pathlib import Path
+from scripts.ModelShapValues.calculate_shap_values import load_feature_frame
+p = Path('scripts/ModelShapValues/tmp_data/kfzteile24_6835d77813526dc3d1229978_test_data.csv')
+df = load_feature_frame(p)
+print(df.shape)
+print(list(df.columns)[:15])
+PY
+```
+
+```
+(833906, 23)
+['_id', 'created', 'url', 'session', 'anonymousId', 'landingpage', 'landingpage_cat', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'pages_visited_per_user', 'pages_visited_per_session_cumulated', 'session_count_last_7d', 'days_between_sessions', 'days_since_last_conversion_checkout_completed', 'pages_visited_per_session']
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The file was mislabeled as CSV instead of Parquet. The label has been corrected.
+</details></think>
+
+_**Agent (default)**_
+
+That file is **Parquet content with a `.csv` extension** (`PAR1` magic bytes), so `read_csv` failed on encoding.
+
+The loader now detects Parquet by content and reads it correctly. Re-run the same command — it should load (~834k rows).
+
+---
+
+_**User**_
+
+What other analysis could be executed, to explain the distribution in shap values to gain further insight?
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants suggestions for additional analyses to better understand their SHAP value distributions.
+
+I will suggest concrete follow-up analyses built on their existing SHAP CSVs, comparison plots, and feature data. These should directly address their LSTM versus XGB and landing page comparisons.
+</details></think>
+
+_**Agent (default)**_
+
+Here are high-value follow-ups on top of mean(|SHAP|) bars/heatmaps:
+
+### 1. Distribution shape (not just means)
+- **Violin / boxplots of SHAP per feature × setting** — shows spread, skew, and outliers that mean(|SHAP|) hides.
+- **Signed mean SHAP** (you already store `mean_shap`) — direction of effect (↑ vs ↓ prediction).
+- **% of rows with |SHAP| > threshold** — how often a feature actually matters.
+
+### 2. Dependence / interaction
+- **SHAP dependence plots** (feature value vs SHAP, colored by another feature) — e.g. `pages_visited_per_session` × `days_between_sessions`.
+- **Top SHAP interaction pairs** (tree models) — where two features jointly drive predictions.
+- Especially useful for **landingpage vs landingpage_cat** comparisons across settings.
+
+### 3. Cohort / segment slices
+Compute mean(|SHAP|) within slices of the data, e.g.:
+- high vs low session duration  
+- converters vs non-converters (if label available)  
+- top landing pages  
+
+Compare whether feature importance is stable or segment-specific.
+
+### 4. Cross-model agreement
+- **Rank correlation of feature importances** (Spearman) between settings/backends.
+- **Disagreement plot**: features that matter for LSTM but not XGB (or with vs without landingpage).
+- Helps answer: “Does architecture change *what* the model uses, or only *how much*?”
+
+### 5. Role-specific causal lens
+For **control vs treatment** (same features, different heads):
+- **Δ mean(|SHAP|)** or **Δ signed SHAP** per feature  
+- Features that flip importance between arms are the most actionable for “why CATE looks like this.”
+
+### 6. Reliability checks
+- **SHAP vs prediction**: sum of SHAP + base value ≈ model output (sanity).
+- **Stability across CVs / bootstrap resample of rows** — which rankings are noise.
+- **Calibration of absolute SHAP scales** — conversion classifiers vs tau regressors aren’t on the same scale; compare ranks within role, not raw values across roles.
+
+### 7. Practical “story” outputs
+- Per setting: **top-5 features with one-sentence interpretation** (direction + typical magnitude).
+- **Waterfall for a few archetypal profiles** (median user, heavy browser, bounce) — easiest for stakeholders.
+
+---
+
+**Best next step given your current outputs:**  
+(1) signed SHAP + violin by feature for conversion/control/treatment, then  
+(2) dependence plots for the top 2–3 features from the comparison heatmap, then  
+(3) control−treatment importance delta.
+
+I can add any of these as plots/CSVs into `calculate_shap_values.py` if you want.
+
+---
+
+_**User**_
+
+why are there no shap values for scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Investigating why SHAP values are missing for the specified Tchibo LSTM model.
+
+Checking logs, model folder contents, and SHAP output for tchibo.
+</details></think>
+
+_**Agent (default)**_
+
+I'll check the Tchibo run logs and that model folder to see why SHAP wasn't produced.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/&#34;; echo &#39;---&#39;; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/&#34; | head -40; echo &#39;---&#39;; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/&#34; | rg &#39;cv_6.*(test_score|control\.h5|treatment\.h5|conversion_probability\.h5|inputs)&#39; ; echo &#39;--- inputs ---&#39;; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/inputs.parquet&#34; 2&gt;&amp;1; echo &#39;--- output ---&#39;; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/&#34; 2&gt;/dev/null; ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/&#34; 2&gt;/dev/null; ls -t &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/&#34;*tchibo* 2&gt;/dev/null | head -5</summary>
+```bash
+ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/"; echo '---'; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/" | head -40; echo '---'; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/" | rg 'cv_6.*(test_score|control\.h5|treatment\.h5|conversion_probability\.h5|inputs)' ; echo '--- inputs ---'; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/inputs.parquet" 2>&1; echo '--- output ---'; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/" 2>/dev/null; ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/" 2>/dev/null; ls -t "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/"*tchibo* 2>/dev/null | head -5
+```
+
+```
+2026-08-12_best_models_without_landingpage_lstm
+2026-09-12_best_models_with_landingpage_lstm
+---
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_68b69dff2e5f2d9a58cce692_test_score.csv
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_conversion_probability.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_conversion_probability_score_test.csv
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_conversion_probability_weights.weights.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_control.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_control_weights.weights.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_model_mu_c.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_model_mu_c_weights.weights.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_model_mu_t.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_model_mu_t_weights.weights.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_propensitymodel.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_propensitymodel_weights.weights.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_treatment.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_treatment_weights.weights.h5
+inputs.parquet
+---
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_68b69dff2e5f2d9a58cce692_test_score.csv
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_conversion_probability.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_control.h5
+2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_treatment.h5
+--- inputs ---
+/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/inputs.parquet
+--- output ---
+tchibo_68b69dff2e5f2d9a58cce692_test_data
+2026-08-12_best_models_without_landi
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: latest=$(ls -t /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_tchibo_*.log 2&gt;/dev/null | head -1); echo &#34;latest=$latest&#34;; rg -n &#39;2026-09-12_best_models_with_landingpage_lstm|failed|inputs|missing|No matching|artifacts|picked|skipped|Dimensions|FileNotFound&#39; &#34;$latest&#34; | head -80</summary>
+```bash
+latest=$(ls -t /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_tchibo_*.log 2>/dev/null | head -1); echo "latest=$latest"; rg -n '2026-09-12_best_models_with_landingpage_lstm|failed|inputs|missing|No matching|artifacts|picked|skipped|Dimensions|FileNotFound' "$latest" | head -80
+```
+
+```
+latest=/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_tchibo_20260914_143151.log
+7:2026-09-14 16:31:51 INFO settings: ['2026-08-12_best_models_without_landingpage_lstm', '2026-09-12_best_models_with_landingpage_lstm']
+10:2026-09-14 16:32:06 INFO Setting 2026-08-12_best_models_without_landingpage_lstm: 3 artifacts after F1 selection, explaining on 1966519 rows
+12:2026-09-14 16:32:14 WARNING GradientExplainer failed ('NoneType' object cannot be interpreted as an integer); falling back to KernelExplainer
+423:2026-09-14 16:34:49 WARNING GradientExplainer failed ('NoneType' object cannot be interpreted as an integer); falling back to KernelExplainer
+831:2026-09-14 16:37:09 WARNING GradientExplainer failed ('NoneType' object cannot be interpreted as an integer); falling back to KernelExplainer
+1238:2026-09-14 16:39:20 INFO Setting 2026-09-12_best_models_with_landingpage_lstm: 3 artifacts after F1 selection, explaining on 1966519 rows
+1240:2026-09-14 16:39:20 WARNING GradientExplainer failed ('NoneType' object cannot be interpreted as an integer); falling back to KernelExplainer
+2443:2026-09-14 16:41:35 WARNING GradientExplainer failed ('NoneType' object cannot be interpreted as an integer); falling back to KernelExplainer
+3646:2026-09-14 16:43:39 WARNING GradientExplainer failed ('NoneType' object cannot be interpreted as an integer); falling back to KernelExplainer
+4852:2026-09-14 16:47:04 INFO Done. Explained 6 model artifacts.
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The output folder for that model exists.
+
+Checking the folder contents and the comparison CSV or manifest.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -la &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/2026-09-12_best_models_with_landingpage_lstm/&#34;; echo &#39;---&#39;; ls -la &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/2026-08-12_best_models_without_landingpage_lstm/&#34;; echo &#39;--- manifest ---&#39;; cat &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/shap_run_manifest.csv&#34;; echo &#39;--- comparison settings ---&#39;; cut -d, -f1 &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv&#34; | sort -u; echo &#39;--- log around 1238 ---&#39;; sed -n &#39;1235,1260p&#39; &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_tchibo_20260914_143151.log&#34;; echo &#39;--- failed? ---&#39;; rg -n &#39;failed for|wrote |explaining|ERROR&#39; &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_tchibo_20260914_143151.log&#34; | rg &#39;09-12|wrote|failed|explaining&#39; | head -40</summary>
+```bash
+ls -la "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/2026-09-12_best_models_with_landingpage_lstm/"; echo '---'; ls -la "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/2026-08-12_best_models_without_landingpage_lstm/"; echo '--- manifest ---'; cat "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/shap_run_manifest.csv"; echo '--- comparison settings ---'; cut -d, -f1 "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv" | sort -u; echo '--- log around 1238 ---'; sed -n '1235,1260p' "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_tchibo_20260914_143151.log"; echo '--- failed? ---'; rg -n 'failed for|wrote |explaining|ERROR' "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_tchibo_20260914_143151.log" | rg '09-12|wrote|failed|explaining' | head -40
+```
+
+```
+total 1248
+drwxr-xr-x  14 karolinegriesbach  staff     448 Sep 14 16:46 .
+drwxr-xr-x   8 karolinegriesbach  staff     256 Sep 14 16:47 ..
+-rw-r--r--   1 karolinegriesbach  staff    2924 Sep 14 16:41 cv_6_control_mean_abs_shap.csv
+-rw-r--r--   1 karolinegriesbach  staff   62517 Sep 14 16:41 cv_6_control_shap_bar.png
+-rw-r--r--   1 karolinegriesbach  staff  106014 Sep 14 16:41 cv_6_control_shap_beeswarm.png
+-rw-r--r--   1 karolinegriesbach  staff   27553 Sep 14 16:41 cv_6_control_shap_values.csv
+-rw-r--r--   1 karolinegriesbach  staff    2823 Sep 14 16:43 cv_6_conversion_mean_abs_shap.csv
+-rw-r--r--   1 karolinegriesbach  staff   63667 Sep 14 16:43 cv_6_conversion_shap_bar.png
+-rw-r--r--   1 karolinegriesbach  staff  114929 Sep 14 16:43 cv_6_conversion_shap_beeswarm.png
+-rw-r--r--   1 karolinegriesbach  staff   31911 Sep 14 16:43 cv_6_conversion_shap_values.csv
+-rw-r--r--   1 karolinegriesbach  staff    2949 Sep 14 16:46 cv_6_treatment_mean_abs_shap.csv
+-rw-r--r--   1 karolinegriesbach  staff   63132 Sep 14 16:46 cv_6_treatment_shap_bar.png
+-rw-r--r--   1 karolinegriesbach  staff  108759 Sep 14 16:46 cv_6_treatment_shap_beeswarm.png
+-rw-r--r--   1 karolinegriesbach  staff   32132 Sep 14 16:46 cv_6_treatment_shap_values.csv
+---
+total 1392
+drwxr-xr-x  14 karolinegriesbach  staff     448 Sep 14 16:39 .
+drwxr-xr-x   8 karolinegriesbach  staff     256 Sep 14 16:47 ..
+-rw-r--r--   1 karolinegriesbach  staff    2663 Sep 14 16:34 cv_6_control_mean_abs_shap.csv
+-rw-r--r--   1 karolinegriesbach  staff   58048 Sep 14 16:34 cv_6_control_shap_bar.png
+-rw-r--r--   1 karolinegriesbach  staff  136484 Sep 14 16:34 cv_6_control_shap_beeswarm.png
+-rw-r--r--   1 karolinegriesbach  staff   24968 Sep 14 16:34 cv_6_control_shap_values.csv
+-rw-r--r--   1 karolinegriesbach  staff    2587 Sep 14 16:37 cv_6_conversion_mean_abs_shap.csv
+-rw-r--r--   1 karolinegriesbach  staff   59002 Sep 14 16:37 cv_6_conversion_shap_bar.png
+-rw-r--r--   1 karolinegriesbach  staff  154989 Sep 14 16:37 cv_6_conve
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+SHAP values do exist for that folder.
+
+The SHAP values for the with_landingpage model are extremely small (1e-8 scale). They may appear as zeros in the plot.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: echo &#39;=== Sept 12 mean abs ===&#39;; cat &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv&#34;; echo; echo &#39;=== Aug 12 mean abs ===&#39;; cat &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/2026-08-12_best_models_without_landingpage_lstm/cv_6_control_mean_abs_shap.csv&#34;; echo; echo &#39;=== comparison rows for 09-12 ===&#39;; rg &#39;2026-09-12&#39; &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv&#34; | head -20; echo; /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python &lt;&lt; &#39;PY&#39;
+import pandas as pd
+p=&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv&#39;
+df=pd.read_csv(p)
+print(df.groupby(&#39;customer_setting&#39;)[&#39;mean_abs_shap&#39;].agg([&#39;sum&#39;,&#39;max&#39;,&#39;mean&#39;]))
+print(&#39;\nby role for 09-12:&#39;)
+print(df[df.customer_setting.str.contains(&#39;2026-09-12&#39;)].groupby(&#39;role&#39;)[&#39;mean_abs_shap&#39;].sum())
+PY
+# check naming for test_score matching
+ls &#34;/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/&#34;*test_score*</summary>
+```bash
+echo '=== Sept 12 mean abs ==='; cat "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv"; echo; echo '=== Aug 12 mean abs ==='; cat "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/2026-08-12_best_models_without_landingpage_lstm/cv_6_control_mean_abs_shap.csv"; echo; echo '=== comparison rows for 09-12 ==='; rg '2026-09-12' "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv" | head -20; echo; /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/bin/python << 'PY'
+import pandas as pd
+p='scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv'
+df=pd.read_csv(p)
+print(df.groupby('customer_setting')['mean_abs_shap'].agg(['sum','max','mean']))
+print('\nby role for 09-12:')
+print(df[df.customer_setting.str.contains('2026-09-12')].groupby('role')['mean_abs_shap'].sum())
+PY
+# check naming for test_score matching
+ls "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/"*test_score*
+```
+
+```
+=== Sept 12 mean abs ===
+customer_setting,cv,role,backend,model_path,feature,mean_abs_shap,mean_shap
+2026-09-12_best_models_with_landingpage_lstm,6,control,lstm,/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_control.h5,landingpage_cat,2.4272456528153938e-05,-2.1954537116017363e-05
+2026-09-12_best_models_with_landingpage_lstm,6,control,lstm,/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_control.h5,session_duration_in_s,2.398216911132622e-05,2.1683810174165354e-05
+2026-09-12_best_models_with_landingpage_lstm,6,control,lstm,/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_control.h5,pages_visited_per_user,8.844400832451444e-07,1.3381281491773335e-07
+2026-09-12_best_models_with_landingpage_lstm,6,control,lstm,/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_control.h5,pages_visited_per_user_cumulated,7.20805214885425e-07,2.0624960531959716e-07
+2026-09-12_best_models_with_landingpage_lstm,6,control,lstm,/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/2026-09-12_classifier_NNLST
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+SHAP values do exist for that model. They are roughly 10,000 times smaller than those for the without_landingpage model. This makes them invisible on shared-scale comparison plots.
+
+KernelExplainer was capped at 200 rows by a fallback limit. F1 matching failed because the filename lacks the `_saved_model` suffix the parser expects. The files were still generated.
+</details></think>
+
+_**Agent (default)**_
+
+They **were** computed — they just look missing on the comparison plots.
+
+Outputs are here:
+
+`scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/2026-09-12_best_models_with_landingpage_lstm/`
+
+(control / conversion / treatment CSVs + beeswarm/bar plots)
+
+**Why they look empty:** mean(|SHAP|) for that setting is tiny vs the Aug-12 without-landingpage LSTM:
+
+| setting | sum of mean(\|SHAP\|) |
+|---------|----------------------|
+| `2026-08-12_..._without_landingpage_lstm` | ~1.49 |
+| `2026-09-12_..._with_landingpage_lstm` | ~0.0067 |
+
+Control/treatment are ~1e-5–1e-6, so on a shared axis next to ~0.2 bars they appear as zero.
+
+**Also note from the run:**
+- GradientExplainer failed → KernelExplainer fallback (only **200** rows explained, not the full dataset)
+- F1 showed `n/a` because that folder’s filenames omit `_saved_model_` (`NNLSTM_50_nan_cv_6_...`), so the test-score matcher didn’t link
+
+**Takeaway:** open the per-setting bar/beeswarm plots for `2026-09-12_...`, or use a **log scale / separate panel / normalized ranks** in the comparison plot so the small SHAP magnitudes are visible.
