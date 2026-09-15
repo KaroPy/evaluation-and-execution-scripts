@@ -4194,9 +4194,45 @@ conversionn models should be grouped by model.objective
 
 _**Agent (default)**_
 
+<think><details><summary>Thought Process</summary>
+Conversion models should be grouped by model.objective.
+
+I'll add model.objective to the data collection columns and update the result columns and logging format to display it.
+</details></think>
+
+_**Agent (default)**_
+
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
-Status: **loading**
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py",
+  "pattern": "MODEL_COLUMNS|RESULT_COLUMNS|CONVERSION|objective|summarize|format_result"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py",
+  "pattern": "MODEL_COLUMNS|RESULT_COLUMNS|CONVERSION|objective|summarize|format_result",
+  "topFiles": [
+    {
+      "matchCount": 15,
+      "uri": "scripts/models/check_model_resets.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 15
+}
+```
+Status: **completed**
 
 </details></tool-use>
 
@@ -4204,6 +4240,296 @@ _**Agent (default)**_
 
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
-Status: **loading**
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.py",
+  "pattern": "model\\.objective|\"objective\""
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "pattern": "model\\.objective|\"objective\"",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "./SprintStories/EN-xx-goals-to-objectives/final_merge_check_all_signals.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./SprintStories/EN-xx-goals-to-objectives/final_merge_check.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./scripts/interventions/check_signal_model_parameters.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "./Analysis/SignalInsights/extract_signals_and_objectives_without_active_signal.py"
+    },
+    {
+      "matchCount": 10,
+      "uri": "./SprintStories/EN-xx-goals-to-objectives/audit_model_objectives.py"
+    },
+    {
+      "matchCount": 5,
+      "uri": "./SprintStories/EN-xx-goals-to-objectives/goals_to_objectives.py"
+    }
+  ],
+  "totalFiles": 6,
+  "totalMatches": 36
+}
+```
+Status: **completed**
 
 </details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Adding `model.objective` to model and result columns. Conversion models will be grouped by objective. Logging and gap-pooling logic will be updated accordingly.
+
+reset_gaps will aggregate conversion-only totals across workspaces and objectives.
+</details></think>
+
+_**Agent (default)**_
+
+I'll add `model.objective`, group conversion models by it, and keep signal matching limited to causal.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Need to update overall_rows for conversion workspace averages. Currently averaged per workspace, but grouping by objective may change this.
+
+Detail rows should group by workspace and objective. Overall totals pool by workspace and objective. The workspace average question remains unresolved: should it average per-workspace totals or objective-level averages?
+
+`reset_gaps` needs updating for conversion to pool by `model.objective`. The workspace average should pool objectives within each workspace before averaging across workspaces. Detail rows will use workspace × objective.
+
+Workspace averages will be an unweighted mean of per-workspace averages. Each workspace pools its objective gaps first. An objective_counts helper is needed too.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating overall_rows to include model information.
+
+Adding objective_counts and updating audience_counts. Adjusting the conversion summary, result line formatting, and main row building.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Need to fix summary_row if it still exists without model.
+
+Checking if summary_row is still used. Fixing the docstring at the top.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py",
+  "pattern": "summary_row|model.objective"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py",
+  "pattern": "summary_row|model.objective",
+  "topFiles": [
+    {
+      "matchCount": 18,
+      "uri": "scripts/models/check_model_resets.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 18
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: python3 - &lt;&lt;&#39;PY&#39;
+import importlib.util
+import pandas as pd
+spec = importlib.util.spec_from_file_location(&#39;m&#39;, &#39;scripts/models/check_model_resets.py&#39;)
+mod = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(mod)
+rows = [
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;c1&#34;,&#34;model.path&#34;:&#34;c1&#34;,&#34;model.type&#34;:&#34;conversion&#34;,&#34;model.audience&#34;:&#34;(none)&#34;,&#34;model.objective&#34;:&#34;obj1&#34;,&#34;signal.name&#34;:&#34;&#34;,&#34;signal.source&#34;:&#34;&#34;,&#34;reset.date&#34;:&#34;2026-01-01&#34;,&#34;reset&#34;:True},
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;c2&#34;,&#34;model.path&#34;:&#34;c2&#34;,&#34;model.type&#34;:&#34;conversion&#34;,&#34;model.audience&#34;:&#34;(none)&#34;,&#34;model.objective&#34;:&#34;obj1&#34;,&#34;signal.name&#34;:&#34;&#34;,&#34;signal.source&#34;:&#34;&#34;,&#34;reset.date&#34;:&#34;2026-01-11&#34;,&#34;reset&#34;:True},
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;c3&#34;,&#34;model.path&#34;:&#34;c3&#34;,&#34;model.type&#34;:&#34;conversion&#34;,&#34;model.audience&#34;:&#34;(none)&#34;,&#34;model.objective&#34;:&#34;obj2&#34;,&#34;signal.name&#34;:&#34;&#34;,&#34;signal.source&#34;:&#34;&#34;,&#34;reset.date&#34;:&#34;2026-01-01&#34;,&#34;reset&#34;:True},
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;c4&#34;,&#34;model.path&#34;:&#34;c4&#34;,&#34;model.type&#34;:&#34;conversion&#34;,&#34;model.audience&#34;:&#34;(none)&#34;,&#34;model.objective&#34;:&#34;obj2&#34;,&#34;signal.name&#34;:&#34;&#34;,&#34;signal.source&#34;:&#34;&#34;,&#34;reset.date&#34;:&#34;2026-01-21&#34;,&#34;reset&#34;:True},
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;a1&#34;,&#34;model.path&#34;:&#34;p1&#34;,&#34;model.type&#34;:&#34;causal&#34;,&#34;model.audience&#34;:&#34;s1&#34;,&#34;model.objective&#34;:&#34;(none)&#34;,&#34;signal.name&#34;:&#34;Seed&#34;,&#34;signal.source&#34;:&#34;googleAnalytics&#34;,&#34;reset.date&#34;:&#34;2026-01-01&#34;,&#34;reset&#34;:True},
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;a2&#34;,&#34;model.path&#34;:&#34;p2&#34;,&#34;model.type&#34;:&#34;causal&#34;,&#34;model.audience&#34;:&#34;s1&#34;,&#34;model.objective&#34;:&#34;(none)&#34;,&#34;signal.name&#34;:&#34;Seed&#34;,&#34;signal.source&#34;:&#34;googleAnalytics&#34;,&#34;reset.date&#34;:&#34;2026-01-08&#34;,&#34;reset&#34;:True},
+]
+s = mod.summarize(pd.DataFrame(rows))
+print(s[[&#39;workspace.name&#39;,&#39;model.type&#39;,&#39;model.objective&#39;,&#39;model.audience&#39;,&#39;models&#39;,&#39;resets&#39;,&#39;days_between&#39;]].to_string(index=False))
+print(&#39;---&#39;)
+for _, r in s.iterrows():
+    print(mod.format_result_line(r))
+conv = s[(s[&#39;model.type&#39;]==&#39;conversion&#39;) &amp; (s[&#39;workspace.name&#39;]==&#39;A&#39;)]
+assert list(conv[&#39;model.objective&#39;]) == [&#39;obj1&#39;,&#39;obj2&#39;] or set(conv[&#39;model.objective&#39;])=={&#39;obj1&#39;,&#39;obj2&#39;}
+assert len(conv)==2
+print(&#39;ok&#39;)
+PY</summary>
+```bash
+python3 - <<'PY'
+import importlib.util
+import pandas as pd
+spec = importlib.util.spec_from_file_location('m', 'scripts/models/check_model_resets.py')
+mod = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(mod)
+rows = [
+    {"workspace.name":"A","workspace.id":"1","model.id":"c1","model.path":"c1","model.type":"conversion","model.audience":"(none)","model.objective":"obj1","signal.name":"","signal.source":"","reset.date":"2026-01-01","reset":True},
+    {"workspace.name":"A","workspace.id":"1","model.id":"c2","model.path":"c2","model.type":"conversion","model.audience":"(none)","model.objective":"obj1","signal.name":"","signal.source":"","reset.date":"2026-01-11","reset":True},
+    {"workspace.name":"A","workspace.id":"1","model.id":"c3","model.path":"c3","model.type":"conversion","model.audience":"(none)","model.objective":"obj2","signal.name":"","signal.source":"","reset.date":"2026-01-01","reset":True},
+    {"workspace.name":"A","workspace.id":"1","model.id":"c4","model.path":"c4","model.type":"conversion","model.audience":"(none)","model.objective":"obj2","signal.name":"","signal.source":"","reset.date":"2026-01-21","reset":True},
+    {"workspace.name":"A","workspace.id":"1","model.id":"a1","model.path":"p1","model.type":"causal","model.audience":"s1","model.objective":"(none)","signal.name":"Seed","signal.source":"googleAnalytics","reset.date":"2026-01-01","reset":True},
+    {"workspace.name":"A","workspace.id":"1","model.id":"a2","model.path":"p2","model.type":"causal","model.audience":"s1","model.objective":"(none)","signal.name":"Seed","signal.source":"googleAnalytics","reset.date":"2026-01-08","reset":True},
+]
+s = mod.summarize(pd.DataFrame(rows))
+print(s[['workspace.name','model.type','model.objective','model.audience','models','resets','days_between']].to_string(index=False))
+print('---')
+for _, r in s.iterrows():
+    print(mod.format_result_line(r))
+conv = s[(s['model.type']=='conversion') & (s['workspace.name']=='A')]
+assert list(conv['model.objective']) == ['obj1','obj2'] or set(conv['model.objective'])=={'obj1','obj2'}
+assert len(conv)==2
+print('ok')
+PY
+```
+
+```
+  workspace.name model.type model.objective model.audience  models  resets days_between
+               A     causal                             s1       2       2          [7]
+               A conversion            obj1                      2       2         [10]
+               A conversion            obj2                      2       2         [20]
+(all workspaces) conversion                                      4       4     [10, 20]
+(all workspaces) conversion                                      1       1      [15.00]
+(all workspaces)     causal                                      2       2          [7]
+(all workspaces)     causal                                      1       1       [7.00]
+---
+causal | Seed | googleAnalytics | s1: 2 / 2 models reset (100.00%) | days between resets: [7] avg=7.00 sd=n/a
+conversion | A | objective obj1: 2 / 2 models reset (100.00%) | days between resets: [10] avg=10.00 sd=n/a
+conversion | A | objective obj2: 2 / 2 models reset (100.00%) | days between resets: [20] avg=20.00 sd=n/a
+conversion | (all workspaces): 4 / 4 models reset (100.00%) | days between resets: [10, 20] avg=15.00 sd=7.07
+conversion | (workspace avg): [15.00] avg=15.00 sd=n/a (workspaces with avg=1 / 1)
+causal | (all workspaces): 2 / 2 models reset (100.00%) | days between resets: [7] avg=7.00 sd=n/a
+causal | (workspace avg): [7.00] avg=7.00 sd=n/a (workspaces with avg=1 / 1)
+ok
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Conversion models are now grouped by objective.
+</details></think>
+
+_**Agent (default)**_
+
+Conversion models are now grouped by **`model.objective`**.
+
+- Summary / log: `conversion | <workspace> | objective <id>: …`
+- Causal still groups by signal (`model.audience`)
+- Cross-workspace totals still pool conversion gaps per objective
