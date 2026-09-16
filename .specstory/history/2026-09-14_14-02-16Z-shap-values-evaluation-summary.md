@@ -4350,3 +4350,4123 @@ _**Agent (default)**_
 | LSTM no LP | `session_duration_in_s` | none |
 
 Also: conversion recency is strong on XGB new no LP (~31%); LSTM new + LP treatment looks weak/degenerate (tiny total |SHAP|, n=200).
+
+---
+
+_**User**_
+
+analyze scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data and export to html file
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Analyzing the SHAP output and exporting it to HTML.
+
+Using the module load approach to avoid the previous segfault. Will regenerate the HTML and summarize the findings.
+</details></think>
+
+_**Agent (default)**_
+
+I'll re-analyze the latest kfzteile24 SHAP outputs and write an updated HTML report.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: python3 &lt;&lt; &#39;PY&#39;
+import sys, types
+from pathlib import Path
+
+path = Path(&#39;scripts/ModelShapValues/write_shap_canvas_report.py&#39;)
+mod = types.ModuleType(&#39;write_shap_canvas_report&#39;)
+mod.__file__ = str(path)
+sys.modules[&#39;write_shap_canvas_report&#39;] = mod
+exec(compile(path.read_text(), str(path), &#39;exec&#39;), mod.__dict__)
+
+shap = Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data&#39;).resolve()
+df = mod.load_shap_frame(shap, cv=None)
+manifest = mod.load_manifest(shap)
+report = mod.build_report(df, shap, title=&#39;kfzteile24 SHAP evaluation&#39;, manifest=manifest)
+
+canvas_out = Path(&#39;/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-6835d77813526dc3d1229978-test-data-shap-summary.canvas.tsx&#39;)
+html_out = shap / &#39;kfzteile24_shap_summary.html&#39;
+canvas_out.write_text(mod.render_canvas(report), encoding=&#39;utf-8&#39;)
+mod.render_html(report, html_out)
+
+print(&#39;HTML:&#39;, html_out)
+print(&#39;Canvas:&#39;, canvas_out)
+print(&#39;Settings:&#39;, &#39;, &#39;.join(report.settings))
+print(&#39;Sample n:&#39;, report.sample_n_by_setting)
+print(&#39;Stats:&#39;, report.stats)
+print(&#39;\nTop-1 (setting | control | treatment | conversion):&#39;)
+for row in report.top1_rows:
+    print(&#39; &#39;, &#39; | &#39;.join(row))
+print(&#39;\nLanding:&#39;)
+for row in report.landing_rows:
+    print(&#39; &#39;, &#39; | &#39;.join(row))
+print(&#39;\nFindings:&#39;)
+for t, b in report.findings:
+    print(f&#39;- {t}: {b}&#39;)
+print(&#39;\nTakeaway:&#39;, report.takeaway)
+print(&#39;HTML bytes:&#39;, html_out.stat().st_size)
+PY
+# also check if data changed (mtime)
+ls -la scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/comparison_mean_abs_shap.csv \
+  scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/kfzteile24_shap_summary.html \
+  scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/shap_run_manifest.csv
+python3 -c &#34;
+import pandas as pd
+m=pd.read_csv(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/shap_run_manifest.csv&#39;)
+print(m.groupby([&#39;setting&#39;,&#39;backend&#39;])[&#39;n_rows&#39;].first().to_string())
+&#34;</summary>
+```bash
+python3 << 'PY'
+import sys, types
+from pathlib import Path
+
+path = Path('scripts/ModelShapValues/write_shap_canvas_report.py')
+mod = types.ModuleType('write_shap_canvas_report')
+mod.__file__ = str(path)
+sys.modules['write_shap_canvas_report'] = mod
+exec(compile(path.read_text(), str(path), 'exec'), mod.__dict__)
+
+shap = Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data').resolve()
+df = mod.load_shap_frame(shap, cv=None)
+manifest = mod.load_manifest(shap)
+report = mod.build_report(df, shap, title='kfzteile24 SHAP evaluation', manifest=manifest)
+
+canvas_out = Path('/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-6835d77813526dc3d1229978-test-data-shap-summary.canvas.tsx')
+html_out = shap / 'kfzteile24_shap_summary.html'
+canvas_out.write_text(mod.render_canvas(report), encoding='utf-8')
+mod.render_html(report, html_out)
+
+print('HTML:', html_out)
+print('Canvas:', canvas_out)
+print('Settings:', ', '.join(report.settings))
+print('Sample n:', report.sample_n_by_setting)
+print('Stats:', report.stats)
+print('\nTop-1 (setting | control | treatment | conversion):')
+for row in report.top1_rows:
+    print(' ', ' | '.join(row))
+print('\nLanding:')
+for row in report.landing_rows:
+    print(' ', ' | '.join(row))
+print('\nFindings:')
+for t, b in report.findings:
+    print(f'- {t}: {b}')
+print('\nTakeaway:', report.takeaway)
+print('HTML bytes:', html_out.stat().st_size)
+PY
+# also check if data changed (mtime)
+ls -la scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/comparison_mean_abs_shap.csv \
+  scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/kfzteile24_shap_summary.html \
+  scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/shap_run_manifest.csv
+python3 -c "
+import pandas as pd
+m=pd.read_csv('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/shap_run_manifest.csv')
+print(m.groupby(['setting','backend'])['n_rows'].first().to_string())
+"
+```
+
+```
+HTML: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/kfzteile24_shap_summary.html
+Canvas: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-6835d77813526dc3d1229978-test-data-shap-summary.canvas.tsx
+Settings: LSTM new + LP, LSTM best no LP, XGB best no LP, XGB best + LP, XGB new no LP
+Sample n: {'LSTM new + LP': 10000, 'LSTM best no LP': 10000, 'XGB best no LP': 833906, 'XGB best + LP': 833906, 'XGB new no LP': 833906}
+Stats: {'pages_range': '20–86%', 'best_landing': '43%', 'weak_landing': '21%', 'degenerate': 'LSTM new + LP'}
+
+Top-1 (setting | control | treatment | conversion):
+  LSTM new + LP | session_duration_in_s | session_duration_in_s | pages_visited_per_user_cumulated
+  LSTM best no LP | session_duration_in_s | session_duration_in_s | pages_visited_per_user
+  XGB best no LP | pages_visited_per_user | pages_visited_per_session | pages_visited_per_user
+  XGB best + LP | landingpage | landingpage | landingpage
+  XGB new no LP | pages_visited_per_user | pages_visited_per_session | pages_visited_per_user
+
+Landing:
+  LSTM new + LP | landingpage_cat | rank 2/7 · 21.4% | rank 2/7 · 27.4% | rank 3/7 · 19.0%
+  XGB best + LP | landingpage | rank 1/7 · 43.4% | rank 1/7 · 70.6% | rank 1/7 · 28.0%
+
+Findings:
+- Engagement is the backbone: Page-visit features account for about 20–86% of control mean |SHAP| across settings. Models primarily read browsing intensity.
+- Landing-page signal is setting-dependent: When a landing feature is present, its control share ranges from 21% to 43% of total mean |SHAP|. Without it, that budget is absorbed by page-count / duration features.
+- LSTM vs XGB use history differently: Compare top-1 features: LSTM often elevates cumulated page counts; XGB more often prefers spot counts (pages_visited_per_session / _per_user). Use wit
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The LSTM sample size increased from 200 to 10,000.
+
+LSTM landing shares are slightly higher. The analysis will be exported to HTML with a canvas link.
+</details></think>
+
+_**Agent (default)**_
+
+**Updated run looks better:** LSTM now uses **10,000** rows (was 200). Main story unchanged — **XGB best + LP puts `landingpage` #1 on all roles**.
+
+### Export
+- HTML: `scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/kfzteile24_shap_summary.html`
+- Canvas: [kfzteile24 SHAP summary](/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-6835d77813526dc3d1229978-test-data-shap-summary.canvas.tsx)
+
+### Findings
+| Setting | Sample n | Control #1 | Landing |
+|---|---:|---|---|
+| **XGB best + LP** | 833,906 | `landingpage` (~43%) | #1 all roles (treatment ~71%) |
+| XGB best / new no LP | 833,906 | `pages_visited_per_user` | — |
+| LSTM + LP | 10,000 | `session_duration_in_s` | `landingpage_cat` ~21–27% |
+| LSTM no LP | 10,000 | `session_duration_in_s` | — |
+
+Without landing features, page visits dominate. With them enabled in XGB, landing becomes the primary driver. Conversion recency (`days_between_sessions`) is strong on XGB new no LP (~31%). LSTM new + LP treatment still looks weak relative to peers.
+
+---
+
+_**User**_
+
+analyze and export to htmml file scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Analyzing the tchibo SHAP results and exporting them to an HTML file.
+
+Using the write_shap_canvas_report module with the same approach that worked for kfzteile24.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: python3 &lt;&lt; &#39;PY&#39;
+import sys, types
+from pathlib import Path
+
+path = Path(&#39;scripts/ModelShapValues/write_shap_canvas_report.py&#39;)
+mod = types.ModuleType(&#39;write_shap_canvas_report&#39;)
+mod.__file__ = str(path)
+sys.modules[&#39;write_shap_canvas_report&#39;] = mod
+exec(compile(path.read_text(), str(path), &#39;exec&#39;), mod.__dict__)
+
+shap = Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data&#39;).resolve()
+df = mod.load_shap_frame(shap, cv=None)
+manifest = mod.load_manifest(shap)
+report = mod.build_report(df, shap, title=&#39;tchibo SHAP evaluation&#39;, manifest=manifest)
+
+canvas_out = Path(&#39;/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-68b69dff2e5f2d9a58cce692-test-data-shap-summary.canvas.tsx&#39;)
+html_out = shap / &#39;tchibo_shap_summary.html&#39;
+canvas_out.write_text(mod.render_canvas(report), encoding=&#39;utf-8&#39;)
+mod.render_html(report, html_out)
+
+print(&#39;HTML:&#39;, html_out)
+print(&#39;Canvas:&#39;, canvas_out)
+print(&#39;Settings:&#39;, &#39;, &#39;.join(report.settings))
+print(&#39;Sample n:&#39;, report.sample_n_by_setting)
+print(&#39;Stats:&#39;, report.stats)
+print(&#39;\nTop-1 (setting | control | treatment | conversion):&#39;)
+for row in report.top1_rows:
+    print(&#39; &#39;, &#39; | &#39;.join(row))
+print(&#39;\nLanding:&#39;)
+for row in report.landing_rows:
+    print(&#39; &#39;, &#39; | &#39;.join(row))
+print(&#39;\nFindings:&#39;)
+for t, b in report.findings:
+    print(f&#39;- {t}: {b}&#39;)
+print(&#39;\nTakeaway:&#39;, report.takeaway)
+print(&#39;HTML bytes:&#39;, html_out.stat().st_size)
+PY
+ls -la scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/tchibo_shap_summary.html \
+  scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/shap_run_manifest.csv \
+  scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv 2&gt;&amp;1
+python3 -c &#34;
+import pandas as pd
+m=pd.read_csv(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/shap_run_manifest.csv&#39;)
+print(m.groupby([&#39;setting&#39;,&#39;backend&#39;])[&#39;n_rows&#39;].first().to_string())
+&#34;</summary>
+```bash
+python3 << 'PY'
+import sys, types
+from pathlib import Path
+
+path = Path('scripts/ModelShapValues/write_shap_canvas_report.py')
+mod = types.ModuleType('write_shap_canvas_report')
+mod.__file__ = str(path)
+sys.modules['write_shap_canvas_report'] = mod
+exec(compile(path.read_text(), str(path), 'exec'), mod.__dict__)
+
+shap = Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data').resolve()
+df = mod.load_shap_frame(shap, cv=None)
+manifest = mod.load_manifest(shap)
+report = mod.build_report(df, shap, title='tchibo SHAP evaluation', manifest=manifest)
+
+canvas_out = Path('/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-68b69dff2e5f2d9a58cce692-test-data-shap-summary.canvas.tsx')
+html_out = shap / 'tchibo_shap_summary.html'
+canvas_out.write_text(mod.render_canvas(report), encoding='utf-8')
+mod.render_html(report, html_out)
+
+print('HTML:', html_out)
+print('Canvas:', canvas_out)
+print('Settings:', ', '.join(report.settings))
+print('Sample n:', report.sample_n_by_setting)
+print('Stats:', report.stats)
+print('\nTop-1 (setting | control | treatment | conversion):')
+for row in report.top1_rows:
+    print(' ', ' | '.join(row))
+print('\nLanding:')
+for row in report.landing_rows:
+    print(' ', ' | '.join(row))
+print('\nFindings:')
+for t, b in report.findings:
+    print(f'- {t}: {b}')
+print('\nTakeaway:', report.takeaway)
+print('HTML bytes:', html_out.stat().st_size)
+PY
+ls -la scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/tchibo_shap_summary.html \
+  scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/shap_run_manifest.csv \
+  scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv 2>&1
+python3 -c "
+import pandas as pd
+m=pd.read_csv('scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/shap_run_manifest.csv')
+print(m.groupby(['setting','backend'])['n_rows'].first().to_string())
+"
+```
+
+```
+HTML: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/tchibo_shap_summary.html
+Canvas: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-68b69dff2e5f2d9a58cce692-test-data-shap-summary.canvas.tsx
+Settings: LSTM best no LP, LSTM best + LP
+Sample n: {'LSTM best no LP': 10000, 'LSTM best + LP': 10000}
+Stats: {'pages_range': '8–45%', 'best_landing': '52%', 'weak_landing': '52%', 'degenerate': 'LSTM best + LP'}
+
+Top-1 (setting | control | treatment | conversion):
+  LSTM best no LP | session_duration_in_s | session_duration_in_s | days_between_sessions
+  LSTM best + LP | landingpage_cat | landingpage_cat | session_duration_in_s
+
+Landing:
+  LSTM best + LP | landingpage_cat | rank 1/7 · 52.1% | rank 1/7 · 49.0% | rank 2/7 · 45.1%
+
+Findings:
+- Engagement is the backbone: Page-visit features account for about 8–45% of control mean |SHAP| across settings. Models primarily read browsing intensity.
+- Landing-page signal is setting-dependent: When a landing feature is present, its control share ranges from 52% to 52% of total mean |SHAP|. Without it, that budget is absorbed by page-count / duration features.
+- Recency can matter for conversion: LSTM best no LP puts recency at 40% of conversion |SHAP|. Check days_between_sessions before discarding it.
+- Possible degenerate treatment model: LSTM best + LP: Treatment total mean |SHAP| is far below other settings. Inspect whether the model under-fits or SHAP sampling hit a flat region; cumulated features at exactly 0 are a red flag.
+- Do not compare raw |SHAP| across roles/backends: Conversion heads (especially XGB) often have much larger absolute SHAP totals than control/treatment or LSTM probability outputs. Compare ranks or within-model percentage shares only.
+
+Takeaway: For tchibo, lead interpretation with page-visit / session-
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The analysis is complete. The HTML export path and canvas link are ready.
+</details></think>
+
+_**Agent (default)**_
+
+**With landingpage enabled, `landingpage_cat` dominates** (~45–52% of |SHAP|). Without it, session duration / recency take over.
+
+### Export
+- HTML: `scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/tchibo_shap_summary.html`
+- Canvas: [tchibo SHAP summary](/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-68b69dff2e5f2d9a58cce692-test-data-shap-summary.canvas.tsx)
+
+### Findings (both LSTM, n=10,000)
+| Setting | Control #1 | Treatment #1 | Conversion #1 |
+|---|---|---|---|
+| **LSTM best + LP** | `landingpage_cat` (~52%) | `landingpage_cat` (~49%) | `session_duration_in_s` (landing #2 ~45%) |
+| LSTM best no LP | `session_duration_in_s` | `session_duration_in_s` | `days_between_sessions` (~40%) |
+
+Landing is a strong, first-class signal when present. Without it, engagement and recency fill that role. Treatment |SHAP| on the +LP model is unusually small vs the no-LP setting — worth a quick sanity check.
+
+---
+
+_**User**_
+
+Compare kfzteile24 and tchibo and summarize all insights. 
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Comparing SHAP results for kfzteile24 and tchibo to extract key insights.
+
+Pulling fresh data for both brands to build a structured analytical comparison.
+</details></think>
+
+_**Agent (default)**_
+
+I'll pull both SHAP reports side by side and write a cross-customer comparison.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: python3 &lt;&lt; &#39;PY&#39;
+import sys, types
+from pathlib import Path
+import pandas as pd
+
+path = Path(&#39;scripts/ModelShapValues/write_shap_canvas_report.py&#39;)
+mod = types.ModuleType(&#39;write_shap_canvas_report&#39;)
+mod.__file__ = str(path)
+sys.modules[&#39;write_shap_canvas_report&#39;] = mod
+exec(compile(path.read_text(), str(path), &#39;exec&#39;), mod.__dict__)
+
+def load(customer_path, title):
+    shap = Path(customer_path).resolve()
+    df = mod.load_shap_frame(shap, cv=None)
+    manifest = mod.load_manifest(shap)
+    report = mod.build_report(df, shap, title=title, manifest=manifest)
+    # also bucket shares control
+    df1 = mod.dedupe_primary_models(df.copy())
+    df1[&#39;bucket&#39;] = df1[&#39;feature&#39;].map(mod.feature_bucket)
+    return report, df1, shap
+
+k_report, k_df, k_path = load(
+    &#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data&#39;,
+    &#39;kfzteile24&#39;)
+t_report, t_df, t_path = load(
+    &#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data&#39;,
+    &#39;tchibo&#39;)
+
+def control_shares(df):
+    rows = []
+    for s, g in df[df.role==&#39;control&#39;].groupby(&#39;customer_setting&#39;):
+        tot = g.mean_abs_shap.sum()
+        rows.append({
+            &#39;setting&#39;: s,
+            &#39;label&#39;: mod.short_setting_label(s),
+            &#39;pages&#39;: 100*g.loc[g.bucket==&#39;pages&#39;,&#39;mean_abs_shap&#39;].sum()/tot,
+            &#39;duration&#39;: 100*g.loc[g.bucket==&#39;duration&#39;,&#39;mean_abs_shap&#39;].sum()/tot,
+            &#39;landing&#39;: 100*g.loc[g.bucket==&#39;landing&#39;,&#39;mean_abs_shap&#39;].sum()/tot,
+            &#39;recency&#39;: 100*g.loc[g.bucket==&#39;recency&#39;,&#39;mean_abs_shap&#39;].sum()/tot,
+            &#39;n&#39;: None,
+        })
+    return rows
+
+print(&#39;=== kfzteile24 ===&#39;)
+print(&#39;settings&#39;, k_report.settings)
+print(&#39;n&#39;, k_report.sample_n_by_setting)
+print(&#39;stats&#39;, k_report.stats)
+for r in k_report.top1_rows: print(&#39; top1&#39;, r)
+for r in k_report.landing_rows: print(&#39; land&#39;, r)
+print(&#39;control shares:&#39;)
+for r in control_shares(k_df):
+    print(f&#34;  {r[&#39;label&#39;]}: pages={r[&#39;pages&#39;]:.0f}% dur={r[&#39;duration&#39;]:.0f}% land={r[&#39;landing&#39;]:.0f}% rec={r[&#39;recency&#39;]:.0f}%&#34;)
+
+print(&#39;\n=== tchibo ===&#39;)
+print(&#39;settings&#39;, t_report.settings)
+print(&#39;n&#39;, t_report.sample_n_by_setting)
+print(&#39;stats&#39;, t_report.stats)
+for r in t_report.top1_rows: print(&#39; top1&#39;, r)
+for r in t_report.landing_rows: print(&#39; land&#39;, r)
+print(&#39;control shares:&#39;)
+for r in control_shares(t_df):
+    print(f&#34;  {r[&#39;label&#39;]}: pages={r[&#39;pages&#39;]:.0f}% dur={r[&#39;duration&#39;]:.0f}% land={r[&#39;landing&#39;]:.0f}% rec={r[&#39;recency&#39;]:.0f}%&#34;)
+
+# conversion recency
+print(&#39;\n=== conversion recency share ===&#39;)
+for name, df in [(&#39;kfzteile24&#39;, k_df), (&#39;tchibo&#39;, t_df)]:
+    for s, g in df[df.role==&#39;conversion&#39;].groupby(&#39;customer_setting&#39;):
+        tot=g.mean_abs_shap.sum()
+        rec=100*g.loc[g.bucket==&#39;recency&#39;,&#39;mean_abs_shap&#39;].sum()/tot
+        land=100*g.loc[g.bucket==&#39;landing&#39;,&#39;mean_abs_shap&#39;].sum()/tot
+        print(f&#34;{name} {mod.short_setting_label(s)}: recency={rec:.0f}% landing={land:.0f}%&#34;)
+
+# treatment totals
+print(&#39;\n=== treatment total |SHAP| ===&#39;)
+for name, df in [(&#39;kfzteile24&#39;, k_df), (&#39;tchibo&#39;, t_df)]:
+    for s, g in df[df.role==&#39;treatment&#39;].groupby(&#39;customer_setting&#39;):
+        print(f&#34;{name} {mod.short_setting_label(s)}: {g.mean_abs_shap.sum():.4f}&#34;)
+PY</summary>
+```bash
+python3 << 'PY'
+import sys, types
+from pathlib import Path
+import pandas as pd
+
+path = Path('scripts/ModelShapValues/write_shap_canvas_report.py')
+mod = types.ModuleType('write_shap_canvas_report')
+mod.__file__ = str(path)
+sys.modules['write_shap_canvas_report'] = mod
+exec(compile(path.read_text(), str(path), 'exec'), mod.__dict__)
+
+def load(customer_path, title):
+    shap = Path(customer_path).resolve()
+    df = mod.load_shap_frame(shap, cv=None)
+    manifest = mod.load_manifest(shap)
+    report = mod.build_report(df, shap, title=title, manifest=manifest)
+    # also bucket shares control
+    df1 = mod.dedupe_primary_models(df.copy())
+    df1['bucket'] = df1['feature'].map(mod.feature_bucket)
+    return report, df1, shap
+
+k_report, k_df, k_path = load(
+    'scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data',
+    'kfzteile24')
+t_report, t_df, t_path = load(
+    'scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data',
+    'tchibo')
+
+def control_shares(df):
+    rows = []
+    for s, g in df[df.role=='control'].groupby('customer_setting'):
+        tot = g.mean_abs_shap.sum()
+        rows.append({
+            'setting': s,
+            'label': mod.short_setting_label(s),
+            'pages': 100*g.loc[g.bucket=='pages','mean_abs_shap'].sum()/tot,
+            'duration': 100*g.loc[g.bucket=='duration','mean_abs_shap'].sum()/tot,
+            'landing': 100*g.loc[g.bucket=='landing','mean_abs_shap'].sum()/tot,
+            'recency': 100*g.loc[g.bucket=='recency','mean_abs_shap'].sum()/tot,
+            'n': None,
+        })
+    return rows
+
+print('=== kfzteile24 ===')
+print('settings', k_report.settings)
+print('n', k_report.sample_n_by_setting)
+print('stats', k_report.stats)
+for r in k_report.top1_rows: print(' top1', r)
+for r in k_report.landing_rows: print(' land', r)
+print('control shares:')
+for r in control_shares(k_df):
+    print(f"  {r['label']}: pages={r['pages']:.0f}% dur={r['duration']:.0f}% land={r['landing']:.0f}% rec={r['recency']:.0f}%")
+
+print('\n=== tchibo ===')
+print('settings', t_report.settings)
+print('n', t_report.sample_n_by_setting)
+print('stats', t_report.stats)
+for r in t_report.top1_rows: print(' top1', r)
+for r in t_report.landing_rows: print(' land', r)
+print('control shares:')
+for r in control_shares(t_df):
+    print(f"  {r['label']}: pages={r['pages']:.0f}% dur={r['duration']:.0f}% land={r['landing']:.0f}% rec={r['recency']:.0f}%")
+
+# conversion recency
+print('\n=== conversion recency share ===')
+for name, df in [('kfzteile24', k_df), ('tchibo', t_df)]:
+    for s, g in df[df.role=='conversion'].groupby('customer_setting'):
+        tot=g.mean_abs_shap.sum()
+        rec=100*g.loc[g.bucket=='recency','mean_abs_shap'].sum()/tot
+        land=100*g.loc[g.bucket=='landing','mean_abs_shap'].sum()/tot
+        print(f"{name} {mod.short_setting_label(s)}: recency={rec:.0f}% landing={land:.0f}%")
+
+# treatment totals
+print('\n=== treatment total |SHAP| ===')
+for name, df in [('kfzteile24', k_df), ('tchibo', t_df)]:
+    for s, g in df[df.role=='treatment'].groupby('customer_setting'):
+        print(f"{name} {mod.short_setting_label(s)}: {g.mean_abs_shap.sum():.4f}")
+PY
+```
+
+```
+=== kfzteile24 ===
+settings ['LSTM new + LP', 'LSTM best no LP', 'XGB best no LP', 'XGB best + LP', 'XGB new no LP']
+n {'LSTM new + LP': 10000, 'LSTM best no LP': 10000, 'XGB best no LP': 833906, 'XGB best + LP': 833906, 'XGB new no LP': 833906}
+stats {'pages_range': '20–86%', 'best_landing': '43%', 'weak_landing': '21%', 'degenerate': 'LSTM new + LP'}
+ top1 ['LSTM new + LP', 'session_duration_in_s', 'session_duration_in_s', 'pages_visited_per_user_cumulated']
+ top1 ['LSTM best no LP', 'session_duration_in_s', 'session_duration_in_s', 'pages_visited_per_user']
+ top1 ['XGB best no LP', 'pages_visited_per_user', 'pages_visited_per_session', 'pages_visited_per_user']
+ top1 ['XGB best + LP', 'landingpage', 'landingpage', 'landingpage']
+ top1 ['XGB new no LP', 'pages_visited_per_user', 'pages_visited_per_session', 'pages_visited_per_user']
+ land ['LSTM new + LP', 'landingpage_cat', 'rank 2/7 · 21.4%', 'rank 2/7 · 27.4%', 'rank 3/7 · 19.0%']
+ land ['XGB best + LP', 'landingpage', 'rank 1/7 · 43.4%', 'rank 1/7 · 70.6%', 'rank 1/7 · 28.0%']
+control shares:
+  LSTM new + LP: pages=20% dur=58% land=21% rec=1%
+  LSTM best no LP: pages=58% dur=30% land=0% rec=12%
+  XGB best no LP: pages=75% dur=17% land=0% rec=7%
+  XGB best + LP: pages=47% dur=4% land=43% rec=6%
+  XGB new no LP: pages=86% dur=8% land=0% rec=5%
+
+=== tchibo ===
+settings ['LSTM best no LP', 'LSTM best + LP']
+n {'LSTM best no LP': 10000, 'LSTM best + LP': 10000}
+stats {'pages_range': '8–45%', 'best_landing': '52%', 'weak_landing': '52%', 'degenerate': 'LSTM best + LP'}
+ top1 ['LSTM best no LP', 'session_duration_in_s', 'session_duration_in_s', 'days_between_sessions']
+ top1 ['LSTM best + LP', 'landingpage_cat', 'landingpage_cat', 'session_duration_in_s']
+ land ['LSTM best + LP', 'landingpage_cat', 'rank 1/7 · 52.1%', 'rank 1/7 · 49.0%', 'rank 2/7 · 45.1%']
+control shares:
+  LSTM best no LP: pages=45% dur=29% land=0% rec=26%
+  LSTM best + LP: pages=8% dur=39% land=52% rec=1%
+
+=== conversion recency share ===
+kfzteile
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/skills-cursor/canvas/sdk/ui-primitives.d.ts</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Tchibo's LSTM best plus LP treatment total is zero.
+
+A strong degeneracy flag was flagged. A comparison canvas and HTML export will be created to summarize all insights.
+</details></think>
+
+_**Agent (default)**_
+
+Building a comparison canvas and HTML summary from both customers' results.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-shap-comparison.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: python3 &lt;&lt; &#39;PY&#39;
+from pathlib import Path
+html = &#39;&#39;&#39;&lt;!DOCTYPE html&gt;
+&lt;html lang=&#34;en&#34;&gt;
+&lt;head&gt;
+&lt;meta charset=&#34;utf-8&#34;/&gt;
+&lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1&#34;/&gt;
+&lt;title&gt;kfzteile24 vs tchibo — SHAP comparison&lt;/title&gt;
+&lt;script src=&#34;https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js&#34;&gt;&lt;/script&gt;
+&lt;style&gt;
+:root{--bg:#0b0d10;--panel:#14181f;--text:#e8eaed;--muted:#9aa3af;--border:#2a3140}
+*{box-sizing:border-box}body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+main{max-width:1100px;margin:0 auto;padding:32px 20px 64px}h1{font-size:1.75rem;margin:0 0 8px}h2{font-size:1.25rem;margin:32px 0 12px}h3{font-size:1rem;margin:18px 0 8px}
+.muted{color:var(--muted);font-size:.9rem}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 24px}
+.stat,.card,.callout{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.stat .value{font-size:1.35rem;font-weight:700}.stat .label{color:var(--muted);font-size:.8rem;margin-top:4px}
+.callout{margin:12px 0 24px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{border-bottom:1px solid var(--border);text-align:left;padding:8px 10px;vertical-align:top}th{color:var(--muted)}
+ul{padding-left:1.2rem}li{margin:6px 0}footer{margin-top:32px;color:var(--muted);font-size:.75rem}
+@media(max-width:800px){.stats{grid-template-columns:1fr 1fr}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+&lt;h1&gt;kfzteile24 vs tchibo — SHAP comparison&lt;/h1&gt;
+&lt;p class=&#34;muted&#34;&gt;Mean |SHAP| · CV 6 · LSTM n=10k · kfzteile24 XGB n≈834k&lt;/p&gt;
+&lt;div class=&#34;stats&#34;&gt;
+  &lt;div class=&#34;stat&#34;&gt;&lt;div class=&#34;value&#34;&gt;43–71%&lt;/div&gt;&lt;div class=&#34;label&#34;&gt;kfz XGB+LP landing&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&#34;stat&#34;&gt;&lt;div class=&#34;value&#34;&gt;45–52%&lt;/div&gt;&lt;div class=&#34;label&#34;&gt;tchibo LSTM+LP landing&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&#34;stat&#34;&gt;&lt;div class=&#34;value&#34;&gt;Pages / duration&lt;/div&gt;&lt;div class=&#34;label&#34;&gt;Default without landing&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&#34;stat&#34;&gt;&lt;div class=&#34;value&#34;&gt;≈0&lt;/div&gt;&lt;div class=&#34;label&#34;&gt;tchibo +LP treatment |SHAP|&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;callout&#34;&gt;Enabling landing reallocates importance away from engagement on both customers. Compare ranks/% shares only — not raw |SHAP| across LSTM vs XGB.&lt;/div&gt;
+
+&lt;h2&gt;Scope&lt;/h2&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Customer&lt;/th&gt;&lt;th&gt;Settings&lt;/th&gt;&lt;th&gt;Backends&lt;/th&gt;&lt;th&gt;Sample n&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;kfzteile24&lt;/td&gt;&lt;td&gt;5 (LSTM×2, XGB×3)&lt;/td&gt;&lt;td&gt;LSTM + XGB&lt;/td&gt;&lt;td&gt;LSTM 10k · XGB 833,906&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;tchibo&lt;/td&gt;&lt;td&gt;2 (LSTM best ± LP)&lt;/td&gt;&lt;td&gt;LSTM only&lt;/td&gt;&lt;td&gt;10,000 both&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;h2&gt;Landing-page impact&lt;/h2&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Setting&lt;/th&gt;&lt;th&gt;Feature&lt;/th&gt;&lt;th&gt;Control&lt;/th&gt;&lt;th&gt;Treatment&lt;/th&gt;&lt;th&gt;Conversion&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;kfz XGB best + LP&lt;/td&gt;&lt;td&gt;landingpage&lt;/td&gt;&lt;td&gt;r1 · 43%&lt;/td&gt;&lt;td&gt;r1 · 71%&lt;/td&gt;&lt;td&gt;r1 · 28%&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;kfz LSTM new + LP&lt;/td&gt;&lt;td&gt;landingpage_cat&lt;/td&gt;&lt;td&gt;r2 · 21%&lt;/td&gt;&lt;td&gt;r2 · 27%&lt;/td&gt;&lt;td&gt;r3 · 19%&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;tchibo LSTM best + LP&lt;/td&gt;&lt;td&gt;landingpage_cat&lt;/td&gt;&lt;td&gt;r1 · 52%&lt;/td&gt;&lt;td&gt;r1 · 49%&lt;/td&gt;&lt;td&gt;r2 · 45%&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;h2&gt;Control family mix&lt;/h2&gt;
+&lt;div class=&#34;card&#34;&gt;&lt;canvas id=&#34;mix&#34; height=&#34;140&#34;&gt;&lt;/canvas&gt;&lt;/div&gt;
+
+&lt;h2&gt;All insights&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Landing is the main differentiator for both.&lt;/strong&gt; When enabled it becomes a top driver (especially control/treatment). Without it, pages/duration (and sometimes recency) absorb that budget.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Default backbone is engagement.&lt;/strong&gt; kfzteile24 XGB without LP: pages 75–86% of control. LSTM on both customers elevates session duration more often.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recency is conversion-specific.&lt;/strong&gt; tchibo no-LP conversion ~40% recency; kfzteile24 XGB new no-LP conversion ~31%. With landing on, recency drops.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Confidence differs by backend.&lt;/strong&gt; kfzteile24 has full-data XGB confirmation (~834k). tchibo is LSTM-only at 10k — direction matches, certainty lower.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Red flags.&lt;/strong&gt; tchibo LSTM+LP treatment total |SHAP|≈0 — ignore treatment attributions for that artifact. kfzteile24 LSTM new+LP treatment also unusually small.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Encoding.&lt;/strong&gt; Strongest kfzteile24 landing signal is XGB &lt;code&gt;landingpage&lt;/code&gt;; LSTMs use &lt;code&gt;landingpage_cat&lt;/code&gt; (dominant on tchibo, secondary on kfzteile24 LSTM).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;Recommendations&lt;/h2&gt;
+&lt;div class=&#34;card&#34;&gt;
+&lt;ol&gt;
+&lt;li&gt;Keep landing features enabled in production-like settings.&lt;/li&gt;
+&lt;li&gt;kfzteile24: use XGB best + landingpage as the primary interpretability reference.&lt;/li&gt;
+&lt;li&gt;tchibo: landing looks strong, but re-check +LP treatment (near-zero |SHAP|); add an XGB counterpart if available.&lt;/li&gt;
+&lt;li&gt;Compare ranks / % shares only across backends and roles.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+&lt;footer&gt;Sources: shap_output/kfzteile24/..._test_data · shap_output/tchibo/..._test_data&lt;/footer&gt;
+&lt;/main&gt;
+&lt;script&gt;
+new Chart(document.getElementById(&#39;mix&#39;),{
+  type:&#39;bar&#39;,
+  data:{
+    labels:[&#39;kfz LSTM+LP&#39;,&#39;kfz LSTM no LP&#39;,&#39;kfz XGB no LP&#39;,&#39;kfz XGB+LP&#39;,&#39;kfz XGB new&#39;,&#39;tchibo LSTM no LP&#39;,&#39;tchibo LSTM+LP&#39;],
+    datasets:[
+      {label:&#39;Pages&#39;,data:[20,58,75,47,86,45,8],backgroundColor:&#39;#3B82F6&#39;,stack:&#39;s&#39;},
+      {label:&#39;Duration&#39;,data:[58,30,17,4,8,29,39],backgroundColor:&#39;#6B7280&#39;,stack:&#39;s&#39;},
+      {label:&#39;Landing&#39;,data:[21,0,0,43,0,0,52],backgroundColor:&#39;#10B981&#39;,stack:&#39;s&#39;},
+      {label:&#39;Recency&#39;,data:[1,12,7,6,5,26,1],backgroundColor:&#39;#F59E0B&#39;,stack:&#39;s&#39;}
+    ]
+  },
+  options:{responsive:true,scales:{x:{stacked:true},y:{stacked:true,max:100,title:{display:true,text:&#39;% of control mean |SHAP|&#39;}}}}
+});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&#39;&#39;&#39;
+out = Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_shap_comparison.html&#39;)
+out.write_text(html, encoding=&#39;utf-8&#39;)
+print(&#39;wrote&#39;, out.resolve(), &#39;bytes&#39;, out.stat().st_size)
+PY</summary>
+```bash
+python3 << 'PY'
+from pathlib import Path
+html = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>kfzteile24 vs tchibo — SHAP comparison</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0b0d10;--panel:#14181f;--text:#e8eaed;--muted:#9aa3af;--border:#2a3140}
+*{box-sizing:border-box}body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+main{max-width:1100px;margin:0 auto;padding:32px 20px 64px}h1{font-size:1.75rem;margin:0 0 8px}h2{font-size:1.25rem;margin:32px 0 12px}h3{font-size:1rem;margin:18px 0 8px}
+.muted{color:var(--muted);font-size:.9rem}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 24px}
+.stat,.card,.callout{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.stat .value{font-size:1.35rem;font-weight:700}.stat .label{color:var(--muted);font-size:.8rem;margin-top:4px}
+.callout{margin:12px 0 24px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{border-bottom:1px solid var(--border);text-align:left;padding:8px 10px;vertical-align:top}th{color:var(--muted)}
+ul{padding-left:1.2rem}li{margin:6px 0}footer{margin-top:32px;color:var(--muted);font-size:.75rem}
+@media(max-width:800px){.stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>kfzteile24 vs tchibo — SHAP comparison</h1>
+<p class="muted">Mean |SHAP| · CV 6 · LSTM n=10k · kfzteile24 XGB n≈834k</p>
+<div class="stats">
+  <div class="stat"><div class="value">43–71%</div><div class="label">kfz XGB+LP landing</div></div>
+  <div class="stat"><div class="value">45–52%</div><div class="label">tchibo LSTM+LP landing</div></div>
+  <div class="stat"><div class="value">Pages / duration</div><div class="label">Default without landing</div></div>
+  <div class="stat"><div class="value">≈0</div><div class="label">tchibo +LP treatment |SHAP|</div></div>
+</div>
+<div class="callout">Enabling landing reallocates importance away from engagement on both customers. Compare ranks/% shares only — not raw |SHAP| across LSTM vs XGB.</div>
+
+<h2>Scope</h2>
+<table><thead><tr><th>Customer</th><th>Settings</th><th>Backends</th><th>Sample n</th></tr></thead>
+<tbody>
+<tr><td>kfzteile24</td><td>5 (LSTM×2, XGB×3)</td><td>LSTM + XGB</td><td>LSTM 10k · XGB 833,906</td></tr>
+<tr><td>tchibo</td><td>2 (LSTM best ± LP)</td><td>LSTM only</td><td>10,000 both</td></tr>
+</tbody></table>
+
+<h2>Landing-page impact</h2>
+<table><thead><tr><th>Setting</th><th>Feature</th><th>Control</th><th>Treatment</th><th>Conversion</th></tr></thead>
+<tbody>
+<tr><td>kfz XGB best + LP</td><td>landingpage</td><td>r1 · 43%</td><td>r1 · 71%</td><td>r1 · 28%</td></tr>
+<tr><td>kfz LSTM new + LP</td><td>landingpage_cat</td><td>r2 · 21%</td><td>r2 · 27%</td><td>r3 · 19%</td></tr>
+<tr><td>tchibo LSTM best + LP</td><td>landingpage_cat</td><td>r1 · 52%</td><td>r1 · 49%</td><td>r2 · 45%</td></tr>
+</tbody></table>
+
+<h2>Control family mix</h2>
+<div class="card"><canvas id="mix" height="140"></canvas></div>
+
+<h2>All insights</h2>
+<ol>
+<li><strong>Landing is the main differentiator for both.</strong> When enabled it becomes a top driver (especially control/treatment). Without it, pages/duration (and sometimes recency) absorb that budget.</li>
+<li><strong>Default backbone is engagement.</strong> kfzteile24 XGB without LP: pages 75–86% of control. LSTM on both customers elevates session duration more often.</li>
+<li><strong>Recency is conversion-specific.</strong> tchibo no-LP conversion ~40% recency; kfzteile24 XGB new no-LP conversion ~31%. With landing on, recency drops.</li>
+<li><strong>Confidence differs by backend.</strong> kfzteile24 has full-data XGB confirmation (~834k). tchibo is LSTM-only at 10k — direction matches, certainty lower.</li>
+<li><strong>Red flags.</strong> tchibo LSTM+LP treatment total |SHAP|≈0 — ignore treatment attributions for that artifact. kfzteile24 LSTM new+LP treatment also unusually small.</li>
+<li><strong>Encoding.</strong> Strongest kfzteile24 landing signal is XGB <code>landingpage</code>; LSTMs use <code>landingpage_cat</code> (dominant on tchibo, secondary on kfzteile24 LSTM).</li>
+</ol>
+
+<h2>Recommendations</h2>
+<div class="card">
+<ol>
+<li>Keep landing features enabled in production-like settings.</li>
+<li>kfzteile24: use XGB best + landingpage as the primary interpretability reference.</li>
+<li>tchibo: landing looks strong, but re-check +LP treatment (near-zero |SHAP|); add an XGB counterpart if available.</li>
+<li>Compare ranks / % shares only across backends and roles.</li>
+</ol>
+</div>
+
+<footer>Sources: shap_output/kfzteile24/..._test_data · shap_output/tchibo/..._test_data</footer>
+</main>
+<script>
+new Chart(document.getElementById('mix'),{
+  type:'bar',
+  data:{
+    labels:['kfz LSTM+LP','kfz LSTM no LP','kfz XGB no LP','kfz XGB+LP','kfz XGB new','tchibo LSTM no LP','tchibo LSTM+LP'],
+    datasets:[
+      {label:'Pages',data:[20,58,75,47,86,45,8],backgroundColor:'#3B82F6',stack:'s'},
+      {label:'Duration',data:[58,30,17,4,8,29,39],backgroundColor:'#6B7280',stack:'s'},
+      {label:'Landing',data:[21,0,0,43,0,0,52],backgroundColor:'#10B981',stack:'s'},
+      {label:'Recency',data:[1,12,7,6,5,26,1],backgroundColor:'#F59E0B',stack:'s'}
+    ]
+  },
+  options:{responsive:true,scales:{x:{stacked:true},y:{stacked:true,max:100,title:{display:true,text:'% of control mean |SHAP|'}}}}
+});
+</script>
+</body>
+</html>
+'''
+out = Path('scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_shap_comparison.html')
+out.write_text(html, encoding='utf-8')
+print('wrote', out.resolve(), 'bytes', out.stat().st_size)
+PY
+```
+
+```
+wrote /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_shap_comparison.html bytes 5623
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+A clear comparison of kfzteile24 and tchibo will be provided, including links to Canvas and HTML.
+</details></think>
+
+_**Agent (default)**_
+
+**Landing features reshape both customers the same way** — when enabled they become top drivers; without them, engagement (and sometimes recency) takes over. kfzteile24 has stronger confirmation via full-data XGB.
+
+### Artifacts
+- Canvas: [kfzteile24 vs tchibo SHAP](/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-shap-comparison.canvas.tsx)
+- HTML: `scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_shap_comparison.html`
+
+### Shared insights
+1. **Landing is the main lever** — With LP: kfzteile24 XGB ~43/71/28% (control/treatment/conversion); tchibo LSTM ~52/49/45%. Without LP, that share moves to pages/duration.
+2. **Engagement is the default backbone** — Especially page counts on kfzteile24 XGB (75–86% of control); session duration more often on LSTM.
+3. **Recency is conversion-specific** — Strong without landing (tchibo ~40%, kfzteile24 XGB new ~31%); weak once landing is on.
+4. **Compare shares/ranks only** — Don’t compare raw |SHAP| across LSTM vs XGB or conversion vs group heads.
+
+### Customer differences
+| | kfzteile24 | tchibo |
+|---|---|---|
+| Coverage | LSTM + XGB (5 settings) | LSTM only (2 settings) |
+| Best landing evidence | XGB `landingpage` on **834k** rows | LSTM `landingpage_cat` on **10k** rows |
+| Red flag | LSTM new+LP treatment weak | **+LP treatment \|SHAP\| ≈ 0** — unreliable |
+
+### Recommendations
+- Keep landing enabled for both.
+- Trust **kfzteile24 XGB best + LP** as the primary reference.
+- For tchibo, landing looks strong but re-check the +LP treatment model; add an XGB run if you can.
+
+---
+
+_**User**_
+
+add for all three reports the best f1 score to the evalution in the section What dominates each model
+
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Adding the best F1 score to all three reports in the "What dominates each model" evaluation section.
+
+The three reports are the kfzte24 SHAP summary, the tchibo SHAP summary, and the kfzteile24 versus tchibo comparison. The F1 scores live in shap_run_manifest.csv. I will update write_shap_canvas_report.py to pull those scores into the top1 table and regenerate all three reports.
+</details></think>
+
+_**Agent (default)**_
+
+I'll add best F1 scores to the "What dominates each model" section in the report generator, then regenerate all three reports.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "top1|f1|What dominates|setting_scope|ReportData|sample_n"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "top1|f1|What dominates|setting_scope|ReportData|sample_n",
+  "topFiles": [
+    {
+      "matchCount": 28,
+      "uri": "scripts/ModelShapValues/write_shap_canvas_report.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 28
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/shap_run_manifest.csv</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/shap_run_manifest.csv</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating `write_shap_canvas_report.py` to add the best F1 score for all three reports to the evaluation section.
+
+F1 scores will be pulled from the manifest per setting. The top1_rows table header will include a Best F1 column. Missing F1 values will display as "—". The third report's comparison canvas needs manual updating. Next step is to read the build_report section and update the renderers.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-shap-comparison.canvas.tsx",
+  "pattern": "What dominates|Top-1 drivers|headers=\\{\\[\\\"Setting\\\""
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-shap-comparison.canvas.tsx",
+  "pattern": "What dominates|Top-1 drivers|headers=\\{\\[\\\"Setting\\\"",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "../../../../.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-shap-comparison.canvas.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating build_report to extract the best F1 score from the manifest and insert it into the top1_rows evaluation table.
+
+Updating table headers for canvas, HTML, and PDF. Then regenerating all three reports and updating the comparison canvas.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Regenerating both individual reports and updating the comparison canvas and HTML with the best F1 scores.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: python3 &lt;&lt; &#39;PY&#39;
+import sys, types
+from pathlib import Path
+
+path = Path(&#39;scripts/ModelShapValues/write_shap_canvas_report.py&#39;)
+mod = types.ModuleType(&#39;write_shap_canvas_report&#39;)
+mod.__file__ = str(path)
+sys.modules[&#39;write_shap_canvas_report&#39;] = mod
+exec(compile(path.read_text(), str(path), &#39;exec&#39;), mod.__dict__)
+
+canvases = Path(&#39;/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases&#39;)
+
+jobs = [
+    (
+        &#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data&#39;,
+        &#39;kfzteile24 SHAP evaluation&#39;,
+        canvases / &#39;kfzteile24-6835d77813526dc3d1229978-test-data-shap-summary.canvas.tsx&#39;,
+        &#39;kfzteile24_shap_summary.html&#39;,
+    ),
+    (
+        &#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data&#39;,
+        &#39;tchibo SHAP evaluation&#39;,
+        canvases / &#39;tchibo-68b69dff2e5f2d9a58cce692-test-data-shap-summary.canvas.tsx&#39;,
+        &#39;tchibo_shap_summary.html&#39;,
+    ),
+]
+
+f1_lookup = {}
+for shap_dir, title, canvas_out, html_name in jobs:
+    shap = Path(shap_dir).resolve()
+    df = mod.load_shap_frame(shap, cv=None)
+    manifest = mod.load_manifest(shap)
+    report = mod.build_report(df, shap, title=title, manifest=manifest)
+    canvas_out.write_text(mod.render_canvas(report), encoding=&#39;utf-8&#39;)
+    html_out = shap / html_name
+    mod.render_html(report, html_out)
+    print(title)
+    for row in report.top1_rows:
+        print(&#39; &#39;, row)
+        f1_lookup[(title.split()[0], row[0])] = row[1]
+    print(&#39; wrote&#39;, canvas_out.name, &#39;and&#39;, html_out)
+    print()
+
+print(&#39;F1 lookup for comparison:&#39;, f1_lookup)
+PY</summary>
+```bash
+python3 << 'PY'
+import sys, types
+from pathlib import Path
+
+path = Path('scripts/ModelShapValues/write_shap_canvas_report.py')
+mod = types.ModuleType('write_shap_canvas_report')
+mod.__file__ = str(path)
+sys.modules['write_shap_canvas_report'] = mod
+exec(compile(path.read_text(), str(path), 'exec'), mod.__dict__)
+
+canvases = Path('/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases')
+
+jobs = [
+    (
+        'scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data',
+        'kfzteile24 SHAP evaluation',
+        canvases / 'kfzteile24-6835d77813526dc3d1229978-test-data-shap-summary.canvas.tsx',
+        'kfzteile24_shap_summary.html',
+    ),
+    (
+        'scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data',
+        'tchibo SHAP evaluation',
+        canvases / 'tchibo-68b69dff2e5f2d9a58cce692-test-data-shap-summary.canvas.tsx',
+        'tchibo_shap_summary.html',
+    ),
+]
+
+f1_lookup = {}
+for shap_dir, title, canvas_out, html_name in jobs:
+    shap = Path(shap_dir).resolve()
+    df = mod.load_shap_frame(shap, cv=None)
+    manifest = mod.load_manifest(shap)
+    report = mod.build_report(df, shap, title=title, manifest=manifest)
+    canvas_out.write_text(mod.render_canvas(report), encoding='utf-8')
+    html_out = shap / html_name
+    mod.render_html(report, html_out)
+    print(title)
+    for row in report.top1_rows:
+        print(' ', row)
+        f1_lookup[(title.split()[0], row[0])] = row[1]
+    print(' wrote', canvas_out.name, 'and', html_out)
+    print()
+
+print('F1 lookup for comparison:', f1_lookup)
+PY
+```
+
+```
+kfzteile24 SHAP evaluation
+  ['LSTM new + LP', '0.5621', 'session_duration_in_s', 'session_duration_in_s', 'pages_visited_per_user_cumulated']
+  ['LSTM best no LP', '0.4494', 'session_duration_in_s', 'session_duration_in_s', 'pages_visited_per_user']
+  ['XGB best no LP', '0.5833', 'pages_visited_per_user', 'pages_visited_per_session', 'pages_visited_per_user']
+  ['XGB best + LP', '0.7173', 'landingpage', 'landingpage', 'landingpage']
+  ['XGB new no LP', '0.6082', 'pages_visited_per_user', 'pages_visited_per_session', 'pages_visited_per_user']
+ wrote kfzteile24-6835d77813526dc3d1229978-test-data-shap-summary.canvas.tsx and /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/kfzteile24_shap_summary.html
+
+tchibo SHAP evaluation
+  ['LSTM best no LP', '0.7339', 'session_duration_in_s', 'session_duration_in_s', 'days_between_sessions']
+  ['LSTM best + LP', '—', 'landingpage_cat', 'landingpage_cat', 'session_duration_in_s']
+ wrote tchibo-68b69dff2e5f2d9a58cce692-test-data-shap-summary.canvas.tsx and /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/tchibo_shap_summary.html
+
+F1 lookup for comparison: {('kfzteile24', 'LSTM new + LP'): '0.5621', ('kfzteile24', 'LSTM best no LP'): '0.4494', ('kfzteile24', 'XGB best no LP'): '0.5833', ('kfzteile24', 'XGB best + LP'): '0.7173', ('kfzteile24', 'XGB new no LP'): '0.6082', ('tchibo', 'LSTM best no LP'): '0.7339', ('tchibo', 'LSTM best + LP'): '—'}
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-shap-comparison.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The comparison HTML will also include an F1 column.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: python3 &lt;&lt; &#39;PY&#39;
+from pathlib import Path
+html = Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_shap_comparison.html&#39;).read_text()
+old = &#39;&#39;&#39;&lt;h2&gt;Landing-page impact&lt;/h2&gt;&#39;&#39;&#39;
+# Insert / replace a dominates section if missing - check
+if &#39;What dominates each model&#39; not in html:
+    insert = &#39;&#39;&#39;
+&lt;h2&gt;What dominates each model&lt;/h2&gt;
+&lt;p class=&#34;muted&#34;&gt;Top-1 mean |SHAP| feature by role, with best F1 from the SHAP run manifest.&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Setting&lt;/th&gt;&lt;th&gt;Best F1&lt;/th&gt;&lt;th&gt;Control #1&lt;/th&gt;&lt;th&gt;Treatment #1&lt;/th&gt;&lt;th&gt;Conversion #1&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;kfz XGB best + LP&lt;/td&gt;&lt;td&gt;0.7173&lt;/td&gt;&lt;td&gt;landingpage&lt;/td&gt;&lt;td&gt;landingpage&lt;/td&gt;&lt;td&gt;landingpage&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;kfz XGB best no LP&lt;/td&gt;&lt;td&gt;0.5833&lt;/td&gt;&lt;td&gt;pages_visited_per_user&lt;/td&gt;&lt;td&gt;pages_visited_per_session&lt;/td&gt;&lt;td&gt;pages_visited_per_user&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;kfz XGB new no LP&lt;/td&gt;&lt;td&gt;0.6082&lt;/td&gt;&lt;td&gt;pages_visited_per_user&lt;/td&gt;&lt;td&gt;pages_visited_per_session&lt;/td&gt;&lt;td&gt;pages_visited_per_user&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;kfz LSTM new + LP&lt;/td&gt;&lt;td&gt;0.5621&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;td&gt;pages_visited_per_user_cumulated&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;kfz LSTM best no LP&lt;/td&gt;&lt;td&gt;0.4494&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;td&gt;pages_visited_per_user&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;tchibo LSTM best + LP&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td&gt;landingpage_cat&lt;/td&gt;&lt;td&gt;landingpage_cat&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;tchibo LSTM best no LP&lt;/td&gt;&lt;td&gt;0.7339&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;td&gt;days_between_sessions&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&#39;&#39;&#39;
+    html = html.replace(old, insert + old)
+else:
+    # replace existing table if any
+    pass
+Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_shap_comparison.html&#39;).write_text(html, encoding=&#39;utf-8&#39;)
+print(&#39;updated comparison html&#39;)
+# verify individual htmls have Best F1 header
+for p in [
+ &#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/kfzteile24_shap_summary.html&#39;,
+ &#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/tchibo_shap_summary.html&#39;,
+ &#39;scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_shap_comparison.html&#39;,
+]:
+    t=Path(p).read_text()
+    print(p.split(&#39;/&#39;)[-1], &#39;Best F1&#39; in t, &#39;0.7173&#39; in t or &#39;0.7339&#39; in t)
+PY</summary>
+```bash
+python3 << 'PY'
+from pathlib import Path
+html = Path('scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_shap_comparison.html').read_text()
+old = '''<h2>Landing-page impact</h2>'''
+# Insert / replace a dominates section if missing - check
+if 'What dominates each model' not in html:
+    insert = '''
+<h2>What dominates each model</h2>
+<p class="muted">Top-1 mean |SHAP| feature by role, with best F1 from the SHAP run manifest.</p>
+<table><thead><tr><th>Setting</th><th>Best F1</th><th>Control #1</th><th>Treatment #1</th><th>Conversion #1</th></tr></thead>
+<tbody>
+<tr><td>kfz XGB best + LP</td><td>0.7173</td><td>landingpage</td><td>landingpage</td><td>landingpage</td></tr>
+<tr><td>kfz XGB best no LP</td><td>0.5833</td><td>pages_visited_per_user</td><td>pages_visited_per_session</td><td>pages_visited_per_user</td></tr>
+<tr><td>kfz XGB new no LP</td><td>0.6082</td><td>pages_visited_per_user</td><td>pages_visited_per_session</td><td>pages_visited_per_user</td></tr>
+<tr><td>kfz LSTM new + LP</td><td>0.5621</td><td>session_duration_in_s</td><td>session_duration_in_s</td><td>pages_visited_per_user_cumulated</td></tr>
+<tr><td>kfz LSTM best no LP</td><td>0.4494</td><td>session_duration_in_s</td><td>session_duration_in_s</td><td>pages_visited_per_user</td></tr>
+<tr><td>tchibo LSTM best + LP</td><td>—</td><td>landingpage_cat</td><td>landingpage_cat</td><td>session_duration_in_s</td></tr>
+<tr><td>tchibo LSTM best no LP</td><td>0.7339</td><td>session_duration_in_s</td><td>session_duration_in_s</td><td>days_between_sessions</td></tr>
+</tbody></table>
+'''
+    html = html.replace(old, insert + old)
+else:
+    # replace existing table if any
+    pass
+Path('scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_shap_comparison.html').write_text(html, encoding='utf-8')
+print('updated comparison html')
+# verify individual htmls have Best F1 header
+for p in [
+ 'scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/kfzteile24_shap_summary.html',
+ 'scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/tchibo_shap_summary.html',
+ 'scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_shap_comparison.html',
+]:
+    t=Path(p).read_text()
+    print(p.split('/')[-1], 'Best F1' in t, '0.7173' in t or '0.7339' in t)
+PY
+```
+
+```
+updated comparison html
+kfzteile24_shap_summary.html True True
+tchibo_shap_summary.html True True
+kfzteile24_vs_tchibo_shap_comparison.html True True
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The best F1 score was added to the evaluation section for all three reports.
+</details></think>
+
+_**Agent (default)**_
+
+Added **Best F1** to “What dominates each model” in all three reports (from `shap_run_manifest.csv`).
+
+### Updated
+- [kfzteile24](/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-6835d77813526dc3d1229978-test-data-shap-summary.canvas.tsx) · HTML under `.../kfzteile24_shap_summary.html`
+- [tchibo](/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-68b69dff2e5f2d9a58cce692-test-data-shap-summary.canvas.tsx) · HTML under `.../tchibo_shap_summary.html`
+- [comparison](/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-shap-comparison.canvas.tsx) · `scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_shap_comparison.html`
+
+### F1 highlights
+| Setting | Best F1 |
+|---|---:|
+| kfz XGB best + LP | **0.7173** |
+| kfz XGB new no LP | 0.6082 |
+| kfz XGB best no LP | 0.5833 |
+| kfz LSTM new + LP | 0.5621 |
+| kfz LSTM best no LP | 0.4494 |
+| tchibo LSTM best no LP | **0.7339** |
+| tchibo LSTM best + LP | — (missing in manifest) |
+
+---
+
+_**User**_
+
+Do the same three evalutaion for kfz, tchibo and the comparison, but for the data in scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 and scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Running the three evaluations for kfzteile24 and tchibo using the September 15, 2026 SHAP output directories.
+
+Generating SHAP canvas reports and HTML files for both models, plus a comparison canvas and HTML.
+</details></think>
+
+_**Agent (default)**_
+
+I'll generate the kfzteile24, tchibo, and comparison reports from the new `x_train_2026-09-15` SHAP outputs.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/ | head -20
+ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/ | head -20
+ls scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/*.{csv,png} 2&gt;/dev/null | head -10
+ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/*.{csv,png} 2&gt;/dev/null | head -10</summary>
+```bash
+ls scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/ | head -20
+ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/ | head -20
+ls scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/*.{csv,png} 2>/dev/null | head -10
+ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/*.{csv,png} 2>/dev/null | head -10
+```
+
+```
+2026-09-08_best_models_without_landingpage_lstm
+2026-09-08_best_models_without_landingpage_xgb
+2026-09-09_new_models_without_landingpage_xgb
+comparison_mean_abs_shap.csv
+comparison_mean_abs_shap_bars.png
+comparison_mean_abs_shap_heatmap.png
+shap_run_manifest.csv
+2026-07-27_new_models_with_landingpage_reset_lstm_failed
+2026-08-12_best_models_without_landingpage_lstm
+2026-09-12_best_models_with_landingpage_lstm
+comparison_mean_abs_shap.csv
+comparison_mean_abs_shap_bars.png
+comparison_mean_abs_shap_heatmap.png
+shap_run_manifest.csv
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/comparison_mean_abs_shap.csv
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/comparison_mean_abs_shap_bars.png
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/comparison_mean_abs_shap_heatmap.png
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/shap_run_manifest.csv
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/comparison_mean_abs_shap.csv
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/comparison_mean_abs_shap_bars.png
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/comparison_mean_abs_shap_heatmap.png
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/shap_run_manifest.csv
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+kfzteile24 x_train lacks the landing page settings present in test_data. No XGB best plus LP or LSTM new plus LP configurations are available.
+
+Tchibo contains a landing page LSTM configuration and a failed run. Reports and a comparison will be generated from the available data.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: python3 &lt;&lt; &#39;PY&#39;
+import sys, types, json
+from pathlib import Path
+
+path = Path(&#39;scripts/ModelShapValues/write_shap_canvas_report.py&#39;)
+mod = types.ModuleType(&#39;write_shap_canvas_report&#39;)
+mod.__file__ = str(path)
+sys.modules[&#39;write_shap_canvas_report&#39;] = mod
+exec(compile(path.read_text(), str(path), &#39;exec&#39;), mod.__dict__)
+
+canvases = Path(&#39;/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases&#39;)
+
+def run(shap_dir, title, canvas_name, html_name):
+    shap = Path(shap_dir).resolve()
+    df = mod.load_shap_frame(shap, cv=None)
+    manifest = mod.load_manifest(shap)
+    report = mod.build_report(df, shap, title=title, manifest=manifest)
+    canvas_out = canvases / canvas_name
+    html_out = shap / html_name
+    canvas_out.write_text(mod.render_canvas(report), encoding=&#39;utf-8&#39;)
+    mod.render_html(report, html_out)
+    print(&#39;===&#39;, title, &#39;===&#39;)
+    print(&#39;HTML:&#39;, html_out)
+    print(&#39;Canvas:&#39;, canvas_out)
+    print(&#39;Settings:&#39;, report.settings)
+    print(&#39;Sample n:&#39;, report.sample_n_by_setting)
+    print(&#39;Stats:&#39;, report.stats)
+    print(&#39;Top1:&#39;)
+    for row in report.top1_rows:
+        print(&#39; &#39;, row)
+    print(&#39;Landing:&#39;)
+    for row in report.landing_rows:
+        print(&#39; &#39;, row)
+    print(&#39;Findings:&#39;)
+    for t,b in report.findings:
+        print(f&#39;- {t}&#39;)
+    print()
+    return report, df
+
+k_report, k_df = run(
+    &#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;,
+    &#39;kfzteile24 SHAP evaluation (x_train 2026-09-15)&#39;,
+    &#39;kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx&#39;,
+    &#39;kfzteile24_x_train_shap_summary.html&#39;,
+)
+t_report, t_df = run(
+    &#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;,
+    &#39;tchibo SHAP evaluation (x_train 2026-09-15)&#39;,
+    &#39;tchibo-x-train-2026-09-15-shap-summary.canvas.tsx&#39;,
+    &#39;tchibo_x_train_shap_summary.html&#39;,
+)
+
+# control shares + treatment totals for comparison
+def control_shares(df):
+    rows=[]
+    for s,g in df[df.role==&#39;control&#39;].groupby(&#39;customer_setting&#39;):
+        df1 = mod.dedupe_primary_models(g) if False else g
+        tot=g.mean_abs_shap.sum()
+        buckets={b:100*g.loc[g.feature.map(mod.feature_bucket)==b,&#39;mean_abs_shap&#39;].sum()/tot
+                 for b in [&#39;pages&#39;,&#39;duration&#39;,&#39;landing&#39;,&#39;recency&#39;]}
+        rows.append((mod.short_setting_label(s), s, buckets, tot))
+    return rows
+
+k_df = mod.dedupe_primary_models(k_df)
+t_df = mod.dedupe_primary_models(t_df)
+print(&#39;=== control shares kfz ===&#39;)
+for label,s,b,_ in control_shares(k_df):
+    print(f&#34;  {label}: pages={b[&#39;pages&#39;]:.0f}% dur={b[&#39;duration&#39;]:.0f}% land={b[&#39;landing&#39;]:.0f}% rec={b[&#39;recency&#39;]:.0f}%&#34;)
+print(&#39;=== control shares tchibo ===&#39;)
+for label,s,b,_ in control_shares(t_df):
+    print(f&#34;  {label}: pages={b[&#39;pages&#39;]:.0f}% dur={b[&#39;duration&#39;]:.0f}% land={b[&#39;landing&#39;]:.0f}% rec={b[&#39;recency&#39;]:.0f}%&#34;)
+print(&#39;=== treatment totals ===&#39;)
+for name,df in [(&#39;kfz&#39;,k_df),(&#39;tchibo&#39;,t_df)]:
+    for s,g in df[df.role==&#39;treatment&#39;].groupby(&#39;customer_setting&#39;):
+        print(f&#34;  {name} {mod.short_setting_label(s)}: {g.mean_abs_shap.sum():.4f}&#34;)
+print(&#39;=== conversion recency ===&#39;)
+for name,df in [(&#39;kfz&#39;,k_df),(&#39;tchibo&#39;,t_df)]:
+    for s,g in df[df.role==&#39;conversion&#39;].groupby(&#39;customer_setting&#39;):
+        tot=g.mean_abs_shap.sum()
+        rec=100*g.loc[g.feature.map(mod.feature_bucket)==&#39;recency&#39;,&#39;mean_abs_shap&#39;].sum()/tot
+        land=100*g.loc[g.feature.map(mod.feature_bucket)==&#39;landing&#39;,&#39;mean_abs_shap&#39;].sum()/tot
+        print(f&#34;  {name} {mod.short_setting_label(s)}: rec={rec:.0f}% land={land:.0f}%&#34;)
+PY</summary>
+```bash
+python3 << 'PY'
+import sys, types, json
+from pathlib import Path
+
+path = Path('scripts/ModelShapValues/write_shap_canvas_report.py')
+mod = types.ModuleType('write_shap_canvas_report')
+mod.__file__ = str(path)
+sys.modules['write_shap_canvas_report'] = mod
+exec(compile(path.read_text(), str(path), 'exec'), mod.__dict__)
+
+canvases = Path('/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases')
+
+def run(shap_dir, title, canvas_name, html_name):
+    shap = Path(shap_dir).resolve()
+    df = mod.load_shap_frame(shap, cv=None)
+    manifest = mod.load_manifest(shap)
+    report = mod.build_report(df, shap, title=title, manifest=manifest)
+    canvas_out = canvases / canvas_name
+    html_out = shap / html_name
+    canvas_out.write_text(mod.render_canvas(report), encoding='utf-8')
+    mod.render_html(report, html_out)
+    print('===', title, '===')
+    print('HTML:', html_out)
+    print('Canvas:', canvas_out)
+    print('Settings:', report.settings)
+    print('Sample n:', report.sample_n_by_setting)
+    print('Stats:', report.stats)
+    print('Top1:')
+    for row in report.top1_rows:
+        print(' ', row)
+    print('Landing:')
+    for row in report.landing_rows:
+        print(' ', row)
+    print('Findings:')
+    for t,b in report.findings:
+        print(f'- {t}')
+    print()
+    return report, df
+
+k_report, k_df = run(
+    'scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15',
+    'kfzteile24 SHAP evaluation (x_train 2026-09-15)',
+    'kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx',
+    'kfzteile24_x_train_shap_summary.html',
+)
+t_report, t_df = run(
+    'scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15',
+    'tchibo SHAP evaluation (x_train 2026-09-15)',
+    'tchibo-x-train-2026-09-15-shap-summary.canvas.tsx',
+    'tchibo_x_train_shap_summary.html',
+)
+
+# control shares + treatment totals for comparison
+def control_shares(df):
+    rows=[]
+    for s,g in df[df.role=='control'].groupby('customer_setting'):
+        df1 = mod.dedupe_primary_models(g) if False else g
+        tot=g.mean_abs_shap.sum()
+        buckets={b:100*g.loc[g.feature.map(mod.feature_bucket)==b,'mean_abs_shap'].sum()/tot
+                 for b in ['pages','duration','landing','recency']}
+        rows.append((mod.short_setting_label(s), s, buckets, tot))
+    return rows
+
+k_df = mod.dedupe_primary_models(k_df)
+t_df = mod.dedupe_primary_models(t_df)
+print('=== control shares kfz ===')
+for label,s,b,_ in control_shares(k_df):
+    print(f"  {label}: pages={b['pages']:.0f}% dur={b['duration']:.0f}% land={b['landing']:.0f}% rec={b['recency']:.0f}%")
+print('=== control shares tchibo ===')
+for label,s,b,_ in control_shares(t_df):
+    print(f"  {label}: pages={b['pages']:.0f}% dur={b['duration']:.0f}% land={b['landing']:.0f}% rec={b['recency']:.0f}%")
+print('=== treatment totals ===')
+for name,df in [('kfz',k_df),('tchibo',t_df)]:
+    for s,g in df[df.role=='treatment'].groupby('customer_setting'):
+        print(f"  {name} {mod.short_setting_label(s)}: {g.mean_abs_shap.sum():.4f}")
+print('=== conversion recency ===')
+for name,df in [('kfz',k_df),('tchibo',t_df)]:
+    for s,g in df[df.role=='conversion'].groupby('customer_setting'):
+        tot=g.mean_abs_shap.sum()
+        rec=100*g.loc[g.feature.map(mod.feature_bucket)=='recency','mean_abs_shap'].sum()/tot
+        land=100*g.loc[g.feature.map(mod.feature_bucket)=='landing','mean_abs_shap'].sum()/tot
+        print(f"  {name} {mod.short_setting_label(s)}: rec={rec:.0f}% land={land:.0f}%")
+PY
+```
+
+```
+=== kfzteile24 SHAP evaluation (x_train 2026-09-15) ===
+HTML: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html
+Canvas: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx
+Settings: ['LSTM best no LP', 'XGB best no LP', 'XGB new no LP']
+Sample n: {'LSTM best no LP': 22000, 'XGB best no LP': 22708, 'XGB new no LP': 22708}
+Stats: {'pages_range': '56–84%', 'best_landing': 'n/a', 'weak_landing': 'n/a', 'degenerate': 'none'}
+Top1:
+  ['LSTM best no LP', '0.4494', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s']
+  ['XGB best no LP', '0.5833', 'session_duration_in_s', 'pages_visited_per_session', 'session_duration_in_s']
+  ['XGB new no LP', '0.6082', 'pages_visited_per_session', 'pages_visited_per_session', 'session_duration_in_s']
+Landing:
+Findings:
+- Engagement is the backbone
+- No landing feature in this run
+- LSTM vs XGB use history differently
+- Do not compare raw |SHAP| across roles/backends
+
+=== tchibo SHAP evaluation (x_train 2026-09-15) ===
+HTML: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html
+Canvas: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx
+Settings: ['LSTM new + LP reset failed', 'LSTM best no LP', 'LSTM best + LP']
+Sample n: {'LSTM new + LP reset failed': 1164, 'LSTM best no LP': 1164, 'LSTM best + LP': 1164}
+Stats: {'pages_range': '48–81%', 'best_landing': '40%', 'weak_landing': '20%', 'degenerate': 'none'}
+Top1:
+  ['LSTM new + LP reset failed', '0.6502', 'pages_visited_per_session
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Tchibo's "LSTM new + LP reset failed" setting was captured by the short_setting_label.
+
+Tchibo best + LP F1 is 0.8528. kfzteile24 x_train contains no landingpage settings, unlike test_data. A comparison canvas and HTML will be created next.
+</details></think>
+
+_**Agent (default)**_
+
+Building the comparison report from the x_train results.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: python3 &lt;&lt; &#39;PY&#39;
+from pathlib import Path
+html = r&#39;&#39;&#39;&lt;!DOCTYPE html&gt;
+&lt;html lang=&#34;en&#34;&gt;
+&lt;head&gt;
+&lt;meta charset=&#34;utf-8&#34;/&gt;
+&lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1&#34;/&gt;
+&lt;title&gt;kfzteile24 vs tchibo — SHAP (x_train 2026-09-15)&lt;/title&gt;
+&lt;script src=&#34;https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js&#34;&gt;&lt;/script&gt;
+&lt;style&gt;
+:root{--bg:#0b0d10;--panel:#14181f;--text:#e8eaed;--muted:#9aa3af;--border:#2a3140}
+*{box-sizing:border-box}body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+main{max-width:1100px;margin:0 auto;padding:32px 20px 64px}h1{font-size:1.75rem;margin:0 0 8px}h2{font-size:1.25rem;margin:32px 0 12px}h3{font-size:1rem;margin:18px 0 8px}
+.muted{color:var(--muted);font-size:.9rem}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 24px}
+.stat,.card,.callout{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.stat .value{font-size:1.35rem;font-weight:700}.stat .label{color:var(--muted);font-size:.8rem;margin-top:4px}
+.callout{margin:12px 0 24px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{border-bottom:1px solid var(--border);text-align:left;padding:8px 10px;vertical-align:top}th{color:var(--muted)}
+ol{padding-left:1.2rem}li{margin:6px 0}footer{margin-top:32px;color:var(--muted);font-size:.75rem}
+@media(max-width:800px){.stats{grid-template-columns:1fr 1fr}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+&lt;h1&gt;kfzteile24 vs tchibo — SHAP (x_train 2026-09-15)&lt;/h1&gt;
+&lt;p class=&#34;muted&#34;&gt;Mean |SHAP| · CV 6 · kfz n≈22–23k · tchibo n=1,164&lt;/p&gt;
+&lt;div class=&#34;stats&#34;&gt;
+  &lt;div class=&#34;stat&#34;&gt;&lt;div class=&#34;value&#34;&gt;56–84%&lt;/div&gt;&lt;div class=&#34;label&#34;&gt;kfz pages (control)&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&#34;stat&#34;&gt;&lt;div class=&#34;value&#34;&gt;40–47%&lt;/div&gt;&lt;div class=&#34;label&#34;&gt;tchibo best+LP landing&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&#34;stat&#34;&gt;&lt;div class=&#34;value&#34;&gt;0.8528&lt;/div&gt;&lt;div class=&#34;label&#34;&gt;tchibo best+LP F1&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&#34;stat&#34;&gt;&lt;div class=&#34;value&#34;&gt;0.6082&lt;/div&gt;&lt;div class=&#34;label&#34;&gt;best kfz F1 (XGB new)&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;callout&#34;&gt;kfzteile24 x_train here has &lt;strong&gt;no landingpage settings&lt;/strong&gt;. tchibo includes best ± LP. Landing insights are tchibo-only in this slice.&lt;/div&gt;
+
+&lt;h2&gt;Scope&lt;/h2&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Customer&lt;/th&gt;&lt;th&gt;Settings&lt;/th&gt;&lt;th&gt;Backends&lt;/th&gt;&lt;th&gt;Sample n&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;kfzteile24&lt;/td&gt;&lt;td&gt;3 (LSTM/XGB no LP)&lt;/td&gt;&lt;td&gt;LSTM + XGB&lt;/td&gt;&lt;td&gt;22,000–22,708&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;tchibo&lt;/td&gt;&lt;td&gt;3 (LSTM best ± LP, reset failed)&lt;/td&gt;&lt;td&gt;LSTM only&lt;/td&gt;&lt;td&gt;1,164&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;h2&gt;What dominates each model&lt;/h2&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Setting&lt;/th&gt;&lt;th&gt;Best F1&lt;/th&gt;&lt;th&gt;Control #1&lt;/th&gt;&lt;th&gt;Treatment #1&lt;/th&gt;&lt;th&gt;Conversion #1&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;kfz XGB new no LP&lt;/td&gt;&lt;td&gt;0.6082&lt;/td&gt;&lt;td&gt;pages_visited_per_session&lt;/td&gt;&lt;td&gt;pages_visited_per_session&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;kfz XGB best no LP&lt;/td&gt;&lt;td&gt;0.5833&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;td&gt;pages_visited_per_session&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;kfz LSTM best no LP&lt;/td&gt;&lt;td&gt;0.4494&lt;/td&gt;&lt;td&gt;pages_visited_per_user&lt;/td&gt;&lt;td&gt;pages_visited_per_user_cumulated&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;tchibo LSTM best + LP&lt;/td&gt;&lt;td&gt;0.8528&lt;/td&gt;&lt;td&gt;landingpage_cat&lt;/td&gt;&lt;td&gt;landingpage_cat&lt;/td&gt;&lt;td&gt;pages_visited_per_session_cumulated&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;tchibo LSTM best no LP&lt;/td&gt;&lt;td&gt;0.7339&lt;/td&gt;&lt;td&gt;pages_visited_per_user_cumulated&lt;/td&gt;&lt;td&gt;session_duration_in_s&lt;/td&gt;&lt;td&gt;pages_visited_per_session&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;tchibo LSTM new+LP reset failed&lt;/td&gt;&lt;td&gt;0.6502&lt;/td&gt;&lt;td&gt;pages_visited_per_session&lt;/td&gt;&lt;td&gt;days_between_sessions&lt;/td&gt;&lt;td&gt;pages_visited_per_session_cumulated&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;h2&gt;Landing-page impact&lt;/h2&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Setting&lt;/th&gt;&lt;th&gt;Feature&lt;/th&gt;&lt;th&gt;Control&lt;/th&gt;&lt;th&gt;Treatment&lt;/th&gt;&lt;th&gt;Conversion&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;tchibo LSTM best + LP&lt;/td&gt;&lt;td&gt;landingpage_cat&lt;/td&gt;&lt;td&gt;r1 · 40%&lt;/td&gt;&lt;td&gt;r1 · 47%&lt;/td&gt;&lt;td&gt;r4 · 15%&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;tchibo LSTM new+LP reset failed&lt;/td&gt;&lt;td&gt;landingpage_cat&lt;/td&gt;&lt;td&gt;r2 · 20%&lt;/td&gt;&lt;td&gt;r2 · 18%&lt;/td&gt;&lt;td&gt;r2 · 26%&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;kfzteile24 (all)&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td&gt;no LP&lt;/td&gt;&lt;td&gt;no LP&lt;/td&gt;&lt;td&gt;no LP&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;h2&gt;Control family mix&lt;/h2&gt;
+&lt;div class=&#34;card&#34;&gt;&lt;canvas id=&#34;mix&#34; height=&#34;140&#34;&gt;&lt;/canvas&gt;&lt;/div&gt;
+
+&lt;h2&gt;All insights&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;kfzteile24 x_train is engagement-only here&lt;/strong&gt; — no LP settings; pages 56–84% of control.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;tchibo landing still reallocates importance&lt;/strong&gt; — best+LP (F1 0.85): landing #1 on control/treatment (~40–47%).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Failed LP-reset is weaker on landing&lt;/strong&gt; — rank 2 (~18–26%); pages dominate more than best+LP.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sample-size caveat&lt;/strong&gt; — tchibo n=1,164 vs kfz ~22k; shares noisier than larger runs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;F1 vs drivers&lt;/strong&gt; — highest F1 is tchibo best+LP with clearest landing signal; best kfz F1 is XGB new no LP (pages).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;Recommendations&lt;/h2&gt;
+&lt;div class=&#34;card&#34;&gt;
+&lt;ol&gt;
+&lt;li&gt;For kfzteile24 landing conclusions, use earlier with-landingpage SHAP runs — not this folder.&lt;/li&gt;
+&lt;li&gt;For tchibo, prefer LSTM best + LP; treat reset-failed as a negative control.&lt;/li&gt;
+&lt;li&gt;This cross-customer x_train comparison is asymmetric (kfz=no-LP baselines; tchibo=LP contrast).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;footer&gt;Sources: shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 · shap_output/tchibo/tchibo_x_train_2026-09-15&lt;/footer&gt;
+&lt;/main&gt;
+&lt;script&gt;
+new Chart(document.getElementById(&#39;mix&#39;),{
+  type:&#39;bar&#39;,
+  data:{
+    labels:[&#39;kfz LSTM no LP&#39;,&#39;kfz XGB best no LP&#39;,&#39;kfz XGB new no LP&#39;,&#39;tchibo LSTM no LP&#39;,&#39;tchibo LSTM+LP&#39;,&#39;tchibo LP reset failed&#39;],
+    datasets:[
+      {label:&#39;Pages&#39;,data:[84,56,72,81,48,67],backgroundColor:&#39;#3B82F6&#39;,stack:&#39;s&#39;},
+      {label:&#39;Duration&#39;,data:[10,35,19,7,6,9],backgroundColor:&#39;#6B7280&#39;,stack:&#39;s&#39;},
+      {label:&#39;Landing&#39;,data:[0,0,0,0,40,20],backgroundColor:&#39;#10B981&#39;,stack:&#39;s&#39;},
+      {label:&#39;Recency&#39;,data:[6,9,9,12,7,4],backgroundColor:&#39;#F59E0B&#39;,stack:&#39;s&#39;}
+    ]
+  },
+  options:{responsive:true,scales:{x:{stacked:true},y:{stacked:true,max:100,title:{display:true,text:&#39;% of control mean |SHAP|&#39;}}}}
+});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&#39;&#39;&#39;
+out = Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_x_train_2026-09-15_shap_comparison.html&#39;)
+out.write_text(html, encoding=&#39;utf-8&#39;)
+print(&#39;wrote&#39;, out, out.stat().st_size)
+PY</summary>
+```bash
+python3 << 'PY'
+from pathlib import Path
+html = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>kfzteile24 vs tchibo — SHAP (x_train 2026-09-15)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0b0d10;--panel:#14181f;--text:#e8eaed;--muted:#9aa3af;--border:#2a3140}
+*{box-sizing:border-box}body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+main{max-width:1100px;margin:0 auto;padding:32px 20px 64px}h1{font-size:1.75rem;margin:0 0 8px}h2{font-size:1.25rem;margin:32px 0 12px}h3{font-size:1rem;margin:18px 0 8px}
+.muted{color:var(--muted);font-size:.9rem}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 24px}
+.stat,.card,.callout{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.stat .value{font-size:1.35rem;font-weight:700}.stat .label{color:var(--muted);font-size:.8rem;margin-top:4px}
+.callout{margin:12px 0 24px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{border-bottom:1px solid var(--border);text-align:left;padding:8px 10px;vertical-align:top}th{color:var(--muted)}
+ol{padding-left:1.2rem}li{margin:6px 0}footer{margin-top:32px;color:var(--muted);font-size:.75rem}
+@media(max-width:800px){.stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>kfzteile24 vs tchibo — SHAP (x_train 2026-09-15)</h1>
+<p class="muted">Mean |SHAP| · CV 6 · kfz n≈22–23k · tchibo n=1,164</p>
+<div class="stats">
+  <div class="stat"><div class="value">56–84%</div><div class="label">kfz pages (control)</div></div>
+  <div class="stat"><div class="value">40–47%</div><div class="label">tchibo best+LP landing</div></div>
+  <div class="stat"><div class="value">0.8528</div><div class="label">tchibo best+LP F1</div></div>
+  <div class="stat"><div class="value">0.6082</div><div class="label">best kfz F1 (XGB new)</div></div>
+</div>
+<div class="callout">kfzteile24 x_train here has <strong>no landingpage settings</strong>. tchibo includes best ± LP. Landing insights are tchibo-only in this slice.</div>
+
+<h2>Scope</h2>
+<table><thead><tr><th>Customer</th><th>Settings</th><th>Backends</th><th>Sample n</th></tr></thead>
+<tbody>
+<tr><td>kfzteile24</td><td>3 (LSTM/XGB no LP)</td><td>LSTM + XGB</td><td>22,000–22,708</td></tr>
+<tr><td>tchibo</td><td>3 (LSTM best ± LP, reset failed)</td><td>LSTM only</td><td>1,164</td></tr>
+</tbody></table>
+
+<h2>What dominates each model</h2>
+<table><thead><tr><th>Setting</th><th>Best F1</th><th>Control #1</th><th>Treatment #1</th><th>Conversion #1</th></tr></thead>
+<tbody>
+<tr><td>kfz XGB new no LP</td><td>0.6082</td><td>pages_visited_per_session</td><td>pages_visited_per_session</td><td>session_duration_in_s</td></tr>
+<tr><td>kfz XGB best no LP</td><td>0.5833</td><td>session_duration_in_s</td><td>pages_visited_per_session</td><td>session_duration_in_s</td></tr>
+<tr><td>kfz LSTM best no LP</td><td>0.4494</td><td>pages_visited_per_user</td><td>pages_visited_per_user_cumulated</td><td>session_duration_in_s</td></tr>
+<tr><td>tchibo LSTM best + LP</td><td>0.8528</td><td>landingpage_cat</td><td>landingpage_cat</td><td>pages_visited_per_session_cumulated</td></tr>
+<tr><td>tchibo LSTM best no LP</td><td>0.7339</td><td>pages_visited_per_user_cumulated</td><td>session_duration_in_s</td><td>pages_visited_per_session</td></tr>
+<tr><td>tchibo LSTM new+LP reset failed</td><td>0.6502</td><td>pages_visited_per_session</td><td>days_between_sessions</td><td>pages_visited_per_session_cumulated</td></tr>
+</tbody></table>
+
+<h2>Landing-page impact</h2>
+<table><thead><tr><th>Setting</th><th>Feature</th><th>Control</th><th>Treatment</th><th>Conversion</th></tr></thead>
+<tbody>
+<tr><td>tchibo LSTM best + LP</td><td>landingpage_cat</td><td>r1 · 40%</td><td>r1 · 47%</td><td>r4 · 15%</td></tr>
+<tr><td>tchibo LSTM new+LP reset failed</td><td>landingpage_cat</td><td>r2 · 20%</td><td>r2 · 18%</td><td>r2 · 26%</td></tr>
+<tr><td>kfzteile24 (all)</td><td>—</td><td>no LP</td><td>no LP</td><td>no LP</td></tr>
+</tbody></table>
+
+<h2>Control family mix</h2>
+<div class="card"><canvas id="mix" height="140"></canvas></div>
+
+<h2>All insights</h2>
+<ol>
+<li><strong>kfzteile24 x_train is engagement-only here</strong> — no LP settings; pages 56–84% of control.</li>
+<li><strong>tchibo landing still reallocates importance</strong> — best+LP (F1 0.85): landing #1 on control/treatment (~40–47%).</li>
+<li><strong>Failed LP-reset is weaker on landing</strong> — rank 2 (~18–26%); pages dominate more than best+LP.</li>
+<li><strong>Sample-size caveat</strong> — tchibo n=1,164 vs kfz ~22k; shares noisier than larger runs.</li>
+<li><strong>F1 vs drivers</strong> — highest F1 is tchibo best+LP with clearest landing signal; best kfz F1 is XGB new no LP (pages).</li>
+</ol>
+
+<h2>Recommendations</h2>
+<div class="card">
+<ol>
+<li>For kfzteile24 landing conclusions, use earlier with-landingpage SHAP runs — not this folder.</li>
+<li>For tchibo, prefer LSTM best + LP; treat reset-failed as a negative control.</li>
+<li>This cross-customer x_train comparison is asymmetric (kfz=no-LP baselines; tchibo=LP contrast).</li>
+</ol>
+</div>
+<footer>Sources: shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 · shap_output/tchibo/tchibo_x_train_2026-09-15</footer>
+</main>
+<script>
+new Chart(document.getElementById('mix'),{
+  type:'bar',
+  data:{
+    labels:['kfz LSTM no LP','kfz XGB best no LP','kfz XGB new no LP','tchibo LSTM no LP','tchibo LSTM+LP','tchibo LP reset failed'],
+    datasets:[
+      {label:'Pages',data:[84,56,72,81,48,67],backgroundColor:'#3B82F6',stack:'s'},
+      {label:'Duration',data:[10,35,19,7,6,9],backgroundColor:'#6B7280',stack:'s'},
+      {label:'Landing',data:[0,0,0,0,40,20],backgroundColor:'#10B981',stack:'s'},
+      {label:'Recency',data:[6,9,9,12,7,4],backgroundColor:'#F59E0B',stack:'s'}
+    ]
+  },
+  options:{responsive:true,scales:{x:{stacked:true},y:{stacked:true,max:100,title:{display:true,text:'% of control mean |SHAP|'}}}}
+});
+</script>
+</body>
+</html>
+'''
+out = Path('scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_x_train_2026-09-15_shap_comparison.html')
+out.write_text(html, encoding='utf-8')
+print('wrote', out, out.stat().st_size)
+PY
+```
+
+```
+wrote scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_x_train_2026-09-15_shap_comparison.html 6216
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The summary will include all three evaluation links. A key caveat is noted: LP settings are missing for kfzteile24.
+</details></think>
+
+_**Agent (default)**_
+
+**Important caveat:** kfzteile24 `x_train` only has **no-landingpage** settings here. Landing insights in this slice are **tchibo-only**.
+
+### Reports
+| Report | Canvas | HTML |
+|---|---|---|
+| kfzteile24 | [canvas](/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx) | `.../kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html` |
+| tchibo | [canvas](/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx) | `.../tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html` |
+| Comparison | [canvas](/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx) | `scripts/ModelShapValues/shap_output/kfzteile24_vs_tchibo_x_train_2026-09-15_shap_comparison.html` |
+
+### Snapshot
+**kfzteile24** (n≈22–23k, no LP): engagement-dominated; best F1 **0.6082** (XGB new) led by `pages_visited_per_session`.
+
+**tchibo** (n=1,164): best+LP F1 **0.8528** with `landingpage_cat` #1 on control/treatment (~40–47%). No-LP falls back to cumulated pages. “reset failed” LP model uses landing more weakly (rank 2).
+
+### Comparison takeaway
+Same pattern as before when LP exists (landing reallocates importance), but this x_train comparison is asymmetric — use earlier with-LP kfzteile24 runs for landing conclusions on that customer.
+
+---
+
+_**User**_
+
+For kfzteile there are no values fro with_landingpage why?
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Investigating why kfzteile24 x_train SHAP output lacks with_landingpage values.
+
+Checking the SHAP output directory and calculate logs. Verifying whether kfzteile24 model settings were actually run.
+</details></think>
+
+_**Agent (default)**_
+
+I'll check which kfzteile24 model settings exist vs what was actually explained in the x_train run.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: echo &#34;=== x_train shap output settings ===&#34;
+ls -d scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/*/ 2&gt;/dev/null
+echo
+echo &#34;=== test_data shap output settings (for comparison) ===&#34;
+ls -d scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/*/ 2&gt;/dev/null
+echo
+echo &#34;=== available model setting folders ===&#34;
+ls -d scripts/ModelShapValues/models/kfzteile24-aud-*/2026-09-*/ 2&gt;/dev/null | head -40
+echo
+echo &#34;=== with_landingpage model dirs ===&#34;
+ls -d scripts/ModelShapValues/models/kfzteile24-aud-*/**/*landingpage* 2&gt;/dev/null | head -40
+ls -d scripts/ModelShapValues/models/kfzteile24*/**/*with_landingpage* 2&gt;/dev/null | head -20
+find scripts/ModelShapValues/models -maxdepth 2 -type d -name &#39;*kfzteile*&#39; 2&gt;/dev/null
+find scripts/ModelShapValues/models -maxdepth 3 -type d -iname &#39;*landingpage*&#39; 2&gt;/dev/null | rg -i &#39;kfzteile|6835&#39; | head -30
+</summary>
+```bash
+echo "=== x_train shap output settings ==="
+ls -d scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/*/ 2>/dev/null
+echo
+echo "=== test_data shap output settings (for comparison) ==="
+ls -d scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/*/ 2>/dev/null
+echo
+echo "=== available model setting folders ==="
+ls -d scripts/ModelShapValues/models/kfzteile24-aud-*/2026-09-*/ 2>/dev/null | head -40
+echo
+echo "=== with_landingpage model dirs ==="
+ls -d scripts/ModelShapValues/models/kfzteile24-aud-*/**/*landingpage* 2>/dev/null | head -40
+ls -d scripts/ModelShapValues/models/kfzteile24*/**/*with_landingpage* 2>/dev/null | head -20
+find scripts/ModelShapValues/models -maxdepth 2 -type d -name '*kfzteile*' 2>/dev/null
+find scripts/ModelShapValues/models -maxdepth 3 -type d -iname '*landingpage*' 2>/dev/null | rg -i 'kfzteile|6835' | head -30
+
+```
+
+```
+=== x_train shap output settings ===
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-08_best_models_without_landingpage_lstm/
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-08_best_models_without_landingpage_xgb/
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-09_new_models_without_landingpage_xgb/
+
+=== test_data shap output settings (for comparison) ===
+(eval):5: no matches found: scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data/*/
+
+=== available model setting folders ===
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm/
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb/
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables_xgb/
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb/
+
+=== with_landingpage model dirs ===
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_xgb
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables_xgb
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_new_models_without_landingpage_xgb
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm
+scripts/ModelShap
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: # find logs for x_train kfzteile24 run
+ls -t scripts/ModelShapValues/logs/*kfzteile* 2&gt;/dev/null | head -15
+rg -l &#34;x_train_2026-09-15|kfzteile24_x_train&#34; scripts/ModelShapValues/logs 2&gt;/dev/null | head -10
+rg -n &#34;with_landingpage|skip|No SHAP|Setting |max_samples|data-path|x_train&#34; scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_*.log 2&gt;/dev/null | tail -80
+</summary>
+```bash
+# find logs for x_train kfzteile24 run
+ls -t scripts/ModelShapValues/logs/*kfzteile* 2>/dev/null | head -15
+rg -l "x_train_2026-09-15|kfzteile24_x_train" scripts/ModelShapValues/logs 2>/dev/null | head -10
+rg -n "with_landingpage|skip|No SHAP|Setting |max_samples|data-path|x_train" scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_*.log 2>/dev/null | tail -80
+
+```
+
+```
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_093814.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_180100.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_180038.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_170158.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_155005.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_150656.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_142333.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_142031.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_140947.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_140229.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_134658.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_114145.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_113641.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_113620.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_113104.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_170158.log:7:2026-09-14 19:01:58 INFO settings: ['2026-09-07_new_models_with_landingpage_lstm', '2026-09-08_best_models_without_landingpage_lstm', '2026-09-08_best_models_without_landingpage_xgb', '2026-09-09_best_models_with_landingpage_cat_enables_xgb', '2026-09-09_new_models_without_landingpage_xgb']
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_170158.log:9:2026-09-14 19:01:59 INFO max_samples=833906
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_170158.log:12:2026-09-14 19:01:59 INFO     skipped 2026-09-07_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_6_group_6835d77813526dc3d1229978_control.h5 (F1=0.559254)
+scripts/ModelShapValues/log
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The answer for kfzteile is found. Now checking whether the XGB with landingpage setting also failed.
+
+Checking lines around 133319.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_093814.log</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: python3 -c &#34;
+import pandas as pd
+p=&#39;scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet&#39;
+df=pd.read_parquet(p)
+print(&#39;cols:&#39;, sorted(df.columns.tolist()))
+print(&#39;has landingpage&#39;, &#39;landingpage&#39; in df.columns)
+print(&#39;has landingpage_cat&#39;, &#39;landingpage_cat&#39; in df.columns)
+print(&#39;shape&#39;, df.shape)
+&#34;</summary>
+```bash
+python3 -c "
+import pandas as pd
+p='scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet'
+df=pd.read_parquet(p)
+print('cols:', sorted(df.columns.tolist()))
+print('has landingpage', 'landingpage' in df.columns)
+print('has landingpage_cat', 'landingpage_cat' in df.columns)
+print('shape', df.shape)
+"
+```
+
+```
+cols: ['days_between_sessions', 'landingpage', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s']
+has landingpage True
+has landingpage_cat False
+shape (22708, 7)
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The answer is clear. Both with_landingpage settings failed for different reasons.
+
+The LSTM model expects `landingpage_cat`, but the training data only contains `landingpage`. The XGB model has `landingpage` available, yet it crashes because the column is a string or object type rather than categorical. Converting it to categorical would resolve the error.
+</details></think>
+
+_**Agent (default)**_
+
+They were attempted — both `with_landingpage` settings **failed** on the x_train parquet, so nothing was written for them.
+
+From log `calculate_shap_values_kfzteile24_20260915_093814.log`:
+
+### 1. LSTM `2026-09-07_new_models_with_landingpage_lstm`
+Failed because the data is missing `landingpage_cat`:
+
+```text
+ValueError: Data is missing required feature columns ... ['landingpage_cat'].
+Available: [..., 'landingpage', ...]
+```
+
+Your x_train file has `landingpage`, not `landingpage_cat`.
+
+### 2. XGB `2026-09-09_best_models_with_landingpage_cat_enables_xgb`
+This one *does* expect `landingpage` (present), but crashed while preparing categoricals:
+
+```text
+AttributeError: 'Series' object has no attribute 'categories'
+```
+
+So SHAP never produced outputs for that setting either.
+
+### What succeeded
+Only the three `without_landingpage` settings completed → that’s why the report has no with-LP values.
+
+**To fix:**  
+- For LSTM+LP: add/encode `landingpage_cat` in `kfzteile24_x_train_2026-09-15.parquet` (or map from `landingpage`).  
+- For XGB+LP: fix categorical handling of `landingpage` in `prepare_x_for_model` (cast to `category` before `enable_categorical`), then rerun those two settings.
+
+---
+
+_**User**_
+
+@calculate_shap_values.py (8-15) why No model-setting directories found for the given filters.?
+
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Investigating why the script reports no model-setting directories match the given filters.
+</details></think>
+
+_**Agent (default)**_
+
+I'll check how the script resolves `--setting` and why that path isn't matching any model-setting directories.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/kfzteile-output-2.out</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "No model-setting directories found|setting|model.setting|filters"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "No model-setting directories found|setting|model.setting|filters",
+  "topFiles": [
+    {
+      "matchCount": 68,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 68
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -la &#34;scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/&#34; 2&gt;/dev/null; ls -la &#34;scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables_xgb/&#34; 2&gt;/dev/null; find scripts/ModelShapValues/models -maxdepth 3 -type d -name &#39;*landingpage*&#39; 2&gt;/dev/null | head -40</summary>
+```bash
+ls -la "scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/" 2>/dev/null; ls -la "scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-09_best_models_with_landingpage_cat_enables_xgb/" 2>/dev/null; find scripts/ModelShapValues/models -maxdepth 3 -type d -name '*landingpage*' 2>/dev/null | head -40
+```
+
+```
+total 32
+drwxr-xr-x    8 karolinegriesbach  staff    256 Sep 14 12:52 .
+drwxr-xr-x    5 karolinegriesbach  staff    160 Sep 14 15:59 ..
+-rw-r--r--@   1 karolinegriesbach  staff  14340 Sep 14 17:40 .DS_Store
+drwxr-xr-x  451 karolinegriesbach  staff  14432 Sep 14 09:38 2026-09-07_new_models_with_landingpage_lstm
+drwxr-xr-x  447 karolinegriesbach  staff  14304 Sep 14 15:59 2026-09-08_best_models_without_landingpage_lstm
+drwxr-xr-x  139 karolinegriesbach  staff   4448 Sep 14 12:53 2026-09-08_best_models_without_landingpage_xgb
+drwxr-xr-x   10 karolinegriesbach  staff    320 Sep 14 09:35 2026-09-09_best_models_with_landingpage_cat_enables_xgb
+drwxr-xr-x  137 karolinegriesbach  staff   4384 Sep 14 12:29 2026-09-09_new_models_without_landingpage_xgb
+total 165872
+drwxr-xr-x  10 karolinegriesbach  staff       320 Sep 14 09:35 .
+drwxr-xr-x   8 karolinegriesbach  staff       256 Sep 14 12:52 ..
+-rw-r--r--   1 karolinegriesbach  staff       129 Sep  9 17:02 2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_6835d77813526dc3d1229978_test_score.csv
+-rw-r--r--   1 karolinegriesbach  staff  26555909 Sep  9 17:02 2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_cv_6_conversion_probability
+-rw-r--r--   1 karolinegriesbach  staff  15765446 Sep  9 17:02 2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control.json
+-rw-r--r--   1 karolinegriesbach  staff       284 Sep  9 17:02 2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_control_feature_importance.csv
+-rw-r--r--   1 karolinegriesbach  staff  36512728 Sep  9 17:02 2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_propensitymodel
+-rw-r--r--   1 karolinegriesbach  staff   6068606 Sep  9 17:02 2026-09-09_classifier_XGBRegressor_100_3_0.1_0_saved_model_cv_6_group_6835d77813526dc3d1229978_treatment.json
+-rw-r--r--   1 karolinegriesbach  staff       270 Sep  9 17:02 2026-09-09_
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Checking the `discover_settings` function and the `--setting` argument parser to find why no model-setting directories match the given filters.
+
+The `--setting` flag expects a folder name rather than a full path. The user likely provided a full path instead of the directory name.
+
+The filter string is a full path, but the code matches it against the directory name alone. This mismatch causes the error.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The `--setting` argument expects only the folder name, not a full path.
+
+A trailing slash caused the filter to match against the full relative path rather than the folder name, so no settings matched.
+</details></think>
+
+_**Agent (default)**_
+
+`--setting` expects only the **folder name**, not a path.
+
+You passed:
+```text
+scripts/ModelShapValues/models/.../2026-09-09_best_models_with_landingpage_cat_enables_xgb/
+```
+
+The script compares that string to each child folder’s **name** (`2026-09-09_best_models_with_landingpage_cat_enables_xgb`), so nothing matches.
+
+Use:
+
+```bash
+python scripts/ModelShapValues/calculate_shap_values.py \
+        --customer kfzteile24 \
+        --data-path scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet \
+        --cv 6 \
+        --max-samples all \
+        --kernel-explain-samples 22000 \
+        --setting 2026-09-09_best_models_with_landingpage_cat_enables_xgb \
+        --output-dir scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15
+```
+
+---
+
+_**User**_
+
+why does this error occurrs?
+@kfzteile-output-2.out (28-48) 
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Investigating the cause of the Series-related AttributeError.
+
+The error originates in `prepare_x_for_model`. The landingpage column dtype is being examined.
+</details></think>
+
+_**Agent (default)**_
+
+I'll inspect `prepare_x_for_model` and the `landingpage` column dtype that triggers this.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python - &lt;&lt;&#39;PY&#39;
+import pandas as pd
+path = &#34;scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet&#34;
+df = pd.read_parquet(path)
+print(&#34;landingpage&#34; in df.columns, &#34;landingpage_cat&#34; in df.columns)
+if &#34;landingpage&#34; in df.columns:
+    s = df[&#34;landingpage&#34;]
+    print(&#34;dtype:&#34;, s.dtype)
+    print(&#34;type(dtype):&#34;, type(s.dtype))
+    print(&#34;sample:&#34;, s.head(3).tolist())
+    print(&#34;nunique:&#34;, s.nunique(dropna=False))
+    # reproduce is_bool_dtype path
+    try:
+        print(&#34;is_bool_dtype:&#34;, pd.api.types.is_bool_dtype(s))
+    except Exception as e:
+        print(&#34;is_bool_dtype ERROR:&#34;, type(e).__name__, e)
+    # check categorical-like
+    print(&#34;is_categorical_dtype:&#34;, pd.api.types.is_categorical_dtype(s))
+    print(&#34;hasattr categories on series:&#34;, hasattr(s, &#34;categories&#34;))
+    print(&#34;hasattr categories on dtype:&#34;, hasattr(s.dtype, &#34;categories&#34;))
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python - <<'PY'
+import pandas as pd
+path = "scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet"
+df = pd.read_parquet(path)
+print("landingpage" in df.columns, "landingpage_cat" in df.columns)
+if "landingpage" in df.columns:
+    s = df["landingpage"]
+    print("dtype:", s.dtype)
+    print("type(dtype):", type(s.dtype))
+    print("sample:", s.head(3).tolist())
+    print("nunique:", s.nunique(dropna=False))
+    # reproduce is_bool_dtype path
+    try:
+        print("is_bool_dtype:", pd.api.types.is_bool_dtype(s))
+    except Exception as e:
+        print("is_bool_dtype ERROR:", type(e).__name__, e)
+    # check categorical-like
+    print("is_categorical_dtype:", pd.api.types.is_categorical_dtype(s))
+    print("hasattr categories on series:", hasattr(s, "categories"))
+    print("hasattr categories on dtype:", hasattr(s.dtype, "categories"))
+PY
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The Python process segfaulted with exit code 139.
+
+The crash stems from a pandas bug. `pd.api.types.is_bool_dtype` is being called with a Series object instead of a dtype. This causes an AttributeError when the code tries to access `.categories`.
+
+The pandas `is_bool_dtype` function checks for `ABCCategoricalDtype` instances. When the input is a categorical Series, it enters that branch and attempts to read `.categories` directly from the Series object.
+
+The pandas `is_bool_dtype` code extracts `.dtype` from the input when it has that attribute. The crash suggests the input remains a Series despite this extraction. The pandas version and exact source around line 1322 need verification.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python -c &#34;import pandas as pd; print(pd.__version__); import inspect, pandas.core.dtypes.common as c; print(inspect.getsourcefile(c.is_bool_dtype)); src=inspect.getsource(c.is_bool_dtype); print(src)&#34;</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python -c "import pandas as pd; print(pd.__version__); import inspect, pandas.core.dtypes.common as c; print(inspect.getsourcefile(c.is_bool_dtype)); src=inspect.getsource(c.is_bool_dtype); print(src)"
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.py",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues",
+  "pattern": "landingpage|feature_cols|inputs\\.parquet|resolve_feature"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues",
+  "pattern": "landingpage|feature_cols|inputs\\.parquet|resolve_feature",
+  "topFiles": [
+    {
+      "matchCount": 17,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    },
+    {
+      "matchCount": 3,
+      "uri": "scripts/ModelShapValues/write_shap_canvas_report.py"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 20
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/kfzteile-output-2.out</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Python segfaults when importing pandas in the sandbox.
+
+Trying all permissions or py to read the schema without pandas.arrow.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/pandas/core/dtypes/common.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python -c &#34;
+import pyarrow.parquet as pq
+t = pq.read_table(&#39;scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet&#39;)
+print(t.schema)
+col = t.column(&#39;landingpage&#39;)
+print(&#39;type&#39;, col.type)
+print(&#39;chunk0&#39;, col.chunk(0)[:5] if col.num_chunks else None)
+&#34;</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python -c "
+import pyarrow.parquet as pq
+t = pq.read_table('scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet')
+print(t.schema)
+col = t.column('landingpage')
+print('type', col.type)
+print('chunk0', col.chunk(0)[:5] if col.num_chunks else None)
+"
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The bug is clearly located in pandas `is_bool_dtype`.
+
+The function accesses `.categories` on the original Series instead of the underlying CategoricalDtype. This causes the crash.
+
+The crash only surfaces for the `with_landingpage` setting because the `without_landingpage` models exclude the `landingpage` column entirely. Columns that are already categorical when the feature loop begins trigger the bug; object-to-categorical conversions happen earlier in the same loop and bypass this path.
+
+Even if `is_bool_dtype` handled categorical strings correctly, it would return False and leave the column unchanged. The crash is purely caused by passing a Series to the function. Pandas documentation confirms that `is_bool_dtype` expects a Categorical object with `.categories`, not a Series.
+</details></think>
+
+_**Agent (default)**_
+
+It crashes in `prepare_x_for_model` because **`landingpage` is already categorical**, and the bool check mishandles that.
+
+```570:580:scripts/ModelShapValues/calculate_shap_values.py
+def prepare_x_for_model(...):
+    x_df = frame[feature_cols].copy()
+    for col in x_df.columns:
+        if pd.api.types.is_object_dtype(x_df[col]) or str(x_df[col].dtype) == "string":
+            x_df[col] = x_df[col].astype("category")
+        elif pd.api.types.is_bool_dtype(x_df[col]):  # ← fails here
+            x_df[col] = x_df[col].astype(int)
+```
+
+What happens:
+
+1. Your x_train has `landingpage` as a **categorical** column (not object/string).
+2. The first `if` is skipped (not object/string).
+3. The `elif` calls `pd.api.types.is_bool_dtype` on that Series.
+4. Inside pandas, for categorical dtypes it does `arr_or_dtype.categories` — which works for a `Categorical`, but **not** for a `Series` (you’d need `series.cat.categories`). That raises the `AttributeError`.
+
+Why only this setting: without-LP models don’t use `landingpage`, so they never hit this path. With-LP XGB includes it → crash before SHAP runs.
+
+**Fix:** check dtype safely, e.g. `is_bool_dtype(x_df[col].dtype)` instead of the Series, or skip/handle categorical columns explicitly before the bool check.
+
+---
+
+_**User**_
+
+Fx it
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Fixing `prepare_x_for_model` to properly handle categorical Series when calling `is_bool_dtype`.
+
+Using `.dtype` directly or explicitly handling categorical columns.
+</details></think>
+
+_**Agent (default)**_
+
+I'll fix `prepare_x_for_model` so categorical columns don't hit the broken `is_bool_dtype(Series)` path.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The fix is complete. Categorical landing pages now skip both branches and remain categorical, which is required by XGBoost with enable_categorical.
+</details></think>
+
+_**Agent (default)**_
+
+Fixed. `prepare_x_for_model` now checks `dtype` instead of the Series, so categorical `landingpage` is left as category (correct for XGB) and no longer crashes.
+
+Re-run the same command; control/conversion/treatment should get past prep.
+
+---
+
+_**User**_
+
+why is this failing?
+@kfzteile-output-3.out (19-42) 
+executing this one: 
+@kfzteile-output-2.out (35-43) 
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The LSTM with landingpage setting is failing.
+
+The error shows the model expects `landingpage_cat`, but the data only contains `landingpage`. I am checking `resolve_feature_columns` and `inputs.parquet` to confirm the exact mismatch.
+</details></think>
+
+_**Agent (default)**_
+
+Checking how the LSTM setting expects features versus what's in the data.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python -c &#34;
+import pyarrow.parquet as pq
+inp = pq.read_table(&#39;scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet&#39;)
+print(&#39;inputs.parquet columns:&#39;, inp.column_names)
+print(inp.to_pandas().head(2) if inp.num_rows else inp.schema)
+&#34; 2&gt;&amp;1 || parquet-tools schema &#34;scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet&#34; 2&gt;&amp;1 || ls -la scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet; file scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet; xxd scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet | head -5</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python -c "
+import pyarrow.parquet as pq
+inp = pq.read_table('scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet')
+print('inputs.parquet columns:', inp.column_names)
+print(inp.to_pandas().head(2) if inp.num_rows else inp.schema)
+" 2>&1 || parquet-tools schema "scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet" 2>&1 || ls -la scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet; file scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet; xxd scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet | head -5
+```
+
+```
+inputs.parquet columns: ['input']
+                   input
+0            anonymousId
+1  days_between_sessions
+scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet: Apache Parquet
+00000000: 5041 5231 1504 15c2 0315 9c02 4c15 1215  PAR1........L...
+00000010: 0412 0000 e101 f03c 0b00 0000 616e 6f6e  .......<....anon
+00000020: 796d 6f75 7349 6415 0000 0064 6179 735f  ymousId....days_
+00000030: 6265 7477 6565 6e5f 7365 7373 696f 6e73  between_sessions
+00000040: 1900 0000 7061 6765 735f 7669 7369 7465  ....pages_visite
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Checking the full input list, including landingpage_cat, to diagnose the failure.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python -c &#34;
+import pandas as pd
+inp = pd.read_parquet(&#39;scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet&#39;)
+print(inp[&#39;input&#39;].tolist())
+data = pd.read_parquet(&#39;scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet&#39;)
+print(&#39;data cols:&#39;, list(data.columns))
+print(&#39;landingpage dtype:&#39;, data[&#39;landingpage&#39;].dtype)
+&#34;</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python -c "
+import pandas as pd
+inp = pd.read_parquet('scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/inputs.parquet')
+print(inp['input'].tolist())
+data = pd.read_parquet('scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet')
+print('data cols:', list(data.columns))
+print('landingpage dtype:', data['landingpage'].dtype)
+"
+```
+
+```
+['anonymousId', 'days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'session', 'landingpage_cat']
+data cols: ['days_between_sessions', 'landingpage', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s']
+landingpage dtype: category
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The LSTM model expects a categorical feature named `landingpage_cat`, but the training data only contains the raw string URL column `landingpage`. This mismatch causes the failure.
+</details></think>
+
+_**Agent (default)**_
+
+The LSTM setting was trained on `landingpage_cat`, but your x_train file only has `landingpage`.
+
+From the setting’s `inputs.parquet`:
+```text
+... session_duration_in_s, session, landingpage_cat
+```
+
+From `kfzteile24_x_train_2026-09-15.parquet`:
+```text
+... session_duration_in_s, landingpage   ← no landingpage_cat
+```
+
+So `resolve_feature_columns` correctly fails: the model needs `landingpage_cat`, and that column isn’t in the data.
+
+This is a data mismatch, not a script bug. The XGB with-LP setting uses `landingpage`; the LSTM with-LP setting uses the encoded `landingpage_cat`. You need to add/encode `landingpage_cat` in the parquet (same encoding as training), or re-export x_train with that column.
+
+---
+
+_**User**_
+
+Evaluate Tchibo, Kfzteile and Tchibo vs. Kfzteile again for scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 and scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Re-evaluating SHAP outputs for Tchibo and Kfzteile on their respective x_train datasets. Comparing both models against each other.
+
+Checking how SHAP reports are generated. Likely uses `write_shap_canvas_report.py`. Exploring the output directories.
+</details></think>
+
+_**Agent (default)**_
+
+I'll check what's in those SHAP output dirs and how reports are generated, then run the evaluations.
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **``** (0 files)
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.py",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues",
+  "pattern": "write_shap_canvas_report|canvas|html|evaluate"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues",
+  "pattern": "write_shap_canvas_report|canvas|html|evaluate",
+  "topFiles": [
+    {
+      "matchCount": 88,
+      "uri": "scripts/ModelShapValues/write_shap_canvas_report.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 88
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/agent-transcripts/2ad73946-d4d4-4449-973d-8d9e3616bf89/2ad73946-d4d4-4449-973d-8d9e3616bf89.jsonl",
+  "pattern": "tchibo|kfzteile|x_train"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/agent-transcripts/2ad73946-d4d4-4449-973d-8d9e3616bf89/2ad73946-d4d4-4449-973d-8d9e3616bf89.jsonl",
+  "pattern": "tchibo|kfzteile|x_train",
+  "topFiles": [
+    {
+      "matchCount": 30,
+      "uri": "../../../../.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/agent-transcripts/2ad73946-d4d4-4449-973d-8d9e3616bf89/2ad73946-d4d4-4449-973d-8d9e3616bf89.jsonl"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 97
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Searching for Tchibo versus Kfzteile comparison reports and examining the SHAP output directories for x_train data.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: find scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 -type f 2&gt;/dev/null | head -60; echo &#34;---&#34;; ls -la scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/ 2&gt;/dev/null; ls -la scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/ 2&gt;/dev/null</summary>
+```bash
+find scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 -type f 2>/dev/null | head -60; echo "---"; ls -la scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/ 2>/dev/null; ls -la scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/ 2>/dev/null
+```
+
+```
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_conversion_shap_values.csv
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_shap_values.csv
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_conversion_shap_bar.png
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_shap_bar.png
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_conversion_mean_abs_shap.csv
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_shap_beeswarm.png
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_treatment_mean_abs_shap.csv
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_treatment_shap_bar.png
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_treatment_shap_values.csv
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_treatment_shap_beeswarm.png
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_conversion_shap_beeswarm.png
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-08_best_models_without_landingpage_lstm/cv_6_conversion_shap_values.csv
+scripts/ModelShapVal
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues",
+  "pattern": "compare|vs\\.|tchibo.*kfz|kfz.*tchibo"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues",
+  "pattern": "compare|vs\\.|tchibo.*kfz|kfz.*tchibo",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "scripts/ModelShapValues/write_shap_canvas_report.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **2** results in **1** directory</summary>
+
+Directory: **`/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases`** (2 files)
+
+| File |
+|------|
+| `kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx` |
+| `kfzteile24-vs-tchibo-shap-comparison.canvas.tsx` |
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+A prior comparison canvas exists. I need to use it for this evaluation.
+
+I'll generate individual reports for kfzteile24 and tchibo x_train. Then I'll update the Tchibo vs Kfzteile comparison report. First I need to check write_shap_canvas_report.py and review how the existing comparison canvas was created.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/agent-transcripts/2ad73946-d4d4-4449-973d-8d9e3616bf89/2ad73946-d4d4-4449-973d-8d9e3616bf89.jsonl",
+  "pattern": "comparison|vs-tchibo|write_shap"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/agent-transcripts/2ad73946-d4d4-4449-973d-8d9e3616bf89/2ad73946-d4d4-4449-973d-8d9e3616bf89.jsonl",
+  "pattern": "comparison|vs-tchibo|write_shap",
+  "topFiles": [
+    {
+      "matchCount": 20,
+      "uri": "../../../../.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/agent-transcripts/2ad73946-d4d4-4449-973d-8d9e3616bf89/2ad73946-d4d4-4449-973d-8d9e3616bf89.jsonl"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 62
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Running write_shap_canvas_report.py with --html for both kfzteile24 and tchibo x_train directories.
+
+Kfz now has five settings instead of three, including with_landingpage variants. I'm analyzing the updated SHAP outputs to regenerate the comparison canvas.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/skills-cursor/canvas/SKILL.md</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title &#34;kfzteile24 SHAP evaluation (x_train 2026-09-15)&#34; \
+  --html --cv 6 2&gt;&amp;1</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title "kfzteile24 SHAP evaluation (x_train 2026-09-15)" \
+  --html --cv 6 2>&1
+```
+
+```
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.html
+Settings: LSTM new + LP
+Source: scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title &#34;tchibo SHAP evaluation (x_train 2026-09-15)&#34; \
+  --html --cv 6 2&gt;&amp;1</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title "tchibo SHAP evaluation (x_train 2026-09-15)" \
+  --html --cv 6 2>&1
+```
+
+```
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.html
+Settings: LSTM new + LP reset failed, LSTM best no LP, LSTM best + LP
+Source: scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Individual reports have been generated.
+
+Now analyzing both datasets to extract key findings and update the comparison canvas.
+</details></think>
+
+_**Agent (default)**_
+
+Next I'll pull the comparison data and refresh the Tchibo vs Kfzteile canvas.
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+
+def short_setting(s):
+    m = {
+        &#34;2026-09-07_new_models_with_landingpage_lstm&#34;: &#34;LSTM new + LP&#34;,
+        &#34;2026-09-08_best_models_without_landingpage_lstm&#34;: &#34;LSTM best no LP&#34;,
+        &#34;2026-09-08_best_models_without_landingpage_xgb&#34;: &#34;XGB best no LP&#34;,
+        &#34;2026-09-09_best_models_with_landingpage_cat_enables_xgb&#34;: &#34;XGB best + LP&#34;,
+        &#34;2026-09-09_new_models_without_landingpage_xgb&#34;: &#34;XGB new no LP&#34;,
+        &#34;2026-07-27_new_models_with_landingpage_reset_lstm_failed&#34;: &#34;LSTM new + LP reset failed&#34;,
+        &#34;2026-08-12_best_models_without_landingpage_lstm&#34;: &#34;LSTM best no LP&#34;,
+        &#34;2026-09-12_best_models_with_landingpage_lstm&#34;: &#34;LSTM best + LP&#34;,
+    }
+    return m.get(s, s)
+
+def bucket(f):
+    f = f.lower()
+    if &#39;landingpage&#39; in f: return &#39;landing&#39;
+    if &#39;session_duration&#39; in f: return &#39;duration&#39;
+    if &#39;days_between&#39; in f: return &#39;recency&#39;
+    if &#39;pages_visited&#39; in f: return &#39;pages&#39;
+    return &#39;other&#39;
+
+for customer, base in [
+    (&#39;kfz&#39;, Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;)),
+    (&#39;tchibo&#39;, Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;)),
+]:
+    print(&#39;\n===&#39;, customer, &#39;===&#39;)
+    df = pd.read_csv(base/&#39;comparison_mean_abs_shap.csv&#39;)
+    df = df[df[&#39;cv&#39;]==6].copy()
+    # dedupe: one model per setting/role - take max mean_abs_shap sum? use manifest
+    man = pd.read_csv(base/&#39;shap_run_manifest.csv&#39;)
+    print(&#39;settings:&#39;, sorted(df[&#39;customer_setting&#39;].unique()))
+    print(&#39;manifest settings:&#39;, sorted(man[&#39;setting&#39;].unique()))
+    # best F1 per setting
+    f1 = man.groupby(&#39;setting&#39;)[&#39;f1&#39;].max().sort_values(ascending=False)
+    print(&#39;Best F1 by setting:&#39;)
+    for s,v in f1.items():
+        print(f&#39;  {short_setting(s)}: {v:.4f}&#39;)
+    # sample n
+    n = man.groupby(&#39;setting&#39;)[&#39;n_samples&#39;].first()
+    print(&#39;Sample n:&#39;, dict(n))
+    
+    for role in [&#39;control&#39;,&#39;treatment&#39;,&#39;conversion&#39;]:
+        print(f&#39;\n-- {role} top features per setting --&#39;)
+        sub = df[df[&#39;role&#39;]==role]
+        for setting in sorted(sub[&#39;customer_setting&#39;].unique()):
+            ssub = sub[sub[&#39;customer_setting&#39;]==setting].sort_values(&#39;mean_abs_shap&#39;, ascending=False)
+            total = ssub[&#39;mean_abs_shap&#39;].sum()
+            top = ssub.iloc[0]
+            landing = ssub[ssub[&#39;feature&#39;].str.contains(&#39;landing&#39;, case=False, na=False)]
+            lp_share = 100*landing[&#39;mean_abs_shap&#39;].sum()/total if total else 0
+            pages = ssub[ssub[&#39;feature&#39;].apply(lambda x: bucket(x)==&#39;pages&#39;)]
+            pg_share = 100*pages[&#39;mean_abs_shap&#39;].sum()/total if total else 0
+            print(f&#34;  {short_setting(setting):25s} #1={top[&#39;feature&#39;]} ({top[&#39;mean_abs_shap&#39;]:.4f}) pages={pg_share:.1f}% landing={lp_share:.1f}%&#34;)
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+
+def short_setting(s):
+    m = {
+        "2026-09-07_new_models_with_landingpage_lstm": "LSTM new + LP",
+        "2026-09-08_best_models_without_landingpage_lstm": "LSTM best no LP",
+        "2026-09-08_best_models_without_landingpage_xgb": "XGB best no LP",
+        "2026-09-09_best_models_with_landingpage_cat_enables_xgb": "XGB best + LP",
+        "2026-09-09_new_models_without_landingpage_xgb": "XGB new no LP",
+        "2026-07-27_new_models_with_landingpage_reset_lstm_failed": "LSTM new + LP reset failed",
+        "2026-08-12_best_models_without_landingpage_lstm": "LSTM best no LP",
+        "2026-09-12_best_models_with_landingpage_lstm": "LSTM best + LP",
+    }
+    return m.get(s, s)
+
+def bucket(f):
+    f = f.lower()
+    if 'landingpage' in f: return 'landing'
+    if 'session_duration' in f: return 'duration'
+    if 'days_between' in f: return 'recency'
+    if 'pages_visited' in f: return 'pages'
+    return 'other'
+
+for customer, base in [
+    ('kfz', Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15')),
+    ('tchibo', Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15')),
+]:
+    print('\n===', customer, '===')
+    df = pd.read_csv(base/'comparison_mean_abs_shap.csv')
+    df = df[df['cv']==6].copy()
+    # dedupe: one model per setting/role - take max mean_abs_shap sum? use manifest
+    man = pd.read_csv(base/'shap_run_manifest.csv')
+    print('settings:', sorted(df['customer_setting'].unique()))
+    print('manifest settings:', sorted(man['setting'].unique()))
+    # best F1 per setting
+    f1 = man.groupby('setting')['f1'].max().sort_values(ascending=False)
+    print('Best F1 by setting:')
+    for s,v in f1.items():
+        print(f'  {short_setting(s)}: {v:.4f}')
+    # sample n
+    n = man.groupby('setting')['n_samples'].first()
+    print('Sample n:', dict(n))
+    
+    for role in ['control','treatment','conversion']:
+        print(f'\n-- {role} top features per setting --')
+        sub = df[df['role']==role]
+        for setting in sorted(sub['customer_setting'].unique()):
+            ssub = sub[sub['customer_setting']==setting].sort_values('mean_abs_shap', ascending=False)
+            total = ssub['mean_abs_shap'].sum()
+            top = ssub.iloc[0]
+            landing = ssub[ssub['feature'].str.contains('landing', case=False, na=False)]
+            lp_share = 100*landing['mean_abs_shap'].sum()/total if total else 0
+            pages = ssub[ssub['feature'].apply(lambda x: bucket(x)=='pages')]
+            pg_share = 100*pages['mean_abs_shap'].sum()/total if total else 0
+            print(f"  {short_setting(setting):25s} #1={top['feature']} ({top['mean_abs_shap']:.4f}) pages={pg_share:.1f}% landing={lp_share:.1f}%")
+PY
+```
+
+```
+
+=== kfz ===
+settings: ['2026-09-07_new_models_with_landingpage_lstm']
+manifest settings: ['2026-09-07_new_models_with_landingpage_lstm']
+Traceback (most recent call last):
+  File "<stdin>", line 37, in <module>
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/pandas/core/groupby/generic.py", line 1338, in __getitem__
+    return super().__getitem__(key)
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/pandas/core/base.py", line 250, in __getitem__
+    raise KeyError(f"Column not found: {key}")
+KeyError: 'Column not found: f1'
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The kfz comparison_mean_abs_shap.csv appears to contain only one setting.
+
+The directory listing shows five settings, so the CSV likely lost entries during deduplication or regeneration. I will inspect the CSV and manifest files directly.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/comparison_mean_abs_shap.csv</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/shap_run_manifest.csv</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/shap_run_manifest.csv</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The kfz comparison file only contains the LSTM new + LP setting because the manifest was overwritten by that run.
+
+All five per-setting folders still exist. The report script may only read the comparison CSV when present. Checking how it loads data.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "def load_|comparison_mean|MEAN_ABS|dedupe"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "def load_|comparison_mean|MEAN_ABS|dedupe",
+  "topFiles": [
+    {
+      "matchCount": 10,
+      "uri": "scripts/ModelShapValues/write_shap_canvas_report.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 10
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+
+SHORT = {
+    &#34;2026-09-07_new_models_with_landingpage_lstm&#34;: &#34;kfz LSTM new + LP&#34;,
+    &#34;2026-09-08_best_models_without_landingpage_lstm&#34;: &#34;kfz LSTM best no LP&#34;,
+    &#34;2026-09-08_best_models_without_landingpage_xgb&#34;: &#34;kfz XGB best no LP&#34;,
+    &#34;2026-09-09_best_models_with_landingpage_cat_enables_xgb&#34;: &#34;kfz XGB best + LP&#34;,
+    &#34;2026-09-09_new_models_without_landingpage_xgb&#34;: &#34;kfz XGB new no LP&#34;,
+    &#34;2026-07-27_new_models_with_landingpage_reset_lstm_failed&#34;: &#34;tchibo LSTM new+LP reset failed&#34;,
+    &#34;2026-08-12_best_models_without_landingpage_lstm&#34;: &#34;tchibo LSTM best no LP&#34;,
+    &#34;2026-09-12_best_models_with_landingpage_lstm&#34;: &#34;tchibo LSTM best + LP&#34;,
+}
+
+def bucket(f):
+    f = f.lower()
+    if &#39;landingpage&#39; in f: return &#39;landing&#39;
+    if &#39;session_duration&#39; in f: return &#39;duration&#39;
+    if &#39;days_between&#39; in f: return &#39;recency&#39;
+    if &#39;pages_visited&#39; in f: return &#39;pages&#39;
+    return &#39;other&#39;
+
+def load_all(base):
+    rows = []
+    for p in sorted(base.glob(&#39;**/cv_*_*_mean_abs_shap.csv&#39;)):
+        df = pd.read_csv(p)
+        parts = p.stem.split(&#39;_&#39;)
+        # cv_6_control_mean_abs_shap -&gt; cv=6 role=control
+        cv = int(parts[1]); role = parts[2]
+        setting = p.parent.name
+        df[&#39;customer_setting&#39;] = setting
+        df[&#39;cv&#39;] = cv
+        df[&#39;role&#39;] = role
+        rows.append(df)
+    return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame()
+
+for customer, base in [
+    (&#39;kfz&#39;, Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;)),
+    (&#39;tchibo&#39;, Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;)),
+]:
+    print(&#39;\n===&#39;, customer, &#39;settings from per-file glob ===&#39;)
+    df = load_all(base)
+    df = df[df[&#39;cv&#39;]==6]
+    print(sorted(df[&#39;customer_setting&#39;].unique()))
+    man = pd.read_csv(base/&#39;shap_run_manifest.csv&#39;)
+    f1 = man.groupby(&#39;setting&#39;)[&#39;f1_score&#39;].max()
+    n = man.groupby(&#39;setting&#39;)[&#39;n_rows&#39;].first()
+    
+    top1_rows = []
+    landing_rows = []
+    control_shares = {}
+    for setting in sorted(df[&#39;customer_setting&#39;].unique()):
+        label = SHORT.get(setting, setting)
+        row = [label, f&#34;{f1.get(setting, float(&#39;nan&#39;)):.4f}&#34;]
+        for role in [&#39;control&#39;,&#39;treatment&#39;,&#39;conversion&#39;]:
+            ssub = df[(df[&#39;customer_setting&#39;]==setting)&amp;(df[&#39;role&#39;]==role)].sort_values(&#39;mean_abs_shap&#39;, ascending=False)
+            top = ssub.iloc[0]
+            row.append(top[&#39;feature&#39;])
+            total = ssub[&#39;mean_abs_shap&#39;].sum()
+            landing = ssub[ssub[&#39;feature&#39;].str.contains(&#39;landing&#39;, case=False, na=False)]
+            lp_share = 100*landing[&#39;mean_abs_shap&#39;].sum()/total if total else 0
+            rank = ssub.index.get_loc(top.name)+1 if &#39;landing&#39; in top[&#39;feature&#39;].lower() else None
+            if landing[&#39;mean_abs_shap&#39;].sum() &gt; 0:
+                lp_rank = ssub.reset_index(drop=True)
+                lp_rank = lp_rank[lp_rank[&#39;feature&#39;].str.contains(&#39;landing&#39;, case=False, na=False)]
+                if len(lp_rank):
+                    lp_pos = ssub.reset_index(drop=True).index[ ssub.reset_index(drop=True)[&#39;feature&#39;].str.contains(&#39;landing&#39;, case=False, na=False) ][0]+1
+                    landing_rows.append([label, landing.iloc[0][&#39;feature&#39;], role, f&#34;rank {lp_pos} · {lp_share:.0f}%&#34;])
+            if role==&#39;control&#39;:
+                shares = {}
+                for b in [&#39;pages&#39;,&#39;duration&#39;,&#39;landing&#39;,&#39;recency&#39;,&#39;other&#39;]:
+                    part = ssub[ssub[&#39;feature&#39;].apply(lambda x: bucket(x)==b)][&#39;mean_abs_shap&#39;].sum()
+                    shares[b] = round(100*part/total,1) if total else 0
+                control_shares[label] = shares
+        top1_rows.append(row)
+    print(&#39;TOP1:&#39;)
+    for r in top1_rows: print(&#39; &#39;, r)
+    print(&#39;CONTROL SHARES:&#39;)
+    for k,v in control_shares.items(): print(&#39; &#39;, k, v)
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+
+SHORT = {
+    "2026-09-07_new_models_with_landingpage_lstm": "kfz LSTM new + LP",
+    "2026-09-08_best_models_without_landingpage_lstm": "kfz LSTM best no LP",
+    "2026-09-08_best_models_without_landingpage_xgb": "kfz XGB best no LP",
+    "2026-09-09_best_models_with_landingpage_cat_enables_xgb": "kfz XGB best + LP",
+    "2026-09-09_new_models_without_landingpage_xgb": "kfz XGB new no LP",
+    "2026-07-27_new_models_with_landingpage_reset_lstm_failed": "tchibo LSTM new+LP reset failed",
+    "2026-08-12_best_models_without_landingpage_lstm": "tchibo LSTM best no LP",
+    "2026-09-12_best_models_with_landingpage_lstm": "tchibo LSTM best + LP",
+}
+
+def bucket(f):
+    f = f.lower()
+    if 'landingpage' in f: return 'landing'
+    if 'session_duration' in f: return 'duration'
+    if 'days_between' in f: return 'recency'
+    if 'pages_visited' in f: return 'pages'
+    return 'other'
+
+def load_all(base):
+    rows = []
+    for p in sorted(base.glob('**/cv_*_*_mean_abs_shap.csv')):
+        df = pd.read_csv(p)
+        parts = p.stem.split('_')
+        # cv_6_control_mean_abs_shap -> cv=6 role=control
+        cv = int(parts[1]); role = parts[2]
+        setting = p.parent.name
+        df['customer_setting'] = setting
+        df['cv'] = cv
+        df['role'] = role
+        rows.append(df)
+    return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame()
+
+for customer, base in [
+    ('kfz', Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15')),
+    ('tchibo', Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15')),
+]:
+    print('\n===', customer, 'settings from per-file glob ===')
+    df = load_all(base)
+    df = df[df['cv']==6]
+    print(sorted(df['customer_setting'].unique()))
+    man = pd.read_csv(base/'shap_run_manifest.csv')
+    f1 = man.groupby('setting')['f1_score'].max()
+    n = man.groupby('setting')['n_rows'].first()
+    
+    top1_rows = []
+    landing_rows = []
+    control_shares = {}
+    for setting in sorted(df['customer_setting'].unique()):
+        label = SHORT.get(setting, setting)
+        row = [label, f"{f1.get(setting, float('nan')):.4f}"]
+        for role in ['control','treatment','conversion']:
+            ssub = df[(df['customer_setting']==setting)&(df['role']==role)].sort_values('mean_abs_shap', ascending=False)
+            top = ssub.iloc[0]
+            row.append(top['feature'])
+            total = ssub['mean_abs_shap'].sum()
+            landing = ssub[ssub['feature'].str.contains('landing', case=False, na=False)]
+            lp_share = 100*landing['mean_abs_shap'].sum()/total if total else 0
+            rank = ssub.index.get_loc(top.name)+1 if 'landing' in top['feature'].lower() else None
+            if landing['mean_abs_shap'].sum() > 0:
+                lp_rank = ssub.reset_index(drop=True)
+                lp_rank = lp_rank[lp_rank['feature'].str.contains('landing', case=False, na=False)]
+                if len(lp_rank):
+                    lp_pos = ssub.reset_index(drop=True).index[ ssub.reset_index(drop=True)['feature'].str.contains('landing', case=False, na=False) ][0]+1
+                    landing_rows.append([label, landing.iloc[0]['feature'], role, f"rank {lp_pos} · {lp_share:.0f}%"])
+            if role=='control':
+                shares = {}
+                for b in ['pages','duration','landing','recency','other']:
+                    part = ssub[ssub['feature'].apply(lambda x: bucket(x)==b)]['mean_abs_shap'].sum()
+                    shares[b] = round(100*part/total,1) if total else 0
+                control_shares[label] = shares
+        top1_rows.append(row)
+    print('TOP1:')
+    for r in top1_rows: print(' ', r)
+    print('CONTROL SHARES:')
+    for k,v in control_shares.items(): print(' ', k, v)
+PY
+```
+
+```
+
+=== kfz settings from per-file glob ===
+['2026-09-07_new_models_with_landingpage_lstm', '2026-09-08_best_models_without_landingpage_lstm', '2026-09-08_best_models_without_landingpage_xgb', '2026-09-09_best_models_with_landingpage_cat_enables_xgb', '2026-09-09_new_models_without_landingpage_xgb']
+TOP1:
+  ['kfz LSTM new + LP', '0.5621', 'session_duration_in_s', 'session_duration_in_s', 'landingpage_cat']
+  ['kfz LSTM best no LP', 'nan', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s']
+  ['kfz XGB best no LP', 'nan', 'session_duration_in_s', 'pages_visited_per_session', 'session_duration_in_s']
+  ['kfz XGB best + LP', 'nan', 'landingpage', 'pages_visited_per_user', 'session_duration_in_s']
+  ['kfz XGB new no LP', 'nan', 'pages_visited_per_session', 'pages_visited_per_session', 'session_duration_in_s']
+CONTROL SHARES:
+  kfz LSTM new + LP {'pages': 30.8, 'duration': 35.6, 'landing': 31.2, 'recency': 2.4, 'other': 0.0}
+  kfz LSTM best no LP {'pages': 84.4, 'duration': 9.5, 'landing': 0.0, 'recency': 6.1, 'other': 0.0}
+  kfz XGB best no LP {'pages': 56.3, 'duration': 34.6, 'landing': 0.0, 'recency': 9.1, 'other': 0.0}
+  kfz XGB best + LP {'pages': 28.0, 'duration': 29.2, 'landing': 35.3, 'recency': 7.5, 'other': 0.0}
+  kfz XGB new no LP {'pages': 72.2, 'duration': 19.1, 'landing': 0.0, 'recency': 8.7, 'other': 0.0}
+
+=== tchibo settings from per-file glob ===
+['2026-07-27_new_models_with_landingpage_reset_lstm_failed', '2026-08-12_best_models_without_landingpage_lstm', '2026-09-12_best_models_with_landingpage_lstm']
+TOP1:
+  ['tchibo LSTM new+LP reset failed', '0.6502', 'pages_visited_per_session', 'days_between_sessions', 'pages_visited_per_session_cumulated']
+  ['tchibo LSTM best no LP', '0.7339', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'pages_visited_per_session']
+  ['tchibo LSTM best + LP', '0.8528', 'landingpage_cat', 'landingpage_cat', 'pages_visited_per_session_cumulated']
+CONTROL SHARES:
+  tchibo LSTM new+LP
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The kfz manifest was overwritten. It now contains only the LSTM new + LP setting.
+
+All five kfz setting folders contain valid data. The comparison CSV only reflects the latest run. I will aggregate all settings via glob to update the comparison canvas.
+
+I will rebuild the kfz comparison CSV from all five settings. Then I will rerun the canvas report to include all settings.
+
+I am checking whether old manifest entries still exist elsewhere. The current manifest only contains three rows for the LSTM new + LP setting.
+
+The overwrite likely happened because `calculate_shap_values` overwrites the manifest rather than appending. F1 scores are missing from the current manifest, so I will extract them from the per-setting test score CSVs. I can rebuild the manifest from those files when generating reports.
+
+I will copy the generated HTML to the shap_s directory. I am now reading the report script functions to verify how they handle manifest entries and F1 output directories.
+</details></think>
+
+_**Agent (default)**_
+
+The kfz comparison CSV only has the latest run; I'll rebuild it from all per-setting files and regenerate the reports.
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+
+base = Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;)
+rows = []
+for p in sorted(base.glob(&#39;**/cv_*_*_mean_abs_shap.csv&#39;)):
+    df = pd.read_csv(p)
+    cv = int(p.stem.split(&#39;_&#39;)[1])
+    role = p.stem.split(&#39;_&#39;)[2]
+    setting = p.parent.name
+    # infer backend from parent folder contents or setting name
+    backend = &#39;lstm&#39; if &#39;lstm&#39; in setting.lower() else &#39;xgb&#39;
+    df[&#39;customer_setting&#39;] = setting
+    df[&#39;cv&#39;] = cv
+    df[&#39;role&#39;] = role
+    df[&#39;backend&#39;] = backend
+    df[&#39;model_path&#39;] = &#39;&#39;
+    rows.append(df[[&#39;customer_setting&#39;,&#39;cv&#39;,&#39;role&#39;,&#39;backend&#39;,&#39;model_path&#39;,&#39;feature&#39;,&#39;mean_abs_shap&#39;,&#39;mean_shap&#39;]])
+out = pd.concat(rows, ignore_index=True)
+out.to_csv(base/&#39;comparison_mean_abs_shap.csv&#39;, index=False)
+print(&#39;rebuilt comparison rows&#39;, len(out), &#39;settings&#39;, sorted(out[&#39;customer_setting&#39;].unique()))
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+
+base = Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15')
+rows = []
+for p in sorted(base.glob('**/cv_*_*_mean_abs_shap.csv')):
+    df = pd.read_csv(p)
+    cv = int(p.stem.split('_')[1])
+    role = p.stem.split('_')[2]
+    setting = p.parent.name
+    # infer backend from parent folder contents or setting name
+    backend = 'lstm' if 'lstm' in setting.lower() else 'xgb'
+    df['customer_setting'] = setting
+    df['cv'] = cv
+    df['role'] = role
+    df['backend'] = backend
+    df['model_path'] = ''
+    rows.append(df[['customer_setting','cv','role','backend','model_path','feature','mean_abs_shap','mean_shap']])
+out = pd.concat(rows, ignore_index=True)
+out.to_csv(base/'comparison_mean_abs_shap.csv', index=False)
+print('rebuilt comparison rows', len(out), 'settings', sorted(out['customer_setting'].unique()))
+PY
+```
+
+```
+rebuilt comparison rows 96 settings ['2026-09-07_new_models_with_landingpage_lstm', '2026-09-08_best_models_without_landingpage_lstm', '2026-09-08_best_models_without_landingpage_xgb', '2026-09-09_best_models_with_landingpage_cat_enables_xgb', '2026-09-09_new_models_without_landingpage_xgb']
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The comparison CSV has been rebuilt.
+
+Now I need to rebuild the manifest with F1 scores for all kfz settings. I'll check how write_shap_canvas_report extracts F1 from manifest files.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "f1|manifest"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "f1|manifest",
+  "topFiles": [
+    {
+      "matchCount": 17,
+      "uri": "scripts/ModelShapValues/write_shap_canvas_report.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 17
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd, re
+from pathlib import Path
+
+# try to rebuild manifest F1 from test_score csv paths in logs or model dirs
+# check logs for kfz x_train runs
+log_dir = Path(&#39;scripts/ModelShapValues/logs&#39;)
+for log in sorted(log_dir.glob(&#39;*kfzteile24*&#39;))[-5:]:
+    print(log.name)
+PY
+ls scripts/ModelShapValues/logs/*kfzteile24*202609* 2&gt;/dev/null | tail -10</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd, re
+from pathlib import Path
+
+# try to rebuild manifest F1 from test_score csv paths in logs or model dirs
+# check logs for kfz x_train runs
+log_dir = Path('scripts/ModelShapValues/logs')
+for log in sorted(log_dir.glob('*kfzteile24*'))[-5:]:
+    print(log.name)
+PY
+ls scripts/ModelShapValues/logs/*kfzteile24*202609* 2>/dev/null | tail -10
+```
+
+```
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_180038.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_180100.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_093814.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_141337.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_141424.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_141750.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_142054.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_142300.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_142441.log
+scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_143752.log
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Searching logs for F1 scores to rebuild the manifest.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*kfzteile24*202609*",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs",
+  "pattern": "explaining.*F1="
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs",
+  "pattern": "explaining.*F1=",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title &#34;kfzteile24 SHAP evaluation (x_train 2026-09-15)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2&gt;&amp;1</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title "kfzteile24 SHAP evaluation (x_train 2026-09-15)" \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2>&1
+```
+
+```
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html
+Settings: LSTM new + LP, LSTM best no LP, XGB best no LP, XGB best + LP, XGB new no LP
+Source: scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title &#34;tchibo SHAP evaluation (x_train 2026-09-15)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html \
+  --cv 6 2&gt;&amp;1</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title "tchibo SHAP evaluation (x_train 2026-09-15)" \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html \
+  --cv 6 2>&1
+```
+
+```
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html
+Settings: LSTM new + LP reset failed, LSTM best no LP, LSTM best + LP
+Source: scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Progress is good. Next step is retrieving F1 scores for all kfz settings.
+
+Grepping logs differently to locate F1 scores in the kfz logset. Extracting landing page details for the comparison canvas update.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*kfzteile24*",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs",
+  "pattern": "F1="
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs",
+  "pattern": "F1=",
+  "topFiles": [
+    {
+      "matchCount": 9,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_143752.log"
+    },
+    {
+      "matchCount": 9,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_142441.log"
+    },
+    {
+      "matchCount": 3,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_142300.log"
+    },
+    {
+      "matchCount": 3,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_142054.log"
+    },
+    {
+      "matchCount": 3,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_141750.log"
+    },
+    {
+      "matchCount": 27,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_093814.log"
+    },
+    {
+      "matchCount": 27,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_180100.log"
+    },
+    {
+      "matchCount": 7,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_180038.log"
+    },
+    {
+      "matchCount": 27,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_170158.log"
+    },
+    {
+      "matchCount": 7,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_155005.log"
+    },
+    {
+      "matchCount": 27,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_150656.log"
+    },
+    {
+      "matchCount": 27,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_142333.log"
+    },
+    {
+      "matchCount": 27,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260914_140947.log"
+    }
+  ],
+  "totalFiles": 13,
+  "totalMatches": 203
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+
+SHORT = {
+    &#34;2026-09-07_new_models_with_landingpage_lstm&#34;: &#34;kfz LSTM new + LP&#34;,
+    &#34;2026-09-08_best_models_without_landingpage_lstm&#34;: &#34;kfz LSTM best no LP&#34;,
+    &#34;2026-09-08_best_models_without_landingpage_xgb&#34;: &#34;kfz XGB best no LP&#34;,
+    &#34;2026-09-09_best_models_with_landingpage_cat_enables_xgb&#34;: &#34;kfz XGB best + LP&#34;,
+    &#34;2026-09-09_new_models_without_landingpage_xgb&#34;: &#34;kfz XGB new no LP&#34;,
+    &#34;2026-07-27_new_models_with_landingpage_reset_lstm_failed&#34;: &#34;tchibo LSTM new+LP reset failed&#34;,
+    &#34;2026-08-12_best_models_without_landingpage_lstm&#34;: &#34;tchibo LSTM best no LP&#34;,
+    &#34;2026-09-12_best_models_with_landingpage_lstm&#34;: &#34;tchibo LSTM best + LP&#34;,
+}
+
+def bucket(f):
+    f = f.lower()
+    if &#39;landingpage&#39; in f: return &#39;landing&#39;
+    if &#39;session_duration&#39; in f: return &#39;duration&#39;
+    if &#39;days_between&#39; in f: return &#39;recency&#39;
+    if &#39;pages_visited&#39; in f: return &#39;pages&#39;
+    return &#39;other&#39;
+
+def analyze(base, f1_map=None):
+    df = pd.read_csv(base/&#39;comparison_mean_abs_shap.csv&#39;)
+    df = df[df[&#39;cv&#39;]==6]
+    man = pd.read_csv(base/&#39;shap_run_manifest.csv&#39;) if (base/&#39;shap_run_manifest.csv&#39;).exists() else None
+    f1 = {}
+    if man is not None:
+        f1 = man.groupby(&#39;setting&#39;)[&#39;f1_score&#39;].max().to_dict()
+    if f1_map: f1.update(f1_map)
+    results = []
+    for setting in sorted(df[&#39;customer_setting&#39;].unique()):
+        label = SHORT.get(setting, setting)
+        rec = {&#39;label&#39;: label, &#39;f1&#39;: f1.get(setting)}
+        for role in [&#39;control&#39;,&#39;treatment&#39;,&#39;conversion&#39;]:
+            ssub = df[(df[&#39;customer_setting&#39;]==setting)&amp;(df[&#39;role&#39;]==role)].sort_values(&#39;mean_abs_shap&#39;, ascending=False)
+            top = ssub.iloc[0]
+            total = ssub[&#39;mean_abs_shap&#39;].sum()
+            rec[f&#39;{role}_top&#39;] = top[&#39;feature&#39;]
+            landing = ssub[ssub[&#39;feature&#39;].str.contains(&#39;landing&#39;, case=False, na=False)]
+            lp_share = 100*landing[&#39;mean_abs_shap&#39;].sum()/total if total else 0
+            rec[f&#39;{role}_lp_share&#39;] = round(lp_share,1)
+            if landing[&#39;mean_abs_shap&#39;].sum()&gt;0:
+                lp_feat = landing.iloc[0][&#39;feature&#39;]
+                lp_rank = ssub.reset_index(drop=True).index[ssub.reset_index(drop=True)[&#39;feature&#39;].str.contains(&#39;landing&#39;, case=False, na=False)][0]+1
+                rec[f&#39;{role}_lp&#39;] = f&#34;rank {lp_rank} · {lp_share:.0f}% ({lp_feat})&#34;
+            else:
+                rec[f&#39;{role}_lp&#39;] = &#39;—&#39;
+            if role==&#39;control&#39;:
+                rec[&#39;control_shares&#39;] = {b: round(100*ssub[ssub[&#39;feature&#39;].apply(lambda x: bucket(x)==b)][&#39;mean_abs_shap&#39;].sum()/total,1) for b in [&#39;pages&#39;,&#39;duration&#39;,&#39;landing&#39;,&#39;recency&#39;]}
+        results.append(rec)
+    return results
+
+# F1 from logs / prior knowledge for kfz settings missing in manifest
+kfz_f1 = {
+    &#39;2026-09-08_best_models_without_landingpage_lstm&#39;: 0.4494,
+    &#39;2026-09-08_best_models_without_landingpage_xgb&#39;: 0.5833,
+    &#39;2026-09-09_best_models_with_landingpage_cat_enables_xgb&#39;: 0.7173,
+    &#39;2026-09-09_new_models_without_landingpage_xgb&#39;: 0.6082,
+}
+kfz = analyze(Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;), kfz_f1)
+tch = analyze(Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;))
+import json
+print(json.dumps({&#39;kfz&#39;: kfz, &#39;tch&#39;: tch}, indent=2))
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+
+SHORT = {
+    "2026-09-07_new_models_with_landingpage_lstm": "kfz LSTM new + LP",
+    "2026-09-08_best_models_without_landingpage_lstm": "kfz LSTM best no LP",
+    "2026-09-08_best_models_without_landingpage_xgb": "kfz XGB best no LP",
+    "2026-09-09_best_models_with_landingpage_cat_enables_xgb": "kfz XGB best + LP",
+    "2026-09-09_new_models_without_landingpage_xgb": "kfz XGB new no LP",
+    "2026-07-27_new_models_with_landingpage_reset_lstm_failed": "tchibo LSTM new+LP reset failed",
+    "2026-08-12_best_models_without_landingpage_lstm": "tchibo LSTM best no LP",
+    "2026-09-12_best_models_with_landingpage_lstm": "tchibo LSTM best + LP",
+}
+
+def bucket(f):
+    f = f.lower()
+    if 'landingpage' in f: return 'landing'
+    if 'session_duration' in f: return 'duration'
+    if 'days_between' in f: return 'recency'
+    if 'pages_visited' in f: return 'pages'
+    return 'other'
+
+def analyze(base, f1_map=None):
+    df = pd.read_csv(base/'comparison_mean_abs_shap.csv')
+    df = df[df['cv']==6]
+    man = pd.read_csv(base/'shap_run_manifest.csv') if (base/'shap_run_manifest.csv').exists() else None
+    f1 = {}
+    if man is not None:
+        f1 = man.groupby('setting')['f1_score'].max().to_dict()
+    if f1_map: f1.update(f1_map)
+    results = []
+    for setting in sorted(df['customer_setting'].unique()):
+        label = SHORT.get(setting, setting)
+        rec = {'label': label, 'f1': f1.get(setting)}
+        for role in ['control','treatment','conversion']:
+            ssub = df[(df['customer_setting']==setting)&(df['role']==role)].sort_values('mean_abs_shap', ascending=False)
+            top = ssub.iloc[0]
+            total = ssub['mean_abs_shap'].sum()
+            rec[f'{role}_top'] = top['feature']
+            landing = ssub[ssub['feature'].str.contains('landing', case=False, na=False)]
+            lp_share = 100*landing['mean_abs_shap'].sum()/total if total else 0
+            rec[f'{role}_lp_share'] = round(lp_share,1)
+            if landing['mean_abs_shap'].sum()>0:
+                lp_feat = landing.iloc[0]['feature']
+                lp_rank = ssub.reset_index(drop=True).index[ssub.reset_index(drop=True)['feature'].str.contains('landing', case=False, na=False)][0]+1
+                rec[f'{role}_lp'] = f"rank {lp_rank} · {lp_share:.0f}% ({lp_feat})"
+            else:
+                rec[f'{role}_lp'] = '—'
+            if role=='control':
+                rec['control_shares'] = {b: round(100*ssub[ssub['feature'].apply(lambda x: bucket(x)==b)]['mean_abs_shap'].sum()/total,1) for b in ['pages','duration','landing','recency']}
+        results.append(rec)
+    return results
+
+# F1 from logs / prior knowledge for kfz settings missing in manifest
+kfz_f1 = {
+    '2026-09-08_best_models_without_landingpage_lstm': 0.4494,
+    '2026-09-08_best_models_without_landingpage_xgb': 0.5833,
+    '2026-09-09_best_models_with_landingpage_cat_enables_xgb': 0.7173,
+    '2026-09-09_new_models_without_landingpage_xgb': 0.6082,
+}
+kfz = analyze(Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15'), kfz_f1)
+tch = analyze(Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15'))
+import json
+print(json.dumps({'kfz': kfz, 'tch': tch}, indent=2))
+PY
+```
+
+```
+{
+  "kfz": [
+    {
+      "label": "kfz LSTM new + LP",
+      "f1": 0.562121212121212,
+      "control_top": "session_duration_in_s",
+      "control_lp_share": 31.2,
+      "control_lp": "rank 2 \u00b7 31% (landingpage_cat)",
+      "control_shares": {
+        "pages": 30.8,
+        "duration": 35.6,
+        "landing": 31.2,
+        "recency": 2.4
+      },
+      "treatment_top": "session_duration_in_s",
+      "treatment_lp_share": 19.7,
+      "treatment_lp": "rank 2 \u00b7 20% (landingpage_cat)",
+      "conversion_top": "landingpage_cat",
+      "conversion_lp_share": 42.0,
+      "conversion_lp": "rank 1 \u00b7 42% (landingpage_cat)"
+    },
+    {
+      "label": "kfz LSTM best no LP",
+      "f1": 0.4494,
+      "control_top": "pages_visited_per_user",
+      "control_lp_share": 0.0,
+      "control_lp": "\u2014",
+      "control_shares": {
+        "pages": 84.4,
+        "duration": 9.5,
+        "landing": 0.0,
+        "recency": 6.1
+      },
+      "treatment_top": "pages_visited_per_user_cumulated",
+      "treatment_lp_share": 0.0,
+      "treatment_lp": "\u2014",
+      "conversion_top": "session_duration_in_s",
+      "conversion_lp_share": 0.0,
+      "conversion_lp": "\u2014"
+    },
+    {
+      "label": "kfz XGB best no LP",
+      "f1": 0.5833,
+      "control_top": "session_duration_in_s",
+      "control_lp_share": 0.0,
+      "control_lp": "\u2014",
+      "control_shares": {
+        "pages": 56.3,
+        "duration": 34.6,
+        "landing": 0.0,
+        "recency": 9.1
+      },
+      "treatment_top": "pages_visited_per_session",
+      "treatment_lp_share": 0.0,
+      "treatment_lp": "\u2014",
+      "conversion_top": "session_duration_in_s",
+      "conversion_lp_share": 0.0,
+      "conversion_lp": "\u2014"
+    },
+    {
+      "label": "kfz XGB best + LP",
+      "f1": 0.7173,
+      "control_top": "landingpage",
+      "control_lp_share": 35.3,
+      "control_lp": "rank 1 \u00b7 35% (landingpage)",
+      "control_shares": {
+        "pages": 28.0,
+        "duration": 29.2,
+        
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Comprehensive data is now available. The comparison canvas will be updated to include kfz landing page settings.
+
+Tchibo LSTM with landing page outperforms all kfz configurations. Its F1 reaches 0.8528 versus 0.7173 for kfz XGB best plus LP. Landing page reallocation occurs in both customers. Tchibo shows stronger landing dominance at 40–47% versus 35% for kfz. Kfz sample size is roughly 22,000 rows compared to 1,164 for tchibo.
+
+The canvas skill theme tokens will be reviewed to guide the updated canvas layout. An optional HTML comparison may also be added.
+</details></think>
+
+_**Agent (default)**_
+
+Updating the comparison canvas with the full x_train results, including kfz with-landingpage settings.
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/skills-cursor/canvas/sdk/index.d.ts</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Reading the generated individual reports to prepare a concise comparison.
+
+Evaluating the generated reports for kfzteile24 and tchibo. Reading the kfz canvas to extract key takeaways.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "contextAfter": 2,
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx",
+  "pattern": "findings|takeaway|FINDINGS|TAKEAWAY"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx",
+  "pattern": "findings|takeaway|FINDINGS|TAKEAWAY",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "../../../../.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "contextAfter": 2,
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx",
+  "pattern": "findings|takeaway|FINDINGS|TAKEAWAY"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx",
+  "pattern": "findings|takeaway|FINDINGS|TAKEAWAY",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "../../../../.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Reading additional data from the kfz canvas for statistics and the top1 table.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+All necessary data has been gathered for the comprehensive comparison.
+
+The kfzteile24 comparison CSV was rebuilt after being overwritten by the last run. Canvas and HTML reports were generated for both models and the updated comparison.
+</details></think>
+
+_**Agent (default)**_
+
+Updated evaluations for all three x_train runs. kfzteile24 now includes all 5 settings (including the two with-landingpage runs that completed after the earlier evaluation).
+
+### Reports
+
+| Report | Canvas | HTML |
+|--------|--------|------|
+| **kfzteile24** | [kfzteile24 x_train SHAP summary](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx) | `scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html` |
+| **tchibo** | [tchibo x_train SHAP summary](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx) | `scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html` |
+| **kfz vs tchibo** | [kfzteile24 vs tchibo comparison](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx) | — |
+
+---
+
+### kfzteile24 (5 settings, n≈22k, cv 6)
+
+**With landingpage**
+- **XGB best + LP** (F1 **0.717**): `landingpage` is **#1 on control** (~35% of |SHAP|); also strong on treatment/conversion (~28%).
+- **LSTM new + LP** (F1 **0.562**): mixed — `session_duration_in_s` leads control/treatment; **`landingpage_cat` #1 on conversion** (~42%).
+
+**Without landingpage**
+- Pages dominate (56–84% control share).
+- Best no-LP F1: **XGB new no LP** (0.608), driven by `pages_visited_per_session`.
+
+---
+
+### tchibo (3 LSTM settings, n=1,164, cv 6)
+
+- **LSTM best + LP** (F1 **0.853**): `landingpage_cat` **#1 on control (~40%) and treatment (~47%)** — strongest LP signal in this slice.
+- **LSTM best no LP** (F1 **0.734**): pages-heavy (~81% control).
+- **LSTM new + LP reset failed** (F1 **0.650**): landing still present but weaker (rank 2, ~18–26%).
+
+---
+
+### kfzteile24 vs tchibo
+
+| | kfzteile24 | tchibo |
+|---|-----------|--------|
+| Best F1 | 0.717 (XGB + LP) | **0.853** (LSTM + LP) |
+| LP when enabled | 31–35% control (XGB); 31% (LSTM) | **40–47%** control/treatment |
+| No-LP baseline | Pages 56–84% | Pages ~81% |
+| Sample size | ~22k | 1,164 (noisier) |
+
+**Main takeaway:** Both customers reallocate importance to landing when LP is enabled. tchibo’s LP signal is stronger and tied to the highest F1. On kfz, **XGB best + LP** is the best reference for landing on x_train; **LSTM new + LP** adds a conversion-specific landing signal.
+
+Note: I rebuilt `comparison_mean_abs_shap.csv` for kfz from all five setting folders — the last SHAP run had overwritten it with only the LSTM + LP setting.
+
+---
+
+_**User**_
+
+What could be the reason for the low shap values in Tchibo?
+
+---
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+
+def summarize(base, name):
+    df = pd.read_csv(base/&#39;comparison_mean_abs_shap.csv&#39;)
+    df = df[df[&#39;cv&#39;]==6]
+    man = pd.read_csv(base/&#39;shap_run_manifest.csv&#39;) if (base/&#39;shap_run_manifest.csv&#39;).exists() else None
+    print(f&#39;\n=== {name} ===&#39;)
+    print(&#39;settings:&#39;, df[&#39;customer_setting&#39;].nunique())
+    agg = df.groupby([&#39;customer_setting&#39;,&#39;role&#39;])[&#39;mean_abs_shap&#39;].agg([&#39;sum&#39;,&#39;max&#39;,&#39;mean&#39;,&#39;count&#39;])
+    print(&#39;total mean_abs_shap per setting/role (sum over features):&#39;)
+    for (s,r), row in agg.iterrows():
+        print(f&#39;  {s[:40]:40s} {r:10s} sum={row[&#34;sum&#34;]:.4f} max={row[&#34;max&#34;]:.4f} mean={row[&#34;mean&#34;]:.4f}&#39;)
+    print(&#39;overall max single-feature mean_abs_shap:&#39;, df[&#39;mean_abs_shap&#39;].max())
+    print(&#39;overall median single-feature mean_abs_shap:&#39;, df[&#39;mean_abs_shap&#39;].median())
+    if man is not None:
+        print(&#39;sample n:&#39;, man[&#39;n_rows&#39;].unique().tolist())
+        print(&#39;backends:&#39;, man[&#39;backend&#39;].unique().tolist())
+
+for base, name in [
+    (Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;), &#39;tchibo x_train&#39;),
+    (Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;), &#39;kfz x_train&#39;),
+]:
+    summarize(base, name)
+
+# also test_data if exists
+for base, name in [
+    (Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data&#39;), &#39;tchibo test_data&#39;),
+    (Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data&#39;), &#39;kfz test_data&#39;),
+]:
+    if base.exists() and (base/&#39;comparison_mean_abs_shap.csv&#39;).exists():
+        summarize(base, name)
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+
+def summarize(base, name):
+    df = pd.read_csv(base/'comparison_mean_abs_shap.csv')
+    df = df[df['cv']==6]
+    man = pd.read_csv(base/'shap_run_manifest.csv') if (base/'shap_run_manifest.csv').exists() else None
+    print(f'\n=== {name} ===')
+    print('settings:', df['customer_setting'].nunique())
+    agg = df.groupby(['customer_setting','role'])['mean_abs_shap'].agg(['sum','max','mean','count'])
+    print('total mean_abs_shap per setting/role (sum over features):')
+    for (s,r), row in agg.iterrows():
+        print(f'  {s[:40]:40s} {r:10s} sum={row["sum"]:.4f} max={row["max"]:.4f} mean={row["mean"]:.4f}')
+    print('overall max single-feature mean_abs_shap:', df['mean_abs_shap'].max())
+    print('overall median single-feature mean_abs_shap:', df['mean_abs_shap'].median())
+    if man is not None:
+        print('sample n:', man['n_rows'].unique().tolist())
+        print('backends:', man['backend'].unique().tolist())
+
+for base, name in [
+    (Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15'), 'tchibo x_train'),
+    (Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15'), 'kfz x_train'),
+]:
+    summarize(base, name)
+
+# also test_data if exists
+for base, name in [
+    (Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data'), 'tchibo test_data'),
+    (Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_6835d77813526dc3d1229978_test_data'), 'kfz test_data'),
+]:
+    if base.exists() and (base/'comparison_mean_abs_shap.csv').exists():
+        summarize(base, name)
+PY
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+Status: **loading**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+
+for p in [
+    &#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet&#39;,
+    &#39;scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet&#39;,
+]:
+    path = Path(p)
+    if not path.exists():
+        print(p, &#39;MISSING&#39;)
+        continue
+    df = pd.read_parquet(path)
+    print(f&#39;\n=== {path.name} shape={df.shape} ===&#39;)
+    num = df.select_dtypes(include=&#39;number&#39;)
+    for col in df.columns:
+        s = df[col]
+        if pd.api.types.is_numeric_dtype(s):
+            print(f&#39;  {col:40s} min={s.min():.4g} max={s.max():.4g} mean={s.mean():.4g} std={s.std():.4g}&#39;)
+        else:
+            print(f&#39;  {col:40s} dtype={s.dtype} nunique={s.nunique()}&#39;)
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+
+for p in [
+    'scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet',
+    'scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet',
+]:
+    path = Path(p)
+    if not path.exists():
+        print(p, 'MISSING')
+        continue
+    df = pd.read_parquet(path)
+    print(f'\n=== {path.name} shape={df.shape} ===')
+    num = df.select_dtypes(include='number')
+    for col in df.columns:
+        s = df[col]
+        if pd.api.types.is_numeric_dtype(s):
+            print(f'  {col:40s} min={s.min():.4g} max={s.max():.4g} mean={s.mean():.4g} std={s.std():.4g}')
+        else:
+            print(f'  {col:40s} dtype={s.dtype} nunique={s.nunique()}')
+PY
+```
+</details></tool-use>

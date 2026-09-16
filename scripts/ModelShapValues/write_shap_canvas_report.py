@@ -198,6 +198,10 @@ def short_setting_label(setting: str) -> str:
         parts.append("no LP")
     elif "with_landingpage" in s or "landingpage" in s:
         parts.append("+ LP")
+    if "reset" in s:
+        parts.append("reset")
+    if "failed" in s:
+        parts.append("failed")
     if not parts:
         return setting[-40:] if len(setting) > 40 else setting
     return " ".join(parts)
@@ -355,13 +359,22 @@ def build_report(df: pd.DataFrame, shap_results: Path, title: str | None, manife
     df["setting_label"] = df["customer_setting"].map(label_of)
 
     sample_n_by_setting: dict[str, int] = {}
-    if manifest is not None and "n_rows" in manifest.columns:
+    f1_by_setting: dict[str, float] = {}
+    if manifest is not None:
         m = manifest.copy()
         setting_col = "setting" if "setting" in m.columns else "customer_setting"
         if setting_col in m.columns:
             for setting, g in m.groupby(setting_col):
-                if setting in label_of:
-                    sample_n_by_setting[label_of[str(setting)]] = int(g["n_rows"].iloc[0])
+                if setting not in label_of:
+                    continue
+                label = label_of[str(setting)]
+                if "n_rows" in g.columns:
+                    sample_n_by_setting[label] = int(g["n_rows"].iloc[0])
+                if "f1_score" in g.columns:
+                    f1_vals = pd.to_numeric(g["f1_score"], errors="coerce").dropna()
+                    if not f1_vals.empty:
+                        # Manifest stores the setting's selected-model F1 (same across roles).
+                        f1_by_setting[label] = float(f1_vals.max())
 
     setting_scope_rows: list[list[str]] = []
     for setting in setting_order:
@@ -392,10 +405,13 @@ def build_report(df: pd.DataFrame, shap_results: Path, title: str | None, manife
                 shares[b].append(_pct(part, total))
         bucket_shares[role] = shares
 
-    # Top-1 feature per setting × role.
+    # Top-1 feature per setting × role, with best F1 from the SHAP run manifest.
     top1_rows: list[list[str]] = []
     for setting in setting_order:
-        row = [label_of[setting]]
+        label = label_of[setting]
+        f1 = f1_by_setting.get(label)
+        f1_cell = f"{f1:.4f}" if f1 is not None else "—"
+        row = [label, f1_cell]
         for role in ROLES:
             g = df[(df["customer_setting"] == setting) & (df["role"] == role)]
             if g.empty:
@@ -837,7 +853,7 @@ def render_canvas(report: ReportData) -> str:
         "      <Stack gap={12}>",
         "        <H2>What dominates each model</H2>",
         "        <Table",
-        '          headers={["Setting", "Control #1", "Treatment #1", "Conversion #1"]}',
+        '          headers={["Setting", "Best F1", "Control #1", "Treatment #1", "Conversion #1"]}',
         f"          rows={{{_tsx_list_of_lists(report.top1_rows)}}}",
         "        />",
         "      </Stack>",
@@ -1024,8 +1040,8 @@ def render_pdf(report: ReportData, output: Path) -> Path:
         ax_top = fig.add_axes([0.06, 0.58, 0.88, 0.32])
         _draw_table(
             ax_top,
-            ["Setting", "Control #1", "Treatment #1", "Conversion #1"],
-            _wrap_cells(report.top1_rows, width=26),
+            ["Setting", "Best F1", "Control #1", "Treatment #1", "Conversion #1"],
+            _wrap_cells(report.top1_rows, width=22),
             title="What dominates each model",
         )
 
@@ -1346,7 +1362,7 @@ def render_html(report: ReportData, output: Path) -> Path:
 
     <section>
       <h2>What dominates each model</h2>
-      {_html_table(["Setting", "Control #1", "Treatment #1", "Conversion #1"], report.top1_rows)}
+      {_html_table(["Setting", "Best F1", "Control #1", "Treatment #1", "Conversion #1"], report.top1_rows)}
     </section>
 
     <section>

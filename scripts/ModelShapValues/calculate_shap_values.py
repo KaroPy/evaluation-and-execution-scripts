@@ -5,16 +5,15 @@ Discovers model-setting folders for a customer, loads each role model, explains 
 feature matrix from --data-path, and writes CSVs plus summary plots.
 
 Usage (from repo root):
-    python scripts/ModelShapValues/calculate_shap_values.py \\
-        --customer kfzteile24 \\
-        --data-path /path/to/features.parquet \\
-        --cv 6 \\
-        --max-samples all
+    python scripts/ModelShapValues/calculate_shap_values.py \
+        --customer kfzteile24 \
+        --data-path scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet \
+        --cv 6 \
+        --max-samples all \
+        --kernel-explain-samples 22000 \
+        --output-dir scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15
 
-    python scripts/ModelShapValues/calculate_shap_values.py \\
-        --customer tchibo \\
-        --data-path /path/to/features.csv \\
-        --setting 2026-09-12_best_models_with_landingpage_lstm
+    python scripts/ModelShapValues/calculate_shap_values.py --customer Tchibo --data-path scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet --cv 6 --max-samples all --kernel-explain-samples 22000 --output-dir scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 > tchibo-output.out
 """
 
 from __future__ import annotations
@@ -83,22 +82,70 @@ class ModelArtifact:
     test_score_path: str | None = None
 
 
+FAMILY_RE = re.compile(r"(NNLSTM_\d+|XGBRegressor_\d+)")
+
+
 def model_family_prefix(model_path: Path) -> str | None:
     """Shared prefix that links a model file to its *_test_score.csv."""
     match = re.search(r"(.+_saved_model_cv_\d+)", model_path.name)
+    if match:
+        return match.group(1)
+    match = re.search(r"(.+_cv_\d+)", model_path.name)
     return match.group(1) if match else None
 
 
-def find_test_score_csv(setting_dir: Path, model_path: Path) -> Path | None:
+def _family_and_cv(model_path: Path) -> tuple[str | None, int | None]:
+    family_match = FAMILY_RE.search(model_path.name)
+    cv_match = CV_RE.search(model_path.name)
+    family = family_match.group(1) if family_match else None
+    cv = int(cv_match.group(1)) if cv_match else None
+    return family, cv
+
+
+def _is_test_score_csv(path: Path) -> bool:
+    name = path.name
+    if path.suffix != ".csv" or "train_score" in name or "xlearner" in name:
+        return False
+    # Only group/model ``*_test_score.csv``. Ignore ``*_score_test.csv``
+    # (conversion_probability_score_test.csv and similar).
+    if name.endswith("_score_test.csv"):
+        return False
+    return name.endswith("_test_score.csv")
+
+
+def find_test_score_csv(
+    setting_dir: Path,
+    model_path: Path,
+    role: str | None = None,
+) -> Path | None:
+    """Find the F1 CSV for a model.
+
+    Uses only ``*_test_score.csv`` (typically the group/xlearner test score).
+    ``*_score_test.csv`` files are ignored. Filenames do not always share a
+    ``_saved_model_cv_`` prefix, so matching also uses architecture + cv.
+    """
+    family, cv = _family_and_cv(model_path)
     prefix = model_family_prefix(model_path)
-    if not prefix:
+    candidates: list[Path] = []
+    for path in setting_dir.iterdir():
+        if not path.is_file() or not _is_test_score_csv(path):
+            continue
+        if family and family not in path.name:
+            continue
+        if cv is not None and not re.search(rf"_cv_{cv}(?:_|\.|$)", path.name):
+            continue
+        candidates.append(path)
+
+    if prefix:
+        for path in setting_dir.glob(f"{prefix}*"):
+            if path.is_file() and _is_test_score_csv(path) and path not in candidates:
+                if family and family not in path.name:
+                    continue
+                candidates.append(path)
+
+    if not candidates:
         return None
-    candidates = sorted(
-        path
-        for path in setting_dir.glob(f"{prefix}*_test_score.csv")
-        if path.name.endswith("_test_score.csv") and "train_score" not in path.name
-    )
-    return candidates[0] if candidates else None
+    return sorted(candidates)[0]
 
 
 def read_f1_score(test_score_path: Path) -> float | None:
@@ -131,7 +178,7 @@ def select_best_artifacts_by_f1(
     for (role, cv), group in sorted(grouped.items()):
         scored: list[ModelArtifact] = []
         for artifact in group:
-            score_path = find_test_score_csv(setting_dir, artifact.path)
+            score_path = find_test_score_csv(setting_dir, artifact.path, role=artifact.role)
             f1 = read_f1_score(score_path) if score_path else None
             scored.append(
                 ModelArtifact(
@@ -527,9 +574,12 @@ def prepare_x_for_model(
 ) -> tuple[pd.DataFrame | np.ndarray, pd.DataFrame]:
     x_df = frame[feature_cols].copy()
     for col in x_df.columns:
-        if pd.api.types.is_object_dtype(x_df[col]) or str(x_df[col].dtype) == "string":
+        dtype = x_df[col].dtype
+        if pd.api.types.is_object_dtype(dtype) or str(dtype) == "string":
             x_df[col] = x_df[col].astype("category")
-        elif pd.api.types.is_bool_dtype(x_df[col]):
+        elif pd.api.types.is_bool_dtype(dtype):
+            # Pass dtype (not Series): is_bool_dtype(Series) crashes on categoricals
+            # because pandas accesses .categories on the Series itself.
             x_df[col] = x_df[col].astype(int)
 
     if backend == "lstm":
