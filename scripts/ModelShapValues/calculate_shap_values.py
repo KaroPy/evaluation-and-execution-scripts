@@ -56,6 +56,67 @@ ID_LIKE_COLUMNS = {
     "sessionid",
     "session_id",
 }
+
+
+def _keras_custom_objects() -> dict:
+    """Custom layers used by NNLSTM_landingpage_emb models."""
+    from keras import layers
+    import tensorflow as tf
+
+    class LandingpageIndexIds(layers.Layer):
+        """Extract landingpage id from the last feature channel for Embedding."""
+
+        def __init__(self, vocab_size: int = 2, **kwargs):
+            super().__init__(**kwargs)
+            self.vocab_size = int(vocab_size)
+
+        def call(self, inputs):
+            ids = inputs[..., -1]
+            ids = tf.cast(tf.round(ids), tf.int32)
+            return tf.clip_by_value(ids, 0, self.vocab_size - 1)
+
+        def get_config(self):
+            cfg = super().get_config()
+            cfg.update({"vocab_size": self.vocab_size})
+            return cfg
+
+    class SplitNumericFeatures(layers.Layer):
+        """Drop the last (landingpage) channel; keep numeric features."""
+
+        def call(self, inputs):
+            return inputs[..., :-1]
+
+        def get_config(self):
+            return super().get_config()
+
+    return {
+        "LandingpageIndexIds": LandingpageIndexIds,
+        "SplitNumericFeatures": SplitNumericFeatures,
+    }
+
+
+def model_uses_landingpage_embedding(model) -> bool:
+    try:
+        names = {getattr(layer, "name", "") for layer in model.layers}
+        class_names = {layer.__class__.__name__ for layer in model.layers}
+        return (
+            "landingpage_ids" in names
+            or "landingpage_embedding" in names
+            or "LandingpageIndexIds" in class_names
+        )
+    except Exception:
+        return False
+
+
+def ensure_landingpage_last(feature_cols: list[str]) -> list[str]:
+    """Embedding LSTMs expect landingpage_* as the last input channel."""
+    landing = [c for c in feature_cols if "landingpage" in c.lower()]
+    rest = [c for c in feature_cols if "landingpage" not in c.lower()]
+    if not landing:
+        return feature_cols
+    return rest + landing
+
+
 ROLE_PATTERNS = {
     "conversion": re.compile(r"(?:conversion_probability(?:_model)?\.h5$|conversion_probability$)"),
     "control": re.compile(r"_control(?:\.json|\.h5)$"),
@@ -472,7 +533,7 @@ def load_feature_frame(data_path: Path) -> pd.DataFrame:
 
 def read_inputs_parquet(setting_dir: Path) -> list[str] | None:
     inputs_path = setting_dir / "inputs.parquet"
-    if not inputs_path.exists():
+    if not inputs_path.is_file():
         return None
     values = pd.read_parquet(inputs_path)["input"].dropna().astype(str).tolist()
     return [col for col in values if col.lower() not in ID_LIKE_COLUMNS]
@@ -501,6 +562,14 @@ def resolve_feature_columns(
             source = str(setting_dir / "inputs.parquet")
 
     if not feature_names:
+        # Fallback: use data columns (drop id-like); required for settings with a
+        # missing/empty inputs.parquet (e.g. landingpage_embedded).
+        feature_names = [
+            c for c in data_columns if c.lower() not in ID_LIKE_COLUMNS
+        ]
+        source = "data columns"
+
+    if not feature_names:
         raise FileNotFoundError(
             f"Could not resolve model inputs for {setting_dir}. "
             "Expected either feature names on the model or an inputs.parquet "
@@ -513,6 +582,10 @@ def resolve_feature_columns(
             f"Data is missing required feature columns from {source}: {missing}. "
             f"Available: {data_columns}"
         )
+
+    if backend == "lstm" and model_uses_landingpage_embedding(model):
+        feature_names = ensure_landingpage_last(feature_names)
+
     return feature_names
 
 
@@ -554,10 +627,14 @@ def load_model(artifact: ModelArtifact):
         with path.open("rb") as handle:
             return pickle.load(handle)
 
-    # LSTM / Keras
-    from keras.models import load_model
+    # LSTM / Keras (may include custom landingpage embedding layers)
+    from keras.models import load_model as keras_load_model
 
-    model = load_model(str(path), compile=False)
+    model = keras_load_model(
+        str(path),
+        compile=False,
+        custom_objects=_keras_custom_objects(),
+    )
     weights = Path(str(path).replace(".h5", "_weights.weights.h5"))
     if not weights.exists():
         # common alternate naming
