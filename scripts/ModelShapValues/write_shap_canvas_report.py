@@ -181,12 +181,14 @@ def _slugify(text: str) -> str:
 
 
 def short_setting_label(setting: str) -> str:
-    """Human-readable short label from a setting folder name."""
-    s = setting
-    # Drop leading date prefix.
-    s = re.sub(r"^\d{4}-\d{2}-\d{2}_", "", s)
+    """Human-readable short label from a setting folder name (keeps date)."""
+    date_match = re.match(r"^(\d{4}-\d{2}-\d{2})_(.*)$", setting)
+    date_prefix = date_match.group(1) if date_match else None
+    s = date_match.group(2) if date_match else setting
     parts: list[str] = []
-    if "lstm" in s:
+    if "embed" in s:
+        parts.append("LSTM emb")
+    elif "lstm" in s:
         parts.append("LSTM")
     elif "xgb" in s:
         parts.append("XGB")
@@ -194,17 +196,91 @@ def short_setting_label(setting: str) -> str:
         parts.append("best")
     elif "new_models" in s:
         parts.append("new")
-    if "without_landingpage" in s or "no_landing" in s:
+    if "permutat" in s:
+        parts.append("LP permutated")
+    elif "without_landingpage" in s or "no_landing" in s:
         parts.append("no LP")
-    elif "with_landingpage" in s or "landingpage" in s:
+    elif "with_landingpage" in s or "landingpage" in s or "embed" in s:
         parts.append("+ LP")
+    if "standard" in s:
+        parts.append("standard")
     if "reset" in s:
         parts.append("reset")
     if "failed" in s:
         parts.append("failed")
-    if not parts:
-        return setting[-40:] if len(setting) > 40 else setting
-    return " ".join(parts)
+    body = " ".join(parts) if parts else (setting[-40:] if len(setting) > 40 else setting)
+    if date_prefix:
+        return f"{date_prefix} {body}"
+    return body
+
+
+def _read_f1_from_test_score(path: Path) -> float | None:
+    try:
+        frame = pd.read_csv(path)
+    except Exception:
+        return None
+    if "F1" not in frame.columns or frame.empty:
+        return None
+    value = frame["F1"].iloc[0]
+    if pd.isna(value):
+        return None
+    return float(value)
+
+
+def resolve_setting_f1(
+    setting: str,
+    shap_results: Path,
+    df: pd.DataFrame,
+    cv: int | None = None,
+) -> float | None:
+    """Best-effort F1 from model_path / setting folder *_test_score.csv."""
+    sub = df[df["customer_setting"] == setting]
+    if cv is not None:
+        sub = sub[sub["cv"] == cv]
+    cvs = sorted({int(c) for c in sub["cv"].dropna().unique() if int(c) >= 0})
+    prefer_cv = cvs[0] if len(cvs) == 1 else (cv if cv is not None else (cvs[-1] if cvs else None))
+
+    model_paths = [
+        Path(p)
+        for p in sub["model_path"].fillna("").astype(str).unique()
+        if p and p != "nan"
+    ]
+    setting_dirs: list[Path] = []
+    for mp in model_paths:
+        if mp.parent.is_dir() and mp.parent not in setting_dirs:
+            setting_dirs.append(mp.parent)
+    local_dir = shap_results / setting
+    # Prefer the models/... sibling directory inferred from model_path.
+    candidates: list[Path] = []
+    for sdir in setting_dirs or ([local_dir] if local_dir.is_dir() else []):
+        for path in sdir.glob("*_test_score.csv"):
+            if path.name.endswith("_score_test.csv"):
+                continue
+            if prefer_cv is not None and not re.search(rf"_cv_{prefer_cv}(?:_|\.|$)", path.name):
+                continue
+            candidates.append(path)
+    scores = [_read_f1_from_test_score(p) for p in candidates]
+    scores = [s for s in scores if s is not None]
+    return max(scores) if scores else None
+
+
+def resolve_setting_sample_n(setting: str, shap_results: Path, df: pd.DataFrame) -> int | None:
+    """Sample n from SHAP value CSV row count, else None."""
+    setting_dir = shap_results / setting
+    if setting_dir.is_dir():
+        shap_csvs = sorted(setting_dir.glob("cv_*_*_shap_values.csv"))
+        for path in shap_csvs:
+            try:
+                # Fast path: count data lines without loading full frame when huge.
+                with path.open("r", encoding="utf-8") as handle:
+                    n = sum(1 for _ in handle) - 1
+                if n > 0:
+                    return int(n)
+            except Exception:
+                continue
+    # Fallback: unique rows are not in mean_abs; leave unknown.
+    _ = df
+    return None
 
 
 def feature_bucket(feature: str) -> str:
@@ -376,6 +452,26 @@ def build_report(df: pd.DataFrame, shap_results: Path, title: str | None, manife
                         # Manifest stores the setting's selected-model F1 (same across roles).
                         f1_by_setting[label] = float(f1_vals.max())
 
+    # Fill gaps from model *_test_score.csv and SHAP value CSV row counts.
+    for setting in setting_order:
+        label = label_of[setting]
+        if label not in f1_by_setting:
+            cvs = sorted(
+                {
+                    int(c)
+                    for c in df.loc[df["customer_setting"] == setting, "cv"].dropna().unique()
+                    if int(c) >= 0
+                }
+            )
+            prefer_cv = cvs[0] if len(cvs) == 1 else None
+            f1 = resolve_setting_f1(setting, shap_results, df, cv=prefer_cv)
+            if f1 is not None:
+                f1_by_setting[label] = f1
+        if label not in sample_n_by_setting:
+            n = resolve_setting_sample_n(setting, shap_results, df)
+            if n is not None:
+                sample_n_by_setting[label] = n
+
     setting_scope_rows: list[list[str]] = []
     for setting in setting_order:
         label = label_of[setting]
@@ -384,12 +480,15 @@ def build_report(df: pd.DataFrame, shap_results: Path, title: str | None, manife
         feats = sorted(sub["feature"].unique().tolist())
         landing = [f for f in feats if "landing" in f.lower()]
         n = sample_n_by_setting.get(label, -1)
+        f1 = f1_by_setting.get(label)
+        f1_cell = f"{f1:.4f}" if f1 is not None else "—"
         setting_scope_rows.append(
             [
-                setting,
+                label,
                 ", ".join(backends) or "—",
                 ", ".join(landing) if landing else "—",
                 str(n) if n > 0 else "—",
+                f1_cell,
             ]
         )
 
@@ -405,13 +504,15 @@ def build_report(df: pd.DataFrame, shap_results: Path, title: str | None, manife
                 shares[b].append(_pct(part, total))
         bucket_shares[role] = shares
 
-    # Top-1 feature per setting × role, with best F1 from the SHAP run manifest.
+    # Top-1 feature per setting × role, with sample n + best F1.
     top1_rows: list[list[str]] = []
     for setting in setting_order:
         label = label_of[setting]
         f1 = f1_by_setting.get(label)
         f1_cell = f"{f1:.4f}" if f1 is not None else "—"
-        row = [label, f1_cell]
+        n = sample_n_by_setting.get(label, -1)
+        n_cell = str(n) if n > 0 else "—"
+        row = [label, n_cell, f1_cell]
         for role in ROLES:
             g = df[(df["customer_setting"] == setting) & (df["role"] == role)]
             if g.empty:
@@ -835,7 +936,7 @@ def render_canvas(report: ReportData) -> str:
         "      <Stack gap={12}>",
         "        <H2>Scope</H2>",
         "        <Table",
-        '          headers={["Setting", "Backend", "Landing feature", "Sample n"]}',
+        '          headers={["Setting", "Backend", "Landing feature", "Sample n", "Best F1"]}',
         f"          rows={{{_tsx_list_of_lists(report.setting_scope_rows)}}}",
         "        />",
         "      </Stack>",
@@ -853,7 +954,7 @@ def render_canvas(report: ReportData) -> str:
         "      <Stack gap={12}>",
         "        <H2>What dominates each model</H2>",
         "        <Table",
-        '          headers={["Setting", "Best F1", "Control #1", "Treatment #1", "Conversion #1"]}',
+        '          headers={["Setting", "Sample n", "Best F1", "Control #1", "Treatment #1", "Conversion #1"]}',
         f"          rows={{{_tsx_list_of_lists(report.top1_rows)}}}",
         "        />",
         "      </Stack>",
@@ -995,7 +1096,7 @@ def render_pdf(report: ReportData, output: Path) -> Path:
         ax_scope = fig.add_axes([0.06, 0.08, 0.88, 0.58])
         _draw_table(
             ax_scope,
-            ["Setting", "Backend", "Landing feature", "Sample n"],
+            ["Setting", "Backend", "Landing feature", "Sample n", "Best F1"],
             _wrap_cells(report.setting_scope_rows, width=42),
             title="Scope",
         )
@@ -1040,7 +1141,7 @@ def render_pdf(report: ReportData, output: Path) -> Path:
         ax_top = fig.add_axes([0.06, 0.58, 0.88, 0.32])
         _draw_table(
             ax_top,
-            ["Setting", "Best F1", "Control #1", "Treatment #1", "Conversion #1"],
+            ["Setting", "Sample n", "Best F1", "Control #1", "Treatment #1", "Conversion #1"],
             _wrap_cells(report.top1_rows, width=22),
             title="What dominates each model",
         )
@@ -1349,7 +1450,7 @@ def render_html(report: ReportData, output: Path) -> Path:
 
     <section>
       <h2>Scope</h2>
-      {_html_table(["Setting", "Backend", "Landing feature", "Sample n"], report.setting_scope_rows)}
+      {_html_table(["Setting", "Backend", "Landing feature", "Sample n", "Best F1"], report.setting_scope_rows)}
     </section>
 
     <section>
@@ -1362,7 +1463,7 @@ def render_html(report: ReportData, output: Path) -> Path:
 
     <section>
       <h2>What dominates each model</h2>
-      {_html_table(["Setting", "Best F1", "Control #1", "Treatment #1", "Conversion #1"], report.top1_rows)}
+      {_html_table(["Setting", "Sample n", "Best F1", "Control #1", "Treatment #1", "Conversion #1"], report.top1_rows)}
     </section>
 
     <section>
