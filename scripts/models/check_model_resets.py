@@ -584,6 +584,23 @@ def objective_counts(df: pd.DataFrame) -> pd.DataFrame:
     return grouped
 
 
+def filter_out_initialization(df: pd.DataFrame, group_cols: list[str]) -> pd.DataFrame:
+    """Exclude groups with exactly one reset (treated as model initialization)."""
+    if df.empty:
+        return df
+    missing = [col for col in group_cols if col not in df.columns]
+    if missing:
+        return df
+    group_resets = df.groupby(group_cols, dropna=False)["reset"].transform("sum")
+    return df.loc[group_resets != 1].copy()
+
+
+def aggregation_group_cols(model_type: str) -> list[str]:
+    if model_type == CAUSAL_TYPE:
+        return ["workspace.name", "workspace.id", "model.audience"]
+    return ["workspace.name", "workspace.id", "model.objective"]
+
+
 def overall_rows(df: pd.DataFrame) -> list[dict]:
     rows: list[dict] = []
     for model_type in CROSS_WORKSPACE_TYPES:
@@ -591,9 +608,46 @@ def overall_rows(df: pd.DataFrame) -> list[dict]:
         if type_df.empty:
             continue
 
-        models = len(type_df)
-        resets = int(type_df["reset"].sum())
-        listed, avg, sd = gap_stats(reset_gaps(type_df))
+        # Single-reset groups are initialization and must not enter aggregates.
+        agg_df = filter_out_initialization(type_df, aggregation_group_cols(model_type))
+        if agg_df.empty:
+            rows.append(
+                {
+                    "workspace.name": ALL_WORKSPACES,
+                    "model.type": model_type,
+                    "signal.name": SIGNAL_TOTAL,
+                    "signal.source": "",
+                    "model.audience": "",
+                    "model.objective": "",
+                    "models": 0,
+                    "resets": 0,
+                    "reset_pct": 0.0,
+                    "days_between": "",
+                    "days_between_avg": None,
+                    "days_between_sd": None,
+                }
+            )
+            rows.append(
+                {
+                    "workspace.name": ALL_WORKSPACES,
+                    "model.type": model_type,
+                    "signal.name": SIGNAL_WORKSPACE_AVG,
+                    "signal.source": "",
+                    "model.audience": "",
+                    "model.objective": "",
+                    "models": 0,
+                    "resets": 0,
+                    "reset_pct": 0.0,
+                    "days_between": "",
+                    "days_between_avg": None,
+                    "days_between_sd": None,
+                }
+            )
+            continue
+
+        models = len(agg_df)
+        resets = int(agg_df["reset"].sum())
+        listed, avg, sd = gap_stats(reset_gaps(agg_df))
         rows.append(
             {
                 "workspace.name": ALL_WORKSPACES,
@@ -613,7 +667,7 @@ def overall_rows(df: pd.DataFrame) -> list[dict]:
 
         workspace_avgs: list[float] = []
         workspace_count = 0
-        for _, workspace_df in type_df.groupby(["workspace.name", "workspace.id"], dropna=False):
+        for _, workspace_df in agg_df.groupby(["workspace.name", "workspace.id"], dropna=False):
             workspace_count += 1
             _listed, workspace_avg, _sd = gap_stats(reset_gaps(workspace_df))
             if workspace_avg is not None:
