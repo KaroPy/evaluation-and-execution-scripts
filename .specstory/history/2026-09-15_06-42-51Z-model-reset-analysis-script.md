@@ -4533,3 +4533,169 @@ Conversion models are now grouped by **`model.objective`**.
 - Summary / log: `conversion | <workspace> | objective <id>: …`
 - Causal still groups by signal (`model.audience`)
 - Cross-workspace totals still pool conversion gaps per objective
+
+---
+
+_**User**_
+
+If reset_model count == 1, assume, that it is the initialization and do not use it in aggreagation
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Single reset cases should be excluded from aggregation.
+
+Reviewing the summary CSV and overall_rows logic to find where to exclude single-reset cases.
+</details></think>
+
+_**Agent (default)**_
+
+I'll exclude groups with a single reset from aggregation, treating them as initialization only.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/data/model_resets_20260915_074148_summary.csv</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Treat a reset count of 1 as initialization. Exclude it from aggregation.
+
+Detail rows may still show resets=1. Aggregation totals and workspace averages must exclude groups with only one reset. This prevents initialization resets from inflating overall gap calculations.
+
+Filter the overall dataframe to drop groups with exactly one reset. Causal aggregation groups by workspace and audience. Conversion aggregation groups by workspace and objective. Workspace averages must also exclude single-reset groups within each workspace.
+
+`overall_rows` already processes data per model type, so the exclusion helper can use a generic group key. It will sum resets per group and drop any group with exactly one reset.
+
+A transform-based approach would mask out groups with exactly one reset. Zero-reset groups should remain in model counts. Single-reset groups must be fully excluded from overall reset totals and days-between calculations.
+
+Single-reset groups contribute zero gaps, so days-between aggregation is already correct. The remaining issues are counting those groups in overall reset totals and model counts. Workspaces containing only single-reset groups already yield n/a averages.
+</details></think>
+
+_**Agent (default)**_
+
+I'll keep single-reset groups in the detail rows, but exclude them from overall totals and workspace averages as initialization.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/models/check_model_resets.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The docstring should also be updated briefly.
+
+Detail rows with a single reset already leave days_between empty. Optional formatting changes for init rows are unnecessary. The logic will now be tested.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: python3 - &lt;&lt;&#39;PY&#39;
+import importlib.util
+import pandas as pd
+spec = importlib.util.spec_from_file_location(&#39;m&#39;, &#39;scripts/models/check_model_resets.py&#39;)
+mod = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(mod)
+rows = [
+    # causal init only (1 reset) — detail shown, excluded from overall
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;a1&#34;,&#34;model.path&#34;:&#34;p1&#34;,&#34;model.type&#34;:&#34;causal&#34;,&#34;model.audience&#34;:&#34;s_init&#34;,&#34;model.objective&#34;:&#34;(none)&#34;,&#34;signal.name&#34;:&#34;Init&#34;,&#34;signal.source&#34;:&#34;facebook&#34;,&#34;reset.date&#34;:&#34;2026-01-01&#34;,&#34;reset&#34;:True},
+    # causal with 2 resets — included
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;a2&#34;,&#34;model.path&#34;:&#34;p2&#34;,&#34;model.type&#34;:&#34;causal&#34;,&#34;model.audience&#34;:&#34;s2&#34;,&#34;model.objective&#34;:&#34;(none)&#34;,&#34;signal.name&#34;:&#34;Seed&#34;,&#34;signal.source&#34;:&#34;facebook&#34;,&#34;reset.date&#34;:&#34;2026-01-01&#34;,&#34;reset&#34;:True},
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;a3&#34;,&#34;model.path&#34;:&#34;p3&#34;,&#34;model.type&#34;:&#34;causal&#34;,&#34;model.audience&#34;:&#34;s2&#34;,&#34;model.objective&#34;:&#34;(none)&#34;,&#34;signal.name&#34;:&#34;Seed&#34;,&#34;signal.source&#34;:&#34;facebook&#34;,&#34;reset.date&#34;:&#34;2026-01-15&#34;,&#34;reset&#34;:True},
+    # conversion init
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;c1&#34;,&#34;model.path&#34;:&#34;c1&#34;,&#34;model.type&#34;:&#34;conversion&#34;,&#34;model.audience&#34;:&#34;(none)&#34;,&#34;model.objective&#34;:&#34;obj_init&#34;,&#34;signal.name&#34;:&#34;&#34;,&#34;signal.source&#34;:&#34;&#34;,&#34;reset.date&#34;:&#34;2026-01-01&#34;,&#34;reset&#34;:True},
+    # conversion with 2 resets
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;c2&#34;,&#34;model.path&#34;:&#34;c2&#34;,&#34;model.type&#34;:&#34;conversion&#34;,&#34;model.audience&#34;:&#34;(none)&#34;,&#34;model.objective&#34;:&#34;obj2&#34;,&#34;signal.name&#34;:&#34;&#34;,&#34;signal.source&#34;:&#34;&#34;,&#34;reset.date&#34;:&#34;2026-01-01&#34;,&#34;reset&#34;:True},
+    {&#34;workspace.name&#34;:&#34;A&#34;,&#34;workspace.id&#34;:&#34;1&#34;,&#34;model.id&#34;:&#34;c3&#34;,&#34;model.path&#34;:&#34;c3&#34;,&#34;model.type&#34;:&#34;conversion&#34;,&#34;model.audience&#34;:&#34;(none)&#34;,&#34;model.objective&#34;:&#34;obj2&#34;,&#34;signal.name&#34;:&#34;&#34;,&#34;signal.source&#34;:&#34;&#34;,&#34;reset.date&#34;:&#34;2026-01-11&#34;,&#34;reset&#34;:True},
+]
+s = mod.summarize(pd.DataFrame(rows))
+print(s[[&#39;workspace.name&#39;,&#39;model.type&#39;,&#39;signal.name&#39;,&#39;model.audience&#39;,&#39;model.objective&#39;,&#39;models&#39;,&#39;resets&#39;,&#39;days_between&#39;]].to_string(index=False))
+total_c = s[(s[&#39;workspace.name&#39;]==&#39;(all workspaces)&#39;) &amp; (s[&#39;model.type&#39;]==&#39;causal&#39;) &amp; (s[&#39;signal.name&#39;]==&#39;(total)&#39;)].iloc[0]
+assert total_c[&#39;resets&#39;] == 2, total_c[&#39;resets&#39;]
+assert total_c[&#39;models&#39;] == 2, total_c[&#39;models&#39;]
+assert total_c[&#39;days_between&#39;] == &#39;[14]&#39;
+total_v = s[(s[&#39;workspace.name&#39;]==&#39;(all workspaces)&#39;) &amp; (s[&#39;model.type&#39;]==&#39;conversion&#39;) &amp; (s[&#39;signal.name&#39;]==&#39;(total)&#39;)].iloc[0]
+assert total_v[&#39;resets&#39;] == 2
+assert total_v[&#39;models&#39;] == 2
+# detail still has init rows
+assert ((s[&#39;model.audience&#39;]==&#39;s_init&#39;) &amp; (s[&#39;resets&#39;]==1)).any()
+assert ((s[&#39;model.objective&#39;]==&#39;obj_init&#39;) &amp; (s[&#39;resets&#39;]==1)).any()
+print(&#39;ok&#39;)
+PY</summary>
+```bash
+python3 - <<'PY'
+import importlib.util
+import pandas as pd
+spec = importlib.util.spec_from_file_location('m', 'scripts/models/check_model_resets.py')
+mod = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(mod)
+rows = [
+    # causal init only (1 reset) — detail shown, excluded from overall
+    {"workspace.name":"A","workspace.id":"1","model.id":"a1","model.path":"p1","model.type":"causal","model.audience":"s_init","model.objective":"(none)","signal.name":"Init","signal.source":"facebook","reset.date":"2026-01-01","reset":True},
+    # causal with 2 resets — included
+    {"workspace.name":"A","workspace.id":"1","model.id":"a2","model.path":"p2","model.type":"causal","model.audience":"s2","model.objective":"(none)","signal.name":"Seed","signal.source":"facebook","reset.date":"2026-01-01","reset":True},
+    {"workspace.name":"A","workspace.id":"1","model.id":"a3","model.path":"p3","model.type":"causal","model.audience":"s2","model.objective":"(none)","signal.name":"Seed","signal.source":"facebook","reset.date":"2026-01-15","reset":True},
+    # conversion init
+    {"workspace.name":"A","workspace.id":"1","model.id":"c1","model.path":"c1","model.type":"conversion","model.audience":"(none)","model.objective":"obj_init","signal.name":"","signal.source":"","reset.date":"2026-01-01","reset":True},
+    # conversion with 2 resets
+    {"workspace.name":"A","workspace.id":"1","model.id":"c2","model.path":"c2","model.type":"conversion","model.audience":"(none)","model.objective":"obj2","signal.name":"","signal.source":"","reset.date":"2026-01-01","reset":True},
+    {"workspace.name":"A","workspace.id":"1","model.id":"c3","model.path":"c3","model.type":"conversion","model.audience":"(none)","model.objective":"obj2","signal.name":"","signal.source":"","reset.date":"2026-01-11","reset":True},
+]
+s = mod.summarize(pd.DataFrame(rows))
+print(s[['workspace.name','model.type','signal.name','model.audience','model.objective','models','resets','days_between']].to_string(index=False))
+total_c = s[(s['workspace.name']=='(all workspaces)') & (s['model.type']=='causal') & (s['signal.name']=='(total)')].iloc[0]
+assert total_c['resets'] == 2, total_c['resets']
+assert total_c['models'] == 2, total_c['models']
+assert total_c['days_between'] == '[14]'
+total_v = s[(s['workspace.name']=='(all workspaces)') & (s['model.type']=='conversion') & (s['signal.name']=='(total)')].iloc[0]
+assert total_v['resets'] == 2
+assert total_v['models'] == 2
+# detail still has init rows
+assert ((s['model.audience']=='s_init') & (s['resets']==1)).any()
+assert ((s['model.objective']=='obj_init') & (s['resets']==1)).any()
+print('ok')
+PY
+```
+
+```
+  workspace.name model.type     signal.name model.audience model.objective  models  resets days_between
+               A     causal            Init         s_init                       1       1             
+               A     causal            Seed             s2                       2       2         [14]
+               A conversion                                           obj2       2       2         [10]
+               A conversion                                       obj_init       1       1             
+(all workspaces) conversion         (total)                                      2       2         [10]
+(all workspaces) conversion (workspace avg)                                      1       1      [10.00]
+(all workspaces)     causal         (total)                                      2       2         [14]
+(all workspaces)     causal (workspace avg)                                      1       1      [14.00]
+ok
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Init groups still appear in detail views. They are excluded from aggregate totals across all workspaces.
+</details></think>
+
+_**Agent (default)**_
+
+Groups with exactly **1 reset** are treated as initialization.
+
+They still appear in the detail rows, but they are **excluded** from `(all workspaces)` totals and workspace averages (counts and days-between).

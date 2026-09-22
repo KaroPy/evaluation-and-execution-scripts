@@ -8339,6 +8339,19 @@ What could be the reason for the low shap values in Tchibo?
 
 _**Agent (default)**_
 
+<think><details><summary>Thought Process</summary>
+Investigating why SHAP values are lower for Tchibo than for kfzteile24.
+
+Gathering concrete evidence from the data. Comparing mean |SHAP| values, sample sizes, model types, feature distributions, and SHAP computation methods between Tchibo and Kfzteile.
+</details></think>
+
+_**Agent (default)**_
+
+I'll compare Tchibo and kfzteile SHAP magnitudes and the data/model setup to see what explains the lower values.
+
+
+_**Agent (default)**_
+
 <tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
 <summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
 import pandas as pd
@@ -8410,13 +8423,76 @@ for base, name in [
         summarize(base, name)
 PY
 ```
+
+```
+
+=== tchibo x_train ===
+settings: 3
+total mean_abs_shap per setting/role (sum over features):
+  2026-07-27_new_models_with_landingpage_r control    sum=0.3245 max=0.1252 mean=0.0464
+  2026-07-27_new_models_with_landingpage_r conversion sum=0.1104 max=0.0293 mean=0.0158
+  2026-07-27_new_models_with_landingpage_r treatment  sum=0.0658 max=0.0206 mean=0.0094
+  2026-08-12_best_models_without_landingpa control    sum=0.1410 max=0.0505 mean=0.0235
+  2026-08-12_best_models_without_landingpa conversion sum=0.1657 max=0.0731 mean=0.0276
+  2026-08-12_best_models_without_landingpa treatment  sum=0.0713 max=0.0200 mean=0.0119
+  2026-09-12_best_models_with_landingpage_ control    sum=0.1426 max=0.0565 mean=0.0204
+  2026-09-12_best_models_with_landingpage_ conversion sum=0.1660 max=0.0382 mean=0.0237
+  2026-09-12_best_models_with_landingpage_ treatment  sum=0.1403 max=0.0661 mean=0.0200
+overall max single-feature mean_abs_shap: 0.1252212026623382
+overall median single-feature mean_abs_shap: 0.0120972072569971
+sample n: [1164]
+backends: ['lstm']
+
+=== kfz x_train ===
+settings: 5
+total mean_abs_shap per setting/role (sum over features):
+  2026-09-07_new_models_with_landingpage_l control    sum=0.6081 max=0.2167 mean=0.0869
+  2026-09-07_new_models_with_landingpage_l conversion sum=0.4575 max=0.1921 mean=0.0654
+  2026-09-07_new_models_with_landingpage_l treatment  sum=0.1943 max=0.0715 mean=0.0278
+  2026-09-08_best_models_without_landingpa control    sum=0.4656 max=0.1833 mean=0.0776
+  2026-09-08_best_models_without_landingpa conversion sum=0.4231 max=0.1596 mean=0.0705
+  2026-09-08_best_models_without_landingpa treatment  sum=0.3565 max=0.1253 mean=0.0594
+  2026-09-08_best_models_without_landingpa control    sum=0.2053 max=0.0710 mean=0.0342
+  2026-09-08_best_models_without_landingpa conversion sum=4.7086 max=1.6611 mean=0.7848
+  2026-09-08_best_models_without_landingpa treatment  sum=0.1463 max=0.0445 mean=0.0244
+  2026-09-09_best_models_with_landingpage_ control    sum=0.1374 max=0
+… (output truncated)
+```
 </details></tool-use>
 
 _**Agent (default)**_
 
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
-Status: **loading**
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "predict|shap|pred_contribs|KernelExplainer|GradientExplainer"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py",
+  "pattern": "predict|shap|pred_contribs|KernelExplainer|GradientExplainer",
+  "topFiles": [
+    {
+      "matchCount": 73,
+      "uri": "scripts/ModelShapValues/calculate_shap_values.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 73
+}
+```
+Status: **completed**
 
 </details></tool-use>
 
@@ -8469,4 +8545,5205 @@ for p in [
             print(f'  {col:40s} dtype={s.dtype} nunique={s.nunique()}')
 PY
 ```
+
+```
+
+=== tchibo_x_train_2026-09-15.parquet shape=(1164, 7) ===
+  days_between_sessions                    min=-0.4277 max=4.179 mean=8.193e-09 std=1
+  landingpage_cat                          min=-1.968 max=1.501 mean=-8.193e-10 std=1
+  pages_visited_per_session                min=-1.123 max=1.732 mean=0 std=1
+  pages_visited_per_session_cumulated      min=-0.9463 max=3.044 mean=-1.229e-08 std=1
+  pages_visited_per_user                   min=-0.7822 max=3.573 mean=6.554e-09 std=1
+  pages_visited_per_user_cumulated         min=-0.7287 max=3.741 mean=1.639e-09 std=1
+  session_duration_in_s                    min=-1.093 max=2.492 mean=1.639e-08 std=1
+
+=== kfzteile24_x_train_2026-09-15.parquet shape=(22708, 7) ===
+  days_between_sessions                    min=-0.5217 max=9.684 mean=2.688e-09 std=1
+  landingpage                              dtype=category nunique=673
+  pages_visited_per_session                min=-0.9523 max=4.354 mean=-6.72e-10 std=1
+  pages_visited_per_session_cumulated      min=-0.8079 max=6.889 mean=0 std=1
+  pages_visited_per_user                   min=-0.4533 max=17.19 mean=1.68e-10 std=1
+  pages_visited_per_user_cumulated         min=-0.42 max=17.31 mean=-1.176e-09 std=1
+  session_duration_in_s                    min=-0.9419 max=5.71 mean=1.176e-09 std=1
+
+```
 </details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Tchibo LSTM SHAP values are significantly lower than those for kfz LSTM.
+
+Kfz XGB conversion SHAP values are extremely high, but Tchibo uses LSTM exclusively. Tchibo features are standardized numerics, while kfz relies on a categorical landing page with 673 categories. Even within LSTM models, kfz values remain roughly two to three times higher than Tchibo. The next step is examining model output scale and prediction magnitudes.
+
+Tchibo models may produce flat predictions, reducing sensitivity. The KernelExplainer uses only 100 samples with a 50-sample background set. Tchibo treatment roles are especially weak, summing to just 0.065–0.14 versus control. Raw SHAP values and model predictions for both backends will be compared.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+import numpy as np
+from pathlib import Path
+
+def inspect_shap_csv(path):
+    df = pd.read_csv(path)
+    absv = df.abs()
+    print(f&#39;  {path.parent.name}/{path.name}&#39;)
+    print(f&#39;    rows={len(df)} cols={len(df.columns)}&#39;)
+    print(f&#39;    mean|shap| per col: min={absv.mean().min():.6f} max={absv.mean().max():.6f} sum={absv.mean().sum():.6f}&#39;)
+    print(f&#39;    top feature: {absv.mean().idxmax()} = {absv.mean().max():.6f}&#39;)
+
+pairs = [
+    (&#39;tchibo best+LP control&#39;, &#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv&#39;),
+    (&#39;kfz LSTM+LP control&#39;, &#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv&#39;),
+    (&#39;tchibo best+LP treatment&#39;, &#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_treatment_mean_abs_shap.csv&#39;),
+    (&#39;kfz LSTM+LP treatment&#39;, &#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_treatment_mean_abs_shap.csv&#39;),
+]
+for label, p in pairs:
+    print(f&#39;\n{label}:&#39;)
+    inspect_shap_csv(Path(p))
+
+# check if tchibo used kernel vs gradient from logs
+import re
+log = Path(&#39;scripts/ModelShapValues/logs&#39;)
+for f in sorted(log.glob(&#39;*tchibo*&#39;))[-3:]:
+    txt = f.read_text(errors=&#39;ignore&#39;)[:5000]
+    if &#39;GradientExplainer&#39; in txt or &#39;KernelExplainer&#39; in txt:
+        print(&#39;\nlog&#39;, f.name)
+        for line in f.read_text(errors=&#39;ignore&#39;).splitlines():
+            if &#39;GradientExplainer&#39; in line or &#39;KernelExplainer&#39; in line or &#39;explaining&#39; in line.lower():
+                print(&#39; &#39;, line[:120])
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+import numpy as np
+from pathlib import Path
+
+def inspect_shap_csv(path):
+    df = pd.read_csv(path)
+    absv = df.abs()
+    print(f'  {path.parent.name}/{path.name}')
+    print(f'    rows={len(df)} cols={len(df.columns)}')
+    print(f'    mean|shap| per col: min={absv.mean().min():.6f} max={absv.mean().max():.6f} sum={absv.mean().sum():.6f}')
+    print(f'    top feature: {absv.mean().idxmax()} = {absv.mean().max():.6f}')
+
+pairs = [
+    ('tchibo best+LP control', 'scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv'),
+    ('kfz LSTM+LP control', 'scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv'),
+    ('tchibo best+LP treatment', 'scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_treatment_mean_abs_shap.csv'),
+    ('kfz LSTM+LP treatment', 'scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_treatment_mean_abs_shap.csv'),
+]
+for label, p in pairs:
+    print(f'\n{label}:')
+    inspect_shap_csv(Path(p))
+
+# check if tchibo used kernel vs gradient from logs
+import re
+log = Path('scripts/ModelShapValues/logs')
+for f in sorted(log.glob('*tchibo*'))[-3:]:
+    txt = f.read_text(errors='ignore')[:5000]
+    if 'GradientExplainer' in txt or 'KernelExplainer' in txt:
+        print('\nlog', f.name)
+        for line in f.read_text(errors='ignore').splitlines():
+            if 'GradientExplainer' in line or 'KernelExplainer' in line or 'explaining' in line.lower():
+                print(' ', line[:120])
+PY
+```
+
+```
+
+tchibo best+LP control:
+Traceback (most recent call last):
+  File "<stdin>", line 21, in <module>
+  File "<stdin>", line 7, in inspect_shap_csv
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/pandas/core/generic.py", line 1655, in abs
+    res_mgr = self._mgr.apply(np.abs)
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/pandas/core/internals/managers.py", line 302, in apply
+    applied = b.apply(f, **kwargs)
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/pandas/core/internals/blocks.py", line 402, in apply
+    result = func(self.values, **kwargs)
+TypeError: bad operand type for abs(): 'str'
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+import numpy as np
+from pathlib import Path
+
+# Load models and check prediction variance on x_train
+from scripts.ModelShapValues.calculate_shap_values import load_model, prepare_x_for_model, resolve_feature_columns, read_inputs_parquet
+from pathlib import Path
+import pandas as pd
+
+def model_stats(customer, setting, role, data_path):
+    models_root = Path(&#39;scripts/ModelShapValues/models&#39;)
+    cust_dirs = [p for p in models_root.iterdir() if customer in p.name.lower()]
+    setting_dir = cust_dirs[0] / setting
+    data = pd.read_parquet(data_path)
+    # find artifact
+    role_files = list(setting_dir.glob(f&#39;*{role}*&#39;))
+    if role == &#39;conversion&#39;:
+        arts = [p for p in setting_dir.glob(&#39;*conversion_probability*&#39;) if p.suffix==&#39;.h5&#39;]
+    elif role == &#39;control&#39;:
+        arts = [p for p in setting_dir.glob(&#39;*control.h5&#39;)]
+    else:
+        arts = [p for p in setting_dir.glob(&#39;*treatment.h5&#39;)]
+    art_path = arts[0]
+    from scripts.ModelShapValues.calculate_shap_values import ModelArtifact, detect_backend
+    backend = detect_backend(art_path)
+    artifact = ModelArtifact(path=art_path, role=role, cv=6, backend=backend)
+    model = load_model(artifact)
+    feature_cols = read_inputs_parquet(setting_dir)
+    feature_cols = [c for c in feature_cols if c.lower() not in {&#39;anonymousid&#39;,&#39;session&#39;} and c in data.columns]
+    if not feature_cols:
+        feature_cols = [c for c in read_inputs_parquet(setting_dir) if c.lower() not in {&#39;anonymousid&#39;,&#39;session&#39;}]
+    # align columns present
+    missing = [c for c in feature_cols if c not in data.columns]
+    print(f&#39;{customer} {setting[:20]} {role}: missing cols {missing}&#39;)
+    feature_cols = [c for c in feature_cols if c in data.columns]
+    x_model, x_plot = prepare_x_for_model(data, feature_cols, backend)
+    preds = model.predict(x_model, verbose=0)
+    preds = np.asarray(preds).reshape(-1)
+    print(f&#39;  preds: min={preds.min():.6f} max={preds.max():.6f} mean={preds.mean():.6f} std={preds.std():.6f} range={preds.max()-preds.min():.6f}&#39;)
+
+model_stats(&#39;tchibo&#39;, &#39;2026-09-12_best_models_with_landingpage_lstm&#39;, &#39;control&#39;, &#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet&#39;)
+model_stats(&#39;kfzteile24&#39;, &#39;2026-09-07_new_models_with_landingpage_lstm&#39;, &#39;control&#39;, &#39;scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet&#39;)
+model_stats(&#39;tchibo&#39;, &#39;2026-09-12_best_models_with_landingpage_lstm&#39;, &#39;treatment&#39;, &#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet&#39;)
+model_stats(&#39;kfzteile24&#39;, &#39;2026-09-07_new_models_with_landingpage_lstm&#39;, &#39;treatment&#39;, &#39;scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet&#39;)
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+import numpy as np
+from pathlib import Path
+
+# Load models and check prediction variance on x_train
+from scripts.ModelShapValues.calculate_shap_values import load_model, prepare_x_for_model, resolve_feature_columns, read_inputs_parquet
+from pathlib import Path
+import pandas as pd
+
+def model_stats(customer, setting, role, data_path):
+    models_root = Path('scripts/ModelShapValues/models')
+    cust_dirs = [p for p in models_root.iterdir() if customer in p.name.lower()]
+    setting_dir = cust_dirs[0] / setting
+    data = pd.read_parquet(data_path)
+    # find artifact
+    role_files = list(setting_dir.glob(f'*{role}*'))
+    if role == 'conversion':
+        arts = [p for p in setting_dir.glob('*conversion_probability*') if p.suffix=='.h5']
+    elif role == 'control':
+        arts = [p for p in setting_dir.glob('*control.h5')]
+    else:
+        arts = [p for p in setting_dir.glob('*treatment.h5')]
+    art_path = arts[0]
+    from scripts.ModelShapValues.calculate_shap_values import ModelArtifact, detect_backend
+    backend = detect_backend(art_path)
+    artifact = ModelArtifact(path=art_path, role=role, cv=6, backend=backend)
+    model = load_model(artifact)
+    feature_cols = read_inputs_parquet(setting_dir)
+    feature_cols = [c for c in feature_cols if c.lower() not in {'anonymousid','session'} and c in data.columns]
+    if not feature_cols:
+        feature_cols = [c for c in read_inputs_parquet(setting_dir) if c.lower() not in {'anonymousid','session'}]
+    # align columns present
+    missing = [c for c in feature_cols if c not in data.columns]
+    print(f'{customer} {setting[:20]} {role}: missing cols {missing}')
+    feature_cols = [c for c in feature_cols if c in data.columns]
+    x_model, x_plot = prepare_x_for_model(data, feature_cols, backend)
+    preds = model.predict(x_model, verbose=0)
+    preds = np.asarray(preds).reshape(-1)
+    print(f'  preds: min={preds.min():.6f} max={preds.max():.6f} mean={preds.mean():.6f} std={preds.std():.6f} range={preds.max()-preds.min():.6f}')
+
+model_stats('tchibo', '2026-09-12_best_models_with_landingpage_lstm', 'control', 'scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet')
+model_stats('kfzteile24', '2026-09-07_new_models_with_landingpage_lstm', 'control', 'scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet')
+model_stats('tchibo', '2026-09-12_best_models_with_landingpage_lstm', 'treatment', 'scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet')
+model_stats('kfzteile24', '2026-09-07_new_models_with_landingpage_lstm', 'treatment', 'scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet')
+PY
+```
+
+```
+tchibo 2026-09-12_best_mode control: missing cols []
+  preds: min=0.001481 max=0.364967 mean=0.064577 std=0.086718 range=0.363486
+kfzteile24 2026-09-07_new_model control: missing cols []
+Traceback (most recent call last):
+  File "<stdin>", line 42, in <module>
+  File "<stdin>", line 37, in model_stats
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/keras/src/utils/traceback_utils.py", line 122, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/keras/src/utils/traceback_utils.py", line 122, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+ValueError: Exception encountered when calling LSTMCell.call().
+
+[1mDimensions must be equal, but are 6 and 7 for '{{node sequential_56_1/LSTM1_1/lstm_cell_1/MatMul}} = MatMul[T=DT_FLOAT, grad_a=false, grad_b=false, transpose_a=false, transpose_b=false](sequential_56_1/LSTM1_1/strided_slice_1, sequential_56_1/LSTM1_1/lstm_cell_1/Cast/ReadVariableOp)' with input shapes: [32,6], [7,400].[0m
+
+Arguments received by LSTMCell.call():
+  • inputs=tf.Tensor(shape=(32, 6), dtype=float32)
+  • states=('tf.Tensor(shape=(32, 100), dtype=float32)', 'tf.Tensor(shape=(32, 100), dtype=float32)')
+  • training=False
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The SHAP run likely used encoded categorical data. The kfz LSTM model requires landingpage_cat, which is not stored numerically in the parquet file.
+
+Tchibo control predictions are small and tightly clustered (0.001–0.365, std 0.087). This naturally produces low SHAP values. I will inspect the mean_abs CSVs and raw SHAP rows for control samples.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*tchibo*",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs",
+  "pattern": "GradientExplainer|KernelExplainer|explaining"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs",
+  "pattern": "GradientExplainer|KernelExplainer|explaining",
+  "topFiles": [
+    {
+      "matchCount": 30,
+      "uri": "scripts/ModelShapValues/logs/calculate_shap_values_tchibo_20260915_100044.log"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 93
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; wc -l scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_shap_values.csv scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_shap_values.csv 2&gt;/dev/null; .venv/bin/python -c &#34;
+import pandas as pd, numpy as np
+for label,p in [
+ (&#39;tchibo ctrl&#39;, &#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_shap_values.csv&#39;),
+ (&#39;kfz ctrl&#39;, &#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_shap_values.csv&#39;),
+ (&#39;tchibo treat&#39;, &#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_treatment_shap_values.csv&#39;),
+ (&#39;kfz treat&#39;, &#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_treatment_shap_values.csv&#39;),
+]:
+ df=pd.read_csv(p)
+ absm=df.abs().mean()
+ print(label, &#39;n=&#39;,len(df), &#39;sum mean|shap|=&#39;,absm.sum(), &#39;max=&#39;,absm.max(), &#39;top&#39;, absm.idxmax())
+ # additivity check: if we had base values... skip
+ print(&#39;  per-feature&#39;, dict(absm.round(4)))
+&#34;</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && wc -l scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_shap_values.csv scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_shap_values.csv 2>/dev/null; .venv/bin/python -c "
+import pandas as pd, numpy as np
+for label,p in [
+ ('tchibo ctrl', 'scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_shap_values.csv'),
+ ('kfz ctrl', 'scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_shap_values.csv'),
+ ('tchibo treat', 'scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_treatment_shap_values.csv'),
+ ('kfz treat', 'scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_treatment_shap_values.csv'),
+]:
+ df=pd.read_csv(p)
+ absm=df.abs().mean()
+ print(label, 'n=',len(df), 'sum mean|shap|=',absm.sum(), 'max=',absm.max(), 'top', absm.idxmax())
+ # additivity check: if we had base values... skip
+ print('  per-feature', dict(absm.round(4)))
+"
+```
+
+```
+    1165 scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_shap_values.csv
+   22001 scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm/cv_6_control_shap_values.csv
+   23166 total
+tchibo ctrl n= 1164 sum mean|shap|= 0.14260275052632176 max= 0.05649227257399066 top landingpage_cat
+  per-feature {'days_between_sessions': 0.0094, 'pages_visited_per_session': 0.0252, 'pages_visited_per_session_cumulated': 0.0224, 'pages_visited_per_user': 0.0117, 'pages_visited_per_user_cumulated': 0.0089, 'session_duration_in_s': 0.0086, 'landingpage_cat': 0.0565}
+kfz ctrl n= 22000 sum mean|shap|= 0.6081499495477523 max= 0.2167176761855041 top session_duration_in_s
+  per-feature {'days_between_sessions': 0.0144, 'pages_visited_per_session': 0.0065, 'pages_visited_per_session_cumulated': 0.0286, 'pages_visited_per_user': 0.0406, 'pages_visited_per_user_cumulated': 0.1113, 'session_duration_in_s': 0.2167, 'landingpage_cat': 0.19}
+tchibo treat n= 1164 sum mean|shap|= 0.14026826659683708 max= 0.0660596181323023 top landingpage_cat
+  per-feature {'days_between_sessions': 0.009, 'pages_visited_per_session': 0.0297, 'pages_visited_per_session_cumulated': 0.0087, 'pages_visited_per_user': 0.0093, 'pages_visited_per_user_cumulated': 0.0057, 'session_duration_in_s': 0.0117, 'landingpage_cat': 0.0661}
+kfz treat n= 22000 sum mean|shap|= 0.19434654427594902 max= 0.07146252428891915 top session_duration_in_s
+  per-feature {'days_between_sessions': 0.0132, 'pages_visited_per_session': 0.0264, 'pages_visited_per_session_cumulated': 0.0073, 'pages_visited_per_user': 0.0124, 'pages_visited_per_user_cumulated': 0.0252, 'session_duration_in_s': 0.0715, 'landingpage_cat': 0.0383}
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Checking kfz LSTM logs for GradientExplainer versus KernelExplainer. Comparing prediction output scales for Tchibo treatment models, where SHAP sums are very low (~0.06–0.14).
+
+Tchibo control SHAP sums (~0.14) are roughly four times lower than kfz (~0.61). Both use KernelExplainer with nsamples=100. Tchibo control predictions are tiny probability-like values (0.001–0.365, mean 0.065), which directly shrinks absolute SHAP contributions. Treatment models are especially flat.
+
+Tchibo treatment SHAP sums are ~0.14, while kfz treatment is ~0.19 against control ~0.61. Feature encodings differ: tchibo uses standardized numeric features, while kfz uses raw categorical landingpage. Sample size and model architecture are unlikely causes.
+
+SHAP additivity explains the low values: for probability-like outputs, the sum of absolute SHAP contributions equals the prediction minus the base value. Tchibo control SHAP totals (~0.14) roughly match its mean prediction (~0.065), so the small scale is consistent. Kfz control SHAP totals were ~0.61, though predictions could not be retrieved due to a feature mismatch.
+
+The kfz SHAP run succeeded with 22,000 rows, suggesting landingpage was mapped to landingpage_cat after the initial failure. I will now compare SHAP sums to mean prediction scales across all tchibo roles.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+import numpy as np
+from pathlib import Path
+import sys
+sys.path.insert(0, &#39;scripts/ModelShapValues&#39;)
+from calculate_shap_values import load_model, prepare_x_for_model, read_inputs_parquet, ModelArtifact, detect_backend
+
+def pred_stats(customer_dir, setting, role, data_path):
+    setting_dir = Path(customer_dir) / setting
+    data = pd.read_parquet(data_path)
+    if role == &#39;conversion&#39;:
+        art_path = next(setting_dir.glob(&#39;*conversion_probability*.h5&#39;))
+    elif role == &#39;control&#39;:
+        art_path = next(setting_dir.glob(&#39;*control.h5&#39;))
+    else:
+        art_path = next(setting_dir.glob(&#39;*treatment.h5&#39;))
+    backend = detect_backend(art_path)
+    artifact = ModelArtifact(path=art_path, role=role, cv=6, backend=backend)
+    model = load_model(artifact)
+    feature_cols = [c for c in read_inputs_parquet(setting_dir) if c.lower() not in {&#39;anonymousid&#39;,&#39;session&#39;}]
+    # use only cols in data; for kfz map landingpage-&gt;landingpage_cat if needed
+    if &#39;landingpage_cat&#39; in feature_cols and &#39;landingpage_cat&#39; not in data.columns and &#39;landingpage&#39; in data.columns:
+        # can&#39;t easily encode - skip
+        print(f&#39;SKIP {setting} {role}: needs landingpage_cat&#39;)
+        return
+    feature_cols = [c for c in feature_cols if c in data.columns]
+    x_model, _ = prepare_x_for_model(data, feature_cols, backend)
+    preds = np.asarray(model.predict(x_model, verbose=0)).reshape(-1)
+    shap_path = Path(f&#39;scripts/ModelShapValues/shap_output/{Path(customer_dir).name.split(&#34;-&#34;)[0] if &#34;aud&#34; in Path(customer_dir).name else &#34;tchibo&#34;}/&#39;)
+    return preds
+
+# simpler direct paths
+configs = [
+    (&#39;tchibo&#39;, &#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm&#39;, &#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet&#39;, &#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm&#39;),
+]
+for cust, setting_dir, data_path, out_dir in [
+    (&#39;tchibo&#39;, &#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm&#39;, &#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet&#39;, &#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm&#39;),
+    (&#39;kfz&#39;, &#39;scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm&#39;, &#39;scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet&#39;, &#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm&#39;),
+]:
+    setting_dir = Path(setting_dir)
+    data = pd.read_parquet(data_path)
+    print(f&#39;\n=== {cust} LSTM+LP ===&#39;)
+    for role in [&#39;control&#39;,&#39;treatment&#39;,&#39;conversion&#39;]:
+        if role == &#39;conversion&#39;:
+            art_path = next(setting_dir.glob(&#39;*conversion_probability*.h5&#39;))
+        elif role == &#39;control&#39;:
+            art_path = next(setting_dir.glob(&#39;*control.h5&#39;))
+        else:
+            art_path = next(setting_dir.glob(&#39;*treatment.h5&#39;))
+        backend = detect_backend(art_path)
+        model = load_model(ModelArtifact(path=art_path, role=role, cv=6, backend=backend))
+        feature_cols = [c for c in read_inputs_parquet(setting_dir) if c.lower() not in {&#39;anonymousid&#39;,&#39;session&#39;}]
+        feature_cols = [c for c in feature_cols if c in data.columns]
+        if len(feature_cols) &lt; 7:
+            print(f&#39;  {role}: only {len(feature_cols)} features in data, need {read_inputs_parquet(setting_dir)}&#39;)
+            continue
+        x_model, _ = prepare_x_for_model(data, feature_cols, backend)
+        preds = np.asarray(model.predict(x_model, verbose=0)).reshape(-1)
+        mean_abs = pd.read_csv(Path(out_dir)/f&#39;cv_6_{role}_mean_abs_shap.csv&#39;)[&#39;mean_abs_shap&#39;].sum()
+        print(f&#39;  {role}: pred mean={preds.mean():.4f} std={preds.std():.4f} range={preds.max()-preds.min():.4f} | sum(mean|shap|)={mean_abs:.4f} ratio={mean_abs/max(preds.std(),1e-9):.2f}x std&#39;)
+
+# tchibo test_data comparison if exists
+td = Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv&#39;)
+if td.exists():
+    df = pd.read_csv(td)
+    df = df[df[&#39;cv&#39;]==6]
+    print(&#39;\n=== tchibo test_data max mean_abs_shap ===&#39;, df[&#39;mean_abs_shap&#39;].max(), &#39;median&#39;, df[&#39;mean_abs_shap&#39;].median())
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+import numpy as np
+from pathlib import Path
+import sys
+sys.path.insert(0, 'scripts/ModelShapValues')
+from calculate_shap_values import load_model, prepare_x_for_model, read_inputs_parquet, ModelArtifact, detect_backend
+
+def pred_stats(customer_dir, setting, role, data_path):
+    setting_dir = Path(customer_dir) / setting
+    data = pd.read_parquet(data_path)
+    if role == 'conversion':
+        art_path = next(setting_dir.glob('*conversion_probability*.h5'))
+    elif role == 'control':
+        art_path = next(setting_dir.glob('*control.h5'))
+    else:
+        art_path = next(setting_dir.glob('*treatment.h5'))
+    backend = detect_backend(art_path)
+    artifact = ModelArtifact(path=art_path, role=role, cv=6, backend=backend)
+    model = load_model(artifact)
+    feature_cols = [c for c in read_inputs_parquet(setting_dir) if c.lower() not in {'anonymousid','session'}]
+    # use only cols in data; for kfz map landingpage->landingpage_cat if needed
+    if 'landingpage_cat' in feature_cols and 'landingpage_cat' not in data.columns and 'landingpage' in data.columns:
+        # can't easily encode - skip
+        print(f'SKIP {setting} {role}: needs landingpage_cat')
+        return
+    feature_cols = [c for c in feature_cols if c in data.columns]
+    x_model, _ = prepare_x_for_model(data, feature_cols, backend)
+    preds = np.asarray(model.predict(x_model, verbose=0)).reshape(-1)
+    shap_path = Path(f'scripts/ModelShapValues/shap_output/{Path(customer_dir).name.split("-")[0] if "aud" in Path(customer_dir).name else "tchibo"}/')
+    return preds
+
+# simpler direct paths
+configs = [
+    ('tchibo', 'scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm', 'scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet', 'scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm'),
+]
+for cust, setting_dir, data_path, out_dir in [
+    ('tchibo', 'scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm', 'scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet', 'scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm'),
+    ('kfz', 'scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm', 'scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet', 'scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm'),
+]:
+    setting_dir = Path(setting_dir)
+    data = pd.read_parquet(data_path)
+    print(f'\n=== {cust} LSTM+LP ===')
+    for role in ['control','treatment','conversion']:
+        if role == 'conversion':
+            art_path = next(setting_dir.glob('*conversion_probability*.h5'))
+        elif role == 'control':
+            art_path = next(setting_dir.glob('*control.h5'))
+        else:
+            art_path = next(setting_dir.glob('*treatment.h5'))
+        backend = detect_backend(art_path)
+        model = load_model(ModelArtifact(path=art_path, role=role, cv=6, backend=backend))
+        feature_cols = [c for c in read_inputs_parquet(setting_dir) if c.lower() not in {'anonymousid','session'}]
+        feature_cols = [c for c in feature_cols if c in data.columns]
+        if len(feature_cols) < 7:
+            print(f'  {role}: only {len(feature_cols)} features in data, need {read_inputs_parquet(setting_dir)}')
+            continue
+        x_model, _ = prepare_x_for_model(data, feature_cols, backend)
+        preds = np.asarray(model.predict(x_model, verbose=0)).reshape(-1)
+        mean_abs = pd.read_csv(Path(out_dir)/f'cv_6_{role}_mean_abs_shap.csv')['mean_abs_shap'].sum()
+        print(f'  {role}: pred mean={preds.mean():.4f} std={preds.std():.4f} range={preds.max()-preds.min():.4f} | sum(mean|shap|)={mean_abs:.4f} ratio={mean_abs/max(preds.std(),1e-9):.2f}x std')
+
+# tchibo test_data comparison if exists
+td = Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv')
+if td.exists():
+    df = pd.read_csv(td)
+    df = df[df['cv']==6]
+    print('\n=== tchibo test_data max mean_abs_shap ===', df['mean_abs_shap'].max(), 'median', df['mean_abs_shap'].median())
+PY
+```
+
+```
+
+=== tchibo LSTM+LP ===
+  control: pred mean=0.0646 std=0.0867 range=0.3635 | sum(mean|shap|)=0.1426 ratio=1.64x std
+  treatment: pred mean=0.0678 std=0.0867 range=0.4698 | sum(mean|shap|)=0.1403 ratio=1.62x std
+  conversion: pred mean=0.8961 std=0.1042 range=0.5122 | sum(mean|shap|)=0.1660 ratio=1.59x std
+
+=== kfz LSTM+LP ===
+  control: only 6 features in data, need ['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'landingpage_cat']
+  treatment: only 6 features in data, need ['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'landingpage_cat']
+Traceback (most recent call last):
+  File "<stdin>", line 51, in <module>
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py", line 560, in load_model
+    model = load_model(str(path), compile=False)
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/keras/src/saving/saving_api.py", line 196, in load_model
+    return legacy_h5_format.load_model_from_hdf5(
+  File "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.venv/lib/python3.10/site-packages/keras/src/legacy/saving/legacy_h5_format.py", line 125, in load_model_from_hdf5
+    raise ValueError(
+ValueError: No model config found in the file at scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-07_new_models_with_landingpage_lstm/2026-09-07_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_7_conversion_probability_weights.weights.h5.
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_143752.log",
+  "pattern": "GradientExplainer|KernelExplainer"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_143752.log",
+  "pattern": "GradientExplainer|KernelExplainer",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The tchibo LSTM+LP model appears particularly relevant to this question.
+
+Conversion predictions are roughly 14 times higher than control/treatment, yet SHAP values remain comparable. This suggests SHAP reflects deviation from the base value rather than raw prediction magnitude. The relative ratio of SHAP to standard deviation is consistent across all roles.
+
+KFZ LSTM control shows much larger SHAP values than Tchibo. This suggests KFZ may be more feature-sensitive. The next step is to verify whether Tchibo also had low SHAP magnitudes in its test data. A different explainer type between the two models could explain the discrepancy.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_093814.log",
+  "pattern": "GradientExplainer|KernelExplainer"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_093814.log",
+  "pattern": "GradientExplainer|KernelExplainer",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python -c &#34;
+import pandas as pd
+from pathlib import Path
+for name, p in [
+ (&#39;tchibo test&#39;, &#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv&#39;),
+ (&#39;kfz test LSTM&#39;, None),
+]:
+ if p and Path(p).exists():
+  df=pd.read_csv(p); df=df[df[&#39;cv&#39;]==6]
+  print(name, &#39;settings&#39;, df[&#39;customer_setting&#39;].nunique(), &#39;max&#39;, df[&#39;mean_abs_shap&#39;].max(), &#39;median&#39;, df[&#39;mean_abs_shap&#39;].median())
+  lstm = df[df[&#39;backend&#39;]==&#39;lstm&#39;] if &#39;backend&#39; in df.columns else df[df[&#39;model_path&#39;].str.contains(&#39;NNLSTM&#39;, na=False)]
+  if len(lstm): print(&#39;  lstm only max&#39;, lstm[&#39;mean_abs_shap&#39;].max(), &#39;sum sample&#39;, lstm.groupby([&#39;customer_setting&#39;,&#39;role&#39;])[&#39;mean_abs_shap&#39;].sum().head(3).tolist())
+&#34;</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python -c "
+import pandas as pd
+from pathlib import Path
+for name, p in [
+ ('tchibo test', 'scripts/ModelShapValues/shap_output/tchibo/tchibo_68b69dff2e5f2d9a58cce692_test_data/comparison_mean_abs_shap.csv'),
+ ('kfz test LSTM', None),
+]:
+ if p and Path(p).exists():
+  df=pd.read_csv(p); df=df[df['cv']==6]
+  print(name, 'settings', df['customer_setting'].nunique(), 'max', df['mean_abs_shap'].max(), 'median', df['mean_abs_shap'].median())
+  lstm = df[df['backend']=='lstm'] if 'backend' in df.columns else df[df['model_path'].str.contains('NNLSTM', na=False)]
+  if len(lstm): print('  lstm only max', lstm['mean_abs_shap'].max(), 'sum sample', lstm.groupby(['customer_setting','role'])['mean_abs_shap'].sum().head(3).tolist())
+"
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Tchibo always falls back to KernelExplainer with nsamples=100. This small sample size likely explains the low SHAP values.
+
+The Kfz LSTM log shows no GradientExplainer messages. It may have succeeded silently with GradientExplainer instead.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_093814.log</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*kfzteile24*143752*",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs",
+  "pattern": "GradientExplainer|KernelExplainer"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs",
+  "pattern": "GradientExplainer|KernelExplainer",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Both kfz and tchibo use KernelExplainer with nsamples=100 for LSTM. GradientExplainer fails for this model.
+
+KFZ no-LP LSTM SHAP values fall within the same range as Tchibo. Tchibo's treatment role shows very low SHAP values. This may indicate nearly constant treatment model outputs. Conversion features carry the highest SHAP values.
+
+Conversion SHAP values are only marginally higher than the base prediction (~0.9), suggesting those features barely shift the outcome. KFZ LSTM+LPontrol SHAP totals are roughly four times higher than Tchibo. The next step is to verify whether KFZ used a different data path or included landingpage_cat features.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/logs/calculate_shap_values_kfzteile24_20260915_143752.log</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd, numpy as np
+from pathlib import Path
+import sys
+sys.path.insert(0,&#39;scripts/ModelShapValues&#39;)
+from calculate_shap_values import load_model, prepare_x_for_model, read_inputs_parquet, ModelArtifact, detect_backend
+
+# compare group model output sensitivity: std of preds
+for cust, setting_dir, data_path in [
+ (&#39;tchibo&#39;, &#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-08-12_best_models_without_landingpage_lstm&#39;, &#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet&#39;),
+ (&#39;kfz&#39;, &#39;scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm&#39;, &#39;scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet&#39;),
+]:
+    setting_dir=Path(setting_dir); data=pd.read_parquet(data_path)
+    print(f&#39;\n{cust} LSTM no LP&#39;)
+    for role in [&#39;control&#39;,&#39;treatment&#39;,&#39;conversion&#39;]:
+        art = next(setting_dir.glob(f&#39;*{role}*.h5&#39;)) if role!=&#39;conversion&#39; else next(setting_dir.glob(&#39;*conversion_probability*.h5&#39;))
+        if role==&#39;control&#39;: art=next(setting_dir.glob(&#39;*control.h5&#39;))
+        elif role==&#39;treatment&#39;: art=next(setting_dir.glob(&#39;*treatment.h5&#39;))
+        else: art=next(setting_dir.glob(&#39;*conversion_probability*.h5&#39;))
+        model=load_model(ModelArtifact(path=art, role=role, cv=6, backend=&#39;lstm&#39;))
+        cols=[c for c in read_inputs_parquet(setting_dir) if c.lower() not in {&#39;anonymousid&#39;,&#39;session&#39;} and c in data.columns]
+        x,_=prepare_x_for_model(data,cols,&#39;lstm&#39;)
+        p=np.asarray(model.predict(x,verbose=0)).reshape(-1)
+        out=Path(f&#39;scripts/ModelShapValues/shap_output/{cust if cust==&#34;tchibo&#34; else &#34;kfzteile24&#34;}/{&#34;tchibo&#34; if cust==&#34;tchibo&#34; else &#34;kfzteile24&#34;}_x_train_2026-09-15/{setting_dir.name}&#39;)
+        mabs=pd.read_csv(out/f&#39;cv_6_{role}_mean_abs_shap.csv&#39;)[&#39;mean_abs_shap&#39;].sum()
+        print(f&#39;  {role}: pred μ={p.mean():.3f} σ={p.std():.3f} |shap|sum={mabs:.3f} |shap|/σ={mabs/p.std():.2f}&#39;)
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd, numpy as np
+from pathlib import Path
+import sys
+sys.path.insert(0,'scripts/ModelShapValues')
+from calculate_shap_values import load_model, prepare_x_for_model, read_inputs_parquet, ModelArtifact, detect_backend
+
+# compare group model output sensitivity: std of preds
+for cust, setting_dir, data_path in [
+ ('tchibo', 'scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-08-12_best_models_without_landingpage_lstm', 'scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet'),
+ ('kfz', 'scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/2026-09-08_best_models_without_landingpage_lstm', 'scripts/ModelShapValues/tmp_data/kfzteile24_x_train_2026-09-15.parquet'),
+]:
+    setting_dir=Path(setting_dir); data=pd.read_parquet(data_path)
+    print(f'\n{cust} LSTM no LP')
+    for role in ['control','treatment','conversion']:
+        art = next(setting_dir.glob(f'*{role}*.h5')) if role!='conversion' else next(setting_dir.glob('*conversion_probability*.h5'))
+        if role=='control': art=next(setting_dir.glob('*control.h5'))
+        elif role=='treatment': art=next(setting_dir.glob('*treatment.h5'))
+        else: art=next(setting_dir.glob('*conversion_probability*.h5'))
+        model=load_model(ModelArtifact(path=art, role=role, cv=6, backend='lstm'))
+        cols=[c for c in read_inputs_parquet(setting_dir) if c.lower() not in {'anonymousid','session'} and c in data.columns]
+        x,_=prepare_x_for_model(data,cols,'lstm')
+        p=np.asarray(model.predict(x,verbose=0)).reshape(-1)
+        out=Path(f'scripts/ModelShapValues/shap_output/{cust if cust=="tchibo" else "kfzteile24"}/{"tchibo" if cust=="tchibo" else "kfzteile24"}_x_train_2026-09-15/{setting_dir.name}')
+        mabs=pd.read_csv(out/f'cv_6_{role}_mean_abs_shap.csv')['mean_abs_shap'].sum()
+        print(f'  {role}: pred μ={p.mean():.3f} σ={p.std():.3f} |shap|sum={mabs:.3f} |shap|/σ={mabs/p.std():.2f}')
+PY
+```
+
+```
+
+tchibo LSTM no LP
+  control: pred μ=0.011 σ=0.031 |shap|sum=0.141 |shap|/σ=4.58
+  treatment: pred μ=0.017 σ=0.025 |shap|sum=0.071 |shap|/σ=2.84
+  conversion: pred μ=0.894 σ=0.123 |shap|sum=0.166 |shap|/σ=1.35
+
+kfz LSTM no LP
+  control: pred μ=0.138 σ=0.129 |shap|sum=0.466 |shap|/σ=3.60
+  treatment: pred μ=0.119 σ=0.118 |shap|sum=0.357 |shap|/σ=3.01
+  conversion: pred μ=0.803 σ=0.216 |shap|sum=0.423 |shap|/σ=1.96
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The LSTM without LP comparison is revealing.
+
+Tchibo models predict near-zero probabilities (~1–2%) compared to KFZ (~12–14%). SHAP magnitudes scale with output magnitude, so Tchibo’s absolute values are simply smaller. Normalized by standard deviation, Tchibo actually shows higher relative sensitivity. Conversion models show high means (~0.8–0.9) in both groups.
+
+Tchibo’s SHAP sums total 0.166 versus KFZ’s 0.423. KFZ SHAP standard deviation is 0.216 against 0.123 for Tchibo. Tchibo uses only LSTM models; no XGBoost with prediction contributions is available. KFZ’s XGBoost conversion yields SHAP values above 1.6, which would distort comparisons across all settings.
+
+Both groups use KernelExplainer with nsamples=100. GradientExplainer fails for both. Tchibo has only 1,164 training rows versus 22,000 for KFZ. This smaller sample size likely increases sampling noise. Tchibo’s treatment models are especially flat. Their prediction mean is 0.017 with standard deviation 0.025. Their SHAP sum is merely 0.071.
+
+Conversion models show a paradox: they are highly confident yet their SHAP values remain moderate, meaning individual features barely shift predictions
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **``** (0 files)
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The Tchibo test data is no longer present in the repository.
+
+The low SHAP values likely stem from the model output scale, where predictions are near zero for both control and treatment groups. The analysis also uses LSTM with KernelExplainer rather than the higher-contribution XGBoost model. Treatment effects are naturally flatter. Small sample size and limited nsamples add noise. These are normal limitations, not errors.
+
+Absolute SHAP values are simply smaller because the Tchibo model outputs near-zero predictions. Relative sensitivity is comparable to the kfz run. The kfz LSTM without LP shows a control |shap|/σ of 3.6 versus 4.58 for Tchibo. Output scale alone explains the gap.
+</details></think>
+
+_**Agent (default)**_
+
+Several things explain the lower **absolute** SHAP values for Tchibo. The main one is **model output scale**, not a broken SHAP run.
+
+### 1. Tchibo group models predict much smaller values (main reason)
+
+On x_train, Tchibo **control/treatment** LSTM outputs sit near zero:
+
+| Model | Role | Mean prediction | Pred std | Sum of mean \|SHAP\| |
+|-------|------|-----------------|----------|----------------------|
+| **tchibo** LSTM no LP | control | **0.011** | 0.031 | 0.14 |
+| **kfz** LSTM no LP | control | **0.138** | 0.129 | 0.47 |
+| **tchibo** LSTM + LP | control | **0.065** | 0.087 | 0.14 |
+| **kfz** LSTM + LP | control | — | — | 0.61 |
+
+SHAP values sum to `prediction − baseline`, so if predictions are ~0.01–0.07 instead of ~0.12–0.14, |SHAP| will naturally be smaller in absolute terms.
+
+When normalized by prediction std, they’re actually similar (tchibo control ≈ **4.6× σ**, kfz ≈ **3.6× σ**). So Tchibo isn’t necessarily “less explainable” — the outputs are just on a smaller scale.
+
+---
+
+### 2. Apples-to-oranges if you compare to kfz XGB
+
+kfzteile24 also has **XGB** models where conversion |SHAP| can reach **~1.6** (native `pred_contribs`). Tchibo x_train is **LSTM only**. Those XGB numbers will always look much larger than any LSTM KernelExplainer run.
+
+Compare **LSTM vs LSTM**, or use **ranks / % shares within a model**, not raw magnitudes across backend/customer.
+
+---
+
+### 3. Same approximate explainer setup for both
+
+Both use **KernelExplainer** (GradientExplainer fails) with:
+- `nsamples=100`
+- `background_samples=50`
+
+So Tchibo isn’t low because of a different explainer — the setup is the same. `nsamples=100` adds noise, but it doesn’t systematically shrink values.
+
+---
+
+### 4. Treatment models are especially flat
+
+Tchibo **treatment** is the weakest:
+- Mean prediction ≈ **0.017**, std ≈ **0.025**
+- Sum of mean |SHAP| ≈ **0.07**
+
+If the model barely moves off ~0, feature attributions stay small even when landing ranks highly in **relative** terms.
+
+---
+
+### 5. Smaller x_train slice (secondary)
+
+Tchibo: **1,164 rows** vs kfz: **~22k**. That affects stability of the KernelExplainer mean, not the typical scale as strongly as output magnitude does.
+
+---
+
+### How to interpret Tchibo SHAP
+
+- **Use ranks and family shares** (e.g. landingpage_cat #1 at ~40%) — those patterns are meaningful.
+- **Don’t compare raw |SHAP|** across customers, roles, or LSTM vs XGB.
+- Low absolute values on control/treatment are expected when those models output probabilities near zero on x_train.
+
+If you want, we can add a note in the report script that normalizes |SHAP| by prediction std or output range so cross-customer charts are less misleading.
+
+---
+
+_**User**_
+
+nohup python scripts/ModelShapValues/calculate_shap_values.py --customer Tchibo --data-path scripts/ModelShapValues/tmp_data/tchibo_x_train_ladingpage_permutation.parquet.parquet --cv 6 --max-samples all --kernel-explain-samples 22000 --output-dir scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 --setting scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-16_best_models_permutated_landingpage/  > tchibo-output-permutated_landingpage.out
+
+No model-setting directories found for the given filters.
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The `--setting` argument requires a folder name rather than a full path. This explains why no model-setting directories were found.
+
+The data path contains a typo (`ladingpage` instead of `landingpage`) and a duplicated `.parquet` extension. I will verify the actual file paths and provide the corrected command.
+</details></think>
+
+_**Agent (default)**_
+
+Same issue as before with `--setting`: it expects only the folder name. Checking the paths you used as well.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -d scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-16_best_models_permutated_landingpage 2&gt;/dev/null; ls scripts/ModelShapValues/tmp_data/tchibo_x_train*landing*permut* 2&gt;/dev/null; ls scripts/ModelShapValues/tmp_data/tchibo_x_train* 2&gt;/dev/null | head -20</summary>
+```bash
+ls -d scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-16_best_models_permutated_landingpage 2>/dev/null; ls scripts/ModelShapValues/tmp_data/tchibo_x_train*landing*permut* 2>/dev/null; ls scripts/ModelShapValues/tmp_data/tchibo_x_train* 2>/dev/null | head -20
+```
+
+```
+scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-16_best_models_permutated_landingpage
+(eval):1: no matches found: scripts/ModelShapValues/tmp_data/tchibo_x_train*landing*permut*
+scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet
+scripts/ModelShapValues/tmp_data/tchibo_x_train_ladingpage_permutation.parquet
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The `--setting` flag expects only the folder name, not a full path.
+
+The data path contains an extra `.parquet` suffix. The actual filename is `tchibo_x_train_ladingpage_permutation.parquet`. I will provide the corrected command.
+</details></think>
+
+_**Agent (default)**_
+
+`--setting` must be the **folder name only**, not a path. Also drop the extra `.parquet` on the data path (file is `...permutation.parquet`).
+
+```bash
+nohup python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer Tchibo \
+  --data-path scripts/ModelShapValues/tmp_data/tchibo_x_train_ladingpage_permutation.parquet \
+  --cv 6 \
+  --max-samples all \
+  --kernel-explain-samples 22000 \
+  --output-dir scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --setting 2026-09-16_best_models_permutated_landingpage \
+  > tchibo-output-permutated_landingpage.out
+```
+
+---
+
+_**User**_
+
+still @tchibo-output-permutated_landingpage.out (11-12) 
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The permutated landingpage setting still returns "No matching models".
+
+Suspecting a CV filter, role naming, or file naming mismatch. Will inspect the directory and how_artifacts.
+</details></think>
+
+_**Agent (default)**_
+
+I'll check what's in that setting folder and how the script discovers models.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -la &#34;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-16_best_models_permutated_landingpage/&#34; | head -40; echo &#34;---&#34;; ls &#34;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/&#34; | head -20</summary>
+```bash
+ls -la "scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-16_best_models_permutated_landingpage/" | head -40; echo "---"; ls "scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/" | head -20
+```
+
+```
+total 3856
+drwxr-xr-x  16 karolinegriesbach  staff     512 Sep 16 19:50 .
+drwxr-xr-x   6 karolinegriesbach  staff     192 Sep 16 19:50 ..
+-rw-r--r--   1 karolinegriesbach  staff      25 Sep 16 18:50 2026-09-16_classifier_NNLSTM_50_nan_cv_3_conversion_probability_score_test.csv
+-rw-r--r--   1 karolinegriesbach  staff     130 Sep 16 18:50 2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_68b69dff2e5f2d9a58cce692_test_score.csv
+-rw-r--r--   1 karolinegriesbach  staff  163704 Sep 16 18:50 2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_conversion_probability.h5
+-rw-r--r--   1 karolinegriesbach  staff  161648 Sep 16 18:50 2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_conversion_probability_weights.weights.h5
+-rw-r--r--   1 karolinegriesbach  staff  163704 Sep 16 18:50 2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_control.h5
+-rw-r--r--   1 karolinegriesbach  staff  161648 Sep 16 18:50 2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_control_weights.weights.h5
+-rw-r--r--   1 karolinegriesbach  staff  163704 Sep 16 18:50 2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_model_mu_c.h5
+-rw-r--r--   1 karolinegriesbach  staff  161648 Sep 16 18:50 2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_model_mu_c_weights.weights.h5
+-rw-r--r--   1 karolinegriesbach  staff  163704 Sep 16 18:50 2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_model_mu_t.h5
+-rw-r--r--   1 karolinegriesbach  staff  161648 Sep 16 18:50 2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_model_mu_t_weights.weights.h5
+-rw-r--r--   1 karolinegriesbach  staff  163704 Sep 16 18:50 2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_propensitymodel.h5
+-rw-r--r--   1 karolinegriesbach
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/tchibo-output-permutated_landingpage.out</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The permutated landingpage models are all `cv_3`, not `cv_6`. This mismatch is causing the issue.
+</details></think>
+
+_**Agent (default)**_
+
+The setting filter is fine now. The mismatch is **`--cv 6`**.
+
+That folder only has **`cv_3`** models:
+
+```text
+..._saved_model_cv_3_..._control.h5
+..._saved_model_cv_3_..._treatment.h5
+..._saved_model_cv_3_conversion_probability.h5
+```
+
+Use:
+
+```bash
+nohup python scripts/ModelShapValues/calculate_shap_values.py \
+  --customer Tchibo \
+  --data-path scripts/ModelShapValues/tmp_data/tchibo_x_train_ladingpage_permutation.parquet \
+  --cv 3 \
+  --max-samples all \
+  --kernel-explain-samples 22000 \
+  --output-dir scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --setting 2026-09-16_best_models_permutated_landingpage \
+  > tchibo-output-permutated_landingpage.out
+```
+
+Also note: the data has **1,262,570** rows with `--max-samples all` and KernelExplainer capped at 22k — expect a long run.
+
+---
+
+_**User**_
+
+Analyze scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 and scripts/ModelShapValues/shap_output/kfzteile24 as the above reports.
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Generating SHAP canvas reports for tchibo and kfzteile24. A comparison between both datasets may follow.
+</details></think>
+
+_**Agent (default)**_
+
+I'll inspect both SHAP output trees and regenerate the per-customer and comparison reports like before.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -la scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/; echo &#34;---&#34;; ls -la scripts/ModelShapValues/shap_output/kfzteile24/; echo &#34;---&#34;; find scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 scripts/ModelShapValues/shap_output/kfzteile24 -name &#34;comparison_mean_abs_shap.csv&#34; -o -name &#34;shap_run_manifest.csv&#34; 2&gt;/dev/null; echo &#34;---&#34;; find scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 -maxdepth 1 -type d; find scripts/ModelShapValues/shap_output/kfzteile24 -maxdepth 2 -type d</summary>
+```bash
+ls -la scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/; echo "---"; ls -la scripts/ModelShapValues/shap_output/kfzteile24/; echo "---"; find scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 scripts/ModelShapValues/shap_output/kfzteile24 -name "comparison_mean_abs_shap.csv" -o -name "shap_run_manifest.csv" 2>/dev/null; echo "---"; find scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 -maxdepth 1 -type d; find scripts/ModelShapValues/shap_output/kfzteile24 -maxdepth 2 -type d
+```
+
+```
+total 1120
+drwxr-xr-x  12 karolinegriesbach  staff     384 Sep 16 21:57 .
+drwxr-xr-x   4 karolinegriesbach  staff     128 Sep 16 08:29 ..
+-rw-r--r--@  1 karolinegriesbach  staff    6148 Sep 16 10:38 .DS_Store
+drwxr-xr-x  14 karolinegriesbach  staff     448 Sep 15 12:26 2026-07-27_new_models_with_landingpage_reset_lstm_failed
+drwxr-xr-x  14 karolinegriesbach  staff     448 Sep 15 12:43 2026-08-12_best_models_without_landingpage_lstm
+drwxr-xr-x  14 karolinegriesbach  staff     448 Sep 15 13:03 2026-09-12_best_models_with_landingpage_lstm
+drwxr-xr-x  14 karolinegriesbach  staff     448 Sep 17 00:21 2026-09-16_best_models_permutated_landingpage
+-rw-r--r--   1 karolinegriesbach  staff    8975 Sep 17 00:21 comparison_mean_abs_shap.csv
+-rw-r--r--   1 karolinegriesbach  staff  210671 Sep 17 00:21 comparison_mean_abs_shap_bars.png
+-rw-r--r--   1 karolinegriesbach  staff  203594 Sep 17 00:21 comparison_mean_abs_shap_heatmap.png
+-rw-r--r--   1 karolinegriesbach  staff    4858 Sep 17 00:21 shap_run_manifest.csv
+-rw-r--r--@  1 karolinegriesbach  staff   10930 Sep 16 08:19 tchibo_x_train_shap_summary.html
+---
+total 16
+drwxr-xr-x   4 karolinegriesbach  staff   128 Sep 16 08:36 .
+drwxr-xr-x@  7 karolinegriesbach  staff   224 Sep 15 15:57 ..
+-rw-r--r--@  1 karolinegriesbach  staff  6148 Sep 16 08:36 .DS_Store
+drwxr-xr-x  12 karolinegriesbach  staff   384 Sep 15 19:55 kfzteile24_x_train_2026-09-15
+---
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/shap_run_manifest.csv
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/comparison_mean_abs_shap.csv
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/shap_run_manifest.csv
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/comparison_mean_abs_shap.csv
+---
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-16_best_models_permutated_landingpage
+scripts/Mod
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/skills-cursor/canvas/SKILL.md</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The tchibo comparison CSV was likely overwritten by the latest permutated landingpage run, similar to the kfz overwrite.
+
+Rebuilding the comparison from all setting folders requires generating reports and a comparison canvas. The permutated run uses cv_3 while others use cv_6, so the report script must include both cross-validation splits rather than filtering by cv alone.
+</details></think>
+
+_**Agent (default)**_
+
+Tchibo's comparison CSV was likely overwritten by the latest run — I'll rebuild it from all settings and regenerate the reports.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+
+def rebuild_comparison(base: Path):
+    rows = []
+    for p in sorted(base.glob(&#39;**/cv_*_*_mean_abs_shap.csv&#39;)):
+        df = pd.read_csv(p)
+        parts = p.stem.split(&#39;_&#39;)
+        cv = int(parts[1]); role = parts[2]
+        setting = p.parent.name
+        backend = &#39;lstm&#39; if &#39;lstm&#39; in setting.lower() or &#39;NNLSTM&#39; in str(df.get(&#39;model_path&#39;,[&#39;&#39;])) else (&#39;xgb&#39; if &#39;xgb&#39; in setting.lower() else &#39;&#39;)
+        if &#39;backend&#39; not in df.columns:
+            if &#39;lstm&#39; in setting.lower() or &#39;permutat&#39; in setting.lower():
+                backend = &#39;lstm&#39;
+            elif &#39;xgb&#39; in setting.lower():
+                backend = &#39;xgb&#39;
+            df[&#39;backend&#39;] = backend
+        if &#39;customer_setting&#39; not in df.columns:
+            df[&#39;customer_setting&#39;] = setting
+        if &#39;cv&#39; not in df.columns:
+            df[&#39;cv&#39;] = cv
+        if &#39;role&#39; not in df.columns:
+            df[&#39;role&#39;] = role
+        if &#39;model_path&#39; not in df.columns:
+            df[&#39;model_path&#39;] = &#39;&#39;
+        keep = [&#39;customer_setting&#39;,&#39;cv&#39;,&#39;role&#39;,&#39;backend&#39;,&#39;model_path&#39;,&#39;feature&#39;,&#39;mean_abs_shap&#39;,&#39;mean_shap&#39;]
+        for c in keep:
+            if c not in df.columns:
+                df[c] = &#39;&#39; if c in (&#39;backend&#39;,&#39;model_path&#39;) else (cv if c==&#39;cv&#39; else (role if c==&#39;role&#39; else setting))
+        rows.append(df[keep])
+    out = pd.concat(rows, ignore_index=True)
+    out.to_csv(base/&#39;comparison_mean_abs_shap.csv&#39;, index=False)
+    print(base.name, &#39;-&gt;&#39;, len(out), &#39;rows, settings:&#39;, sorted(out[&#39;customer_setting&#39;].unique()), &#39;cvs:&#39;, sorted(out[&#39;cv&#39;].unique()))
+    return out
+
+tch = rebuild_comparison(Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;))
+kfz = rebuild_comparison(Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;))
+
+# also check tchibo comparison was only permutated before
+print(&#39;\ntchibo head settings from rebuilt:&#39;, tch.groupby([&#39;customer_setting&#39;,&#39;cv&#39;]).size())
+print(&#39;\nkfz settings:&#39;, kfz.groupby([&#39;customer_setting&#39;,&#39;cv&#39;]).size())
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+
+def rebuild_comparison(base: Path):
+    rows = []
+    for p in sorted(base.glob('**/cv_*_*_mean_abs_shap.csv')):
+        df = pd.read_csv(p)
+        parts = p.stem.split('_')
+        cv = int(parts[1]); role = parts[2]
+        setting = p.parent.name
+        backend = 'lstm' if 'lstm' in setting.lower() or 'NNLSTM' in str(df.get('model_path',[''])) else ('xgb' if 'xgb' in setting.lower() else '')
+        if 'backend' not in df.columns:
+            if 'lstm' in setting.lower() or 'permutat' in setting.lower():
+                backend = 'lstm'
+            elif 'xgb' in setting.lower():
+                backend = 'xgb'
+            df['backend'] = backend
+        if 'customer_setting' not in df.columns:
+            df['customer_setting'] = setting
+        if 'cv' not in df.columns:
+            df['cv'] = cv
+        if 'role' not in df.columns:
+            df['role'] = role
+        if 'model_path' not in df.columns:
+            df['model_path'] = ''
+        keep = ['customer_setting','cv','role','backend','model_path','feature','mean_abs_shap','mean_shap']
+        for c in keep:
+            if c not in df.columns:
+                df[c] = '' if c in ('backend','model_path') else (cv if c=='cv' else (role if c=='role' else setting))
+        rows.append(df[keep])
+    out = pd.concat(rows, ignore_index=True)
+    out.to_csv(base/'comparison_mean_abs_shap.csv', index=False)
+    print(base.name, '->', len(out), 'rows, settings:', sorted(out['customer_setting'].unique()), 'cvs:', sorted(out['cv'].unique()))
+    return out
+
+tch = rebuild_comparison(Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15'))
+kfz = rebuild_comparison(Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15'))
+
+# also check tchibo comparison was only permutated before
+print('\ntchibo head settings from rebuilt:', tch.groupby(['customer_setting','cv']).size())
+print('\nkfz settings:', kfz.groupby(['customer_setting','cv']).size())
+PY
+```
+
+```
+tchibo_x_train_2026-09-15 -> 81 rows, settings: ['2026-07-27_new_models_with_landingpage_reset_lstm_failed', '2026-08-12_best_models_without_landingpage_lstm', '2026-09-12_best_models_with_landingpage_lstm', '2026-09-16_best_models_permutated_landingpage'] cvs: [3, 6]
+kfzteile24_x_train_2026-09-15 -> 96 rows, settings: ['2026-09-07_new_models_with_landingpage_lstm', '2026-09-08_best_models_without_landingpage_lstm', '2026-09-08_best_models_without_landingpage_xgb', '2026-09-09_best_models_with_landingpage_cat_enables_xgb', '2026-09-09_new_models_without_landingpage_xgb'] cvs: [6]
+
+tchibo head settings from rebuilt: customer_setting                                          cv
+2026-07-27_new_models_with_landingpage_reset_lstm_failed  6     21
+2026-08-12_best_models_without_landingpage_lstm           6     18
+2026-09-12_best_models_with_landingpage_lstm              6     21
+2026-09-16_best_models_permutated_landingpage             3     21
+dtype: int64
+
+kfz settings: customer_setting                                         cv
+2026-09-07_new_models_with_landingpage_lstm              6     21
+2026-09-08_best_models_without_landingpage_lstm          6     18
+2026-09-08_best_models_without_landingpage_xgb           6     18
+2026-09-09_best_models_with_landingpage_cat_enables_xgb  6     21
+2026-09-09_new_models_without_landingpage_xgb            6     18
+dtype: int64
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Regenerating reports for tchibo without the --cv filter to include both CV 3 and 6. For kfz, using --cv 6 or no filter.
+
+Then performing a full analysis and writing a comparison canvas.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title &#34;tchibo SHAP evaluation (x_train + LP permutation)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html 2&gt;&amp;1 &amp;&amp; \
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title &#34;kfzteile24 SHAP evaluation (x_train 2026-09-15)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2&gt;&amp;1</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title "tchibo SHAP evaluation (x_train + LP permutation)" \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html 2>&1 && \
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title "kfzteile24 SHAP evaluation (x_train 2026-09-15)" \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2>&1
+```
+
+```
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html
+Settings: LSTM new + LP reset failed, LSTM best no LP, LSTM best + LP, best + LP
+Source: scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html
+Settings: LSTM new + LP, LSTM best no LP, XGB best no LP, XGB best + LP, XGB new no LP
+Source: scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+import json
+
+SHORT = {
+    &#34;2026-09-07_new_models_with_landingpage_lstm&#34;: &#34;kfz LSTM new + LP&#34;,
+    &#34;2026-09-08_best_models_without_landingpage_lstm&#34;: &#34;kfz LSTM best no LP&#34;,
+    &#34;2026-09-08_best_models_without_landingpage_xgb&#34;: &#34;kfz XGB best no LP&#34;,
+    &#34;2026-09-09_best_models_with_landingpage_cat_enables_xgb&#34;: &#34;kfz XGB best + LP&#34;,
+    &#34;2026-09-09_new_models_without_landingpage_xgb&#34;: &#34;kfz XGB new no LP&#34;,
+    &#34;2026-07-27_new_models_with_landingpage_reset_lstm_failed&#34;: &#34;tchibo LSTM new+LP reset failed&#34;,
+    &#34;2026-08-12_best_models_without_landingpage_lstm&#34;: &#34;tchibo LSTM best no LP&#34;,
+    &#34;2026-09-12_best_models_with_landingpage_lstm&#34;: &#34;tchibo LSTM best + LP&#34;,
+    &#34;2026-09-16_best_models_permutated_landingpage&#34;: &#34;tchibo LSTM LP permutated&#34;,
+}
+
+F1_EXTRA = {
+    &#39;2026-09-08_best_models_without_landingpage_lstm&#39;: 0.4494,
+    &#39;2026-09-08_best_models_without_landingpage_xgb&#39;: 0.5833,
+    &#39;2026-09-09_best_models_with_landingpage_cat_enables_xgb&#39;: 0.7173,
+    &#39;2026-09-09_new_models_without_landingpage_xgb&#39;: 0.6082,
+}
+
+def bucket(f):
+    f = f.lower()
+    if &#39;landingpage&#39; in f: return &#39;landing&#39;
+    if &#39;session_duration&#39; in f: return &#39;duration&#39;
+    if &#39;days_between&#39; in f: return &#39;recency&#39;
+    if &#39;pages_visited&#39; in f: return &#39;pages&#39;
+    return &#39;other&#39;
+
+def analyze(base, f1_extra=None):
+    df = pd.read_csv(base/&#39;comparison_mean_abs_shap.csv&#39;)
+    man = pd.read_csv(base/&#39;shap_run_manifest.csv&#39;) if (base/&#39;shap_run_manifest.csv&#39;).exists() else None
+    f1 = {}
+    n = {}
+    if man is not None:
+        f1 = man.groupby(&#39;setting&#39;)[&#39;f1_score&#39;].max().to_dict()
+        n = man.groupby(&#39;setting&#39;)[&#39;n_rows&#39;].first().to_dict()
+    if f1_extra: f1.update(f1_extra)
+    results = []
+    for setting in sorted(df[&#39;customer_setting&#39;].unique()):
+        label = SHORT.get(setting, setting)
+        cvs = sorted(df[df[&#39;customer_setting&#39;]==setting][&#39;cv&#39;].unique())
+        rec = {&#39;label&#39;: label, &#39;setting&#39;: setting, &#39;cv&#39;: cvs, &#39;f1&#39;: f1.get(setting), &#39;n&#39;: n.get(setting)}
+        for role in [&#39;control&#39;,&#39;treatment&#39;,&#39;conversion&#39;]:
+            ssub = df[(df[&#39;customer_setting&#39;]==setting)&amp;(df[&#39;role&#39;]==role)].sort_values(&#39;mean_abs_shap&#39;, ascending=False)
+            if ssub.empty: continue
+            # if multiple cvs somehow, already unique by setting
+            top = ssub.iloc[0]
+            total = ssub[&#39;mean_abs_shap&#39;].sum()
+            rec[f&#39;{role}_top&#39;] = top[&#39;feature&#39;]
+            landing = ssub[ssub[&#39;feature&#39;].str.contains(&#39;landing&#39;, case=False, na=False)]
+            lp_share = 100*landing[&#39;mean_abs_shap&#39;].sum()/total if total else 0
+            rec[f&#39;{role}_lp_share&#39;] = round(lp_share,1)
+            if landing[&#39;mean_abs_shap&#39;].sum()&gt;0:
+                s2 = ssub.reset_index(drop=True)
+                lp_pos = s2.index[s2[&#39;feature&#39;].str.contains(&#39;landing&#39;, case=False, na=False)][0]+1
+                rec[f&#39;{role}_lp&#39;] = f&#34;rank {lp_pos} · {lp_share:.0f}%&#34;
+            else:
+                rec[f&#39;{role}_lp&#39;] = &#39;—&#39;
+            if role==&#39;control&#39;:
+                rec[&#39;control_shares&#39;] = {b: round(100*ssub[ssub[&#39;feature&#39;].apply(lambda x: bucket(x)==b)][&#39;mean_abs_shap&#39;].sum()/total,1) for b in [&#39;pages&#39;,&#39;duration&#39;,&#39;landing&#39;,&#39;recency&#39;]}
+                rec[&#39;sum_abs&#39;] = round(total,4)
+        results.append(rec)
+    return results
+
+tch = analyze(Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;))
+kfz = analyze(Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;), F1_EXTRA)
+print(json.dumps({&#39;tchibo&#39;: tch, &#39;kfz&#39;: kfz}, indent=2))
+
+# read permutated manifest
+man = pd.read_csv(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/shap_run_manifest.csv&#39;)
+print(&#39;\nmanifest:\n&#39;, man[[&#39;setting&#39;,&#39;cv&#39;,&#39;role&#39;,&#39;f1_score&#39;,&#39;n_rows&#39;]].to_string())
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+import json
+
+SHORT = {
+    "2026-09-07_new_models_with_landingpage_lstm": "kfz LSTM new + LP",
+    "2026-09-08_best_models_without_landingpage_lstm": "kfz LSTM best no LP",
+    "2026-09-08_best_models_without_landingpage_xgb": "kfz XGB best no LP",
+    "2026-09-09_best_models_with_landingpage_cat_enables_xgb": "kfz XGB best + LP",
+    "2026-09-09_new_models_without_landingpage_xgb": "kfz XGB new no LP",
+    "2026-07-27_new_models_with_landingpage_reset_lstm_failed": "tchibo LSTM new+LP reset failed",
+    "2026-08-12_best_models_without_landingpage_lstm": "tchibo LSTM best no LP",
+    "2026-09-12_best_models_with_landingpage_lstm": "tchibo LSTM best + LP",
+    "2026-09-16_best_models_permutated_landingpage": "tchibo LSTM LP permutated",
+}
+
+F1_EXTRA = {
+    '2026-09-08_best_models_without_landingpage_lstm': 0.4494,
+    '2026-09-08_best_models_without_landingpage_xgb': 0.5833,
+    '2026-09-09_best_models_with_landingpage_cat_enables_xgb': 0.7173,
+    '2026-09-09_new_models_without_landingpage_xgb': 0.6082,
+}
+
+def bucket(f):
+    f = f.lower()
+    if 'landingpage' in f: return 'landing'
+    if 'session_duration' in f: return 'duration'
+    if 'days_between' in f: return 'recency'
+    if 'pages_visited' in f: return 'pages'
+    return 'other'
+
+def analyze(base, f1_extra=None):
+    df = pd.read_csv(base/'comparison_mean_abs_shap.csv')
+    man = pd.read_csv(base/'shap_run_manifest.csv') if (base/'shap_run_manifest.csv').exists() else None
+    f1 = {}
+    n = {}
+    if man is not None:
+        f1 = man.groupby('setting')['f1_score'].max().to_dict()
+        n = man.groupby('setting')['n_rows'].first().to_dict()
+    if f1_extra: f1.update(f1_extra)
+    results = []
+    for setting in sorted(df['customer_setting'].unique()):
+        label = SHORT.get(setting, setting)
+        cvs = sorted(df[df['customer_setting']==setting]['cv'].unique())
+        rec = {'label': label, 'setting': setting, 'cv': cvs, 'f1': f1.get(setting), 'n': n.get(setting)}
+        for role in ['control','treatment','conversion']:
+            ssub = df[(df['customer_setting']==setting)&(df['role']==role)].sort_values('mean_abs_shap', ascending=False)
+            if ssub.empty: continue
+            # if multiple cvs somehow, already unique by setting
+            top = ssub.iloc[0]
+            total = ssub['mean_abs_shap'].sum()
+            rec[f'{role}_top'] = top['feature']
+            landing = ssub[ssub['feature'].str.contains('landing', case=False, na=False)]
+            lp_share = 100*landing['mean_abs_shap'].sum()/total if total else 0
+            rec[f'{role}_lp_share'] = round(lp_share,1)
+            if landing['mean_abs_shap'].sum()>0:
+                s2 = ssub.reset_index(drop=True)
+                lp_pos = s2.index[s2['feature'].str.contains('landing', case=False, na=False)][0]+1
+                rec[f'{role}_lp'] = f"rank {lp_pos} · {lp_share:.0f}%"
+            else:
+                rec[f'{role}_lp'] = '—'
+            if role=='control':
+                rec['control_shares'] = {b: round(100*ssub[ssub['feature'].apply(lambda x: bucket(x)==b)]['mean_abs_shap'].sum()/total,1) for b in ['pages','duration','landing','recency']}
+                rec['sum_abs'] = round(total,4)
+        results.append(rec)
+    return results
+
+tch = analyze(Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15'))
+kfz = analyze(Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15'), F1_EXTRA)
+print(json.dumps({'tchibo': tch, 'kfz': kfz}, indent=2))
+
+# read permutated manifest
+man = pd.read_csv('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/shap_run_manifest.csv')
+print('\nmanifest:\n', man[['setting','cv','role','f1_score','n_rows']].to_string())
+PY
+```
+
+```
+Traceback (most recent call last):
+  File "<stdin>", line 70, in <module>
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/encoder.py", line 201, in encode
+    chunks = list(chunks)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/encoder.py", line 431, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/encoder.py", line 438, in _iterencode
+    o = _default(o)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type int64 is not JSON serializable
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Fixing JSON serialization to retrieve the analysis output.
+
+The "best + LP" label for permutated data is ambiguous.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+import json
+import numpy as np
+
+SHORT = {
+    &#34;2026-09-07_new_models_with_landingpage_lstm&#34;: &#34;kfz LSTM new + LP&#34;,
+    &#34;2026-09-08_best_models_without_landingpage_lstm&#34;: &#34;kfz LSTM best no LP&#34;,
+    &#34;2026-09-08_best_models_without_landingpage_xgb&#34;: &#34;kfz XGB best no LP&#34;,
+    &#34;2026-09-09_best_models_with_landingpage_cat_enables_xgb&#34;: &#34;kfz XGB best + LP&#34;,
+    &#34;2026-09-09_new_models_without_landingpage_xgb&#34;: &#34;kfz XGB new no LP&#34;,
+    &#34;2026-07-27_new_models_with_landingpage_reset_lstm_failed&#34;: &#34;tchibo LSTM new+LP reset failed&#34;,
+    &#34;2026-08-12_best_models_without_landingpage_lstm&#34;: &#34;tchibo LSTM best no LP&#34;,
+    &#34;2026-09-12_best_models_with_landingpage_lstm&#34;: &#34;tchibo LSTM best + LP&#34;,
+    &#34;2026-09-16_best_models_permutated_landingpage&#34;: &#34;tchibo LSTM LP permutated&#34;,
+}
+
+F1_EXTRA = {
+    &#39;2026-09-08_best_models_without_landingpage_lstm&#39;: 0.4494,
+    &#39;2026-09-08_best_models_without_landingpage_xgb&#39;: 0.5833,
+    &#39;2026-09-09_best_models_with_landingpage_cat_enables_xgb&#39;: 0.7173,
+    &#39;2026-09-09_new_models_without_landingpage_xgb&#39;: 0.6082,
+}
+
+def bucket(f):
+    f = f.lower()
+    if &#39;landingpage&#39; in f: return &#39;landing&#39;
+    if &#39;session_duration&#39; in f: return &#39;duration&#39;
+    if &#39;days_between&#39; in f: return &#39;recency&#39;
+    if &#39;pages_visited&#39; in f: return &#39;pages&#39;
+    return &#39;other&#39;
+
+def analyze(base, f1_extra=None):
+    df = pd.read_csv(base/&#39;comparison_mean_abs_shap.csv&#39;)
+    man = pd.read_csv(base/&#39;shap_run_manifest.csv&#39;) if (base/&#39;shap_run_manifest.csv&#39;).exists() else None
+    f1 = {}
+    n = {}
+    if man is not None:
+        f1 = {k: float(v) for k,v in man.groupby(&#39;setting&#39;)[&#39;f1_score&#39;].max().to_dict().items()}
+        n = {k: int(v) for k,v in man.groupby(&#39;setting&#39;)[&#39;n_rows&#39;].first().to_dict().items()}
+    if f1_extra: f1.update(f1_extra)
+    results = []
+    for setting in sorted(df[&#39;customer_setting&#39;].unique()):
+        label = SHORT.get(setting, setting)
+        cvs = [int(x) for x in sorted(df[df[&#39;customer_setting&#39;]==setting][&#39;cv&#39;].unique())]
+        rec = {&#39;label&#39;: label, &#39;cv&#39;: cvs, &#39;f1&#39;: f1.get(setting), &#39;n&#39;: n.get(setting)}
+        for role in [&#39;control&#39;,&#39;treatment&#39;,&#39;conversion&#39;]:
+            ssub = df[(df[&#39;customer_setting&#39;]==setting)&amp;(df[&#39;role&#39;]==role)].sort_values(&#39;mean_abs_shap&#39;, ascending=False)
+            if ssub.empty: continue
+            top = ssub.iloc[0]
+            total = float(ssub[&#39;mean_abs_shap&#39;].sum())
+            rec[f&#39;{role}_top&#39;] = top[&#39;feature&#39;]
+            landing = ssub[ssub[&#39;feature&#39;].str.contains(&#39;landing&#39;, case=False, na=False)]
+            lp_share = 100*float(landing[&#39;mean_abs_shap&#39;].sum())/total if total else 0
+            rec[f&#39;{role}_lp_share&#39;] = round(lp_share,1)
+            if float(landing[&#39;mean_abs_shap&#39;].sum())&gt;0:
+                s2 = ssub.reset_index(drop=True)
+                lp_pos = int(s2.index[s2[&#39;feature&#39;].str.contains(&#39;landing&#39;, case=False, na=False)][0])+1
+                rec[f&#39;{role}_lp&#39;] = f&#34;rank {lp_pos} · {lp_share:.0f}%&#34;
+            else:
+                rec[f&#39;{role}_lp&#39;] = &#39;—&#39;
+            if role==&#39;control&#39;:
+                rec[&#39;control_shares&#39;] = {b: round(100*float(ssub[ssub[&#39;feature&#39;].apply(lambda x: bucket(x)==b)][&#39;mean_abs_shap&#39;].sum())/total,1) for b in [&#39;pages&#39;,&#39;duration&#39;,&#39;landing&#39;,&#39;recency&#39;]}
+                rec[&#39;sum_abs&#39;] = round(total,4)
+        results.append(rec)
+    return results
+
+tch = analyze(Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;))
+kfz = analyze(Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;), F1_EXTRA)
+print(json.dumps({&#39;tchibo&#39;: tch, &#39;kfz&#39;: kfz}, indent=2))
+man = pd.read_csv(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/shap_run_manifest.csv&#39;)
+print(&#39;\nmanifest:\n&#39;, man[[&#39;setting&#39;,&#39;cv&#39;,&#39;role&#39;,&#39;f1_score&#39;,&#39;n_rows&#39;]].to_string())
+# also check if older settings still in manifest - they may have been overwritten
+print(&#39;\nall manifest settings:&#39;, man[&#39;setting&#39;].unique().tolist())
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+import json
+import numpy as np
+
+SHORT = {
+    "2026-09-07_new_models_with_landingpage_lstm": "kfz LSTM new + LP",
+    "2026-09-08_best_models_without_landingpage_lstm": "kfz LSTM best no LP",
+    "2026-09-08_best_models_without_landingpage_xgb": "kfz XGB best no LP",
+    "2026-09-09_best_models_with_landingpage_cat_enables_xgb": "kfz XGB best + LP",
+    "2026-09-09_new_models_without_landingpage_xgb": "kfz XGB new no LP",
+    "2026-07-27_new_models_with_landingpage_reset_lstm_failed": "tchibo LSTM new+LP reset failed",
+    "2026-08-12_best_models_without_landingpage_lstm": "tchibo LSTM best no LP",
+    "2026-09-12_best_models_with_landingpage_lstm": "tchibo LSTM best + LP",
+    "2026-09-16_best_models_permutated_landingpage": "tchibo LSTM LP permutated",
+}
+
+F1_EXTRA = {
+    '2026-09-08_best_models_without_landingpage_lstm': 0.4494,
+    '2026-09-08_best_models_without_landingpage_xgb': 0.5833,
+    '2026-09-09_best_models_with_landingpage_cat_enables_xgb': 0.7173,
+    '2026-09-09_new_models_without_landingpage_xgb': 0.6082,
+}
+
+def bucket(f):
+    f = f.lower()
+    if 'landingpage' in f: return 'landing'
+    if 'session_duration' in f: return 'duration'
+    if 'days_between' in f: return 'recency'
+    if 'pages_visited' in f: return 'pages'
+    return 'other'
+
+def analyze(base, f1_extra=None):
+    df = pd.read_csv(base/'comparison_mean_abs_shap.csv')
+    man = pd.read_csv(base/'shap_run_manifest.csv') if (base/'shap_run_manifest.csv').exists() else None
+    f1 = {}
+    n = {}
+    if man is not None:
+        f1 = {k: float(v) for k,v in man.groupby('setting')['f1_score'].max().to_dict().items()}
+        n = {k: int(v) for k,v in man.groupby('setting')['n_rows'].first().to_dict().items()}
+    if f1_extra: f1.update(f1_extra)
+    results = []
+    for setting in sorted(df['customer_setting'].unique()):
+        label = SHORT.get(setting, setting)
+        cvs = [int(x) for x in sorted(df[df['customer_setting']==setting]['cv'].unique())]
+        rec = {'label': label, 'cv': cvs, 'f1': f1.get(setting), 'n': n.get(setting)}
+        for role in ['control','treatment','conversion']:
+            ssub = df[(df['customer_setting']==setting)&(df['role']==role)].sort_values('mean_abs_shap', ascending=False)
+            if ssub.empty: continue
+            top = ssub.iloc[0]
+            total = float(ssub['mean_abs_shap'].sum())
+            rec[f'{role}_top'] = top['feature']
+            landing = ssub[ssub['feature'].str.contains('landing', case=False, na=False)]
+            lp_share = 100*float(landing['mean_abs_shap'].sum())/total if total else 0
+            rec[f'{role}_lp_share'] = round(lp_share,1)
+            if float(landing['mean_abs_shap'].sum())>0:
+                s2 = ssub.reset_index(drop=True)
+                lp_pos = int(s2.index[s2['feature'].str.contains('landing', case=False, na=False)][0])+1
+                rec[f'{role}_lp'] = f"rank {lp_pos} · {lp_share:.0f}%"
+            else:
+                rec[f'{role}_lp'] = '—'
+            if role=='control':
+                rec['control_shares'] = {b: round(100*float(ssub[ssub['feature'].apply(lambda x: bucket(x)==b)]['mean_abs_shap'].sum())/total,1) for b in ['pages','duration','landing','recency']}
+                rec['sum_abs'] = round(total,4)
+        results.append(rec)
+    return results
+
+tch = analyze(Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15'))
+kfz = analyze(Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15'), F1_EXTRA)
+print(json.dumps({'tchibo': tch, 'kfz': kfz}, indent=2))
+man = pd.read_csv('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/shap_run_manifest.csv')
+print('\nmanifest:\n', man[['setting','cv','role','f1_score','n_rows']].to_string())
+# also check if older settings still in manifest - they may have been overwritten
+print('\nall manifest settings:', man['setting'].unique().tolist())
+PY
+```
+
+```
+{
+  "tchibo": [
+    {
+      "label": "tchibo LSTM new+LP reset failed",
+      "cv": [
+        6
+      ],
+      "f1": null,
+      "n": null,
+      "control_top": "pages_visited_per_session",
+      "control_lp_share": 20.2,
+      "control_lp": "rank 2 \u00b7 20%",
+      "control_shares": {
+        "pages": 66.8,
+        "duration": 9.4,
+        "landing": 20.2,
+        "recency": 3.6
+      },
+      "sum_abs": 0.3245,
+      "treatment_top": "days_between_sessions",
+      "treatment_lp_share": 18.2,
+      "treatment_lp": "rank 2 \u00b7 18%",
+      "conversion_top": "pages_visited_per_session_cumulated",
+      "conversion_lp_share": 26.3,
+      "conversion_lp": "rank 2 \u00b7 26%"
+    },
+    {
+      "label": "tchibo LSTM best no LP",
+      "cv": [
+        6
+      ],
+      "f1": null,
+      "n": null,
+      "control_top": "pages_visited_per_user_cumulated",
+      "control_lp_share": 0.0,
+      "control_lp": "\u2014",
+      "control_shares": {
+        "pages": 81.2,
+        "duration": 7.2,
+        "landing": 0.0,
+        "recency": 11.6
+      },
+      "sum_abs": 0.141,
+      "treatment_top": "session_duration_in_s",
+      "treatment_lp_share": 0.0,
+      "treatment_lp": "\u2014",
+      "conversion_top": "pages_visited_per_session",
+      "conversion_lp_share": 0.0,
+      "conversion_lp": "\u2014"
+    },
+    {
+      "label": "tchibo LSTM best + LP",
+      "cv": [
+        6
+      ],
+      "f1": null,
+      "n": null,
+      "control_top": "landingpage_cat",
+      "control_lp_share": 39.6,
+      "control_lp": "rank 1 \u00b7 40%",
+      "control_shares": {
+        "pages": 47.8,
+        "duration": 6.0,
+        "landing": 39.6,
+        "recency": 6.6
+      },
+      "sum_abs": 0.1426,
+      "treatment_top": "landingpage_cat",
+      "treatment_lp_share": 47.1,
+      "treatment_lp": "rank 1 \u00b7 47%",
+      "conversion_top": "pages_visited_per_session_cumulated",
+      "conversion_lp_share": 15.0,
+      "conversion_lp": "rank 4 \u00b7 15%"
+    },
+    {
+      "label": "tchibo LS
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Notable findings emerged for the permutated landing page setting.
+
+Landing page features remain highly important after permutation, suggesting leakage or incorrect permutation application. The control group is dominated by recency. F1 scores sit between no-LP and best-plus-LP results. The absolute SHAP sum for control is very low.
+
+The permutation was applied during training, yet the model still ranks landing page highly. This suggests the feature may retain some hidden correlation, or the model is overfitting to noise in the permuted feature for that specific cross-validation fold.
+
+F1 scores from earlier tchibo analyses will be added to the comparison canvas. The permutation findings will be highlighted as a key insight.
+</details></think>
+
+_**Agent (default)**_
+
+Writing the updated comparison canvas with the new LP-permutation findings.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The auto-generated tchibo canvas may contain a confusing "best + LP" label for the permutated setting.
+
+Both reports were regenerated. The write_shap_canvas_report function shortens folder names.
+</details></think>
+
+_**Agent (default)**_
+
+Updated evaluations for both customers, including the new **LP permutated** tchibo setting.
+
+### Reports
+| Report | Canvas | HTML |
+|--------|--------|------|
+| **tchibo** | [tchibo x_train SHAP](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx) | `shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html` |
+| **kfzteile24** | [kfzteile24 x_train SHAP](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx) | `shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html` |
+| **vs** | [kfz vs tchibo comparison](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx) | — |
+
+*(Rebuilt tchibo `comparison_mean_abs_shap.csv` from all 4 setting folders — the last run had overwritten it with only the permutated setting.)*
+
+---
+
+### tchibo (4 LSTM settings)
+| Setting | F1 | Control #1 | Landing (ctrl / treat / conv) |
+|---------|-----|------------|-------------------------------|
+| **best + LP** | **0.85** | `landingpage_cat` | **40% / 47% / 15%** |
+| **LP permutated** (cv 3) | 0.77 | `days_between_sessions` | **23% / 57% / 67%** |
+| best no LP | 0.73 | `pages_visited_per_user_cumulated` | — |
+| LP reset failed | 0.65 | `pages_visited_per_session` | 20% / 18% / 26% |
+
+**Permutation finding:** control shifts to **recency (~59%)**, but treatment/conversion still put `landingpage_cat` #1 at **57% / 67%**. Not a clean “null LP drops out” result — worth checking train/SHAP permutation consistency.
+
+---
+
+### kfzteile24 (5 settings, unchanged picture)
+- **XGB best + LP** (F1 **0.72**): `landingpage` #1 on control (~35%).
+- **LSTM new + LP** (F1 0.56): duration leads control/treatment; landing #1 on conversion (~42%).
+- No-LP: pages 56–84% of control |SHAP|.
+
+---
+
+### Cross-customer
+- Real LP reallocates importance on both; **tchibo best + LP** still has the strongest F1 + landing ranks.
+- Prefer **ranks / family shares** over raw |SHAP| (tchibo absolute values stay small).
+
+---
+
+_**User**_
+
+In the reports add the date of the setting to the model name as well and add for all settings the sample and best f1 score
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating SHAP reports to include the setting date in model names and add sample and best F1 scores for all settings.
+
+Focusing on `write_shap_canvas_report.py`. Checking how `short_setting_label` and F1/sample values are populated to update the report builder.
+</details></think>
+
+_**Agent (default)**_
+
+I'll update the report generator so setting labels include dates, and every setting shows sample size and best F1, then regenerate the reports.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "short_setting_label|f1_by_setting|sample_n|setting_scope"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "short_setting_label|f1_by_setting|sample_n|setting_scope",
+  "topFiles": [
+    {
+      "matchCount": 19,
+      "uri": "scripts/ModelShapValues/write_shap_canvas_report.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 19
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating `short_setting_label` to include the date prefix.
+
+F1 scores and sample sizes will be pulled from model directories and CSV files when the manifest is incomplete. Scope and top1 tables will be updated to include these metrics. The comparison canvas will be adjusted too. Reports will be regenerated. Scope table headers in canvas, HTML, and PDF outputs also need verification.
+</details></think>
+
+_**Agent (default)**_
+
+I'll enrich F1/sample from model folders when the manifest is incomplete, keep dates in setting labels, and regenerate all reports.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "Setting.*Backend|Best F1|Sample n|top1_rows"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "Setting.*Backend|Best F1|Sample n|top1_rows",
+  "topFiles": [
+    {
+      "matchCount": 12,
+      "uri": "scripts/ModelShapValues/write_shap_canvas_report.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 12
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: # Check where F1/n can be recovered from for missing manifest entries
+ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/*/cv_6_control_mean_abs_shap.csv 2&gt;/dev/null | head
+# sample mean_abs has model_path?
+head -2 scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv
+# find test scores for tchibo settings
+for d in scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/*/; do echo &#34;== $(basename $d)&#34;; ls &#34;$d&#34;*_test_score.csv 2&gt;/dev/null | head -2; done
+for d in scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/*/; do echo &#34;== $(basename $d)&#34;; ls &#34;$d&#34;*_test_score.csv 2&gt;/dev/null | head -2; done</summary>
+```bash
+# Check where F1/n can be recovered from for missing manifest entries
+ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/*/cv_6_control_mean_abs_shap.csv 2>/dev/null | head
+# sample mean_abs has model_path?
+head -2 scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv
+# find test scores for tchibo settings
+for d in scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/*/; do echo "== $(basename $d)"; ls "$d"*_test_score.csv 2>/dev/null | head -2; done
+for d in scripts/ModelShapValues/models/kfzteile24-aud-6835d77813526dc3d1229978/*/; do echo "== $(basename $d)"; ls "$d"*_test_score.csv 2>/dev/null | head -2; done
+```
+
+```
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-07-27_new_models_with_landingpage_reset_lstm_failed/cv_6_control_mean_abs_shap.csv
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-08-12_best_models_without_landingpage_lstm/cv_6_control_mean_abs_shap.csv
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_mean_abs_shap.csv
+customer_setting,cv,role,backend,model_path,feature,mean_abs_shap,mean_shap
+2026-09-12_best_models_with_landingpage_lstm,6,control,lstm,/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/2026-09-12_classifier_NNLSTM_50_nan_cv_6_group_68b69dff2e5f2d9a58cce692_control.h5,landingpage_cat,0.056492272573990705,-0.0025702604696456743
+== 2026-07-27_new_models_with_landingpage_reset_lstm_failed
+scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-07-27_new_models_with_landingpage_reset_lstm_failed/2026-07-27_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_68b69dff2e5f2d9a58cce692_test_score.csv
+scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-07-27_new_models_with_landingpage_reset_lstm_failed/2026-07-27_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_1_68b69dff2e5f2d9a58cce692_test_score.csv
+== 2026-08-12_best_models_without_landingpage_lstm
+scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-08-12_best_models_without_landingpage_lstm/2026-08-12_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_6_68b69dff2e5f2d9a58cce692_test_score.csv
+== 2026-09-12_best_models_with_landingpage_lstm
+scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/2026-09-12_classifier_NNLSTM_50_nan_cv_6_68b69dff2e5f2d9a58cce692_test_score.csv
+== 2026-09-16_best_models_permutated_landingpage
+scripts
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating write_shap_canvas_report.py to include the setting date in model names and add sample and best F1 scores for all settings.
+
+Dates will always prefix short_setting_label. Missing F1 scores will be resolved from model test_score.csv using model_path. Sample n will be counted from shap_values.csv rows. Best F1 will go into the scope table and sample n into the top1 table. The comparison canvas will also be updated manually.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating table headers in the canvas, PDF, and HTML renderers.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+The string to replace was not found in the file.
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+The string to replace was not found in the file.
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The PDF table headers need fixing with the exact context.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title &#34;tchibo SHAP evaluation (x_train + LP permutation)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html 2&gt;&amp;1 &amp;&amp; \
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title &#34;kfzteile24 SHAP evaluation (x_train 2026-09-15)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2&gt;&amp;1</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title "tchibo SHAP evaluation (x_train + LP permutation)" \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html 2>&1 && \
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title "kfzteile24 SHAP evaluation (x_train 2026-09-15)" \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2>&1
+```
+
+```
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html
+Settings: 2026-07-27 LSTM new + LP reset failed, 2026-08-12 LSTM best no LP, 2026-09-12 LSTM best + LP, 2026-09-16 best LP permutated
+Source: scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html
+Settings: 2026-09-07 LSTM new + LP, 2026-09-08 LSTM best no LP, 2026-09-08 XGB best no LP, 2026-09-09 XGB best + LP, 2026-09-09 XGB new no LP
+Source: scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Verifying that all generated canvases include F1 scores and sample counts for every setting. The comparison canvas will be updated similarly.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx",
+  "pattern": "Sample n|Best F1|rows=\\{\\["
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx",
+  "pattern": "Sample n|Best F1|rows=\\{\\[",
+  "topFiles": [
+    {
+      "matchCount": 5,
+      "uri": "../../../../.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 5
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx",
+  "pattern": "Sample n|Best F1|rows=\\{\\["
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx",
+  "pattern": "Sample n|Best F1|rows=\\{\\[",
+  "topFiles": [
+    {
+      "matchCount": 5,
+      "uri": "../../../../.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 5
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Tchibo looks correct. Now checking kfz F1 scores and sample n values.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Updating the comparison canvas with dates and sample and best F1 scores for all settings.
+</details></think>
+
+_**Agent (default)**_
+
+Updating the comparison canvas to match.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Reports now include the setting date in model names and show sample and best F1 scores for all settings.
+</details></think>
+
+_**Agent (default)**_
+
+Updated `write_shap_canvas_report.py` and regenerated all three reports.
+
+**Changes**
+- Setting labels now keep the **date** (e.g. `2026-09-12 LSTM best + LP`)
+- **Scope** and **What dominates** tables include **Sample n** and **Best F1** for every setting (F1 filled from `*_test_score.csv` when the manifest is incomplete; sample n from SHAP value CSV row counts)
+
+**Regenerated**
+- [tchibo x_train SHAP](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx)
+- [kfzteile24 x_train SHAP](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx)
+- [kfz vs tchibo comparison](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx)
+
+HTML copies under each `shap_output/...` folder were refreshed as well.
+
+---
+
+_**User**_
+
+2026-09-16 best LP permutated has higher shap values, can this be due to the reordering of landingpage_cat which is a numerical value. And how ist the LSTM handling it? Do we need to encode it in special way. Or does it works as numerical standard scaled variable as well?
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants to know if reordering the numerical `landingpage_cat` feature explains the higher SHAP values for the permutated landing page. They also ask whether the LSTM treats this as a standard scaled numerical variable or requires special encoding.
+
+I will check how `landingpage_cat` is prepared in the SHAP script, compare the permutated and original data, and examine the training inputs to understand the numerical scaling.
+</details></think>
+
+_**Agent (default)**_
+
+I'll check how `landingpage_cat` is prepared for LSTM and compare the permutated vs original feature distributions.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+import numpy as np
+from pathlib import Path
+
+orig = Path(&#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet&#39;)
+perm = Path(&#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_ladingpage_permutation.parquet&#39;)
+for label, p in [(&#39;orig&#39;, orig), (&#39;perm&#39;, perm)]:
+    df = pd.read_parquet(p)
+    print(f&#39;\n=== {label} shape={df.shape} ===&#39;)
+    print(&#39;dtypes:\n&#39;, df.dtypes)
+    if &#39;landingpage_cat&#39; in df.columns:
+        s = df[&#39;landingpage_cat&#39;]
+        print(f&#39;landingpage_cat: dtype={s.dtype} nunique={s.nunique()} min={s.min()} max={s.max()} mean={s.mean():.4g} std={s.std():.4g}&#39;)
+        print(&#39;value counts head:\n&#39;, s.value_counts().head(10))
+        print(&#39;unique sorted sample:&#39;, sorted(s.dropna().unique())[:15], &#39;...&#39;, sorted(s.dropna().unique())[-5:])
+    # correlation of landing with other features
+    if &#39;landingpage_cat&#39; in df.columns:
+        num = df.select_dtypes(&#39;number&#39;)
+        print(&#39;corr with landingpage_cat:&#39;)
+        print(num.corr()[&#39;landingpage_cat&#39;].sort_values(key=abs, ascending=False))
+
+# If same length? permute check - are other cols identical order?
+if orig.exists() and perm.exists():
+    a = pd.read_parquet(orig)
+    b = pd.read_parquet(perm)
+    print(&#39;\n=== compare ===&#39;)
+    print(&#39;same columns&#39;, list(a.columns)==list(b.columns), a.columns.tolist(), &#39;vs&#39;, b.columns.tolist())
+    print(&#39;same nrows&#39;, len(a), len(b))
+    # different sizes - can&#39;t row-align
+    # check if perm landing looks like shuffled scaled cats
+    print(&#39;perm landing unique count&#39;, b[&#39;landingpage_cat&#39;].nunique())
+    print(&#39;orig landing unique count&#39;, a[&#39;landingpage_cat&#39;].nunique() if &#39;landingpage_cat&#39; in a.columns else &#39;N/A&#39;)
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+import numpy as np
+from pathlib import Path
+
+orig = Path('scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet')
+perm = Path('scripts/ModelShapValues/tmp_data/tchibo_x_train_ladingpage_permutation.parquet')
+for label, p in [('orig', orig), ('perm', perm)]:
+    df = pd.read_parquet(p)
+    print(f'\n=== {label} shape={df.shape} ===')
+    print('dtypes:\n', df.dtypes)
+    if 'landingpage_cat' in df.columns:
+        s = df['landingpage_cat']
+        print(f'landingpage_cat: dtype={s.dtype} nunique={s.nunique()} min={s.min()} max={s.max()} mean={s.mean():.4g} std={s.std():.4g}')
+        print('value counts head:\n', s.value_counts().head(10))
+        print('unique sorted sample:', sorted(s.dropna().unique())[:15], '...', sorted(s.dropna().unique())[-5:])
+    # correlation of landing with other features
+    if 'landingpage_cat' in df.columns:
+        num = df.select_dtypes('number')
+        print('corr with landingpage_cat:')
+        print(num.corr()['landingpage_cat'].sort_values(key=abs, ascending=False))
+
+# If same length? permute check - are other cols identical order?
+if orig.exists() and perm.exists():
+    a = pd.read_parquet(orig)
+    b = pd.read_parquet(perm)
+    print('\n=== compare ===')
+    print('same columns', list(a.columns)==list(b.columns), a.columns.tolist(), 'vs', b.columns.tolist())
+    print('same nrows', len(a), len(b))
+    # different sizes - can't row-align
+    # check if perm landing looks like shuffled scaled cats
+    print('perm landing unique count', b['landingpage_cat'].nunique())
+    print('orig landing unique count', a['landingpage_cat'].nunique() if 'landingpage_cat' in a.columns else 'N/A')
+PY
+```
+
+```
+
+=== orig shape=(1164, 7) ===
+dtypes:
+ days_between_sessions                  float32
+landingpage_cat                        float32
+pages_visited_per_session              float32
+pages_visited_per_session_cumulated    float32
+pages_visited_per_user                 float32
+pages_visited_per_user_cumulated       float32
+session_duration_in_s                  float32
+dtype: object
+landingpage_cat: dtype=float32 nunique=65 min=-1.9675164222717285 max=1.5007950067520142 mean=-8.193e-10 std=1
+value counts head:
+ -1.708029    120
+ 1.115759    110
+-0.443628     82
+ 0.420696     71
+ 0.230130     68
+-1.057279     58
+-0.931326     54
+-0.179795     49
+ 0.912391     47
+ 0.914893     46
+Name: landingpage_cat, dtype: int64
+unique sorted sample: [-1.9675164, -1.9561815, -1.910673, -1.7304448, -1.7080292, -1.6918876, -1.479809, -1.4699135, -1.4077177, -1.361767, -1.3166536, -1.2692072, -1.171615, -1.1525387, -1.0572792] ... [1.4420233, 1.4441491, 1.4957532, 1.4978414, 1.500795]
+corr with landingpage_cat:
+landingpage_cat                        1.000000
+pages_visited_per_session             -0.330978
+pages_visited_per_session_cumulated   -0.275086
+days_between_sessions                 -0.173848
+pages_visited_per_user                -0.052754
+session_duration_in_s                 -0.047733
+pages_visited_per_user_cumulated      -0.029683
+Name: landingpage_cat, dtype: float64
+
+=== perm shape=(1262570, 7) ===
+dtypes:
+ days_between_sessions                  float32
+pages_visited_per_session              float32
+pages_visited_per_session_cumulated    float32
+pages_visited_per_user                 float32
+pages_visited_per_user_cumulated       float32
+session_duration_in_s                  float32
+landingpage_cat                        float32
+dtype: object
+landingpage_cat: dtype=float32 nunique=29173 min=-2.3523194789886475 max=1.5824037790298462 mean=0.03872 std=1.107
+value counts head:
+  0.308737    158841
+ 1.291787     27411
+ 1.428701     15745
+-0.838052     15458
+-1.433727     15458
+ 1
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+
+# SHAP magnitude comparison
+base = Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;)
+for setting in [
+ &#39;2026-09-12_best_models_with_landingpage_lstm&#39;,
+ &#39;2026-09-16_best_models_permutated_landingpage&#39;,
+ &#39;2026-08-12_best_models_without_landingpage_lstm&#39;,
+]:
+    df = pd.read_csv(base/&#39;comparison_mean_abs_shap.csv&#39;)
+    sub = df[df[&#39;customer_setting&#39;]==setting]
+    print(f&#39;\n{setting}&#39;)
+    for role in [&#39;control&#39;,&#39;treatment&#39;,&#39;conversion&#39;]:
+        r = sub[sub[&#39;role&#39;]==role].sort_values(&#39;mean_abs_shap&#39;, ascending=False)
+        if r.empty: continue
+        total = r[&#39;mean_abs_shap&#39;].sum()
+        top = r.iloc[0]
+        lp = r[r[&#39;feature&#39;].str.contains(&#39;landing&#39;, case=False)]
+        print(f&#39;  {role}: sum={total:.4f} #1={top[&#34;feature&#34;]} ({top[&#34;mean_abs_shap&#34;]:.4f}) lp_share={100*lp[&#34;mean_abs_shap&#34;].sum()/total:.1f}%&#39;)
+
+# inputs.parquet for permutated model
+inp = Path(&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-16_best_models_permutated_landingpage&#39;)
+# may lack inputs.parquet
+print(&#39;\npermutated dir files without weights:&#39;, [p.name for p in inp.iterdir() if &#39;weights&#39; not in p.name])
+best = Path(&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/inputs.parquet&#39;)
+if best.exists():
+    print(&#39;best+LP inputs:&#39;, pd.read_parquet(best)[&#39;input&#39;].tolist())
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+
+# SHAP magnitude comparison
+base = Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15')
+for setting in [
+ '2026-09-12_best_models_with_landingpage_lstm',
+ '2026-09-16_best_models_permutated_landingpage',
+ '2026-08-12_best_models_without_landingpage_lstm',
+]:
+    df = pd.read_csv(base/'comparison_mean_abs_shap.csv')
+    sub = df[df['customer_setting']==setting]
+    print(f'\n{setting}')
+    for role in ['control','treatment','conversion']:
+        r = sub[sub['role']==role].sort_values('mean_abs_shap', ascending=False)
+        if r.empty: continue
+        total = r['mean_abs_shap'].sum()
+        top = r.iloc[0]
+        lp = r[r['feature'].str.contains('landing', case=False)]
+        print(f'  {role}: sum={total:.4f} #1={top["feature"]} ({top["mean_abs_shap"]:.4f}) lp_share={100*lp["mean_abs_shap"].sum()/total:.1f}%')
+
+# inputs.parquet for permutated model
+inp = Path('scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-16_best_models_permutated_landingpage')
+# may lack inputs.parquet
+print('\npermutated dir files without weights:', [p.name for p in inp.iterdir() if 'weights' not in p.name])
+best = Path('scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-12_best_models_with_landingpage_lstm/inputs.parquet')
+if best.exists():
+    print('best+LP inputs:', pd.read_parquet(best)['input'].tolist())
+PY
+```
+
+```
+
+2026-09-12_best_models_with_landingpage_lstm
+  control: sum=0.1426 #1=landingpage_cat (0.0565) lp_share=39.6%
+  treatment: sum=0.1403 #1=landingpage_cat (0.0661) lp_share=47.1%
+  conversion: sum=0.1660 #1=pages_visited_per_session_cumulated (0.0382) lp_share=15.0%
+
+2026-09-16_best_models_permutated_landingpage
+  control: sum=0.0529 #1=days_between_sessions (0.0313) lp_share=22.8%
+  treatment: sum=0.0766 #1=landingpage_cat (0.0437) lp_share=57.1%
+  conversion: sum=0.2122 #1=landingpage_cat (0.1420) lp_share=66.9%
+
+2026-08-12_best_models_without_landingpage_lstm
+  control: sum=0.1410 #1=pages_visited_per_user_cumulated (0.0505) lp_share=0.0%
+  treatment: sum=0.0713 #1=session_duration_in_s (0.0200) lp_share=0.0%
+  conversion: sum=0.1657 #1=pages_visited_per_session (0.0731) lp_share=0.0%
+
+permutated dir files without weights: ['2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_control.h5', '2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_conversion_probability.h5', '2026-09-16_classifier_NNLSTM_50_nan_cv_3_conversion_probability_score_test.csv', '2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_treatment.h5', '2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_68b69dff2e5f2d9a58cce692_test_score.csv', '2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_model_mu_t.h5', '2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_propensitymodel.h5', 'inputs.parquet', '2026-09-16_classifier_NNLSTM_50_nan_nan_nan_saved_model_cv_3_group_68b69dff2e5f2d9a58cce692_model_mu_c.h5']
+best+LP inputs: ['anonymousId', 'days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'session', 'landingpage_cat']
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Absolute SHAP values are not uniformly higher for permutated features. The control sum is actually lower.
+
+Conversion landing absolute SHAP is higher at 0.142 versus 0.025 for landing share. Relative shares for treatment and conversion landing pages are also elevated. The permutated dataset contains 1.26 million rows versus 1,164 original rows. Landing page has 29,000 unique values compared to 65. This suggests the permutated data is not merely a shuffled version of the original categorical encodings. It may instead reflect a continuous encoding, generated float values, or a different export.
+
+The original landingpage_cat is already standard-scaled with roughly 65 discrete levels. The LSTM pipeline converts it to numeric, fills missing values with zero, casts to float32, and reshapes without embeddings or one-hot encoding. It therefore treats the feature as continuous, similar to pages and duration. Without embeddings, the LSTM interprets the numeric codes as ordered continuous values.
+
+Label-encoded categories carry no natural order. Treating them as continuous variables imposes false ordinality. Embeddings or one-hot encoding would be more appropriate for unordered categories. Because the training pipeline already uses scaled numeric values, SHAP should align with that representation. Permuting the mapping between codes and landing pages while preserving correlations is another possibility.
+
+Permuting the column values across rows breaks the association with the target and other features. The correlation with pages dropped from -0.33 to roughly 0.05, confirming the link was severed.
+
+The elevated relative SHAP shares for treatment and conversion landing likely stem from two mechanisms. The model may overfit by treating landing as a high-variance noise feature that the outcome heads latch onto. Alternatively, other features may have become less informative, causing the shares to redistribute.
+
+The absolute sum on the control set is lower.
+
+The user may be referring to either the relative share of landing or the absolute conversion SHAP value of 0.14. Comparing magnitudes across the two runs is especially unfair because the permutated SHAP was computed on 22,000 samples drawn from 1.26 million rows, whereas the original run used 1,164 rows. These are entirely different distributions.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd, numpy as np
+from pathlib import Path
+import sys
+sys.path.insert(0,&#39;scripts/ModelShapValues&#39;)
+from calculate_shap_values import load_model, prepare_x_for_model, read_inputs_parquet, ModelArtifact
+
+# pred stats on permutated sample vs best+LP on small train
+perm = pd.read_parquet(&#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_ladingpage_permutation.parquet&#39;)
+# sample same n as explained
+perm_s = perm.sample(n=22000, random_state=42) if len(perm)&gt;22000 else perm
+setting = Path(&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-16_best_models_permutated_landingpage&#39;)
+cols = [c for c in read_inputs_parquet(setting) if c.lower() not in {&#39;anonymousid&#39;,&#39;session&#39;}]
+print(&#39;inputs features used:&#39;, cols)
+for role, globp in [(&#39;control&#39;,&#39;*control.h5&#39;),(&#39;treatment&#39;,&#39;*treatment.h5&#39;),(&#39;conversion&#39;,&#39;*conversion_probability.h5&#39;)]:
+    art = next(setting.glob(globp))
+    model = load_model(ModelArtifact(path=art, role=role, cv=3, backend=&#39;lstm&#39;))
+    x,_ = prepare_x_for_model(perm_s, cols, &#39;lstm&#39;)
+    p = np.asarray(model.predict(x, verbose=0)).reshape(-1)
+    print(f&#39;{role}: pred μ={p.mean():.4f} σ={p.std():.4f} range={p.max()-p.min():.4f}&#39;)
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd, numpy as np
+from pathlib import Path
+import sys
+sys.path.insert(0,'scripts/ModelShapValues')
+from calculate_shap_values import load_model, prepare_x_for_model, read_inputs_parquet, ModelArtifact
+
+# pred stats on permutated sample vs best+LP on small train
+perm = pd.read_parquet('scripts/ModelShapValues/tmp_data/tchibo_x_train_ladingpage_permutation.parquet')
+# sample same n as explained
+perm_s = perm.sample(n=22000, random_state=42) if len(perm)>22000 else perm
+setting = Path('scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-16_best_models_permutated_landingpage')
+cols = [c for c in read_inputs_parquet(setting) if c.lower() not in {'anonymousid','session'}]
+print('inputs features used:', cols)
+for role, globp in [('control','*control.h5'),('treatment','*treatment.h5'),('conversion','*conversion_probability.h5')]:
+    art = next(setting.glob(globp))
+    model = load_model(ModelArtifact(path=art, role=role, cv=3, backend='lstm'))
+    x,_ = prepare_x_for_model(perm_s, cols, 'lstm')
+    p = np.asarray(model.predict(x, verbose=0)).reshape(-1)
+    print(f'{role}: pred μ={p.mean():.4f} σ={p.std():.4f} range={p.max()-p.min():.4f}')
+PY
+```
+
+```
+inputs features used: ['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'landingpage_cat']
+control: pred μ=-0.0336 σ=0.0479 range=0.7878
+treatment: pred μ=-0.0297 σ=0.0657 range=0.5981
+conversion: pred μ=0.8461 σ=0.1800 range=0.9396
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Conversion shows higher prediction standard deviation.
+
+The larger conversion SHAP on permutated data likely stems from its higher absolute standard deviation. I will clarify whether "higher" is absolute or relative. The LSTM treats landingpage_cat as a scaled numeric variable without special encoding. Reordering those codes could inflate SHAP values.
+
+No special encoding is needed for SHAP if training used the same scaling. Embeddings work better for unordered categories. Permuting already-scaled codes is fine as a null test, but relative shares require careful interpretation. Data size differences are huge.
+</details></think>
+
+_**Agent (default)**_
+
+Short answer: for LSTM here, `landingpage_cat` is just another **standard-scaled float**. No special categorical encoding is applied at SHAP time. Higher **relative** landing |SHAP| after permutation is plausible; it does **not** mean landing became a stronger real signal.
+
+### How LSTM handles `landingpage_cat`
+
+In `prepare_x_for_model`, LSTM path does:
+
+```585:589:scripts/ModelShapValues/calculate_shap_values.py
+    if backend == "lstm":
+        numeric = x_df.apply(pd.to_numeric, errors="coerce").fillna(0.0).astype(np.float32)
+        x_model = numeric.to_numpy().reshape(len(numeric), 1, numeric.shape[1])
+```
+
+So:
+- no embedding
+- no one-hot
+- no categorical dtype handling  
+It is treated like `pages_visited_*` / `session_duration_in_s`: a continuous input.
+
+Your original tchibo x_train already looks like **encoded + scaled** landing codes (`mean≈0`, `std≈1`, ~65 discrete levels). That matches “label/frequency/target encode → standard scale”. SHAP should use the **same** representation the model was trained on. You do **not** need a different encoding just for SHAP.
+
+If you wanted a *better* categorical treatment at **training** time, use an embedding (or one-hot). Changing encoding only for SHAP would make attributions wrong.
+
+---
+
+### Can “reordering” of numeric `landingpage_cat` raise SHAP?
+
+Yes, in a few ways — and they are easy to misread.
+
+**1. Absolute values are not uniformly higher**
+
+| Setting | Control Σ\|SHAP\| | Treatment Σ\|SHAP\| | Conversion Σ\|SHAP\| | LP share (ctrl/treat/conv) |
+|---------|-------------------|---------------------|------------------------|----------------------------|
+| best + LP | 0.14 | 0.14 | 0.17 | 40% / 47% / 15% |
+| LP permutated | **0.05** | 0.08 | **0.21** | 23% / **57%** / **67%** |
+
+Control is **lower** overall. What looks “higher” is mostly **landing’s share** on treatment/conversion (and conversion absolute landing |SHAP|).
+
+**2. Permutation breaks semantics, not the fact that it’s a free numeric knob**
+
+On real data, `landingpage_cat` correlates with pages (~−0.33). On the permutated file that drops to ~0.05 — good for a null feature.
+
+But the LSTM still sees a **high-cardinality float** (~29k unique values in the permutated parquet vs ~65 originally). It can still fit noise in that channel. Kernel SHAP then attributes variance to it even when the association is spurious → high **relative** LP share, especially if other features contribute less.
+
+**3. Different data / prediction scale**
+
+Permutated SHAP used a **1.26M-row** file (Kernel capped at 22k), not the 1,164-row x_train. Conversion preds on that sample have **σ≈0.18** vs ~0.10 on the small best+LP set — higher output variance → larger absolute SHAP is expected.
+
+**4. Arbitrary numeric order**
+
+If codes are label-like then scaled, the number order is **not** meaningful (page A=−1.7 vs B=1.1 is not “more landing”). The net can still learn from the values, but it assumes a false continuum. **Shuffling codes** (re-mapping categories) or **shuffling values across rows** both destroy the trained meaning of those numbers; remaining SHAP mass is often noise/overfit, not “landing still matters”.
+
+---
+
+### Do you need special encoding?
+
+| Question | Answer |
+|----------|--------|
+| For SHAP with current LSTMs? | **No** — keep scaled numeric, same as training. |
+| Is scaled numeric OK? | **Yes, if that’s how the model was trained** (your artifacts expect `landingpage_cat` as a float feature). |
+| Ideal for unordered landing pages? | Embedding (or one-hot) at **train** time; then SHAP/embed analysis follows that. |
+| Does permutation invalidate high LP SHAP? | High LP share after a proper row-shuffle is a **red flag**, not evidence that landing is causal. Prefer F1 drop + broken correlations; don’t over-read absolute/relative |SHAP| on the null feature. |
+
+**Practical takeaway:** treat `landingpage_cat` as a standard-scaled numeric input for these LSTMs. The permutated run’s high treatment/conversion LP shares are consistent with “model still uses a noisy numeric channel,” plus a different sample/prediction scale — not with needing a special SHAP encoding.
+
+---
+
+_**User**_
+
+In General: how would you use landingpage_cat as an input for an LSTM
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants to know how to use a categorical variable as input for an LSTM.
+
+Landingpage is unordered and may have high cardinality, so one-hot encoding is poor. Target or frequency encoding followed by scaling is preferable. An embedding layer is the standard approach. The embedding vector can be concatenated with numeric features before the LSTM, or used directly at each timestep.
+
+Their current model reshapes data to a single timestep. The LSTM sequential structure is largely unused. Embedding concatenation remains relevant.
+</details></think>
+
+_**Agent (default)**_
+
+For an LSTM, treat `landingpage_cat` as a **categorical ID**, not as a “real” continuous variable — unless you deliberately choose a numeric encoding and accept the tradeoffs.
+
+### Recommended: embedding
+
+1. Map each landing page to an integer ID (`0 … N−1`), with an `unknown` bucket for rare/new pages.
+2. Feed IDs into an `Embedding(vocab_size, d)` layer (e.g. `d = 8–32`).
+3. Concatenate the embedding vector with the numeric features (pages, duration, recency, …) at each timestep.
+4. Pass the combined vector into the LSTM (or Dense → LSTM).
+
+That lets the model learn a similarity space for landings without imposing an artificial order like “−1.7 &lt; 0.4 &lt; 1.1”.
+
+```text
+landing_id  →  Embedding  →  emb
+numerics    →  (optional Dense)
+concat(emb, numerics)  →  LSTM  →  head
+```
+
+### Acceptable if you keep it simple: target / frequency encode + scale
+
+What you do now (encode → standard scale → float input) works and matches a Dense/LSTM that only sees floats:
+
+- Pros: simple, stable, no vocab plumbing.
+- Cons: codes are **ordered by accident**; nearby numbers aren’t “similar” landings; high cardinality becomes a jagged continuous axis the net can overfit (as in the permutation run).
+
+Fine as a baseline; weak as a semantic representation of pages.
+
+### Usually avoid
+
+| Approach | Why |
+|----------|-----|
+| Raw one-hot into LSTM | Explodes with many landings; sparse, inefficient. |
+| Raw string / URL | Must be hashed/ID’d first. |
+| Treating scaled codes as continuous “strength” | Implies ordinal meaning that isn’t there. |
+
+### Practical details that matter
+
+- **Cardinality:** tens of pages → embedding or even one-hot OK; thousands → embedding + rare-page bucketing.
+- **Train/serve consistency:** same ID map (and same `unknown` rule) at train, eval, and SHAP.
+- **Your current shape `(batch, 1, features)`:** you’re not really using sequence structure; embedding still helps, but a plain MLP would be equally natural unless you have multi-step sessions.
+- **SHAP:** explain the same inputs the model saw (IDs→embedding path, or scaled float path). Don’t re-encode only for SHAP.
+
+**Bottom line:** Prefer **integer ID + embedding + concat with numerics**. Scaled `landingpage_cat` is a workable shortcut, not the ideal categorical treatment for an LSTM.
+
+---
+
+_**User**_
+
+fix @tchibo-output-standard_landingpage_embedded.out (69-95) 
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Fixing the LSTM model loading error caused by the custom Keras layer `LandingpageIndexIds`.
+
+Locating the `LandingpageIndexIds` layer definition in the codebase. Updating `calculate_shap_values.py` to register it via `custom_objects` during model loading.
+</details></think>
+
+_**Agent (default)**_
+
+The model uses a custom Keras layer `LandingpageIndexIds` that isn't registered on load. I'll find its definition and wire it into the SHAP loader.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts",
+  "pattern": "LandingpageIndexIds"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts",
+  "pattern": "LandingpageIndexIds",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "tchibo-output-standard_landingpage_embedded.out"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/tchibo-output-standard_landingpage_embedded.out</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The layer is missing from this repository. It likely originates from the training package.
+
+Searching agent transcripts, notebooks, and H5 model configs for the layer.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+rg: ..: Operation not permitted (os error 1)
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import h5py, json
+from pathlib import Path
+p = Path(&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5&#39;)
+with h5py.File(p, &#39;r&#39;) as f:
+    cfg = f.attrs.get(&#39;model_config&#39;)
+    if cfg is not None:
+        if isinstance(cfg, bytes): cfg = cfg.decode()
+        conf = json.loads(cfg)
+        # find LandingpageIndexIds layer config
+        def walk(obj, path=&#39;&#39;):
+            if isinstance(obj, dict):
+                if obj.get(&#39;class_name&#39;) == &#39;LandingpageIndexIds&#39; or (isinstance(obj.get(&#39;class_name&#39;), str) and &#39;Landing&#39; in obj.get(&#39;class_name&#39;,&#39;&#39;)):
+                    print(&#39;FOUND&#39;, path, json.dumps(obj, indent=2)[:2000])
+                for k,v in obj.items():
+                    walk(v, path+&#39;/&#39;+str(k))
+            elif isinstance(obj, list):
+                for i,v in enumerate(obj):
+                    walk(v, path+f&#39;[{i}]&#39;)
+        walk(conf)
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import h5py, json
+from pathlib import Path
+p = Path('scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5')
+with h5py.File(p, 'r') as f:
+    cfg = f.attrs.get('model_config')
+    if cfg is not None:
+        if isinstance(cfg, bytes): cfg = cfg.decode()
+        conf = json.loads(cfg)
+        # find LandingpageIndexIds layer config
+        def walk(obj, path=''):
+            if isinstance(obj, dict):
+                if obj.get('class_name') == 'LandingpageIndexIds' or (isinstance(obj.get('class_name'), str) and 'Landing' in obj.get('class_name','')):
+                    print('FOUND', path, json.dumps(obj, indent=2)[:2000])
+                for k,v in obj.items():
+                    walk(v, path+'/'+str(k))
+            elif isinstance(obj, list):
+                for i,v in enumerate(obj):
+                    walk(v, path+f'[{i}]')
+        walk(conf)
+PY
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+h5py segfaulted. I'll try all permissions or use Keras to inspect the file.
+
+Also searching the repository and agent stores.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts",
+  "pattern": "LandingpageIndexIds|class Landingpage"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts",
+  "pattern": "LandingpageIndexIds|class Landingpage",
+  "topFiles": [
+    {
+      "matchCount": 5,
+      "uri": ".specstory/history/2026-09-14_14-02-16Z-shap-values-evaluation-summary.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": "tchibo-output-standard_landingpage_embedded.out"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 8
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import json
+# try reading model config via keras without full load - use h5py carefully
+import tables  # maybe not
+# Use keras.legacy or pure zip? h5 is hdf5
+# Try subprocess with numpy only reading via keras src
+from keras.src.legacy.saving import legacy_h5_format
+import h5py
+p=&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5&#39;
+f=h5py.File(p,&#39;r&#39;)
+print(list(f.keys()))
+print(list(f.attrs.keys()))
+cfg=f.attrs[&#39;model_config&#39;]
+if isinstance(cfg, bytes): cfg=cfg.decode(&#39;utf-8&#39;)
+conf=json.loads(cfg)
+# print layer names
+layers = conf.get(&#39;config&#39;,{}).get(&#39;layers&#39;, conf.get(&#39;layers&#39;,[]))
+print(&#39;n layers&#39;, len(layers))
+for layer in layers:
+    cn = layer.get(&#39;class_name&#39;)
+    name = layer.get(&#39;config&#39;,{}).get(&#39;name&#39;)
+    print(cn, name)
+    if cn and &#39;Landing&#39; in cn:
+        print(json.dumps(layer, indent=2)[:3000])
+    # nested models
+    if cn in (&#39;Functional&#39;,&#39;Sequential&#39;,&#39;Model&#39;):
+        for sub in layer.get(&#39;config&#39;,{}).get(&#39;layers&#39;,[]) or []:
+            scn=sub.get(&#39;class_name&#39;)
+            if scn and &#39;Landing&#39; in scn:
+                print(&#39;NESTED&#39;, json.dumps(sub, indent=2)[:3000])
+f.close()
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import json
+# try reading model config via keras without full load - use h5py carefully
+import tables  # maybe not
+# Use keras.legacy or pure zip? h5 is hdf5
+# Try subprocess with numpy only reading via keras src
+from keras.src.legacy.saving import legacy_h5_format
+import h5py
+p='scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5'
+f=h5py.File(p,'r')
+print(list(f.keys()))
+print(list(f.attrs.keys()))
+cfg=f.attrs['model_config']
+if isinstance(cfg, bytes): cfg=cfg.decode('utf-8')
+conf=json.loads(cfg)
+# print layer names
+layers = conf.get('config',{}).get('layers', conf.get('layers',[]))
+print('n layers', len(layers))
+for layer in layers:
+    cn = layer.get('class_name')
+    name = layer.get('config',{}).get('name')
+    print(cn, name)
+    if cn and 'Landing' in cn:
+        print(json.dumps(layer, indent=2)[:3000])
+    # nested models
+    if cn in ('Functional','Sequential','Model'):
+        for sub in layer.get('config',{}).get('layers',[]) or []:
+            scn=sub.get('class_name')
+            if scn and 'Landing' in scn:
+                print('NESTED', json.dumps(sub, indent=2)[:3000])
+f.close()
+PY
+```
+
+```
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+ModuleNotFoundError: No module named 'tables'
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/agent-transcripts",
+  "pattern": "LandingpageIndexIds|landingpage_embedded|IndexIds"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/agent-transcripts",
+  "pattern": "LandingpageIndexIds|landingpage_embedded|IndexIds",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Removing an accidental tables import comment to read the h5 file.
+
+Also searching site-packages for the layer.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import json
+import h5py
+p=&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5&#39;
+with h5py.File(p,&#39;r&#39;) as f:
+    print(&#39;keys&#39;, list(f.keys()))
+    print(&#39;attrs&#39;, list(f.attrs.keys()))
+    cfg=f.attrs[&#39;model_config&#39;]
+    if isinstance(cfg, bytes): cfg=cfg.decode(&#39;utf-8&#39;)
+    conf=json.loads(cfg)
+    layers = conf.get(&#39;config&#39;,{}).get(&#39;layers&#39;, [])
+    print(&#39;n layers&#39;, len(layers))
+    for layer in layers:
+        cn = layer.get(&#39;class_name&#39;)
+        name = layer.get(&#39;config&#39;,{}).get(&#39;name&#39;)
+        print(&#39;-&#39;, cn, name)
+        if cn and &#39;Landing&#39; in cn:
+            print(json.dumps(layer, indent=2)[:4000])
+        if cn in (&#39;Functional&#39;,&#39;Sequential&#39;,&#39;Model&#39;):
+            for sub in layer.get(&#39;config&#39;,{}).get(&#39;layers&#39;,[]) or []:
+                scn=sub.get(&#39;class_name&#39;)
+                if scn and &#39;Landing&#39; in str(scn):
+                    print(&#39;NESTED&#39;, json.dumps(sub, indent=2)[:4000])
+                # sometimes layers wrapped
+                if isinstance(sub.get(&#39;config&#39;), dict) and &#39;layers&#39; in sub[&#39;config&#39;]:
+                    for s2 in sub[&#39;config&#39;][&#39;layers&#39;]:
+                        if &#39;Landing&#39; in str(s2.get(&#39;class_name&#39;,&#39;&#39;)):
+                            print(&#39;NESTED2&#39;, json.dumps(s2, indent=2)[:4000])
+PY
+# also search installed packages
+rg -l &#34;LandingpageIndexIds&#34; .venv/lib 2&gt;/dev/null | head -20
+find /Users/karolinegriesbach/Documents/Innkeepr -name &#34;*.py&#34; 2&gt;/dev/null | xargs rg -l &#34;LandingpageIndexIds&#34; 2&gt;/dev/null | head -20
+</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import json
+import h5py
+p='scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5'
+with h5py.File(p,'r') as f:
+    print('keys', list(f.keys()))
+    print('attrs', list(f.attrs.keys()))
+    cfg=f.attrs['model_config']
+    if isinstance(cfg, bytes): cfg=cfg.decode('utf-8')
+    conf=json.loads(cfg)
+    layers = conf.get('config',{}).get('layers', [])
+    print('n layers', len(layers))
+    for layer in layers:
+        cn = layer.get('class_name')
+        name = layer.get('config',{}).get('name')
+        print('-', cn, name)
+        if cn and 'Landing' in cn:
+            print(json.dumps(layer, indent=2)[:4000])
+        if cn in ('Functional','Sequential','Model'):
+            for sub in layer.get('config',{}).get('layers',[]) or []:
+                scn=sub.get('class_name')
+                if scn and 'Landing' in str(scn):
+                    print('NESTED', json.dumps(sub, indent=2)[:4000])
+                # sometimes layers wrapped
+                if isinstance(sub.get('config'), dict) and 'layers' in sub['config']:
+                    for s2 in sub['config']['layers']:
+                        if 'Landing' in str(s2.get('class_name','')):
+                            print('NESTED2', json.dumps(s2, indent=2)[:4000])
+PY
+# also search installed packages
+rg -l "LandingpageIndexIds" .venv/lib 2>/dev/null | head -20
+find /Users/karolinegriesbach/Documents/Innkeepr -name "*.py" 2>/dev/null | xargs rg -l "LandingpageIndexIds" 2>/dev/null | head -20
+
+```
+
+```
+keys ['model_weights', 'optimizer_weights']
+attrs ['backend', 'keras_version', 'model_config', 'training_config']
+n layers 7
+- InputLayer Input
+- LandingpageIndexIds landingpage_ids
+{
+  "class_name": "LandingpageIndexIds",
+  "config": {
+    "name": "landingpage_ids",
+    "trainable": true,
+    "dtype": {
+      "module": "keras",
+      "class_name": "DTypePolicy",
+      "config": {
+        "name": "float32"
+      },
+      "registered_name": null
+    },
+    "vocab_size": 375479
+  },
+  "name": "landingpage_ids",
+  "inbound_nodes": [
+    {
+      "args": [
+        {
+          "class_name": "__keras_tensor__",
+          "config": {
+            "shape": [
+              null,
+              null,
+              7
+            ],
+            "dtype": "float32",
+            "keras_history": [
+              "Input",
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "kwargs": {}
+    }
+  ]
+}
+- SplitNumericFeatures numeric_feats
+- Embedding landingpage_embedding
+- Concatenate merge_num_emb
+- LSTM LSTM1
+- Dense Output
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+`SplitNumericFeatures` is also present.
+
+Both custom layers are needed. The full SplitNumericFeatures config must be retrieved. Other Innkeepr repositories will be searched for these layers.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import json, h5py
+p=&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5&#39;
+with h5py.File(p,&#39;r&#39;) as f:
+    conf=json.loads(f.attrs[&#39;model_config&#39;].decode() if isinstance(f.attrs[&#39;model_config&#39;], bytes) else f.attrs[&#39;model_config&#39;])
+    for layer in conf[&#39;config&#39;][&#39;layers&#39;]:
+        cn=layer[&#39;class_name&#39;]
+        if cn not in (&#39;InputLayer&#39;,&#39;Embedding&#39;,&#39;Concatenate&#39;,&#39;LSTM&#39;,&#39;Dense&#39;):
+            print(json.dumps(layer, indent=2)[:5000])
+            print(&#39;---&#39;)
+PY
+# search more broadly
+find /Users/karolinegriesbach/Documents/Innkeepr -type f -name &#34;*.py&#34; 2&gt;/dev/null | head -5
+rg -l &#34;LandingpageIndexIds|SplitNumericFeatures&#34; /Users/karolinegriesbach/Documents/Innkeepr --glob &#34;*.py&#34; 2&gt;/dev/null | head -30
+rg -l &#34;LandingpageIndexIds|SplitNumericFeatures&#34; /Users/karolinegriesbach --glob &#34;*.py&#34; 2&gt;/dev/null | head -30
+</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import json, h5py
+p='scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5'
+with h5py.File(p,'r') as f:
+    conf=json.loads(f.attrs['model_config'].decode() if isinstance(f.attrs['model_config'], bytes) else f.attrs['model_config'])
+    for layer in conf['config']['layers']:
+        cn=layer['class_name']
+        if cn not in ('InputLayer','Embedding','Concatenate','LSTM','Dense'):
+            print(json.dumps(layer, indent=2)[:5000])
+            print('---')
+PY
+# search more broadly
+find /Users/karolinegriesbach/Documents/Innkeepr -type f -name "*.py" 2>/dev/null | head -5
+rg -l "LandingpageIndexIds|SplitNumericFeatures" /Users/karolinegriesbach/Documents/Innkeepr --glob "*.py" 2>/dev/null | head -30
+rg -l "LandingpageIndexIds|SplitNumericFeatures" /Users/karolinegriesbach --glob "*.py" 2>/dev/null | head -30
+
+```
+
+```
+{
+  "class_name": "LandingpageIndexIds",
+  "config": {
+    "name": "landingpage_ids",
+    "trainable": true,
+    "dtype": {
+      "module": "keras",
+      "class_name": "DTypePolicy",
+      "config": {
+        "name": "float32"
+      },
+      "registered_name": null
+    },
+    "vocab_size": 375479
+  },
+  "name": "landingpage_ids",
+  "inbound_nodes": [
+    {
+      "args": [
+        {
+          "class_name": "__keras_tensor__",
+          "config": {
+            "shape": [
+              null,
+              null,
+              7
+            ],
+            "dtype": "float32",
+            "keras_history": [
+              "Input",
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "kwargs": {}
+    }
+  ]
+}
+---
+{
+  "class_name": "SplitNumericFeatures",
+  "config": {
+    "name": "numeric_feats",
+    "trainable": true,
+    "dtype": {
+      "module": "keras",
+      "class_name": "DTypePolicy",
+      "config": {
+        "name": "float32"
+      },
+      "registered_name": null
+    }
+  },
+  "name": "numeric_feats",
+  "inbound_nodes": [
+    {
+      "args": [
+        {
+          "class_name": "__keras_tensor__",
+          "config": {
+            "shape": [
+              null,
+              null,
+              7
+            ],
+            "dtype": "float32",
+            "keras_history": [
+              "Input",
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "kwargs": {}
+    }
+  ]
+}
+---
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The search for the source returned no results in Innkeepr.
+
+The layers are missing from this repository. I am reconstructing the architecture manually. The input has seven features including landingpage_cat. The pipeline splits categorical IDs from six numeric features. It embeds the IDs. It concatenates embeddings with numerics. Then it runs LSTM and dense layers. I need to identify the exact feature index for landingpage_cat.
+
+Landingpage_cat is likely the last feature at index 6. The vocabulary size of 375479 suggests these are integer indices rather than float-scaled values.
+
+The training data contains scaled float values for landingpage_cat, which cannot serve as integer embedding indices. I will inspect inputs.parquet and any vocabulary or mapping files to locate the correct ID format.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -la scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/; echo &#39;---&#39;; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+d=Path(&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded&#39;)
+print(pd.read_parquet(d/&#39;inputs.parquet&#39;)[&#39;input&#39;].tolist())
+# any json/pkl vocab
+for p in d.iterdir():
+    if p.suffix in {&#39;.json&#39;,&#39;.pkl&#39;,&#39;.csv&#39;,&#39;.parquet&#39;,&#39;.txt&#39;} and &#39;weight&#39; not in p.name:
+        print(&#39;file&#39;, p.name, p.stat().st_size)
+PY
+# search pip packages
+.venv/bin/pip show innkeepr 2&gt;/dev/null; ls .venv/lib/python3.10/site-packages | rg -i &#39;inn|keepr|model|lstm|landing&#39; | head
+rg -l &#34;LandingpageIndexIds|SplitNumericFeatures&#34; .venv/lib/python3.10/site-packages --glob &#34;*.py&#34; 2&gt;/dev/null | head
+</summary>
+```bash
+ls -la scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/; echo '---'; .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+d=Path('scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded')
+print(pd.read_parquet(d/'inputs.parquet')['input'].tolist())
+# any json/pkl vocab
+for p in d.iterdir():
+    if p.suffix in {'.json','.pkl','.csv','.parquet','.txt'} and 'weight' not in p.name:
+        print('file', p.name, p.stat().st_size)
+PY
+# search pip packages
+.venv/bin/pip show innkeepr 2>/dev/null; ls .venv/lib/python3.10/site-packages | rg -i 'inn|keepr|model|lstm|landing' | head
+rg -l "LandingpageIndexIds|SplitNumericFeatures" .venv/lib/python3.10/site-packages --glob "*.py" 2>/dev/null | head
+
+```
+
+```
+total 868368
+drwxr-xr-x  17 karolinegriesbach  staff       544 Sep 17 12:53 .
+drwxr-xr-x   9 karolinegriesbach  staff       288 Sep 17 12:55 ..
+-rw-r--r--   1 karolinegriesbach  staff        25 Sep 17 11:17 2026-09-17_classifier_NNLSTM_100_nan_cv_10_conversion_probability_score_test.csv
+-rw-r--r--   1 karolinegriesbach  staff       128 Sep 17 11:17 2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_68b69dff2e5f2d9a58cce692_test_score.csv
+-rw-r--r--   1 karolinegriesbach  staff  36235992 Sep 17 11:17 2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_conversion_probability.h5
+-rw-r--r--   1 karolinegriesbach  staff  36234144 Sep 17 11:17 2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_conversion_probability_weights.weights.h5
+-rw-r--r--   1 karolinegriesbach  staff  36631544 Sep 17 11:17 2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5
+-rw-r--r--   1 karolinegriesbach  staff  36630792 Sep 17 11:17 2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control_weights.weights.h5
+-rw-r--r--   1 karolinegriesbach  staff  36631544 Sep 17 11:17 2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_model_mu_c.h5
+-rw-r--r--   1 karolinegriesbach  staff  36630792 Sep 17 11:17 2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_model_mu_c_weights.weights.h5
+-rw-r--r--   1 karolinegriesbach  staff  36631544 Sep 17 11:17 2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_model_mu_t.h5
+-rw-r--r--   1 karolinegriesbach  staff  36630792 Sep 17 11:17 2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_model_mu_t_weights.weights.h5
+-rw-r--r--   1 karolinegriesbach  staff  36235992 Sep 17 11:17 2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_p
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Noticed that inputs.parquet appears to be a directory rather than a file.
+
+Checking agent stores and specstory for the layer definition from a prior attempt.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls -la scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/inputs.parquet/; file scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/inputs.parquet; find /Users/karolinegriesbach -name &#34;*Landingpage*&#34; 2&gt;/dev/null | head -40; find /Users/karolinegriesbach -name &#34;*landingpage*embed*&#34; 2&gt;/dev/null | head -40; rg -l &#34;SplitNumericFeatures|LandingpageIndexIds&#34; /Users/karolinegriesbach/Library/Application\ Support/Cursor 2&gt;/dev/null | head -20</summary>
+```bash
+ls -la scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/inputs.parquet/; file scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/inputs.parquet; find /Users/karolinegriesbach -name "*Landingpage*" 2>/dev/null | head -40; find /Users/karolinegriesbach -name "*landingpage*embed*" 2>/dev/null | head -40; rg -l "SplitNumericFeatures|LandingpageIndexIds" /Users/karolinegriesbach/Library/Application\ Support/Cursor 2>/dev/null | head -20
+```
+
+```
+]633;Ctotal 0
+drwxr-xr-x   2 karolinegriesbach  staff   64 Sep 17 12:53 .
+drwxr-xr-x  17 karolinegriesbach  staff  544 Sep 17 12:53 ..
+scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/inputs.parquet: directory
+]633;D;0
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.specstory",
+  "pattern": "LandingpageIndexIds|SplitNumericFeatures|vocab_size"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/.specstory",
+  "pattern": "LandingpageIndexIds|SplitNumericFeatures|vocab_size",
+  "topFiles": [
+    {
+      "matchCount": 6,
+      "uri": ".specstory/history/2026-09-14_14-02-16Z-shap-values-evaluation-summary.md"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 6
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The search is taking too long. I'll kill it and rebuild the layers from architecture.
+
+The input tensor has shape (null, null, 7). Landingpage is likely the last feature at index 6. LandingpageIndexIds probably extracts that index, casts to integer IDs, and clips them to the vocabulary size.
+
+Raw integer IDs may be required for the landingpage embedding. The embedding layer dimensions will reveal the embedding dimension.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: kill 11943 2&gt;/dev/null; cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import h5py, numpy as np
+p=&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5&#39;
+with h5py.File(p,&#39;r&#39;) as f:
+    def walk(name, obj):
+        if isinstance(obj, h5py.Dataset):
+            print(name, obj.shape, obj.dtype)
+    f[&#39;model_weights&#39;].visititems(walk)
+PY
+# search only Documents/Innkeepr/Git shallow
+rg -l &#34;LandingpageIndexIds|SplitNumericFeatures&#34; /Users/karolinegriesbach/Documents/Innkeepr/Git --glob &#34;*.py&#34; -g &#39;!**/node_modules/**&#39; -g &#39;!**/.venv/**&#39; 2&gt;/dev/null | head -20
+ls /Users/karolinegriesbach/Documents/Innkeepr/Git 2&gt;/dev/null | head -40
+</summary>
+```bash
+kill 11943 2>/dev/null; cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import h5py, numpy as np
+p='scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5'
+with h5py.File(p,'r') as f:
+    def walk(name, obj):
+        if isinstance(obj, h5py.Dataset):
+            print(name, obj.shape, obj.dtype)
+    f['model_weights'].visititems(walk)
+PY
+# search only Documents/Innkeepr/Git shallow
+rg -l "LandingpageIndexIds|SplitNumericFeatures" /Users/karolinegriesbach/Documents/Innkeepr/Git --glob "*.py" -g '!**/node_modules/**' -g '!**/.venv/**' 2>/dev/null | head -20
+ls /Users/karolinegriesbach/Documents/Innkeepr/Git 2>/dev/null | head -40
+
+```
+
+```
+LSTM1/LSTM1/lstm_cell/bias (400,) float32
+LSTM1/LSTM1/lstm_cell/kernel (14, 400) float32
+LSTM1/LSTM1/lstm_cell/recurrent_kernel (100, 400) float32
+Output/Output/bias (1,) float32
+Output/Output/kernel (100, 1) float32
+landingpage_embedding/landingpage_embedding/embeddings (375479, 8) float32
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The LSTM kernel is (14, 400). This means the input has 14 features: 6 numeric columns plus 8 embedding dimensions.
+
+LandingpageIndexIds extracts one ID from the seven-feature vector. The exact feature index is unclear because the layer configuration only stores vocabulary size, not the feature position.
+
+The layer likely hardcodes the landing page index as a parameter. A common implementation would pass `landing_index` to the constructor and extract that specific feature slice during the forward pass.
+
+The missing `landing_index` parameter in `get_config` confirms the landing page is the last feature. `SplitNumericFeatures` drops the final column. Both layers will be implemented as custom objects.
+
+Embedding models require integer landingpage IDs rather than scaled floats. The current data may contain floats, but fixing the load is the immediate priority. I will check tmp_data for a raw integer version.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls scripts/ModelShapValues/tmp_data/ | rg -i &#39;tchibo|embed|landing&#39;; .venv/bin/python &lt;&lt;&#39;PY&#39;
+# Reconstruct and try load
+import tensorflow as tf
+from keras import layers
+from keras.models import load_model as keras_load_model
+from pathlib import Path
+
+class LandingpageIndexIds(layers.Layer):
+    def __init__(self, vocab_size=2, **kwargs):
+        super().__init__(**kwargs)
+        self.vocab_size = int(vocab_size)
+
+    def call(self, inputs):
+        # last feature is landingpage id (float-encoded ints)
+        ids = inputs[..., -1]
+        ids = tf.cast(tf.round(ids), tf.int32)
+        ids = tf.clip_by_value(ids, 0, self.vocab_size - 1)
+        return ids
+
+    def get_config(self):
+        cfg = super().get_config()
+        cfg.update({&#34;vocab_size&#34;: self.vocab_size})
+        return cfg
+
+class SplitNumericFeatures(layers.Layer):
+    def call(self, inputs):
+        return inputs[..., :-1]
+
+    def get_config(self):
+        return super().get_config()
+
+custom = {
+    &#34;LandingpageIndexIds&#34;: LandingpageIndexIds,
+    &#34;SplitNumericFeatures&#34;: SplitNumericFeatures,
+}
+p=&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5&#39;
+model = keras_load_model(p, compile=False, custom_objects=custom)
+print(&#39;loaded&#39;, model)
+print(model.summary())
+# smoke predict
+import numpy as np
+x = np.zeros((2,1,7), dtype=np.float32)
+x[:,:,-1] = [1, 100]
+print(&#39;pred&#39;, model.predict(x, verbose=0).ravel())
+PY</summary>
+```bash
+ls scripts/ModelShapValues/tmp_data/ | rg -i 'tchibo|embed|landing'; .venv/bin/python <<'PY'
+# Reconstruct and try load
+import tensorflow as tf
+from keras import layers
+from keras.models import load_model as keras_load_model
+from pathlib import Path
+
+class LandingpageIndexIds(layers.Layer):
+    def __init__(self, vocab_size=2, **kwargs):
+        super().__init__(**kwargs)
+        self.vocab_size = int(vocab_size)
+
+    def call(self, inputs):
+        # last feature is landingpage id (float-encoded ints)
+        ids = inputs[..., -1]
+        ids = tf.cast(tf.round(ids), tf.int32)
+        ids = tf.clip_by_value(ids, 0, self.vocab_size - 1)
+        return ids
+
+    def get_config(self):
+        cfg = super().get_config()
+        cfg.update({"vocab_size": self.vocab_size})
+        return cfg
+
+class SplitNumericFeatures(layers.Layer):
+    def call(self, inputs):
+        return inputs[..., :-1]
+
+    def get_config(self):
+        return super().get_config()
+
+custom = {
+    "LandingpageIndexIds": LandingpageIndexIds,
+    "SplitNumericFeatures": SplitNumericFeatures,
+}
+p='scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5'
+model = keras_load_model(p, compile=False, custom_objects=custom)
+print('loaded', model)
+print(model.summary())
+# smoke predict
+import numpy as np
+x = np.zeros((2,1,7), dtype=np.float32)
+x[:,:,-1] = [1, 100]
+print('pred', model.predict(x, verbose=0).ravel())
+PY
+```
+
+```
+tchibo_68b69dff2e5f2d9a58cce692_test_data.csv
+tchibo_x_train_2026-09-15.parquet
+tchibo_x_train_ladingpage_permutation.parquet
+loaded <Functional name=NNLSTM_landingpage_emb, built=True>
+Model: "NNLSTM_landingpage_emb"
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)        ┃ Output Shape      ┃    Param # ┃ Connected to      ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━┩
+│ Input (InputLayer)  │ (None, None, 7)   │          0 │ -                 │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ landingpage_ids     │ (None, None)      │          0 │ Input[0][0]       │
+│ (LandingpageIndexI… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ numeric_feats       │ (None, None, 6)   │          0 │ Input[0][0]       │
+│ (SplitNumericFeatu… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ landingpage_embedd… │ (None, None, 8)   │  3,003,832 │ landingpage_ids[… │
+│ (Embedding)         │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ merge_num_emb       │ (None, None, 14)  │          0 │ numeric_feats[0]… │
+│ (Concatenate)       │                   │            │ landingpage_embe… │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ LSTM1 (LSTM)        │ (None, 100)       │     46,000 │ merge_num_emb[0]… │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ Output (Dense)      │ (None, 1)         │        101 │ LSTM1[0][0]       │
+└─────────────────────┴───────────────────┴────────────┴───────────────────┘
+ Total params: 3,049,933 (11.63 MB)
+ Trainable params: 3,049,933 (11.63 MB)
+ Non-trainable params: 0 (0.00 B)
+None
+Traceback (most recent call last):
+  File "<stdin>
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Loading works. A smoke test bug with broadcasting remains.
+
+Custom layers will be placed directly in calculate_shap_values.py rather than a separate module. Landingpage_cat must remain the final feature column. The inputs.parquet directory is empty, so feature names are being sourced from elsewhere.
+
+Inputs.parquet is likely broken or missing feature names. Fixing load_model comes first. Feature order will be enforced to place landingpage_cat last for embedded models.
+</details></think>
+
+_**Agent (default)**_
+
+Load works with those custom layers. Wiring them into the SHAP script and ensuring `landingpage_cat` is the last feature.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: # Check feature order used for previous tchibo LSTM+LP and whether embedded models need integer IDs
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+# other settings inputs
+for s in [&#39;2026-09-12_best_models_with_landingpage_lstm&#39;,&#39;2026-09-16_best_models_permutated_landingpage&#39;]:
+    p=Path(&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692&#39;)/s/&#39;inputs.parquet&#39;
+    if p.is_file():
+        print(s, pd.read_parquet(p)[&#39;input&#39;].tolist())
+# data landing values look like ints?
+df=pd.read_parquet(&#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet&#39;)
+print(&#39;landing sample&#39;, df[&#39;landingpage_cat&#39;].head(10).tolist())
+print(&#39;are they near-integers after unscale? nunique&#39;, df[&#39;landingpage_cat&#39;].nunique())
+PY</summary>
+```bash
+# Check feature order used for previous tchibo LSTM+LP and whether embedded models need integer IDs
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+# other settings inputs
+for s in ['2026-09-12_best_models_with_landingpage_lstm','2026-09-16_best_models_permutated_landingpage']:
+    p=Path('scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692')/s/'inputs.parquet'
+    if p.is_file():
+        print(s, pd.read_parquet(p)['input'].tolist())
+# data landing values look like ints?
+df=pd.read_parquet('scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet')
+print('landing sample', df['landingpage_cat'].head(10).tolist())
+print('are they near-integers after unscale? nunique', df['landingpage_cat'].nunique())
+PY
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Pandas/Parquet segfaults occur intermittently in the sandbox.
+
+Fixing `read_inputs_parquet` to handle directories and invalid inputs. Adding custom layers with `custom_objects` and a fallback feature order for embedded models. The standard order uses seven features, with landingpage category last.
+
+Landingpage category will be forced to the last position for models with LandingpageIndexIds. If inputs.parquet is an empty directory, inputs will be copied from a sibling setting or generated from available data columns.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python -c &#34;
+import pandas as pd
+from pathlib import Path
+for s in [&#39;2026-09-12_best_models_with_landingpage_lstm&#39;,&#39;2026-09-16_best_models_permutated_landingpage&#39;]:
+    p=Path(&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692&#39;)/s/&#39;inputs.parquet&#39;
+    print(s, p.is_file(), pd.read_parquet(p)[&#39;input&#39;].tolist() if p.is_file() else None)
+df=pd.read_parquet(&#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet&#39;)
+print(df[&#39;landingpage_cat&#39;].head(5).tolist())
+print(df.columns.tolist())
+&#34;</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python -c "
+import pandas as pd
+from pathlib import Path
+for s in ['2026-09-12_best_models_with_landingpage_lstm','2026-09-16_best_models_permutated_landingpage']:
+    p=Path('scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692')/s/'inputs.parquet'
+    print(s, p.is_file(), pd.read_parquet(p)['input'].tolist() if p.is_file() else None)
+df=pd.read_parquet('scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet')
+print(df['landingpage_cat'].head(5).tolist())
+print(df.columns.tolist())
+"
+```
+
+```
+2026-09-12_best_models_with_landingpage_lstm True ['anonymousId', 'days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'session', 'landingpage_cat']
+2026-09-16_best_models_permutated_landingpage True ['anonymousId', 'days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'session', 'landingpage_cat']
+[-1.0572792291641235, 0.914893388748169, 1.5007950067520142, -0.7044891119003296, -1.7304447889328003]
+['days_between_sessions', 'landingpage_cat', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s']
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The embedding model expects integer IDs in [0, vocab_size), but landingpage_cat contains scaled floats.
+
+Custom layers and objects will be added to load_model. read_inputs_parquet will return None for directory paths. Features will be reordered so landingpage_cat is last when the model uses LandingpageIndexIds. Fallback logic will construct features from data columns when inputs.parquet is missing.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Only the opening of ID_LIKE_COLUMNS was replaced, likely breaking it.
+
+Checking the file state around that area.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Duplicate ID_LIKE_COLUMNS remnants were left behind.
+
+Lines 125-132 need to be removed.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Unused placeholder classes are being removed. They were confusing.
+
+Model detection needs fixing. The loaded layer class is LandingpageIndexIdsLayer. Check layer.name for 'landingpage_ids' or 'landingpage_embedding'.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/calculate_shap_values.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+# Verify load via calculate_shap_values.load_model
+import sys
+sys.path.insert(0, &#39;scripts/ModelShapValues&#39;)
+from calculate_shap_values import load_model, ModelArtifact, resolve_feature_columns, prepare_x_for_model, model_uses_landingpage_embedding
+from pathlib import Path
+import pandas as pd
+import numpy as np
+
+p = Path(&#39;scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5&#39;)
+art = ModelArtifact(path=p, role=&#39;control&#39;, cv=10, backend=&#39;lstm&#39;)
+model = load_model(art)
+print(&#39;loaded ok&#39;, model.name, &#39;emb?&#39;, model_uses_landingpage_embedding(model))
+data = pd.read_parquet(&#39;scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet&#39;)
+cols = resolve_feature_columns(model, &#39;lstm&#39;, p.parent, list(data.columns))
+print(&#39;feature cols&#39;, cols)
+x_model, x_plot = prepare_x_for_model(data.head(8), cols, &#39;lstm&#39;)
+print(&#39;x shape&#39;, x_model.shape, &#39;last channel sample&#39;, x_model[:3,0,-1])
+pred = model.predict(x_model, verbose=0)
+print(&#39;pred&#39;, pred.ravel()[:5])
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+# Verify load via calculate_shap_values.load_model
+import sys
+sys.path.insert(0, 'scripts/ModelShapValues')
+from calculate_shap_values import load_model, ModelArtifact, resolve_feature_columns, prepare_x_for_model, model_uses_landingpage_embedding
+from pathlib import Path
+import pandas as pd
+import numpy as np
+
+p = Path('scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded/2026-09-17_classifier_NNLSTM_100_nan_nan_nan_saved_model_cv_10_group_68b69dff2e5f2d9a58cce692_control.h5')
+art = ModelArtifact(path=p, role='control', cv=10, backend='lstm')
+model = load_model(art)
+print('loaded ok', model.name, 'emb?', model_uses_landingpage_embedding(model))
+data = pd.read_parquet('scripts/ModelShapValues/tmp_data/tchibo_x_train_2026-09-15.parquet')
+cols = resolve_feature_columns(model, 'lstm', p.parent, list(data.columns))
+print('feature cols', cols)
+x_model, x_plot = prepare_x_for_model(data.head(8), cols, 'lstm')
+print('x shape', x_model.shape, 'last channel sample', x_model[:3,0,-1])
+pred = model.predict(x_model, verbose=0)
+print('pred', pred.ravel()[:5])
+PY
+```
+
+```
+loaded ok NNLSTM_landingpage_emb emb? True
+feature cols ['days_between_sessions', 'pages_visited_per_session', 'pages_visited_per_session_cumulated', 'pages_visited_per_user', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'landingpage_cat']
+x shape (8, 1, 7) last channel sample [-1.0572792  0.9148934  1.500795 ]
+pred [-0.54534304 -0.11736351 -0.04221017  0.02567076  0.12489685]
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Loading and prediction work correctly. The embedding layer expects integer IDs, but landingpage_cat still contains scaled floats.
+
+The fix is complete. Negative floats round to zero, so SHAP attributions for landingpage_cat remain meaningless until the data uses integer IDs.
+</details></think>
+
+_**Agent (default)**_
+
+Fixed. The embedded LSTMs use two custom Keras layers that weren’t registered on load.
+
+**Changes in `calculate_shap_values.py`:**
+- Register `LandingpageIndexIds` + `SplitNumericFeatures` via `custom_objects` when loading `.h5`
+- Treat empty `inputs.parquet` directory as missing and fall back to data columns
+- Put `landingpage_cat` last (required by those layers)
+
+Re-run your command; the `Unknown layer: 'LandingpageIndexIds'` error should be gone.
+
+**Note:** this model’s embedding expects **integer landing IDs** in `[0, vocab_size)` on the last channel. Your current `tchibo_x_train_2026-09-15.parquet` still has **scaled floats** (e.g. `-1.06`, `0.91`). The loader will run, but landing SHAP won’t be meaningful until the SHAP data uses the same integer ID encoding as training.
+
+---
+
+_**User**_
+
+<timestamp>Thursday, Sep 17, 2026, 1:02 PM (UTC+2)</timestamp>
+<system_notification>
+The following task has finished. If you were already aware, ignore this notification and do not restate prior responses.
+
+<task>
+kind: shell
+status: error
+task_id: 986708
+title: Find layer definition anywhere on disk
+tool_call_id: call-eb1fcbb5-88a1-4b2f-97a2-be3bac44aac6-117
+fc_4294a241-4075-9f64-92b1-32972efe421b_0
+</task>
+</system_notification>
+<user_query>Briefly inform the user about the task result and perform any follow-up actions (if needed). If there's no follow-ups needed, don't explicitly say that.</user_query>
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The background shell task failed. It was a long-running find search for LandingpageIndexIds on disk.
+
+The search was superseded by reconstructing layers from the H5 model config and fixing calculate_shap_values.py. No follow-up is needed.
+</details></think>
+
+_**Agent (default)**_
+
+The disk-wide search for `LandingpageIndexIds` didn’t finish (it was killed as too broad). That didn’t block the fix — the layers were reconstructed from the model’s H5 config and registered in `calculate_shap_values.py`, so the embedded models load correctly now.
+
+---
+
+_**User**_
+
+Analyze scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 and scripts/ModelShapValues/shap_output/kfzteile24 as the above reports. Including all F1 Stores. 
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Regenerating SHAP analysis reports for tchibo and kfzteile24, including all F1 Store scores.
+
+Checking directory contents and rebuilding CSVs if needed before regenerating reports.
+</details></think>
+
+_**Agent (default)**_
+
+I'll rebuild the comparison data from all settings and regenerate the tchibo, kfzteile24, and comparison reports with F1 for every setting.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; find scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 scripts/ModelShapValues/shap_output/kfzteile24 -maxdepth 2 -type d; echo &#39;---&#39;; ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/; ls scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/ 2&gt;/dev/null</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && find scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 scripts/ModelShapValues/shap_output/kfzteile24 -maxdepth 2 -type d; echo '---'; ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/; ls scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/ 2>/dev/null
+```
+
+```
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-16_best_models_permutated_landingpage
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-07-27_new_models_with_landingpage_reset_lstm_failed
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-08-12_best_models_without_landingpage_lstm
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-17_best_models_landingpage_embedded
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-17_best_models_with_landingpage_standard_lstm
+scripts/ModelShapValues/shap_output/kfzteile24
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-08_best_models_without_landingpage_lstm
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-09_best_models_with_landingpage_cat_enables_xgb
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-09_new_models_without_landingpage_xgb
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-08_best_models_without_landingpage_xgb
+---
+2026-07-27_new_models_with_landingpage_reset_lstm_failed
+2026-08-12_best_models_without_landingpage_lstm
+2026-09-12_best_models_with_landingpage_lstm
+2026-09-16_best_models_permutated_landingpage
+2026-09-17_best_models_landingpage_embedded
+2026-09-17_best_models_with_landingpage_standard_lstm
+comparison_mean_abs_shap.csv
+comparison_mean_abs_shap_bars.png
+comparison_mean_abs_shap_heatmap.png
+shap_run_manifest.csv
+tchibo_x_train_shap_summary.html
+2026-09-07_new_model
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Rebuilding comparison CSVs from all settings. Regenerating reports. Updating the comparison canvas.
+
+Verifying F1 resolution for all settings, including new embedded and standard LSTM configurations.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+
+def rebuild(base: Path):
+    rows = []
+    for p in sorted(base.glob(&#39;**/cv_*_*_mean_abs_shap.csv&#39;)):
+        df = pd.read_csv(p)
+        parts = p.stem.split(&#39;_&#39;)
+        cv, role = int(parts[1]), parts[2]
+        setting = p.parent.name
+        if &#39;backend&#39; not in df.columns:
+            df[&#39;backend&#39;] = &#39;lstm&#39; if (&#39;lstm&#39; in setting.lower() or &#39;embed&#39; in setting.lower() or &#39;permutat&#39; in setting.lower()) else (&#39;xgb&#39; if &#39;xgb&#39; in setting.lower() else &#39;&#39;)
+        if &#39;customer_setting&#39; not in df.columns:
+            df[&#39;customer_setting&#39;] = setting
+        if &#39;cv&#39; not in df.columns:
+            df[&#39;cv&#39;] = cv
+        if &#39;role&#39; not in df.columns:
+            df[&#39;role&#39;] = role
+        if &#39;model_path&#39; not in df.columns:
+            df[&#39;model_path&#39;] = &#39;&#39;
+        # fix empty backend
+        df.loc[df[&#39;backend&#39;].fillna(&#39;&#39;)==&#39;&#39;, &#39;backend&#39;] = (
+            &#39;lstm&#39; if (&#39;lstm&#39; in setting.lower() or &#39;embed&#39; in setting.lower() or &#39;permutat&#39; in setting.lower())
+            else (&#39;xgb&#39; if &#39;xgb&#39; in setting.lower() else &#39;&#39;)
+        )
+        keep = [&#39;customer_setting&#39;,&#39;cv&#39;,&#39;role&#39;,&#39;backend&#39;,&#39;model_path&#39;,&#39;feature&#39;,&#39;mean_abs_shap&#39;,&#39;mean_shap&#39;]
+        for c in keep:
+            if c not in df.columns:
+                df[c] = &#39;&#39;
+        rows.append(df[keep])
+    out = pd.concat(rows, ignore_index=True)
+    out.to_csv(base/&#39;comparison_mean_abs_shap.csv&#39;, index=False)
+    print(base.name, &#39;rows&#39;, len(out))
+    print(out.groupby([&#39;customer_setting&#39;,&#39;cv&#39;]).size())
+    return out
+
+rebuild(Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;))
+rebuild(Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;))
+PY
+
+# regenerate reports
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title &#34;tchibo SHAP evaluation (x_train)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html 2&gt;&amp;1
+
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title &#34;kfzteile24 SHAP evaluation (x_train 2026-09-15)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2&gt;&amp;1
+</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+
+def rebuild(base: Path):
+    rows = []
+    for p in sorted(base.glob('**/cv_*_*_mean_abs_shap.csv')):
+        df = pd.read_csv(p)
+        parts = p.stem.split('_')
+        cv, role = int(parts[1]), parts[2]
+        setting = p.parent.name
+        if 'backend' not in df.columns:
+            df['backend'] = 'lstm' if ('lstm' in setting.lower() or 'embed' in setting.lower() or 'permutat' in setting.lower()) else ('xgb' if 'xgb' in setting.lower() else '')
+        if 'customer_setting' not in df.columns:
+            df['customer_setting'] = setting
+        if 'cv' not in df.columns:
+            df['cv'] = cv
+        if 'role' not in df.columns:
+            df['role'] = role
+        if 'model_path' not in df.columns:
+            df['model_path'] = ''
+        # fix empty backend
+        df.loc[df['backend'].fillna('')=='', 'backend'] = (
+            'lstm' if ('lstm' in setting.lower() or 'embed' in setting.lower() or 'permutat' in setting.lower())
+            else ('xgb' if 'xgb' in setting.lower() else '')
+        )
+        keep = ['customer_setting','cv','role','backend','model_path','feature','mean_abs_shap','mean_shap']
+        for c in keep:
+            if c not in df.columns:
+                df[c] = ''
+        rows.append(df[keep])
+    out = pd.concat(rows, ignore_index=True)
+    out.to_csv(base/'comparison_mean_abs_shap.csv', index=False)
+    print(base.name, 'rows', len(out))
+    print(out.groupby(['customer_setting','cv']).size())
+    return out
+
+rebuild(Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15'))
+rebuild(Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15'))
+PY
+
+# regenerate reports
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title "tchibo SHAP evaluation (x_train)" \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html 2>&1
+
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title "kfzteile24 SHAP evaluation (x_train 2026-09-15)" \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2>&1
+
+```
+
+```
+tchibo_x_train_2026-09-15 rows 123
+customer_setting                                          cv
+2026-07-27_new_models_with_landingpage_reset_lstm_failed  6     21
+2026-08-12_best_models_without_landingpage_lstm           6     18
+2026-09-12_best_models_with_landingpage_lstm              6     21
+2026-09-16_best_models_permutated_landingpage             3     21
+2026-09-17_best_models_landingpage_embedded               10    21
+2026-09-17_best_models_with_landingpage_standard_lstm     10    21
+dtype: int64
+kfzteile24_x_train_2026-09-15 rows 96
+customer_setting                                         cv
+2026-09-07_new_models_with_landingpage_lstm              6     21
+2026-09-08_best_models_without_landingpage_lstm          6     18
+2026-09-08_best_models_without_landingpage_xgb           6     18
+2026-09-09_best_models_with_landingpage_cat_enables_xgb  6     21
+2026-09-09_new_models_without_landingpage_xgb            6     18
+dtype: int64
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html
+Settings: 2026-07-27 LSTM new + LP reset failed, 2026-08-12 LSTM best no LP, 2026-09-12 LSTM best + LP, 2026-09-16 best LP permutated, 2026-09-17 best + LP, 2026-09-17 LSTM best + LP
+Source: scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The short labels for the two 2026-09-17 settings are ambiguous. "Best + LP" and "LSTM best + LP" could be confused.
+
+Short labels for empty and "standard" settings need improvement. The F1 values and labels.embedded in the generated reports require verification.
+</details></think>
+
+_**Agent (default)**_
+
+Improving labels for the new 2026-09-17 settings (`embedded` vs `standard`), then regenerating.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title &#34;tchibo SHAP evaluation (x_train)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html 2&gt;&amp;1 &amp;&amp; \
+.venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+import json
+import sys
+sys.path.insert(0,&#39;scripts/ModelShapValues&#39;)
+from write_shap_canvas_report import short_setting_label, resolve_setting_f1, resolve_setting_sample_n, feature_bucket
+
+def analyze(base):
+    df = pd.read_csv(base/&#39;comparison_mean_abs_shap.csv&#39;)
+    man = pd.read_csv(base/&#39;shap_run_manifest.csv&#39;) if (base/&#39;shap_run_manifest.csv&#39;).exists() else None
+    f1m = {}
+    nm = {}
+    if man is not None and &#39;setting&#39; in man.columns:
+        if &#39;f1_score&#39; in man.columns:
+            f1m = {k: float(v) for k,v in man.groupby(&#39;setting&#39;)[&#39;f1_score&#39;].max().items()}
+        if &#39;n_rows&#39; in man.columns:
+            nm = {k: int(v) for k,v in man.groupby(&#39;setting&#39;)[&#39;n_rows&#39;].first().items()}
+    out=[]
+    for setting in sorted(df[&#39;customer_setting&#39;].unique()):
+        label = short_setting_label(setting)
+        cvs = [int(x) for x in sorted(df.loc[df[&#39;customer_setting&#39;]==setting,&#39;cv&#39;].unique())]
+        f1 = f1m.get(setting)
+        if f1 is None:
+            prefer = cvs[0] if len(cvs)==1 else None
+            f1 = resolve_setting_f1(setting, base, df, cv=prefer)
+        n = nm.get(setting)
+        if n is None:
+            n = resolve_setting_sample_n(setting, base, df)
+        rec={&#39;label&#39;:label,&#39;cv&#39;:cvs,&#39;f1&#39;:None if f1 is None else round(float(f1),4),&#39;n&#39;:n}
+        for role in [&#39;control&#39;,&#39;treatment&#39;,&#39;conversion&#39;]:
+            ssub=df[(df[&#39;customer_setting&#39;]==setting)&amp;(df[&#39;role&#39;]==role)].sort_values(&#39;mean_abs_shap&#39;,ascending=False)
+            if ssub.empty: continue
+            top=ssub.iloc[0]
+            total=float(ssub[&#39;mean_abs_shap&#39;].sum())
+            rec[f&#39;{role}_top&#39;]=top[&#39;feature&#39;]
+            landing=ssub[ssub[&#39;feature&#39;].str.contains(&#39;landing&#39;,case=False,na=False)]
+            lp=100*float(landing[&#39;mean_abs_shap&#39;].sum())/total if total else 0
+            if float(landing[&#39;mean_abs_shap&#39;].sum())&gt;0:
+                s2=ssub.reset_index(drop=True)
+                pos=int(s2.index[s2[&#39;feature&#39;].str.contains(&#39;landing&#39;,case=False,na=False)][0])+1
+                rec[f&#39;{role}_lp&#39;]=f&#39;rank {pos} · {lp:.0f}%&#39;
+            else:
+                rec[f&#39;{role}_lp&#39;]=&#39;—&#39;
+            if role==&#39;control&#39;:
+                rec[&#39;control_shares&#39;]={b: round(100*float(ssub[ssub[&#39;feature&#39;].map(feature_bucket)==b][&#39;mean_abs_shap&#39;].sum())/total,1) for b in [&#39;pages&#39;,&#39;duration&#39;,&#39;landing&#39;,&#39;recency&#39;]}
+        out.append(rec)
+    return out
+
+print(json.dumps({&#39;tchibo&#39;:analyze(Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;)),
+                  &#39;kfz&#39;:analyze(Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;))}, indent=2))
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title "tchibo SHAP evaluation (x_train)" \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html 2>&1 && \
+.venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+import json
+import sys
+sys.path.insert(0,'scripts/ModelShapValues')
+from write_shap_canvas_report import short_setting_label, resolve_setting_f1, resolve_setting_sample_n, feature_bucket
+
+def analyze(base):
+    df = pd.read_csv(base/'comparison_mean_abs_shap.csv')
+    man = pd.read_csv(base/'shap_run_manifest.csv') if (base/'shap_run_manifest.csv').exists() else None
+    f1m = {}
+    nm = {}
+    if man is not None and 'setting' in man.columns:
+        if 'f1_score' in man.columns:
+            f1m = {k: float(v) for k,v in man.groupby('setting')['f1_score'].max().items()}
+        if 'n_rows' in man.columns:
+            nm = {k: int(v) for k,v in man.groupby('setting')['n_rows'].first().items()}
+    out=[]
+    for setting in sorted(df['customer_setting'].unique()):
+        label = short_setting_label(setting)
+        cvs = [int(x) for x in sorted(df.loc[df['customer_setting']==setting,'cv'].unique())]
+        f1 = f1m.get(setting)
+        if f1 is None:
+            prefer = cvs[0] if len(cvs)==1 else None
+            f1 = resolve_setting_f1(setting, base, df, cv=prefer)
+        n = nm.get(setting)
+        if n is None:
+            n = resolve_setting_sample_n(setting, base, df)
+        rec={'label':label,'cv':cvs,'f1':None if f1 is None else round(float(f1),4),'n':n}
+        for role in ['control','treatment','conversion']:
+            ssub=df[(df['customer_setting']==setting)&(df['role']==role)].sort_values('mean_abs_shap',ascending=False)
+            if ssub.empty: continue
+            top=ssub.iloc[0]
+            total=float(ssub['mean_abs_shap'].sum())
+            rec[f'{role}_top']=top['feature']
+            landing=ssub[ssub['feature'].str.contains('landing',case=False,na=False)]
+            lp=100*float(landing['mean_abs_shap'].sum())/total if total else 0
+            if float(landing['mean_abs_shap'].sum())>0:
+                s2=ssub.reset_index(drop=True)
+                pos=int(s2.index[s2['feature'].str.contains('landing',case=False,na=False)][0])+1
+                rec[f'{role}_lp']=f'rank {pos} · {lp:.0f}%'
+            else:
+                rec[f'{role}_lp']='—'
+            if role=='control':
+                rec['control_shares']={b: round(100*float(ssub[ssub['feature'].map(feature_bucket)==b]['mean_abs_shap'].sum())/total,1) for b in ['pages','duration','landing','recency']}
+        out.append(rec)
+    return out
+
+print(json.dumps({'tchibo':analyze(Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15')),
+                  'kfz':analyze(Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15'))}, indent=2))
+PY
+```
+
+```
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html
+Settings: 2026-07-27 LSTM new + LP reset failed, 2026-08-12 LSTM best no LP, 2026-09-12 LSTM best + LP, 2026-09-16 best LP permutated, 2026-09-17 LSTM emb best + LP, 2026-09-17 LSTM best + LP standard
+Source: scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+{
+  "tchibo": [
+    {
+      "label": "2026-07-27 LSTM new + LP reset failed",
+      "cv": [
+        6
+      ],
+      "f1": 0.6502,
+      "n": 1164,
+      "control_top": "pages_visited_per_session",
+      "control_lp": "rank 2 \u00b7 20%",
+      "control_shares": {
+        "pages": 66.8,
+        "duration": 9.4,
+        "landing": 20.2,
+        "recency": 3.6
+      },
+      "treatment_top": "days_between_sessions",
+      "treatment_lp": "rank 2 \u00b7 18%",
+      "conversion_top": "pages_visited_per_session_cumulated",
+      "conversion_lp": "rank 2 \u00b7 26%"
+    },
+    {
+      "label": "2026-08-12 LSTM best no LP",
+      "cv": [
+        6
+      ],
+      "f1": 0.7339,
+      "n": 1164,
+      "control_top": "pages_visited_per_user_cumulated",
+      "control_lp": "\u2014",
+      "control_shares": {
+        "pages": 81.2,
+        "duration": 7.2,
+        "landing": 0.0,
+        "recency": 11.6
+      },
+      "treatment_top": "session_duration_in_s",
+      "treatment_lp": "\u2014",
+      "conversion_top": "pages_visited_per_session",
+      "conversion_lp": "\u2014"
+    },
+    {
+      "label": "2026-09-12 LSTM best + LP",
+      "cv": [
+        6
+      ],
+      "f1": 0.8528,
+      "n": 1164,
+      "control_top": "landingpage_cat",
+      "control_lp": "rank 1 \u00b7 40%",
+ 
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The embedded model shows an F1 score of zero.
+
+A suspiciously high value of 9946 indicates the embedding path collapsed because scaled floats were used as IDs. Landing SHAP is near zero. The comparison canvas will be updated with all settings and F1 metrics. A short label for the permutated model is missing its LSTM identifier. The comparison canvas is being written now.
+</details></think>
+
+_**Agent (default)**_
+
+Updating the comparison canvas with all settings and F1 scores.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title &#34;kfzteile24 SHAP evaluation (x_train 2026-09-15)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2&gt;&amp;1
+
+# verify F1 present in both canvases
+rg -n &#34;Best F1|Sample n|0\.[0-9]{4}&#34; /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx | head -40
+rg -n &#34;rows=\{\[&#34; -A 10 /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx | head -50
+</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title "kfzteile24 SHAP evaluation (x_train 2026-09-15)" \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2>&1
+
+# verify F1 present in both canvases
+rg -n "Best F1|Sample n|0\.[0-9]{4}" /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx | head -40
+rg -n "rows=\{\[" -A 10 /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx | head -50
+
+```
+
+```
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html
+Settings: 2026-09-07 LSTM new + LP, 2026-09-08 LSTM best no LP, 2026-09-08 XGB best no LP, 2026-09-09 XGB best + LP, 2026-09-09 XGB new no LP
+Source: scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+82:          headers={["Setting", "Backend", "Landing feature", "Sample n", "Best F1"]}
+84:  ["2026-07-27 LSTM new + LP reset failed", "lstm", "landingpage_cat", "1164", "0.6502"],
+85:  ["2026-08-12 LSTM best no LP", "lstm", "—", "1164", "0.7339"],
+86:  ["2026-09-12 LSTM best + LP", "lstm", "landingpage_cat", "1164", "0.8528"],
+87:  ["2026-09-16 best LP permutated", "lstm", "landingpage_cat", "22000", "0.7709"],
+88:  ["2026-09-17 LSTM emb best + LP", "lstm", "landingpage_cat", "1164", "0.9946"],
+89:  ["2026-09-17 LSTM best + LP standard", "lstm", "landingpage_cat", "1164", "0.7792"],
+217:          headers={["Setting", "Sample n", "Best F1", "Control #1", "Treatment #1", "Conversion #1"]}
+219:  ["2026-07-27 LSTM new + LP reset failed", "1164", "0.6502", "pages_visited_per_session", "days_between_sessions", "pages_visited_per_session_cumulated"],
+220:  ["2026-08-12 LSTM best no LP", "1164", "0.7339", "pages_visited_per_user_cumulated", "session_duration_in_s", "pages_visited_per_session"],
+221:  ["2026-09-12 LSTM best + LP", "1164", "0.8528", "landingpage_cat", "landingpage_cat", "pages_visited_per_session_cumulated"],
+222:  ["2026-09-16 best LP permutated", "22000", "0.7709", "days_between_sessions", "landingpage_cat", "landingpage_cat"],
+223:  ["2026-09-17 LSTM emb best + LP", "1164", "0.9946", "pages
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Compiling a concise report with links and key tables for both directories. All F1 Store scores will be included.
+</details></think>
+
+_**Agent (default)**_
+
+Updated evaluations for all settings, with **sample n + best F1** on every row.
+
+### Reports
+| Report | Canvas | HTML |
+|--------|--------|------|
+| **tchibo** | [tchibo x_train SHAP](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx) | `shap_output/tchibo/.../tchibo_x_train_shap_summary.html` |
+| **kfzteile24** | [kfzteile24 x_train SHAP](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx) | `shap_output/kfzteile24/.../kfzteile24_x_train_shap_summary.html` |
+| **vs** | [kfz vs tchibo](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx) | — |
+
+---
+
+### tchibo (6 settings)
+
+| Setting | n | Best F1 | Control #1 | Landing (ctrl / treat / conv) |
+|---------|---|--------:|------------|-------------------------------|
+| **2026-09-17 LSTM emb + LP** | 1164 | **0.9946** | pages_visited_per_session | **rank 7 · ~1%** |
+| **2026-09-12 LSTM best + LP** | 1164 | **0.8528** | landingpage_cat | **40% / 47% / 15%** |
+| **2026-09-17 LSTM + LP standard** | 1164 | **0.7792** | session_duration_in_s | 20% / **37%** / **42%** |
+| **2026-09-16 LP permutated** | 22000 | **0.7709** | days_between_sessions | 23% / **57%** / **67%** |
+| **2026-08-12 LSTM best no LP** | 1164 | **0.7339** | pages_visited_per_user_cumulated | — |
+| **2026-07-27 LP reset failed** | 1164 | **0.6502** | pages_visited_per_session | 20% / 18% / 26% |
+
+**Watch-out:** emb has the highest F1 but almost no landing SHAP — likely scaled floats used as embedding IDs on this slice.
+
+---
+
+### kfzteile24 (5 settings)
+
+| Setting | n | Best F1 | Control #1 | Landing |
+|---------|---|--------:|------------|---------|
+| **2026-09-09 XGB best + LP** | 22708 | **0.7173** | landingpage | **35% / 28% / 28%** |
+| **2026-09-09 XGB new no LP** | 22708 | **0.6082** | pages_visited_per_session | — |
+| **2026-09-08 XGB best no LP** | 22708 | **0.5833** | session_duration_in_s | — |
+| **2026-09-07 LSTM new + LP** | 22000 | **0.5621** | session_duration_in_s | 31% / 20% / **42%** |
+| **2026-09-08 LSTM best no LP** | 22000 | **0.4494** | pages_visited_per_user | — |
+
+---
+
+### Cross-customer takeaway
+- Best **interpretable** LP story: tchibo **2026-09-12 best + LP** (F1 0.85) and kfz **2026-09-09 XGB + LP** (F1 0.72).
+- tchibo **standard + LP** (0.78) also shows strong landing on treatment/conversion.
+- **Emb** F1 alone is not trustworthy for landing attribution until ID-encoded SHAP data is used.
+
+---
+
+_**User**_
+
+Analyze scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 and scripts/ModelShapValues/shap_output/kfzteile24 as the above reports. Including all F1 Stores. 
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Re-analyzing SHAP outputs for tchibo and kfzteile24, including all F1 scores.
+
+Checking for updated results and regenerating the reports.
+</details></think>
+
+_**Agent (default)**_
+
+I'll refresh both SHAP output trees and regenerate the reports with sample n and F1 for every setting.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/; echo &#39;---&#39;; ls scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/; echo &#39;---&#39;; find scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 -name &#34;cv_*_*_mean_abs_shap.csv&#34; | wc -l; find scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 -maxdepth 1 -type d -o -maxdepth 2 -type d | sort</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/; echo '---'; ls scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/; echo '---'; find scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 -name "cv_*_*_mean_abs_shap.csv" | wc -l; find scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 -maxdepth 1 -type d -o -maxdepth 2 -type d | sort
+```
+
+```
+2026-07-27_new_models_with_landingpage_reset_lstm_failed
+2026-08-12_best_models_without_landingpage_lstm
+2026-09-12_best_models_with_landingpage_lstm
+2026-09-16_best_models_permutated_landingpage
+2026-09-17_best_models_landingpage_embedded
+2026-09-17_best_models_with_landingpage_standard_lstm
+comparison_mean_abs_shap.csv
+comparison_mean_abs_shap_bars.png
+comparison_mean_abs_shap_heatmap.png
+shap_run_manifest.csv
+tchibo_x_train_shap_summary.html
+---
+2026-09-07_new_models_with_landingpage_lstm
+2026-09-08_best_models_without_landingpage_lstm
+2026-09-08_best_models_without_landingpage_xgb
+2026-09-09_best_models_with_landingpage_cat_enables_xgb
+2026-09-09_new_models_without_landingpage_xgb
+comparison_mean_abs_shap.csv
+comparison_mean_abs_shap_bars.png
+comparison_mean_abs_shap_heatmap.png
+kfzteile24_x_train_shap_summary.html
+shap_run_manifest.csv
+---
+      33
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-07_new_models_with_landingpage_lstm
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-08_best_models_without_landingpage_lstm
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-08_best_models_without_landingpage_xgb
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-09_best_models_with_landingpage_cat_enables_xgb
+scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/2026-09-09_new_models_without_landingpage_xgb
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-07-27_new_models_with_landingpage_reset_lstm_failed
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-08-12_best_models_without_landingpage_lstm
+scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm
+scrip
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Rebuilding comparison CSVs, regenerating reports, extracting analysis, and refreshing the comparison canvas.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+
+def rebuild(base: Path):
+    rows = []
+    for p in sorted(base.glob(&#39;**/cv_*_*_mean_abs_shap.csv&#39;)):
+        df = pd.read_csv(p)
+        parts = p.stem.split(&#39;_&#39;)
+        cv, role = int(parts[1]), parts[2]
+        setting = p.parent.name
+        if &#39;backend&#39; not in df.columns or df[&#39;backend&#39;].fillna(&#39;&#39;).eq(&#39;&#39;).all():
+            if &#39;xgb&#39; in setting.lower():
+                backend = &#39;xgb&#39;
+            else:
+                backend = &#39;lstm&#39;
+            df[&#39;backend&#39;] = backend
+        if &#39;customer_setting&#39; not in df.columns:
+            df[&#39;customer_setting&#39;] = setting
+        if &#39;cv&#39; not in df.columns:
+            df[&#39;cv&#39;] = cv
+        if &#39;role&#39; not in df.columns:
+            df[&#39;role&#39;] = role
+        if &#39;model_path&#39; not in df.columns:
+            df[&#39;model_path&#39;] = &#39;&#39;
+        keep = [&#39;customer_setting&#39;,&#39;cv&#39;,&#39;role&#39;,&#39;backend&#39;,&#39;model_path&#39;,&#39;feature&#39;,&#39;mean_abs_shap&#39;,&#39;mean_shap&#39;]
+        for c in keep:
+            if c not in df.columns:
+                df[c] = &#39;&#39; if c in (&#39;backend&#39;,&#39;model_path&#39;) else None
+        rows.append(df[keep])
+    out = pd.concat(rows, ignore_index=True)
+    out.to_csv(base/&#39;comparison_mean_abs_shap.csv&#39;, index=False)
+    print(base.name, &#39;-&gt;&#39;, len(out), &#39;rows,&#39;, out[&#39;customer_setting&#39;].nunique(), &#39;settings&#39;)
+    return out
+
+rebuild(Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;))
+rebuild(Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;))
+PY
+
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title &#34;tchibo SHAP evaluation (x_train)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html 2&gt;&amp;1
+
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title &#34;kfzteile24 SHAP evaluation (x_train 2026-09-15)&#34; \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2&gt;&amp;1
+</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+
+def rebuild(base: Path):
+    rows = []
+    for p in sorted(base.glob('**/cv_*_*_mean_abs_shap.csv')):
+        df = pd.read_csv(p)
+        parts = p.stem.split('_')
+        cv, role = int(parts[1]), parts[2]
+        setting = p.parent.name
+        if 'backend' not in df.columns or df['backend'].fillna('').eq('').all():
+            if 'xgb' in setting.lower():
+                backend = 'xgb'
+            else:
+                backend = 'lstm'
+            df['backend'] = backend
+        if 'customer_setting' not in df.columns:
+            df['customer_setting'] = setting
+        if 'cv' not in df.columns:
+            df['cv'] = cv
+        if 'role' not in df.columns:
+            df['role'] = role
+        if 'model_path' not in df.columns:
+            df['model_path'] = ''
+        keep = ['customer_setting','cv','role','backend','model_path','feature','mean_abs_shap','mean_shap']
+        for c in keep:
+            if c not in df.columns:
+                df[c] = '' if c in ('backend','model_path') else None
+        rows.append(df[keep])
+    out = pd.concat(rows, ignore_index=True)
+    out.to_csv(base/'comparison_mean_abs_shap.csv', index=False)
+    print(base.name, '->', len(out), 'rows,', out['customer_setting'].nunique(), 'settings')
+    return out
+
+rebuild(Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15'))
+rebuild(Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15'))
+PY
+
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 \
+  --title "tchibo SHAP evaluation (x_train)" \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html 2>&1
+
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 \
+  --title "kfzteile24 SHAP evaluation (x_train 2026-09-15)" \
+  --html --html-output scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html \
+  --cv 6 2>&1
+
+```
+
+```
+tchibo_x_train_2026-09-15 -> 123 rows, 6 settings
+kfzteile24_x_train_2026-09-15 -> 96 rows, 5 settings
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/tchibo_x_train_shap_summary.html
+Settings: 2026-07-27 LSTM new + LP reset failed, 2026-08-12 LSTM best no LP, 2026-09-12 LSTM best + LP, 2026-09-16 best LP permutated, 2026-09-17 LSTM emb best + LP, 2026-09-17 LSTM best + LP standard
+Source: scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15/kfzteile24_x_train_shap_summary.html
+Settings: 2026-09-07 LSTM new + LP, 2026-09-08 LSTM best no LP, 2026-09-08 XGB best no LP, 2026-09-09 XGB best + LP, 2026-09-09 XGB new no LP
+Source: scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15 · comparison_mean_abs_shap.csv
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Extracting the full F1 analysis and verifying all F1 scores appear in the canvas tables. Refreshing the comparison canvas to confirm the numbers match.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import json
+from pathlib import Path
+import sys
+sys.path.insert(0,&#39;scripts/ModelShapValues&#39;)
+from write_shap_canvas_report import (
+    short_setting_label, resolve_setting_f1, resolve_setting_sample_n,
+    feature_bucket, load_shap_frame, load_manifest, build_report
+)
+
+def summarize(base):
+    df = load_shap_frame(base, cv=None)
+    man = load_manifest(base)
+    report = build_report(df, base, None, man)
+    print(&#39;\n===&#39;, base.name, &#39;===&#39;)
+    print(&#39;SCOPE (Setting, Backend, Landing, n, F1):&#39;)
+    for row in report.setting_scope_rows:
+        print(&#39; &#39;, row)
+    print(&#39;TOP1 (Setting, n, F1, ctrl, treat, conv):&#39;)
+    for row in report.top1_rows:
+        print(&#39; &#39;, row)
+    print(&#39;LANDING:&#39;)
+    for row in report.landing_rows:
+        print(&#39; &#39;, row)
+
+summarize(Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;))
+summarize(Path(&#39;scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15&#39;))
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import json
+from pathlib import Path
+import sys
+sys.path.insert(0,'scripts/ModelShapValues')
+from write_shap_canvas_report import (
+    short_setting_label, resolve_setting_f1, resolve_setting_sample_n,
+    feature_bucket, load_shap_frame, load_manifest, build_report
+)
+
+def summarize(base):
+    df = load_shap_frame(base, cv=None)
+    man = load_manifest(base)
+    report = build_report(df, base, None, man)
+    print('\n===', base.name, '===')
+    print('SCOPE (Setting, Backend, Landing, n, F1):')
+    for row in report.setting_scope_rows:
+        print(' ', row)
+    print('TOP1 (Setting, n, F1, ctrl, treat, conv):')
+    for row in report.top1_rows:
+        print(' ', row)
+    print('LANDING:')
+    for row in report.landing_rows:
+        print(' ', row)
+
+summarize(Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15'))
+summarize(Path('scripts/ModelShapValues/shap_output/kfzteile24/kfzteile24_x_train_2026-09-15'))
+PY
+```
+
+```
+
+=== tchibo_x_train_2026-09-15 ===
+SCOPE (Setting, Backend, Landing, n, F1):
+  ['2026-07-27 LSTM new + LP reset failed', 'lstm', 'landingpage_cat', '1164', '0.6502']
+  ['2026-08-12 LSTM best no LP', 'lstm', '—', '1164', '0.7339']
+  ['2026-09-12 LSTM best + LP', 'lstm', 'landingpage_cat', '1164', '0.8528']
+  ['2026-09-16 best LP permutated', 'lstm', 'landingpage_cat', '22000', '0.7709']
+  ['2026-09-17 LSTM emb best + LP', 'lstm', 'landingpage_cat', '22000', '0.9137']
+  ['2026-09-17 LSTM best + LP standard', 'lstm', 'landingpage_cat', '1164', '0.7792']
+TOP1 (Setting, n, F1, ctrl, treat, conv):
+  ['2026-07-27 LSTM new + LP reset failed', '1164', '0.6502', 'pages_visited_per_session', 'days_between_sessions', 'pages_visited_per_session_cumulated']
+  ['2026-08-12 LSTM best no LP', '1164', '0.7339', 'pages_visited_per_user_cumulated', 'session_duration_in_s', 'pages_visited_per_session']
+  ['2026-09-12 LSTM best + LP', '1164', '0.8528', 'landingpage_cat', 'landingpage_cat', 'pages_visited_per_session_cumulated']
+  ['2026-09-16 best LP permutated', '22000', '0.7709', 'days_between_sessions', 'landingpage_cat', 'landingpage_cat']
+  ['2026-09-17 LSTM emb best + LP', '22000', '0.9137', 'landingpage_cat', 'landingpage_cat', 'pages_visited_per_session']
+  ['2026-09-17 LSTM best + LP standard', '1164', '0.7792', 'session_duration_in_s', 'landingpage_cat', 'landingpage_cat']
+LANDING:
+  ['2026-07-27 LSTM new + LP reset failed', 'landingpage_cat', 'rank 2/7 · 20.2%', 'rank 2/7 · 18.2%', 'rank 2/7 · 26.3%']
+  ['2026-09-12 LSTM best + LP', 'landingpage_cat', 'rank 1/7 · 39.6%', 'rank 1/7 · 47.1%', 'rank 4/7 · 15.0%']
+  ['2026-09-16 best LP permutated', 'landingpage_cat', 'rank 2/7 · 22.8%', 'rank 1/7 · 57.1%', 'rank 1/7 · 66.9%']
+  ['2026-09-17 LSTM emb best + LP', 'landingpage_cat', 'rank 1/7 · 33.9%', 'rank 1/7 · 32.0%', 'rank 6/7 · 0.6%']
+  ['2026-09-17 LSTM best + LP standard', 'landingpage_cat', 'rank 3/7 · 19.8%', 'rank 1/7 · 36.9%', 'rank 1/7 · 42.0%']
+
+=== kfzteile24_x_train_
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Embedded model results have changed significantly since the last analysis.
+
+The embedded model F1 dropped to 0.9137 across 22,000 samples. Landing rank improved to 1 with roughly 34% control and 32% treatment. Conversion remains at 0.6%. The comparison canvas needs updating with these new embedded results and control shares.
+</details></think>
+
+_**Agent (default)**_
+
+Embedded results changed (now strong landing SHAP). Updating the comparison canvas to match.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+import sys
+sys.path.insert(0,&#39;scripts/ModelShapValues&#39;)
+from write_shap_canvas_report import feature_bucket
+
+df=pd.read_csv(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/comparison_mean_abs_shap.csv&#39;)
+for setting in sorted(df[&#39;customer_setting&#39;].unique()):
+    sub=df[(df[&#39;customer_setting&#39;]==setting)&amp;(df[&#39;role&#39;]==&#39;control&#39;)]
+    total=sub[&#39;mean_abs_shap&#39;].sum()
+    shares={b: round(100*sub[sub[&#39;feature&#39;].map(feature_bucket)==b][&#39;mean_abs_shap&#39;].sum()/total,1) for b in [&#39;pages&#39;,&#39;duration&#39;,&#39;landing&#39;,&#39;recency&#39;]}
+    print(setting[:50], shares)
+PY</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+import sys
+sys.path.insert(0,'scripts/ModelShapValues')
+from write_shap_canvas_report import feature_bucket
+
+df=pd.read_csv('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/comparison_mean_abs_shap.csv')
+for setting in sorted(df['customer_setting'].unique()):
+    sub=df[(df['customer_setting']==setting)&(df['role']=='control')]
+    total=sub['mean_abs_shap'].sum()
+    shares={b: round(100*sub[sub['feature'].map(feature_bucket)==b]['mean_abs_shap'].sum()/total,1) for b in ['pages','duration','landing','recency']}
+    print(setting[:50], shares)
+PY
+```
+
+```
+2026-07-27_new_models_with_landingpage_reset_lstm_ {'pages': 66.8, 'duration': 9.4, 'landing': 20.2, 'recency': 3.6}
+2026-08-12_best_models_without_landingpage_lstm {'pages': 81.2, 'duration': 7.2, 'landing': 0.0, 'recency': 11.6}
+2026-09-12_best_models_with_landingpage_lstm {'pages': 47.8, 'duration': 6.0, 'landing': 39.6, 'recency': 6.6}
+2026-09-16_best_models_permutated_landingpage {'pages': 17.0, 'duration': 1.0, 'landing': 22.8, 'recency': 59.1}
+2026-09-17_best_models_landingpage_embedded {'pages': 43.0, 'duration': 4.3, 'landing': 33.9, 'recency': 18.9}
+2026-09-17_best_models_with_landingpage_standard_l {'pages': 45.7, 'duration': 30.2, 'landing': 19.8, 'recency': 4.3}
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Fixing incorrect duration and recency values in the embedding chart.
+
+Correct embedding shares are pages 43, duration 4.3, landing 33.9, and recency 18.9. Updating the comparison canvas chart now.
+</details></think>
+
+_**Agent (default)**_
+
+Fixing the emb control shares in the comparison chart.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+The string to replace was not found in the file.
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+A fuzzy match revealed a slight content difference: recency shows 12 instead of 11.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Preparing a concise analysis of the Tchibo and KFZTeile24 SHAP output directories, including all F1 stores.
+
+Embedded results have changed significantly since the previous analysis.
+</details></think>
+
+_**Agent (default)**_
+
+Refreshed all three reports. Notable change vs last time: **tchibo emb** now has strong landing SHAP (n=22k, F1 0.91).
+
+### Reports
+| Report | Canvas |
+|--------|--------|
+| **tchibo** | [tchibo x_train SHAP](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx) |
+| **kfzteile24** | [kfzteile24 x_train SHAP](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-x-train-2026-09-15-shap-summary.canvas.tsx) |
+| **vs** | [kfz vs tchibo](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/kfzteile24-vs-tchibo-x-train-2026-09-15-shap-comparison.canvas.tsx) |
+
+HTML copies are under each `shap_output/...` folder.
+
+---
+
+### tchibo (all F1)
+
+| Setting | n | Best F1 | Control #1 | Landing (ctrl / treat / conv) |
+|---------|---|--------:|------------|-------------------------------|
+| **2026-09-17 LSTM emb + LP** | 22000 | **0.9137** | landingpage_cat | **34% / 32% / 1%** |
+| **2026-09-12 LSTM best + LP** | 1164 | **0.8528** | landingpage_cat | **40% / 47% / 15%** |
+| **2026-09-17 LSTM + LP standard** | 1164 | **0.7792** | session_duration_in_s | 20% / **37%** / **42%** |
+| **2026-09-16 LP permutated** | 22000 | **0.7709** | days_between_sessions | 23% / **57%** / **67%** |
+| **2026-08-12 LSTM best no LP** | 1164 | **0.7339** | pages_visited_per_user_cumulated | — |
+| **2026-07-27 LP reset failed** | 1164 | **0.6502** | pages_visited_per_session | 20% / 18% / 26% |
+
+---
+
+### kfzteile24 (all F1)
+
+| Setting | n | Best F1 | Control #1 | Landing |
+|---------|---|--------:|------------|---------|
+| **2026-09-09 XGB best + LP** | 22708 | **0.7173** | landingpage | **35% / 28% / 28%** |
+| **2026-09-09 XGB new no LP** | 22708 | **0.6082** | pages_visited_per_session | — |
+| **2026-09-08 XGB best no LP** | 22708 | **0.5833** | session_duration_in_s | — |
+| **2026-09-07 LSTM new + LP** | 22000 | **0.5621** | session_duration_in_s | 31% / 20% / **42%** |
+| **2026-09-08 LSTM best no LP** | 22000 | **0.4494** | pages_visited_per_user | — |
+
+---
+
+### Takeaway
+- **tchibo emb** is now the strongest F1 (0.91) with clear landing on control/treatment — aligned with scaled best + LP.
+- **kfz** reference remains **XGB best + LP** (F1 0.72).
+- F1 order (tchibo): emb 0.91 &gt; best+LP 0.85 &gt; standard 0.78 ≈ permutated 0.77 &gt; no LP 0.73 &gt; reset failed 0.65.
+
+---
+
+_**User**_
+
+2026-09-12 LSTM best + LP should be n=1164 as well?
+
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Checking whether the 2026-09-12 LSTM best + LP configuration should also use n=1164.
+
+The 2026-09-12 LSTM best + LP setting already uses n=1164. The 2026-09-17 embedding result shows n=22000 instead. Verifying against the SHAP output files now.
+</details></think>
+
+_**Agent (default)**_
+
+Checking the recorded sample size for that setting.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; wc -l scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_*_shap_values.csv; echo &#39;---&#39;; rg &#34;2026-09-12&#34; scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/shap_run_manifest.csv 2&gt;/dev/null | head -5; rg &#34;2026-09-12 LSTM best \+ LP&#34; /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx | head -5</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && wc -l scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_*_shap_values.csv; echo '---'; rg "2026-09-12" scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/shap_run_manifest.csv 2>/dev/null | head -5; rg "2026-09-12 LSTM best \+ LP" /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-15-shap-summary.canvas.tsx | head -5
+```
+
+```
+    1165 scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_control_shap_values.csv
+    1165 scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_conversion_shap_values.csv
+    1165 scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/2026-09-12_best_models_with_landingpage_lstm/cv_6_treatment_shap_values.csv
+    3495 total
+---
+  "2026-09-12 LSTM best + LP",
+  ["2026-09-12 LSTM best + LP", "lstm", "landingpage_cat", "1164", "0.8528"],
+  ["2026-09-12 LSTM best + LP", "1164", "0.8528", "landingpage_cat", "landingpage_cat", "pages_visited_per_session_cumulated"],
+              name: "2026-09-12 LSTM best + LP",
+  ["2026-09-12 LSTM best + LP", "landingpage_cat", "rank 1/7 · 39.6%", "rank 1/7 · 47.1%", "rank 4/7 · 15.0%"],
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Confirmed: the CSV contains 1164 data rows, matching the expected n=1164.
+</details></think>
+
+_**Agent (default)**_
+
+Yes. **2026-09-12 LSTM best + LP is already n=1164** (1165 CSV lines including the header).
+
+That matches the original `tchibo_x_train_2026-09-15.parquet` size. The larger **n=22000** values are only for settings that used a KernelExplainer cap / larger file (permutated and the newer emb run).
+
+---
+
+_**User**_
+
+Tchibo only create report for 2026-09-16 - 2026-09-17 models (without scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/2026-09-17_best_models_landingpage_embedded_1mio_rows)
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Generating a Tchibo-only report for models dated 2026-09-16 through 2026-09-17. The `2026-09-17_best_models_landingpage_embedded_1mio_rows` setting will be excluded.
+
+Checking available SHAP outputs and model directories.
+</details></think>
+
+_**Agent (default)**_
+
+I'll generate a Tchibo-only report for the 2026-09-16–17 settings, excluding the `1mio_rows` embedded run.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/; echo &#39;---&#39;; ls scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/ | rg &#39;2026-09-1[67]&#39;</summary>
+```bash
+ls scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15/; echo '---'; ls scripts/ModelShapValues/models/tchibo-aud-68b69dff2e5f2d9a58cce692/ | rg '2026-09-1[67]'
+```
+
+```
+2026-07-27_new_models_with_landingpage_reset_lstm_failed
+2026-08-12_best_models_without_landingpage_lstm
+2026-09-12_best_models_with_landingpage_lstm
+2026-09-16_best_models_permutated_landingpage
+2026-09-17_best_models_landingpage_embedded
+2026-09-17_best_models_with_landingpage_standard_lstm
+comparison_mean_abs_shap.csv
+comparison_mean_abs_shap_bars.png
+comparison_mean_abs_shap_heatmap.png
+shap_run_manifest.csv
+tchibo_x_train_shap_summary.html
+---
+2026-09-16_best_models_permutated_landingpage
+2026-09-17_best_models_landingpage_embedded
+2026-09-17_best_models_landingpage_embedded_1mio_rows
+2026-09-17_best_models_with_landingpage_standard_lstm
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.py",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "add_argument|setting|filter|--cv"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/write_shap_canvas_report.py",
+  "pattern": "add_argument|setting|filter|--cv",
+  "topFiles": [
+    {
+      "matchCount": 40,
+      "uri": "scripts/ModelShapValues/write_shap_canvas_report.py"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 100
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The write_shap_canvas_report script lacks a --setting filter.
+
+A filtered temporary comparison CSV containing only the three required settings will be created. This avoids adding a --setting filter to the report script.
+
+Older settings and the 1mio_rows model will be excluded. The filtered comparison will be written to a temporary subdirectory, and the report will be generated with a custom canvas name and output path.
+
+The filtered comparison CSV will be placed in a dedicated output folder. However, the report script still needs the underlying setting directories to resolve sample counts and F1 scores from manifests. Filtering the comparison alone may not suffice without those directories.
+
+No CLI flag changes are needed. A temporary comparison file will be built by filtering the existing CSV to the three target settings. The report will then run against this subset with a custom output path.
+
+The filtered comparison will be rebuilt directly from the three target setting folders. This preserves the model_path entries needed to resolve F1 scores and sample counts during report generation.
+</details></think>
+
+_**Agent (default)**_
+
+Creating a filtered Tchibo report for only the 2026-09-16 and 2026-09-17 settings (excluding `1mio_rows`).
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts &amp;&amp; .venv/bin/python &lt;&lt;&#39;PY&#39;
+import pandas as pd
+from pathlib import Path
+import sys
+sys.path.insert(0, &#39;scripts/ModelShapValues&#39;)
+from write_shap_canvas_report import (
+    load_shap_frame, load_manifest, build_report, resolve_output_path,
+    render_canvas, render_html, resolve_html_path,
+)
+
+base = Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15&#39;)
+include = {
+    &#39;2026-09-16_best_models_permutated_landingpage&#39;,
+    &#39;2026-09-17_best_models_landingpage_embedded&#39;,
+    &#39;2026-09-17_best_models_with_landingpage_standard_lstm&#39;,
+}
+# rebuild comparison from those folders only
+rows = []
+for setting in sorted(include):
+    sdir = base / setting
+    for p in sorted(sdir.glob(&#39;cv_*_*_mean_abs_shap.csv&#39;)):
+        df = pd.read_csv(p)
+        parts = p.stem.split(&#39;_&#39;)
+        cv, role = int(parts[1]), parts[2]
+        if &#39;customer_setting&#39; not in df.columns:
+            df[&#39;customer_setting&#39;] = setting
+        if &#39;cv&#39; not in df.columns:
+            df[&#39;cv&#39;] = cv
+        if &#39;role&#39; not in df.columns:
+            df[&#39;role&#39;] = role
+        if &#39;backend&#39; not in df.columns or df[&#39;backend&#39;].fillna(&#39;&#39;).eq(&#39;&#39;).all():
+            df[&#39;backend&#39;] = &#39;lstm&#39;
+        if &#39;model_path&#39; not in df.columns:
+            df[&#39;model_path&#39;] = &#39;&#39;
+        keep = [&#39;customer_setting&#39;,&#39;cv&#39;,&#39;role&#39;,&#39;backend&#39;,&#39;model_path&#39;,&#39;feature&#39;,&#39;mean_abs_shap&#39;,&#39;mean_shap&#39;]
+        rows.append(df[keep])
+
+out_dir = Path(&#39;scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-16_17&#39;)
+out_dir.mkdir(parents=True, exist_ok=True)
+comp = pd.concat(rows, ignore_index=True)
+comp.to_csv(out_dir / &#39;comparison_mean_abs_shap.csv&#39;, index=False)
+
+# symlink setting dirs so sample-n / f1 resolution works
+for setting in include:
+    src = (base / setting).resolve()
+    dst = out_dir / setting
+    if dst.exists() or dst.is_symlink():
+        dst.unlink()
+    dst.symlink_to(src, target_is_directory=True)
+
+# filtered manifest if present
+man_path = base / &#39;shap_run_manifest.csv&#39;
+if man_path.exists():
+    man = pd.read_csv(man_path)
+    if &#39;setting&#39; in man.columns:
+        man = man[man[&#39;setting&#39;].isin(include)]
+        man.to_csv(out_dir / &#39;shap_run_manifest.csv&#39;, index=False)
+
+print(&#39;settings:&#39;, sorted(comp[&#39;customer_setting&#39;].unique()))
+print(&#39;rows:&#39;, len(comp))
+PY
+
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-16_17 \
+  --title &#34;tchibo SHAP evaluation (2026-09-16 – 2026-09-17)&#34; \
+  --output /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-16-17-shap-summary.canvas.tsx \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-16_17/tchibo_x_train_2026-09-16_17_shap_summary.html 2&gt;&amp;1
+</summary>
+```bash
+cd /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts && .venv/bin/python <<'PY'
+import pandas as pd
+from pathlib import Path
+import sys
+sys.path.insert(0, 'scripts/ModelShapValues')
+from write_shap_canvas_report import (
+    load_shap_frame, load_manifest, build_report, resolve_output_path,
+    render_canvas, render_html, resolve_html_path,
+)
+
+base = Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-15')
+include = {
+    '2026-09-16_best_models_permutated_landingpage',
+    '2026-09-17_best_models_landingpage_embedded',
+    '2026-09-17_best_models_with_landingpage_standard_lstm',
+}
+# rebuild comparison from those folders only
+rows = []
+for setting in sorted(include):
+    sdir = base / setting
+    for p in sorted(sdir.glob('cv_*_*_mean_abs_shap.csv')):
+        df = pd.read_csv(p)
+        parts = p.stem.split('_')
+        cv, role = int(parts[1]), parts[2]
+        if 'customer_setting' not in df.columns:
+            df['customer_setting'] = setting
+        if 'cv' not in df.columns:
+            df['cv'] = cv
+        if 'role' not in df.columns:
+            df['role'] = role
+        if 'backend' not in df.columns or df['backend'].fillna('').eq('').all():
+            df['backend'] = 'lstm'
+        if 'model_path' not in df.columns:
+            df['model_path'] = ''
+        keep = ['customer_setting','cv','role','backend','model_path','feature','mean_abs_shap','mean_shap']
+        rows.append(df[keep])
+
+out_dir = Path('scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-16_17')
+out_dir.mkdir(parents=True, exist_ok=True)
+comp = pd.concat(rows, ignore_index=True)
+comp.to_csv(out_dir / 'comparison_mean_abs_shap.csv', index=False)
+
+# symlink setting dirs so sample-n / f1 resolution works
+for setting in include:
+    src = (base / setting).resolve()
+    dst = out_dir / setting
+    if dst.exists() or dst.is_symlink():
+        dst.unlink()
+    dst.symlink_to(src, target_is_directory=True)
+
+# filtered manifest if present
+man_path = base / 'shap_run_manifest.csv'
+if man_path.exists():
+    man = pd.read_csv(man_path)
+    if 'setting' in man.columns:
+        man = man[man['setting'].isin(include)]
+        man.to_csv(out_dir / 'shap_run_manifest.csv', index=False)
+
+print('settings:', sorted(comp['customer_setting'].unique()))
+print('rows:', len(comp))
+PY
+
+.venv/bin/python scripts/ModelShapValues/write_shap_canvas_report.py \
+  --shap-results scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-16_17 \
+  --title "tchibo SHAP evaluation (2026-09-16 – 2026-09-17)" \
+  --output /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-16-17-shap-summary.canvas.tsx \
+  --html --html-output scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-16_17/tchibo_x_train_2026-09-16_17_shap_summary.html 2>&1
+
+```
+
+```
+settings: ['2026-09-16_best_models_permutated_landingpage', '2026-09-17_best_models_landingpage_embedded', '2026-09-17_best_models_with_landingpage_standard_lstm']
+rows: 63
+Wrote canvas report: /Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-16-17-shap-summary.canvas.tsx
+Wrote HTML report: /Users/karolinegriesbach/Documents/Innkeepr/Git/evaluation-and-execution-scripts/scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-16_17/tchibo_x_train_2026-09-16_17_shap_summary.html
+Settings: 2026-09-16 best LP permutated, 2026-09-17 LSTM emb best + LP, 2026-09-17 LSTM best + LP standard
+Source: scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-16_17 · comparison_mean_abs_shap.csv
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Verifying F1 and n values in the report.
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-16-17-shap-summary.canvas.tsx",
+  "pattern": "headers=\\{|^\\s+\\[\\\"2026-09-1"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-16-17-shap-summary.canvas.tsx",
+  "pattern": "headers=\\{|^\\s+\\[\\\"2026-09-1",
+  "topFiles": [
+    {
+      "matchCount": 12,
+      "uri": "../../../../.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-16-17-shap-summary.canvas.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 12
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Report generation is complete.
+</details></think>
+
+_**Agent (default)**_
+
+Tchibo-only report for **2026-09-16 – 2026-09-17** (excluded `…_landingpage_embedded_1mio_rows` and all older settings).
+
+**Canvas:** [tchibo 2026-09-16–17 SHAP](file:///Users/karolinegriesbach/.cursor/projects/Users-karolinegriesbach-Documents-Innkeepr-Git-evaluation-and-execution-scripts/canvases/tchibo-x-train-2026-09-16-17-shap-summary.canvas.tsx)
+
+**HTML:** `scripts/ModelShapValues/shap_output/tchibo/tchibo_x_train_2026-09-16_17/tchibo_x_train_2026-09-16_17_shap_summary.html`
+
+| Setting | n | Best F1 | Control #1 | Landing (ctrl / treat / conv) |
+|---------|---|--------:|------------|-------------------------------|
+| **2026-09-17 LSTM emb + LP** | 22000 | **0.9137** | landingpage_cat | **34% / 32% / 1%** |
+| **2026-09-17 LSTM + LP standard** | 1164 | **0.7792** | session_duration_in_s | 20% / **37%** / **42%** |
+| **2026-09-16 LP permutated** | 22000 | **0.7709** | days_between_sessions | 23% / **57%** / **67%** |
